@@ -14,16 +14,345 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      learning_articles: {
+        Row: {
+          category: string
+          content: string | null
+          created_at: string
+          id: string
+          is_published: boolean
+          title: string
+          video_url: string | null
+        }
+        Insert: {
+          category: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          title: string
+          video_url?: string | null
+        }
+        Update: {
+          category?: string
+          content?: string | null
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          title?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      plans: {
+        Row: {
+          created_at: string
+          duration_days: number | null
+          features: Json | null
+          id: string
+          is_active: boolean
+          max_categories: number
+          max_products: number
+          name: string
+          price_pkr: number
+          type: Database["public"]["Enums"]["plan_type"]
+        }
+        Insert: {
+          created_at?: string
+          duration_days?: number | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          max_categories?: number
+          max_products?: number
+          name: string
+          price_pkr?: number
+          type: Database["public"]["Enums"]["plan_type"]
+        }
+        Update: {
+          created_at?: string
+          duration_days?: number | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          max_categories?: number
+          max_products?: number
+          name?: string
+          price_pkr?: number
+          type?: Database["public"]["Enums"]["plan_type"]
+        }
+        Relationships: []
+      }
+      product_packs: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          niche: string
+          price_pkr: number
+          product_count: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          niche: string
+          price_pkr?: number
+          product_count?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          niche?: string
+          price_pkr?: number
+          product_count?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      store_requests: {
+        Row: {
+          admin_notes: string | null
+          amount: number | null
+          created_at: string
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"] | null
+          plan_id: string
+          screenshot_url: string | null
+          status: Database["public"]["Enums"]["store_status"]
+          store_name: string
+          template_id: string
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount?: number | null
+          created_at?: string
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          plan_id: string
+          screenshot_url?: string | null
+          status?: Database["public"]["Enums"]["store_status"]
+          store_name: string
+          template_id: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number | null
+          created_at?: string
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          plan_id?: string
+          screenshot_url?: string | null
+          status?: Database["public"]["Enums"]["store_status"]
+          store_name?: string
+          template_id?: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_requests_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "store_requests_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stores: {
+        Row: {
+          activated_at: string | null
+          category_count: number
+          created_at: string
+          expires_at: string | null
+          id: string
+          name: string
+          plan_id: string
+          product_count: number
+          status: Database["public"]["Enums"]["store_status"]
+          subdomain_slug: string
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          activated_at?: string | null
+          category_count?: number
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          name: string
+          plan_id: string
+          product_count?: number
+          status?: Database["public"]["Enums"]["store_status"]
+          subdomain_slug: string
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          activated_at?: string | null
+          category_count?: number
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          name?: string
+          plan_id?: string
+          product_count?: number
+          status?: Database["public"]["Enums"]["store_status"]
+          subdomain_slug?: string
+          template_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stores_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stores_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      templates: {
+        Row: {
+          available_plans: Json | null
+          created_at: string
+          demo_url: string | null
+          description: string | null
+          features: Json | null
+          id: string
+          is_active: boolean
+          name: string
+          niche: string
+          preview_image_url: string | null
+        }
+        Insert: {
+          available_plans?: Json | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          name: string
+          niche: string
+          preview_image_url?: string | null
+        }
+        Update: {
+          available_plans?: Json | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          niche?: string
+          preview_image_url?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      payment_method:
+        | "easypaisa"
+        | "jazzcash"
+        | "nayapay"
+        | "raast"
+        | "bank_transfer"
+      plan_type: "free" | "rent" | "buy"
+      store_status:
+        | "pending"
+        | "under_review"
+        | "approved"
+        | "rejected"
+        | "activated"
+        | "suspended"
+        | "expired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +479,25 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      payment_method: [
+        "easypaisa",
+        "jazzcash",
+        "nayapay",
+        "raast",
+        "bank_transfer",
+      ],
+      plan_type: ["free", "rent", "buy"],
+      store_status: [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+        "activated",
+        "suspended",
+        "expired",
+      ],
+    },
   },
 } as const
