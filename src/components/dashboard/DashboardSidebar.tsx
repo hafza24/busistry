@@ -66,7 +66,12 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
         <div className="text-sm text-muted-foreground mb-2 truncate">
           {user?.user_metadata?.full_name || user?.email}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          {isAdmin && (
+            <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate("/admin")}>
+              <ShieldCheck className="h-4 w-4 mr-1" /> Admin
+            </Button>
+          )}
           <Button variant="ghost" size="sm" className="flex-1" onClick={() => navigate("/")}>
             <Home className="h-4 w-4 mr-1" /> Home
           </Button>
