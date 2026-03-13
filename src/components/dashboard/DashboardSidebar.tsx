@@ -13,7 +13,7 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Store, Plus, FileText, User, LogOut, Home } from "lucide-react";
+import { Store, Plus, FileText, User, LogOut, Home, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DashboardSidebarProps {
