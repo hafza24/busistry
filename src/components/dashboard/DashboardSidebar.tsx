@@ -23,6 +23,7 @@ interface DashboardSidebarProps {
 
 const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) => {
   const { user, signOut } = useAuth();
+  const { data: isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   const menuItems = [
