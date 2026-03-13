@@ -1,5 +1,6 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsAdmin } from "@/hooks/useAdmin";
 import {
   Sidebar,
   SidebarContent,
