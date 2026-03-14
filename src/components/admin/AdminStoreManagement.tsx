@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { useAllStores, useUpdateStoreStatus } from "@/hooks/useAdmin";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,7 @@ const statusColors: Record<string, string> = {
 const AdminStoreManagement = () => {
   const { data: stores, isLoading } = useAllStores();
   const updateStatus = useUpdateStoreStatus();
+  const navigate = useNavigate();
 
   const handleStatusChange = async (id: string, status: string) => {
     try {
@@ -97,6 +99,7 @@ const AdminStoreManagement = () => {
                         <Button size="sm" variant="ghost"><MoreHorizontal className="h-4 w-4" /></Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => navigate(`/store/${store.id}`)}>Manage Store</DropdownMenuItem>
                         {store.status !== "activated" && (
                           <DropdownMenuItem onClick={() => handleStatusChange(store.id, "activated")}>Activate</DropdownMenuItem>
                         )}

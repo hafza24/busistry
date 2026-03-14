@@ -1,8 +1,9 @@
 import { useStores } from "@/hooks/useStores";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Store, Plus, Calendar, Package } from "lucide-react";
+import { Store, Plus, Calendar, Package, ExternalLink, Settings } from "lucide-react";
 import { format } from "date-fns";
 
 const statusColors: Record<string, string> = {
@@ -21,6 +22,7 @@ interface MyStoresProps {
 
 const MyStores = ({ onLaunchStore }: MyStoresProps) => {
   const { data: stores, isLoading } = useStores();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <div className="flex items-center justify-center py-12 text-muted-foreground">Loading stores...</div>;
@@ -68,7 +70,7 @@ const MyStores = ({ onLaunchStore }: MyStoresProps) => {
                 {(store as any).templates?.name} • {(store as any).plans?.name}
               </p>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-3">
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Package className="h-3.5 w-3.5" />
@@ -78,6 +80,16 @@ const MyStores = ({ onLaunchStore }: MyStoresProps) => {
                   <Calendar className="h-3.5 w-3.5" />
                   {store.expires_at ? `Expires ${format(new Date(store.expires_at), "MMM d, yyyy")}` : "No expiry"}
                 </span>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => navigate(`/store/${store.id}`)}>
+                  <Settings className="h-3.5 w-3.5 mr-1" /> Manage
+                </Button>
+                {store.status === "activated" && (
+                  <Button variant="ghost" size="sm" onClick={() => window.open(`/shop/${store.subdomain_slug}`, "_blank")}>
+                    <ExternalLink className="h-3.5 w-3.5 mr-1" /> View Store
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
