@@ -22,6 +22,7 @@ interface MyStoresProps {
 
 const MyStores = ({ onLaunchStore }: MyStoresProps) => {
   const { data: stores, isLoading } = useStores();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <div className="flex items-center justify-center py-12 text-muted-foreground">Loading stores...</div>;
