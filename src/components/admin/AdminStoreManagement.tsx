@@ -99,6 +99,7 @@ const AdminStoreManagement = () => {
                         <Button size="sm" variant="ghost"><MoreHorizontal className="h-4 w-4" /></Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => navigate(`/store/${store.id}`)}>Manage Store</DropdownMenuItem>
                         {store.status !== "activated" && (
                           <DropdownMenuItem onClick={() => handleStatusChange(store.id, "activated")}>Activate</DropdownMenuItem>
                         )}
