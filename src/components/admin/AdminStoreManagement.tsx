@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { useAllStores, useUpdateStoreStatus } from "@/hooks/useAdmin";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
