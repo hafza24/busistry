@@ -19,6 +19,7 @@ const statusColors: Record<string, string> = {
 const AdminStoreManagement = () => {
   const { data: stores, isLoading } = useAllStores();
   const updateStatus = useUpdateStoreStatus();
+  const navigate = useNavigate();
 
   const handleStatusChange = async (id: string, status: string) => {
     try {
