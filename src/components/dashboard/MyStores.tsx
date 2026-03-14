@@ -70,7 +70,7 @@ const MyStores = ({ onLaunchStore }: MyStoresProps) => {
                 {(store as any).templates?.name} • {(store as any).plans?.name}
               </p>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="space-y-3">
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Package className="h-3.5 w-3.5" />
@@ -80,6 +80,16 @@ const MyStores = ({ onLaunchStore }: MyStoresProps) => {
                   <Calendar className="h-3.5 w-3.5" />
                   {store.expires_at ? `Expires ${format(new Date(store.expires_at), "MMM d, yyyy")}` : "No expiry"}
                 </span>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => navigate(`/store/${store.id}`)}>
+                  <Settings className="h-3.5 w-3.5 mr-1" /> Manage
+                </Button>
+                {store.status === "activated" && (
+                  <Button variant="ghost" size="sm" onClick={() => window.open(`/shop/${store.subdomain_slug}`, "_blank")}>
+                    <ExternalLink className="h-3.5 w-3.5 mr-1" /> View Store
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
