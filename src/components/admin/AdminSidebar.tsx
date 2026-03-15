@@ -15,6 +15,7 @@ interface AdminSidebarProps {
 const menuItems = [
   { id: "requests", label: "Store Requests", icon: ClipboardList },
   { id: "stores", label: "All Stores", icon: Store },
+  { id: "templates", label: "Templates", icon: LayoutTemplate },
   { id: "users", label: "Users", icon: Users },
 ];
 

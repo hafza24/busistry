@@ -40,6 +40,7 @@ const AdminDashboard = () => {
       case "requests": return <AdminRequestManagement />;
       case "stores": return <AdminStoreManagement />;
       case "users": return <AdminUserManagement />;
+      case "templates": return <AdminTemplateManagement />;
       default: return <AdminRequestManagement />;
     }
   };
