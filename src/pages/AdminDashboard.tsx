@@ -13,6 +13,7 @@ const viewTitles: Record<string, string> = {
   requests: "Store Requests",
   stores: "Store Management",
   users: "User Management",
+  templates: "Template Management",
 };
 
 const AdminDashboard = () => {
