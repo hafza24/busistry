@@ -7,11 +7,13 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminStoreManagement from "@/components/admin/AdminStoreManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
+import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 
 const viewTitles: Record<string, string> = {
   requests: "Store Requests",
   stores: "Store Management",
   users: "User Management",
+  templates: "Template Management",
 };
 
 const AdminDashboard = () => {
@@ -38,6 +40,7 @@ const AdminDashboard = () => {
       case "requests": return <AdminRequestManagement />;
       case "stores": return <AdminStoreManagement />;
       case "users": return <AdminUserManagement />;
+      case "templates": return <AdminTemplateManagement />;
       default: return <AdminRequestManagement />;
     }
   };
