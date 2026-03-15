@@ -5,7 +5,7 @@ import {
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { ClipboardList, Store, Users, Home, LogOut, ShieldCheck } from "lucide-react";
+import { ClipboardList, Store, Users, Home, LogOut, ShieldCheck, LayoutTemplate } from "lucide-react";
 
 interface AdminSidebarProps {
   activeView: string;
