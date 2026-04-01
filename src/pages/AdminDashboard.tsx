@@ -4,14 +4,14 @@ import { useIsAdmin } from "@/hooks/useAdmin";
 import { useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import AdminWebsiteOrders from "@/components/admin/AdminWebsiteOrders";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
-import AdminStoreManagement from "@/components/admin/AdminStoreManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 
 const viewTitles: Record<string, string> = {
-  requests: "Store Requests",
-  stores: "Store Management",
+  orders: "Website Orders",
+  requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
 };
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const { data: isAdmin, isLoading: roleLoading } = useIsAdmin();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState("requests");
+  const [activeView, setActiveView] = useState("orders");
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth", { replace: true });
@@ -37,11 +37,11 @@ const AdminDashboard = () => {
 
   const renderView = () => {
     switch (activeView) {
+      case "orders": return <AdminWebsiteOrders />;
       case "requests": return <AdminRequestManagement />;
-      case "stores": return <AdminStoreManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
-      default: return <AdminRequestManagement />;
+      default: return <AdminWebsiteOrders />;
     }
   };
 

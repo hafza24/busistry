@@ -13,8 +13,6 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
-import StoreDashboard from "./pages/StoreDashboard";
-import Storefront from "./pages/Storefront";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,8 +35,6 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/store/:storeId" element={<StoreDashboard />} />
-            <Route path="/shop/:slug" element={<Storefront />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
