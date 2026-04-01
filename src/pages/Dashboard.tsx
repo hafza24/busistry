@@ -3,15 +3,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import MyStores from "@/components/dashboard/MyStores";
-import MyRequests from "@/components/dashboard/MyRequests";
-import LaunchStoreWizard from "@/components/dashboard/LaunchStoreWizard";
+import MyOrders from "@/components/dashboard/MyOrders";
+import OrderWebsiteWizard from "@/components/dashboard/OrderWebsiteWizard";
 import UserProfile from "@/components/dashboard/UserProfile";
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState("stores");
+  const [activeView, setActiveView] = useState("orders");
 
   useEffect(() => {
     if (!loading && !user) navigate("/auth", { replace: true });
@@ -22,21 +21,14 @@ const Dashboard = () => {
 
   const renderView = () => {
     switch (activeView) {
-      case "stores":
-        return <MyStores onLaunchStore={() => setActiveView("new-store")} />;
-      case "new-store":
-        return (
-          <LaunchStoreWizard
-            onComplete={() => setActiveView("requests")}
-            onCancel={() => setActiveView("stores")}
-          />
-        );
-      case "requests":
-        return <MyRequests />;
+      case "orders":
+        return <MyOrders onNewOrder={() => setActiveView("new-order")} />;
+      case "new-order":
+        return <OrderWebsiteWizard onComplete={() => setActiveView("orders")} onCancel={() => setActiveView("orders")} />;
       case "profile":
         return <UserProfile />;
       default:
-        return <MyStores onLaunchStore={() => setActiveView("new-store")} />;
+        return <MyOrders onNewOrder={() => setActiveView("new-order")} />;
     }
   };
 
@@ -48,15 +40,12 @@ const Dashboard = () => {
           <header className="flex h-14 items-center gap-2 border-b border-border px-6">
             <SidebarTrigger />
             <h1 className="text-lg font-semibold font-display text-foreground">
-              {activeView === "stores" && "My Stores"}
-              {activeView === "new-store" && "Launch Store"}
-              {activeView === "requests" && "My Requests"}
+              {activeView === "orders" && "My Orders"}
+              {activeView === "new-order" && "Order a Website"}
               {activeView === "profile" && "Profile"}
             </h1>
           </header>
-          <main className="flex-1 p-6">
-            {renderView()}
-          </main>
+          <main className="flex-1 p-6">{renderView()}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>
