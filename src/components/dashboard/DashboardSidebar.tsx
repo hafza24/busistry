@@ -2,18 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsAdmin } from "@/hooks/useAdmin";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarHeader,
-  SidebarFooter,
+  Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Store, Plus, FileText, User, LogOut, Home, ShieldCheck } from "lucide-react";
+import { Globe, Plus, User, LogOut, Home, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DashboardSidebarProps {
@@ -27,9 +19,8 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
   const navigate = useNavigate();
 
   const menuItems = [
-    { id: "stores", label: "My Stores", icon: Store },
-    { id: "new-store", label: "Launch Store", icon: Plus },
-    { id: "requests", label: "My Requests", icon: FileText },
+    { id: "orders", label: "My Orders", icon: Globe },
+    { id: "new-order", label: "Order Website", icon: Plus },
     { id: "profile", label: "Profile", icon: User },
   ];
 
@@ -48,11 +39,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton
-                    isActive={activeView === item.id}
-                    onClick={() => onViewChange(item.id)}
-                    tooltip={item.label}
-                  >
+                  <SidebarMenuButton isActive={activeView === item.id} onClick={() => onViewChange(item.id)} tooltip={item.label}>
                     <item.icon className="h-4 w-4" />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
@@ -63,9 +50,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <div className="text-sm text-muted-foreground mb-2 truncate">
-          {user?.user_metadata?.full_name || user?.email}
-        </div>
+        <div className="text-sm text-muted-foreground mb-2 truncate">{user?.user_metadata?.full_name || user?.email}</div>
         <div className="flex gap-2 flex-wrap">
           {isAdmin && (
             <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate("/admin")}>

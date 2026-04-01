@@ -5,7 +5,7 @@ import {
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { ClipboardList, Store, Users, Home, LogOut, ShieldCheck, LayoutTemplate } from "lucide-react";
+import { ClipboardList, Users, Home, LogOut, ShieldCheck, LayoutTemplate, Globe } from "lucide-react";
 
 interface AdminSidebarProps {
   activeView: string;
@@ -13,9 +13,9 @@ interface AdminSidebarProps {
 }
 
 const menuItems = [
-  { id: "requests", label: "Store Requests", icon: ClipboardList },
-  { id: "stores", label: "All Stores", icon: Store },
+  { id: "orders", label: "Website Orders", icon: Globe },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
+  { id: "requests", label: "Store Requests (Legacy)", icon: ClipboardList },
   { id: "users", label: "Users", icon: Users },
 ];
 

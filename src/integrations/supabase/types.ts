@@ -596,6 +596,90 @@ export type Database = {
         }
         Relationships: []
       }
+      website_orders: {
+        Row: {
+          additional_notes: string | null
+          address: string
+          admin_notes: string | null
+          amount: number | null
+          business_description: string | null
+          color_preferences: string | null
+          contact_email: string | null
+          contact_phone: string
+          created_at: string
+          domain_preference: string | null
+          id: string
+          logo_url: string | null
+          payment_method: string | null
+          plan_id: string
+          screenshot_url: string | null
+          social_media_links: Json | null
+          status: string
+          store_name: string
+          template_id: string
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+          wordpress_password: string | null
+          wordpress_url: string | null
+          wordpress_username: string | null
+        }
+        Insert: {
+          additional_notes?: string | null
+          address: string
+          admin_notes?: string | null
+          amount?: number | null
+          business_description?: string | null
+          color_preferences?: string | null
+          contact_email?: string | null
+          contact_phone: string
+          created_at?: string
+          domain_preference?: string | null
+          id?: string
+          logo_url?: string | null
+          payment_method?: string | null
+          plan_id: string
+          screenshot_url?: string | null
+          social_media_links?: Json | null
+          status?: string
+          store_name: string
+          template_id: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+          wordpress_password?: string | null
+          wordpress_url?: string | null
+          wordpress_username?: string | null
+        }
+        Update: {
+          additional_notes?: string | null
+          address?: string
+          admin_notes?: string | null
+          amount?: number | null
+          business_description?: string | null
+          color_preferences?: string | null
+          contact_email?: string | null
+          contact_phone?: string
+          created_at?: string
+          domain_preference?: string | null
+          id?: string
+          logo_url?: string | null
+          payment_method?: string | null
+          plan_id?: string
+          screenshot_url?: string | null
+          social_media_links?: Json | null
+          status?: string
+          store_name?: string
+          template_id?: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+          wordpress_password?: string | null
+          wordpress_url?: string | null
+          wordpress_username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
