@@ -43,6 +43,7 @@ const AdminDashboard = () => {
       case "requests": return <AdminRequestManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
+      case "plans": return <AdminPlanManagement />;
       default: return <AdminWebsiteOrders />;
     }
   };

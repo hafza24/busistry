@@ -15,6 +15,7 @@ interface AdminSidebarProps {
 const menuItems = [
   { id: "orders", label: "Website Orders", icon: Globe },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
+  { id: "plans", label: "Plans", icon: CreditCard },
   { id: "requests", label: "Store Requests (Legacy)", icon: ClipboardList },
   { id: "users", label: "Users", icon: Users },
 ];
