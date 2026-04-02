@@ -15,6 +15,7 @@ const viewTitles: Record<string, string> = {
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
+  plans: "Plan Management",
 };
 
 const AdminDashboard = () => {
