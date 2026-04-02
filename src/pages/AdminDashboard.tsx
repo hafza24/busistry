@@ -8,6 +8,7 @@ import AdminWebsiteOrders from "@/components/admin/AdminWebsiteOrders";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
+import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 
 const viewTitles: Record<string, string> = {
   orders: "Website Orders",
