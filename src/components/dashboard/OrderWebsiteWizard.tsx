@@ -94,6 +94,20 @@ const OrderWebsiteWizard = ({ onComplete, onCancel }: OrderWebsiteWizardProps) =
     setSubmitting(true);
 
     try {
+      // Prevent multiple free plan orders
+      if (isFree) {
+        const { count, error: countErr } = await supabase
+          .from("website_orders")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id)
+          .eq("plan_id", selectedPlan);
+        if (countErr) throw countErr;
+        if (count && count > 0) {
+          toast({ title: "Limit reached", description: "You can only order the free plan once.", variant: "destructive" });
+          setSubmitting(false);
+          return;
+        }
+      }
       let screenshotUrl: string | null = null;
       let logoUrl: string | null = null;
 
