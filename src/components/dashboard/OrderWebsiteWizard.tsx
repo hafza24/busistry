@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, Check, Upload, Globe, CreditCard, Palette, Building2 } from "lucide-react";
 
 type Step = "template" | "plan" | "details" | "payment" | "confirm";
