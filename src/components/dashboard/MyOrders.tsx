@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, Clock, ExternalLink } from "lucide-react";
+import { Globe, Clock, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 
@@ -78,18 +79,7 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
               </div>
 
               {order.status === "completed" && order.wordpress_url && (
-                <Card className="bg-primary/5 border-primary/20">
-                  <CardContent className="pt-4 space-y-2 text-sm">
-                    <p className="font-semibold text-foreground">🎉 Your website is ready!</p>
-                    <p><strong>URL:</strong>{" "}
-                      <a href={order.wordpress_url} target="_blank" rel="noopener noreferrer" className="text-primary underline inline-flex items-center gap-1">
-                        {order.wordpress_url} <ExternalLink className="h-3 w-3" />
-                      </a>
-                    </p>
-                    {order.wordpress_username && <p><strong>Username:</strong> {order.wordpress_username}</p>}
-                    {order.wordpress_password && <p><strong>Password:</strong> {order.wordpress_password}</p>}
-                  </CardContent>
-                </Card>
+                <DecryptedCredentials orderId={order.id} hasUrl={!!order.wordpress_url} />
               )}
 
               {order.admin_notes && (
