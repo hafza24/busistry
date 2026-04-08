@@ -49,12 +49,25 @@ const AdminWebsiteOrders = () => {
 
   const updateOrder = useMutation({
     mutationFn: async (updates: { id: string } & Record<string, any>) => {
-      const { id, ...rest } = updates;
-      const { error } = await supabase
-        .from("website_orders")
-        .update({ ...rest, updated_at: new Date().toISOString() })
-        .eq("id", id);
-      if (error) throw error;
+      const { id, wordpress_url, wordpress_username, wordpress_password, ...rest } = updates;
+
+      // Encrypt credentials via Edge Function if any are provided
+      if (wordpress_url || wordpress_username || wordpress_password) {
+        const { data: encData, error: encError } = await supabase.functions.invoke("manage-credentials", {
+          body: { action: "encrypt", order_id: id, wordpress_url, wordpress_username, wordpress_password },
+        });
+        if (encError) throw new Error(encError.message || "Failed to encrypt credentials");
+        if (encData?.error) throw new Error(encData.error);
+      }
+
+      // Update non-credential fields
+      if (Object.keys(rest).length > 0) {
+        const { error } = await supabase
+          .from("website_orders")
+          .update({ ...rest, updated_at: new Date().toISOString() })
+          .eq("id", id);
+        if (error) throw error;
+      }
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin_website_orders"] });
@@ -64,15 +77,40 @@ const AdminWebsiteOrders = () => {
     onError: (e: any) => toast.error(e.message),
   });
 
-  const openDetail = (order: any) => {
+  const openDetail = async (order: any) => {
     setSelected(order);
     setEditFields({
       status: order.status,
-      wordpress_url: order.wordpress_url || "",
-      wordpress_username: order.wordpress_username || "",
-      wordpress_password: order.wordpress_password || "",
+      wordpress_url: "",
+      wordpress_username: "",
+      wordpress_password: "",
       admin_notes: order.admin_notes || "",
     });
+
+    // Decrypt credentials if they exist
+    if (order.wordpress_url || order.wordpress_username || order.wordpress_password) {
+      try {
+        const { data, error } = await supabase.functions.invoke("manage-credentials", {
+          body: { action: "decrypt", order_id: order.id },
+        });
+        if (!error && data && !data.error) {
+          setEditFields((prev) => ({
+            ...prev,
+            wordpress_url: data.wordpress_url || "",
+            wordpress_username: data.wordpress_username || "",
+            wordpress_password: data.wordpress_password || "",
+          }));
+        }
+      } catch {
+        // Fallback to raw values if decryption fails
+        setEditFields((prev) => ({
+          ...prev,
+          wordpress_url: order.wordpress_url || "",
+          wordpress_username: order.wordpress_username || "",
+          wordpress_password: order.wordpress_password || "",
+        }));
+      }
+    }
   };
 
   const handleSave = () => {

@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, Clock, ExternalLink } from "lucide-react";
+import { Globe, Clock, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 
@@ -17,6 +18,53 @@ const statusConfig: Record<string, { color: string; label: string }> = {
 interface MyOrdersProps {
   onNewOrder: () => void;
 }
+
+const DecryptedCredentials = ({ orderId, hasUrl }: { orderId: string; hasUrl: boolean }) => {
+  const [creds, setCreds] = useState<{ wordpress_url: string; wordpress_username: string; wordpress_password: string } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const fetchCreds = async () => {
+    if (creds) { setVisible(!visible); return; }
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("manage-credentials", {
+        body: { action: "decrypt", order_id: orderId },
+      });
+      if (!error && data && !data.error) {
+        setCreds(data);
+        setVisible(true);
+      }
+    } catch { /* ignore */ }
+    setLoading(false);
+  };
+
+  return (
+    <Card className="bg-primary/5 border-primary/20">
+      <CardContent className="pt-4 space-y-2 text-sm">
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-foreground">🎉 Your website is ready!</p>
+          <Button variant="ghost" size="sm" onClick={fetchCreds} disabled={loading}>
+            {loading ? "Loading..." : visible ? <><EyeOff className="h-3 w-3 mr-1" /> Hide</> : <><Eye className="h-3 w-3 mr-1" /> Show Credentials</>}
+          </Button>
+        </div>
+        {visible && creds && (
+          <>
+            {creds.wordpress_url && (
+              <p><strong>URL:</strong>{" "}
+                <a href={creds.wordpress_url} target="_blank" rel="noopener noreferrer" className="text-primary underline inline-flex items-center gap-1">
+                  {creds.wordpress_url} <ExternalLink className="h-3 w-3" />
+                </a>
+              </p>
+            )}
+            {creds.wordpress_username && <p><strong>Username:</strong> {creds.wordpress_username}</p>}
+            {creds.wordpress_password && <p><strong>Password:</strong> ••••••••</p>}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
 
 const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
   const { user } = useAuth();
@@ -78,18 +126,7 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
               </div>
 
               {order.status === "completed" && order.wordpress_url && (
-                <Card className="bg-primary/5 border-primary/20">
-                  <CardContent className="pt-4 space-y-2 text-sm">
-                    <p className="font-semibold text-foreground">🎉 Your website is ready!</p>
-                    <p><strong>URL:</strong>{" "}
-                      <a href={order.wordpress_url} target="_blank" rel="noopener noreferrer" className="text-primary underline inline-flex items-center gap-1">
-                        {order.wordpress_url} <ExternalLink className="h-3 w-3" />
-                      </a>
-                    </p>
-                    {order.wordpress_username && <p><strong>Username:</strong> {order.wordpress_username}</p>}
-                    {order.wordpress_password && <p><strong>Password:</strong> {order.wordpress_password}</p>}
-                  </CardContent>
-                </Card>
+                <DecryptedCredentials orderId={order.id} hasUrl={!!order.wordpress_url} />
               )}
 
               {order.admin_notes && (
