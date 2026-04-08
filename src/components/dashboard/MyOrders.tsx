@@ -19,6 +19,53 @@ interface MyOrdersProps {
   onNewOrder: () => void;
 }
 
+const DecryptedCredentials = ({ orderId, hasUrl }: { orderId: string; hasUrl: boolean }) => {
+  const [creds, setCreds] = useState<{ wordpress_url: string; wordpress_username: string; wordpress_password: string } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const fetchCreds = async () => {
+    if (creds) { setVisible(!visible); return; }
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("manage-credentials", {
+        body: { action: "decrypt", order_id: orderId },
+      });
+      if (!error && data && !data.error) {
+        setCreds(data);
+        setVisible(true);
+      }
+    } catch { /* ignore */ }
+    setLoading(false);
+  };
+
+  return (
+    <Card className="bg-primary/5 border-primary/20">
+      <CardContent className="pt-4 space-y-2 text-sm">
+        <div className="flex items-center justify-between">
+          <p className="font-semibold text-foreground">🎉 Your website is ready!</p>
+          <Button variant="ghost" size="sm" onClick={fetchCreds} disabled={loading}>
+            {loading ? "Loading..." : visible ? <><EyeOff className="h-3 w-3 mr-1" /> Hide</> : <><Eye className="h-3 w-3 mr-1" /> Show Credentials</>}
+          </Button>
+        </div>
+        {visible && creds && (
+          <>
+            {creds.wordpress_url && (
+              <p><strong>URL:</strong>{" "}
+                <a href={creds.wordpress_url} target="_blank" rel="noopener noreferrer" className="text-primary underline inline-flex items-center gap-1">
+                  {creds.wordpress_url} <ExternalLink className="h-3 w-3" />
+                </a>
+              </p>
+            )}
+            {creds.wordpress_username && <p><strong>Username:</strong> {creds.wordpress_username}</p>}
+            {creds.wordpress_password && <p><strong>Password:</strong> ••••••••</p>}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
 const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
   const { user } = useAuth();
 
