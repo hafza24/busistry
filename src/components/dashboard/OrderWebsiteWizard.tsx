@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, Check, Upload, Globe, CreditCard, Palette, Building2 } from "lucide-react";
 
 type Step = "template" | "plan" | "details" | "payment" | "confirm";
@@ -39,6 +39,22 @@ const OrderWebsiteWizard = ({ onComplete, onCancel }: OrderWebsiteWizardProps) =
   const queryClient = useQueryClient();
   const { data: templates, isLoading: templatesLoading } = useTemplates();
   const { data: plans, isLoading: plansLoading } = usePlans();
+
+  const { data: existingFreeOrder } = useQuery({
+    queryKey: ["free_plan_check", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      if (!plans) return null;
+      const freePlanIds = plans.filter(p => p.type === "free").map(p => p.id);
+      if (freePlanIds.length === 0) return null;
+      const { count } = await supabase
+        .from("website_orders")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user!.id)
+        .in("plan_id", freePlanIds);
+      return (count ?? 0) > 0;
+    },
+  });
 
   const [step, setStep] = useState<Step>("template");
   const [selectedTemplate, setSelectedTemplate] = useState("");
@@ -227,33 +243,40 @@ const OrderWebsiteWizard = ({ onComplete, onCancel }: OrderWebsiteWizardProps) =
             <p className="text-muted-foreground">Loading plans...</p>
           ) : (
             <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {plans?.map((p) => (
-                <Card
-                  key={p.id}
-                  className={`cursor-pointer transition-all hover:border-primary/50 ${selectedPlan === p.id ? "border-primary ring-2 ring-primary/20" : "border-border/50"}`}
-                  onClick={() => setSelectedPlan(p.id)}
-                >
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-base font-display">{p.name}</CardTitle>
-                      <Badge variant={p.type === "free" ? "secondary" : "default"}>{p.type}</Badge>
-                    </div>
-                    <CardDescription className="text-xl font-bold font-display text-foreground">
-                      {p.price_pkr === 0 ? "Free" : `PKR ${p.price_pkr.toLocaleString()}`}
-                      {p.type === "rent" && p.duration_days && (
-                        <span className="text-sm font-normal text-muted-foreground"> / {p.duration_days} days</span>
-                      )}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>Up to {p.max_products} products</li>
-                      <li>Up to {p.max_categories} categories</li>
-                      {Array.isArray(p.features) && (p.features as string[]).map((f, i) => <li key={i}>{f}</li>)}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+              {plans?.map((p) => {
+                const isFreeLocked = p.type === "free" && existingFreeOrder;
+                return (
+                  <Card
+                    key={p.id}
+                    className={`transition-all ${isFreeLocked ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:border-primary/50"} ${selectedPlan === p.id ? "border-primary ring-2 ring-primary/20" : "border-border/50"}`}
+                    onClick={() => !isFreeLocked && setSelectedPlan(p.id)}
+                  >
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-base font-display">{p.name}</CardTitle>
+                        <div className="flex gap-1">
+                          {isFreeLocked && <Badge variant="outline" className="text-destructive border-destructive/30">Already Used</Badge>}
+                          <Badge variant={p.type === "free" ? "secondary" : "default"}>{p.type}</Badge>
+                        </div>
+                      </div>
+                      <CardDescription className="text-xl font-bold font-display text-foreground">
+                        {p.price_pkr === 0 ? "Free" : `PKR ${p.price_pkr.toLocaleString()}`}
+                        {p.type === "rent" && p.duration_days && (
+                          <span className="text-sm font-normal text-muted-foreground"> / {p.duration_days} days</span>
+                        )}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>Up to {p.max_products} products</li>
+                        <li>Up to {p.max_categories} categories</li>
+                        {Array.isArray(p.features) && (p.features as string[]).map((f, i) => <li key={i}>{f}</li>)}
+                      </ul>
+                      {isFreeLocked && <p className="text-xs text-destructive mt-2">You've already used your free plan.</p>}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>
