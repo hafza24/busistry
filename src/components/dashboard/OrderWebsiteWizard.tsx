@@ -40,6 +40,22 @@ const OrderWebsiteWizard = ({ onComplete, onCancel }: OrderWebsiteWizardProps) =
   const { data: templates, isLoading: templatesLoading } = useTemplates();
   const { data: plans, isLoading: plansLoading } = usePlans();
 
+  const { data: existingFreeOrder } = useQuery({
+    queryKey: ["free_plan_check", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      if (!plans) return null;
+      const freePlanIds = plans.filter(p => p.type === "free").map(p => p.id);
+      if (freePlanIds.length === 0) return null;
+      const { count } = await supabase
+        .from("website_orders")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user!.id)
+        .in("plan_id", freePlanIds);
+      return (count ?? 0) > 0;
+    },
+  });
+
   const [step, setStep] = useState<Step>("template");
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
