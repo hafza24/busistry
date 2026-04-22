@@ -73,9 +73,14 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
     queryKey: ["website_orders", user?.id],
     enabled: !!user,
     queryFn: async () => {
+      // Note: wordpress_url, wordpress_username, wordpress_password are intentionally excluded.
+      // They are encrypted at rest and column-level access has been revoked. Use the
+      // manage-credentials edge function (decrypt action) to retrieve them when needed.
       const { data, error } = await supabase
         .from("website_orders")
-        .select("*, plans(name, type, price_pkr), templates(name, niche)")
+        .select(
+          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, plans(name, type, price_pkr), templates(name, niche)"
+        )
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;
