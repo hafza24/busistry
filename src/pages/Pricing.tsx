@@ -7,9 +7,13 @@ import { CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const PriceCard = ({ name, price_pkr, duration_days, features, type, popular }: any) => {
+const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular }: any) => {
   const featureList = Array.isArray(features) ? (features as string[]) : [];
   const duration = type === "rent" && duration_days ? `/ ${duration_days} days` : type === "buy" ? "one-time" : null;
+
+  const handleSelect = () => {
+    try { localStorage.setItem("busistry_onboarding_plan", id); } catch {}
+  };
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -33,9 +37,9 @@ const PriceCard = ({ name, price_pkr, duration_days, features, type, popular }: 
               </li>
             ))}
           </ul>
-          <Button className="w-full" variant={popular ? "default" : "outline"} asChild>
-            <Link to="/dashboard">
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
+          <Button className="w-full" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
+            <Link to={`/onboarding?plan=${id}`}>
+              Select plan <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </CardContent>
