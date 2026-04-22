@@ -95,10 +95,11 @@ export const useOnboarding = (initialPlanId?: string | null) => {
       if (row) {
         setData((d) => ({
           ...d,
-          ...row,
+          ...(row as any),
           team_roles: Array.isArray(row.team_roles) ? (row.team_roles as string[]) : [],
           team_members: Array.isArray(row.team_members) ? (row.team_members as any[]) : [],
           plan_id: initialPlanId ?? row.plan_id,
+          status: (row.status === "submitted" ? "submitted" : "draft") as "draft" | "submitted",
         }));
       } else {
         // Create a fresh draft so we have an id for autosave
