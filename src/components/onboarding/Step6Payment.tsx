@@ -106,7 +106,92 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
   };
 
   return (
-    <StepShell title="Confirm & pay" subtitle="Review your selection and confirm payment.">
+    <StepShell title="Confirm & pay" subtitle="Review every detail below. You can jump back to any step to make changes before submitting.">
+      {/* Recap of all previous steps */}
+      <div className="space-y-3">
+        <RecapSection
+          step={1}
+          title="Business basics"
+          onEdit={onEdit}
+          rows={[
+            { label: "Business name", value: fmt(data.business_name) },
+            { label: "Business type", value: fmt(data.business_type) },
+            { label: "Description", value: fmt(data.business_description) },
+            { label: "Country", value: fmt(data.country) },
+          ]}
+        />
+        <RecapSection
+          step={2}
+          title="Branding & design"
+          onEdit={onEdit}
+          rows={[
+            {
+              label: "Logo",
+              value: data.logo_url ? (
+                <a href={data.logo_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+                  View upload
+                </a>
+              ) : data.needs_logo_design ? (
+                "Needs design by Busistry"
+              ) : (
+                "—"
+              ),
+            },
+            { label: "Color palette", value: fmt(data.color_palette) },
+            { label: "Font style", value: fmt(data.font_style) },
+            { label: "References", value: fmt(data.reference_websites) },
+          ]}
+        />
+        <RecapSection
+          step={3}
+          title="Team"
+          onEdit={onEdit}
+          rows={[
+            { label: "Team size", value: fmt(data.team_size) },
+            { label: "Roles", value: fmt(data.team_roles) },
+            {
+              label: "Members",
+              value:
+                data.team_members && data.team_members.length
+                  ? data.team_members.map((m, i) => (
+                      <div key={i}>
+                        {m.name || "Unnamed"} <span className="text-muted-foreground">— {m.role || "—"}</span>
+                      </div>
+                    ))
+                  : "—",
+            },
+          ]}
+        />
+        <RecapSection
+          step={4}
+          title="Store requirements"
+          onEdit={onEdit}
+          rows={[
+            { label: "Store type", value: fmt(data.store_type) },
+            { label: "Products (est.)", value: fmt(data.product_count_estimate) },
+            { label: "Payment gateway", value: fmt(data.payment_gateway) },
+            { label: "Shipping", value: fmt(data.shipping_requirements) },
+            { label: "Special features", value: fmt(data.special_features) },
+          ]}
+        />
+        <RecapSection
+          step={5}
+          title="Contact"
+          onEdit={onEdit}
+          rows={[
+            { label: "Full name", value: fmt(data.full_name) },
+            { label: "Email", value: fmt(data.email) },
+            { label: "Phone", value: fmt(data.phone) },
+            { label: "WhatsApp", value: fmt(data.whatsapp) },
+            { label: "Address", value: fmt(data.business_address) },
+          ]}
+        />
+      </div>
+
+      <div className="pt-2">
+        <h3 className="text-sm font-semibold text-foreground">Plan & payment</h3>
+      </div>
+
       <Card className="border-border/60">
         <CardContent className="pt-5 space-y-2 text-sm">
           <div className="flex justify-between">
