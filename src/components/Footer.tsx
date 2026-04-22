@@ -5,9 +5,9 @@ const Footer = () => (
     <div className="container py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-lg font-bold font-display text-primary mb-3">🌳 Busistree</h3>
+          <h3 className="text-lg font-bold tracking-tight text-foreground mb-3">Busistry<span className="text-primary">.</span></h3>
           <p className="text-sm text-muted-foreground">
-            Launch your online store in minutes. No coding required.
+            A digital studio building brands, websites, and growth systems for ambitious businesses.
           </p>
         </div>
         <div>
@@ -30,7 +30,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Busistree. All rights reserved.
+        © {new Date().getFullYear()} Busistry. All rights reserved.
       </div>
     </div>
   </footer>
