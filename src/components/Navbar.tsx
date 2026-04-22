@@ -20,8 +20,8 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="text-xl font-bold font-display text-primary flex items-center gap-2">
-          🌳 Busistree
+        <Link to="/" className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
+          Busistry<span className="text-primary">.</span>
         </Link>
 
         {/* Desktop nav */}
