@@ -38,9 +38,13 @@ const AdminWebsiteOrders = () => {
   const { data: orders, isLoading } = useQuery({
     queryKey: ["admin_website_orders"],
     queryFn: async () => {
+      // Credentials columns (wordpress_url/username/password) are intentionally excluded.
+      // They are encrypted and only accessible via the manage-credentials edge function.
       const { data, error } = await supabase
         .from("website_orders")
-        .select("*, plans(name, type, price_pkr), templates(name, niche)")
+        .select(
+          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, plans(name, type, price_pkr), templates(name, niche)"
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
