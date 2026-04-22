@@ -91,6 +91,126 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_submissions: {
+        Row: {
+          admin_notes: string | null
+          amount: number | null
+          billing_cycle: string | null
+          business_address: string | null
+          business_description: string | null
+          business_name: string | null
+          business_type: string | null
+          color_palette: string | null
+          country: string | null
+          created_at: string
+          current_step: number
+          email: string | null
+          font_style: string | null
+          full_name: string | null
+          id: string
+          logo_url: string | null
+          needs_logo_design: boolean
+          payment_gateway: string | null
+          payment_method: string | null
+          phone: string | null
+          plan_id: string | null
+          product_count_estimate: number | null
+          reference_websites: string | null
+          screenshot_url: string | null
+          shipping_requirements: string | null
+          special_features: string | null
+          status: string
+          store_type: string | null
+          submitted_at: string | null
+          team_members: Json | null
+          team_roles: Json | null
+          team_size: number | null
+          terms_accepted: boolean
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount?: number | null
+          billing_cycle?: string | null
+          business_address?: string | null
+          business_description?: string | null
+          business_name?: string | null
+          business_type?: string | null
+          color_palette?: string | null
+          country?: string | null
+          created_at?: string
+          current_step?: number
+          email?: string | null
+          font_style?: string | null
+          full_name?: string | null
+          id?: string
+          logo_url?: string | null
+          needs_logo_design?: boolean
+          payment_gateway?: string | null
+          payment_method?: string | null
+          phone?: string | null
+          plan_id?: string | null
+          product_count_estimate?: number | null
+          reference_websites?: string | null
+          screenshot_url?: string | null
+          shipping_requirements?: string | null
+          special_features?: string | null
+          status?: string
+          store_type?: string | null
+          submitted_at?: string | null
+          team_members?: Json | null
+          team_roles?: Json | null
+          team_size?: number | null
+          terms_accepted?: boolean
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+          whatsapp?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number | null
+          billing_cycle?: string | null
+          business_address?: string | null
+          business_description?: string | null
+          business_name?: string | null
+          business_type?: string | null
+          color_palette?: string | null
+          country?: string | null
+          created_at?: string
+          current_step?: number
+          email?: string | null
+          font_style?: string | null
+          full_name?: string | null
+          id?: string
+          logo_url?: string | null
+          needs_logo_design?: boolean
+          payment_gateway?: string | null
+          payment_method?: string | null
+          phone?: string | null
+          plan_id?: string | null
+          product_count_estimate?: number | null
+          reference_websites?: string | null
+          screenshot_url?: string | null
+          shipping_requirements?: string | null
+          special_features?: string | null
+          status?: string
+          store_type?: string | null
+          submitted_at?: string | null
+          team_members?: Json | null
+          team_roles?: Json | null
+          team_size?: number | null
+          terms_accepted?: boolean
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
