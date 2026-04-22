@@ -5,7 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Upload, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Upload, Loader2, Pencil } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -16,9 +17,60 @@ import { OnboardingData } from "@/hooks/useOnboarding";
 interface Props {
   data: OnboardingData;
   update: (p: Partial<OnboardingData>) => void;
+  onEdit?: (step: number) => void;
 }
 
-const Step6Payment = ({ data, update }: Props) => {
+const fmt = (v: unknown): string => {
+  if (v === null || v === undefined || v === "") return "—";
+  if (typeof v === "boolean") return v ? "Yes" : "No";
+  if (Array.isArray(v)) return v.length ? v.join(", ") : "—";
+  return String(v);
+};
+
+const RecapSection = ({
+  step,
+  title,
+  rows,
+  onEdit,
+}: {
+  step: number;
+  title: string;
+  rows: { label: string; value: React.ReactNode }[];
+  onEdit?: (step: number) => void;
+}) => (
+  <div className="rounded-lg border border-border/60 bg-card/40">
+    <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/60">
+      <div className="flex items-center gap-2">
+        <span className="text-[11px] font-semibold text-muted-foreground tabular-nums">
+          0{step}
+        </span>
+        <h4 className="text-sm font-semibold text-foreground">{title}</h4>
+      </div>
+      {onEdit && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => onEdit(step)}
+          className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <Pencil className="h-3 w-3 mr-1.5" />
+          Edit
+        </Button>
+      )}
+    </div>
+    <dl className="divide-y divide-border/40">
+      {rows.map((r) => (
+        <div key={r.label} className="grid grid-cols-3 gap-3 px-4 py-2 text-sm">
+          <dt className="text-muted-foreground col-span-1">{r.label}</dt>
+          <dd className="text-foreground col-span-2 break-words">{r.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+);
+
+const Step6Payment = ({ data, update, onEdit }: Props) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
