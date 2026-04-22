@@ -182,7 +182,16 @@ const Onboarding = () => {
             {step === 3 && <Step3Team data={data} update={update} />}
             {step === 4 && <Step4Store data={data} update={update} />}
             {step === 5 && <Step5Contact data={data} update={update} />}
-            {step === 6 && <Step6Payment data={data} update={update} />}
+            {step === 6 && (
+              <Step6Payment
+                data={data}
+                update={update}
+                onEdit={(s) => {
+                  setStep(s);
+                  update({ current_step: s });
+                }}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
 
