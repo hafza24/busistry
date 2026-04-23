@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 export type OnboardingData = {
   id?: string;
   plan_id?: string | null;
+  template_id?: string | null;
 
   // Step 1 — Project type
   project_type?: string;
@@ -57,6 +58,7 @@ export type OnboardingData = {
 };
 
 const STORAGE_KEY = "busistry_onboarding_plan";
+const TEMPLATE_KEY = "busistry_onboarding_template";
 
 export const setPendingPlan = (planId: string) => {
   try { localStorage.setItem(STORAGE_KEY, planId); } catch {}
@@ -68,10 +70,21 @@ export const clearPendingPlan = () => {
   try { localStorage.removeItem(STORAGE_KEY); } catch {}
 };
 
-export const useOnboarding = (initialPlanId?: string | null) => {
+export const setPendingTemplate = (templateId: string) => {
+  try { localStorage.setItem(TEMPLATE_KEY, templateId); } catch {}
+};
+export const getPendingTemplate = () => {
+  try { return localStorage.getItem(TEMPLATE_KEY); } catch { return null; }
+};
+export const clearPendingTemplate = () => {
+  try { localStorage.removeItem(TEMPLATE_KEY); } catch {}
+};
+
+export const useOnboarding = (initialPlanId?: string | null, initialTemplateId?: string | null) => {
   const { user } = useAuth();
   const [data, setData] = useState<OnboardingData>({
     plan_id: initialPlanId ?? null,
+    template_id: initialTemplateId ?? null,
     needs_logo_design: false,
     terms_accepted: false,
     current_step: 1,
@@ -109,6 +122,7 @@ export const useOnboarding = (initialPlanId?: string | null) => {
             ? (row as any).project_details
             : {},
           plan_id: initialPlanId ?? row.plan_id,
+          template_id: initialTemplateId ?? (row as any).template_id ?? null,
           status: (row.status === "submitted" ? "submitted" : "draft") as "draft" | "submitted",
         }));
       } else {
@@ -118,20 +132,26 @@ export const useOnboarding = (initialPlanId?: string | null) => {
           .insert({
             user_id: user.id,
             plan_id: initialPlanId ?? null,
+            template_id: initialTemplateId ?? null,
             email: user.email ?? null,
             current_step: 1,
             status: "draft",
-          })
+          } as any)
           .select("*")
           .single();
         if (created && !cancelled) {
-          setData((d) => ({ ...d, id: created.id, plan_id: created.plan_id }));
+          setData((d) => ({
+            ...d,
+            id: created.id,
+            plan_id: created.plan_id,
+            template_id: (created as any).template_id ?? null,
+          }));
         }
       }
       if (!cancelled) setLoading(false);
     })();
     return () => { cancelled = true; };
-  }, [user, initialPlanId]);
+  }, [user, initialPlanId, initialTemplateId]);
 
   const update = (patch: Partial<OnboardingData>) => {
     setData((d) => ({ ...d, ...patch }));
@@ -168,7 +188,10 @@ export const useOnboarding = (initialPlanId?: string | null) => {
         submitted_at: new Date().toISOString(),
       })
       .eq("id", data.id);
-    if (!error) clearPendingPlan();
+    if (!error) {
+      clearPendingPlan();
+      clearPendingTemplate();
+    }
     return { error };
   };
 

@@ -127,6 +127,7 @@ export type Database = {
           team_members: Json | null
           team_roles: Json | null
           team_size: number | null
+          template_id: string | null
           terms_accepted: boolean
           transaction_id: string | null
           updated_at: string
@@ -168,6 +169,7 @@ export type Database = {
           team_members?: Json | null
           team_roles?: Json | null
           team_size?: number | null
+          template_id?: string | null
           terms_accepted?: boolean
           transaction_id?: string | null
           updated_at?: string
@@ -209,6 +211,7 @@ export type Database = {
           team_members?: Json | null
           team_roles?: Json | null
           team_size?: number | null
+          template_id?: string | null
           terms_accepted?: boolean
           transaction_id?: string | null
           updated_at?: string

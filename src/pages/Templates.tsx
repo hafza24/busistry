@@ -4,8 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Rocket, Loader2 } from "lucide-react";
+import { ExternalLink, Rocket, Loader2, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const Templates = () => {
   const [activeNiche, setActiveNiche] = useState("All");
@@ -26,13 +27,17 @@ const Templates = () => {
   const niches = ["All", ...Array.from(new Set(templates.map((t) => t.niche)))];
   const filtered = activeNiche === "All" ? templates : templates.filter((t) => t.niche === activeNiche);
 
+  const handleSelect = (id: string) => {
+    setPendingTemplate(id);
+  };
+
   return (
     <div className="py-16">
       <div className="container">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold font-display text-foreground mb-4">Store Templates</h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Browse stunning, ready-to-launch templates for every niche
+        <div className="text-center mb-12 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Choose your template</h1>
+          <p className="text-lg text-muted-foreground">
+            Pick a starting point. We'll customize it with your brand and launch it in 24–48 hours.
           </p>
         </div>
 
@@ -61,18 +66,18 @@ const Templates = () => {
             {filtered.map((t) => {
               const features = Array.isArray(t.features) ? (t.features as string[]) : [];
               return (
-                <Card key={t.id} className="group border-border/50 hover:shadow-lg hover:border-primary/20 transition-all flex flex-col">
+                <Card key={t.id} className="group border-border/50 hover:shadow-lg hover:border-primary/30 transition-all flex flex-col overflow-hidden">
                   {t.preview_image_url ? (
-                    <img src={t.preview_image_url} alt={t.name} className="h-44 w-full object-cover rounded-t-lg" />
+                    <img src={t.preview_image_url} alt={t.name} className="h-44 w-full object-cover" loading="lazy" />
                   ) : (
-                    <div className="h-44 bg-gradient-to-br from-primary/10 to-accent/10 rounded-t-lg flex items-center justify-center">
+                    <div className="h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                       <span className="text-4xl opacity-60">🖼️</span>
                     </div>
                   )}
                   <CardContent className="p-5 flex-1">
                     <Badge variant="secondary" className="mb-2">{t.niche}</Badge>
                     <h3 className="font-semibold font-display text-lg text-foreground">{t.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 mb-3">{t.description}</p>
+                    {t.description && <p className="text-sm text-muted-foreground mt-1 mb-3 line-clamp-2">{t.description}</p>}
                     <div className="flex flex-wrap gap-1">
                       {features.slice(0, 4).map((f) => (
                         <span key={f} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">{f}</span>
@@ -80,16 +85,20 @@ const Templates = () => {
                     </div>
                   </CardContent>
                   <CardFooter className="p-5 pt-0 gap-2">
-                    <Button size="sm" className="flex-1" asChild>
-                      <Link to="/dashboard">
-                        <Rocket className="h-3.5 w-3.5 mr-1" /> Order Now
+                    <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
+                      <Link to={`/onboarding?template=${t.id}`}>
+                        <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
                       </Link>
                     </Button>
-                    {t.demo_url && (
-                      <Button size="sm" variant="outline" asChild>
+                    {t.demo_url ? (
+                      <Button size="sm" variant="outline" asChild title="Preview demo">
                         <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-3.5 w-3.5" />
+                          <Eye className="h-3.5 w-3.5" />
                         </a>
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="outline" disabled title="No demo available">
+                        <Eye className="h-3.5 w-3.5" />
                       </Button>
                     )}
                   </CardFooter>
