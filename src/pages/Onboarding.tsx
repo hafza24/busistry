@@ -133,6 +133,7 @@ const Onboarding = () => {
       return;
     }
     clearPendingPlan();
+    clearPendingTemplate();
     setDone(true);
     setTimeout(() => navigate("/dashboard"), 2500);
   };
