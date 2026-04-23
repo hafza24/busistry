@@ -191,7 +191,11 @@ const Onboarding = () => {
                 {label}
               </span>
             ))}
-          </div>
+        </div>
+
+        <div className="mb-6">
+          <SelectedTemplateBanner templateId={data.template_id ?? templateId} />
+        </div>
         </div>
 
         <AnimatePresence mode="wait">
