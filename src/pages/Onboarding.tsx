@@ -1,13 +1,20 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useOnboarding, getPendingPlan, clearPendingPlan } from "@/hooks/useOnboarding";
+import {
+  useOnboarding,
+  getPendingPlan,
+  clearPendingPlan,
+  getPendingTemplate,
+  clearPendingTemplate,
+  setPendingPlan,
+  setPendingTemplate,
+} from "@/hooks/useOnboarding";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, ArrowRight, Check, Loader2, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
 
 import Step1ProjectType from "@/components/onboarding/Step1ProjectType";
 import Step2ProjectDetails from "@/components/onboarding/Step2ProjectDetails";
@@ -17,6 +24,7 @@ import Step5Team from "@/components/onboarding/Step3Team";
 import Step6Store from "@/components/onboarding/Step4Store";
 import Step7Contact from "@/components/onboarding/Step5Contact";
 import Step8Payment from "@/components/onboarding/Step6Payment";
+import SelectedTemplateBanner from "@/components/onboarding/SelectedTemplateBanner";
 
 const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Contact", "Confirm"];
 const TOTAL_STEPS = STEP_LABELS.length;
@@ -31,17 +39,31 @@ const Onboarding = () => {
     () => searchParams.get("plan") ?? getPendingPlan() ?? null,
     [searchParams]
   );
+  const templateId = useMemo(
+    () => searchParams.get("template") ?? getPendingTemplate() ?? null,
+    [searchParams]
+  );
 
-  const { data, update, loading, saving, submit } = useOnboarding(planId);
+  // Persist these in case the user has to sign in mid-flow
+  useEffect(() => {
+    if (planId) setPendingPlan(planId);
+    if (templateId) setPendingTemplate(templateId);
+  }, [planId, templateId]);
+
+  const { data, update, loading, saving, submit } = useOnboarding(planId, templateId);
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate(`/auth?redirect=${encodeURIComponent(`/onboarding${planId ? `?plan=${planId}` : ""}`)}`);
+      const params = new URLSearchParams();
+      if (planId) params.set("plan", planId);
+      if (templateId) params.set("template", templateId);
+      const qs = params.toString();
+      navigate(`/auth?redirect=${encodeURIComponent(`/onboarding${qs ? `?${qs}` : ""}`)}`);
     }
-  }, [user, authLoading, navigate, planId]);
+  }, [user, authLoading, navigate, planId, templateId]);
 
   useEffect(() => {
     if (!loading && data.current_step && data.current_step !== step) {
