@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 export type OnboardingData = {
   id?: string;
   plan_id?: string | null;
+  template_id?: string | null;
 
   // Step 1 — Project type
   project_type?: string;
