@@ -151,7 +151,7 @@ export const useOnboarding = (initialPlanId?: string | null, initialTemplateId?:
       if (!cancelled) setLoading(false);
     })();
     return () => { cancelled = true; };
-  }, [user, initialPlanId]);
+  }, [user, initialPlanId, initialTemplateId]);
 
   const update = (patch: Partial<OnboardingData>) => {
     setData((d) => ({ ...d, ...patch }));
@@ -188,7 +188,10 @@ export const useOnboarding = (initialPlanId?: string | null, initialTemplateId?:
         submitted_at: new Date().toISOString(),
       })
       .eq("id", data.id);
-    if (!error) clearPendingPlan();
+    if (!error) {
+      clearPendingPlan();
+      clearPendingTemplate();
+    }
     return { error };
   };
 
