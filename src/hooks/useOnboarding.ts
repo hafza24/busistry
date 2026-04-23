@@ -6,7 +6,13 @@ export type OnboardingData = {
   id?: string;
   plan_id?: string | null;
 
-  // Step 1
+  // Step 1 — Project type
+  project_type?: string;
+
+  // Step 2 — Conditional answers (depends on project_type)
+  project_details?: Record<string, any>;
+
+  // Step 3 — Business basics
   business_name?: string;
   business_type?: string;
   business_description?: string;
@@ -72,6 +78,7 @@ export const useOnboarding = (initialPlanId?: string | null) => {
     status: "draft",
     team_roles: [],
     team_members: [],
+    project_details: {},
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -98,6 +105,9 @@ export const useOnboarding = (initialPlanId?: string | null) => {
           ...(row as any),
           team_roles: Array.isArray(row.team_roles) ? (row.team_roles as string[]) : [],
           team_members: Array.isArray(row.team_members) ? (row.team_members as any[]) : [],
+          project_details: (row as any).project_details && typeof (row as any).project_details === "object"
+            ? (row as any).project_details
+            : {},
           plan_id: initialPlanId ?? row.plan_id,
           status: (row.status === "submitted" ? "submitted" : "draft") as "draft" | "submitted",
         }));
@@ -140,6 +150,7 @@ export const useOnboarding = (initialPlanId?: string | null) => {
           ...rest,
           team_roles: rest.team_roles ?? [],
           team_members: rest.team_members ?? [],
+          project_details: rest.project_details ?? {},
         } as any)
         .eq("id", id);
       setSaving(false);

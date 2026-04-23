@@ -9,14 +9,17 @@ import { ArrowLeft, ArrowRight, Check, Loader2, CheckCircle2 } from "lucide-reac
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 
-import Step1Business from "@/components/onboarding/Step1Business";
-import Step2Branding from "@/components/onboarding/Step2Branding";
-import Step3Team from "@/components/onboarding/Step3Team";
-import Step4Store from "@/components/onboarding/Step4Store";
-import Step5Contact from "@/components/onboarding/Step5Contact";
-import Step6Payment from "@/components/onboarding/Step6Payment";
+import Step1ProjectType from "@/components/onboarding/Step1ProjectType";
+import Step2ProjectDetails from "@/components/onboarding/Step2ProjectDetails";
+import Step3Business from "@/components/onboarding/Step1Business";
+import Step4Branding from "@/components/onboarding/Step2Branding";
+import Step5Team from "@/components/onboarding/Step3Team";
+import Step6Store from "@/components/onboarding/Step4Store";
+import Step7Contact from "@/components/onboarding/Step5Contact";
+import Step8Payment from "@/components/onboarding/Step6Payment";
 
-const STEP_LABELS = ["Business", "Branding", "Team", "Store", "Contact", "Confirm"];
+const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Contact", "Confirm"];
+const TOTAL_STEPS = STEP_LABELS.length;
 
 const Onboarding = () => {
   const { user, loading: authLoading } = useAuth();
@@ -24,7 +27,6 @@ const Onboarding = () => {
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
 
-  // Plan id: from URL ?plan=, or from saved pending plan
   const planId = useMemo(
     () => searchParams.get("plan") ?? getPendingPlan() ?? null,
     [searchParams]
@@ -35,39 +37,48 @@ const Onboarding = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
 
-  // Redirect to auth if not signed in
   useEffect(() => {
     if (!authLoading && !user) {
       navigate(`/auth?redirect=${encodeURIComponent(`/onboarding${planId ? `?plan=${planId}` : ""}`)}`);
     }
   }, [user, authLoading, navigate, planId]);
 
-  // Sync wizard step from saved draft
   useEffect(() => {
     if (!loading && data.current_step && data.current_step !== step) {
-      setStep(data.current_step);
+      setStep(Math.min(TOTAL_STEPS, data.current_step));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-  const canProceed = (s: number): boolean => {
-    switch (s) {
-      case 1:
-        return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
-      case 2:
-        return data.needs_logo_design || !!data.logo_url
-          ? !!data.font_style
-          : !!data.font_style;
-      case 3:
-        return true;
-      case 4:
-        return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
-      case 5:
-        return !!data.full_name && !!data.email && !!data.phone;
-      case 6:
-        return !!data.terms_accepted;
+  const detailsValid = (): boolean => {
+    const d = data.project_details ?? {};
+    switch (data.project_type) {
+      case "ecommerce":
+        return !!d.selling && d.num_products !== undefined && !!d.payment_gateway_setup && !!d.has_images;
+      case "agency":
+        return !!d.services_offered && d.num_pages !== undefined && !!d.portfolio;
+      case "booking":
+        return !!d.booking_type && !!d.time_slots && !!d.booking_payment;
+      case "business":
+        return !!d.business_subtype && Array.isArray(d.pages) && d.pages.length > 0 && !!d.contact_method;
+      case "management":
+        return !!d.system_type && !!d.user_roles_text && !!d.complexity;
       default:
         return false;
+    }
+  };
+
+  const canProceed = (s: number): boolean => {
+    switch (s) {
+      case 1: return !!data.project_type;
+      case 2: return detailsValid();
+      case 3: return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
+      case 4: return !!data.font_style;
+      case 5: return true;
+      case 6: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
+      case 7: return !!data.full_name && !!data.email && !!data.phone;
+      case 8: return !!data.terms_accepted;
+      default: return false;
     }
   };
 
@@ -76,7 +87,7 @@ const Onboarding = () => {
       toast({ title: "Please complete this step", description: "Fill in the required fields to continue.", variant: "destructive" });
       return;
     }
-    const next = Math.min(6, step + 1);
+    const next = Math.min(TOTAL_STEPS, step + 1);
     setStep(next);
     update({ current_step: next });
   };
@@ -88,7 +99,7 @@ const Onboarding = () => {
   };
 
   const handleSubmit = async () => {
-    if (!canProceed(6)) {
+    if (!canProceed(TOTAL_STEPS)) {
       toast({ title: "Please accept the terms", variant: "destructive" });
       return;
     }
@@ -134,41 +145,32 @@ const Onboarding = () => {
     );
   }
 
-  const progressValue = ((step - 1) / 5) * 100;
+  const progressValue = ((step - 1) / (TOTAL_STEPS - 1)) * 100;
 
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto px-4 py-8 md:py-14">
-        {/* Header */}
         <div className="mb-8 space-y-3">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Step {step} of 6 — {STEP_LABELS[step - 1]}</span>
+            <span>Step {step} of {TOTAL_STEPS} — {STEP_LABELS[step - 1]}</span>
             <span className="flex items-center gap-1.5">
               {saving ? (
-                <>
-                  <Loader2 className="h-3 w-3 animate-spin" /> Saving…
-                </>
+                <><Loader2 className="h-3 w-3 animate-spin" /> Saving…</>
               ) : (
-                <>
-                  <Check className="h-3 w-3" /> Auto-saved
-                </>
+                <><Check className="h-3 w-3" /> Auto-saved</>
               )}
             </span>
           </div>
           <Progress value={progressValue} className="h-1.5" />
           <div className="hidden md:flex justify-between text-[11px] text-muted-foreground">
             {STEP_LABELS.map((label, i) => (
-              <span
-                key={label}
-                className={`${i + 1 <= step ? "text-foreground font-medium" : ""}`}
-              >
+              <span key={label} className={`${i + 1 <= step ? "text-foreground font-medium" : ""}`}>
                 {label}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Step content */}
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -177,13 +179,15 @@ const Onboarding = () => {
             exit={{ opacity: 0, x: -12 }}
             transition={{ duration: 0.18 }}
           >
-            {step === 1 && <Step1Business data={data} update={update} />}
-            {step === 2 && <Step2Branding data={data} update={update} />}
-            {step === 3 && <Step3Team data={data} update={update} />}
-            {step === 4 && <Step4Store data={data} update={update} />}
-            {step === 5 && <Step5Contact data={data} update={update} />}
-            {step === 6 && (
-              <Step6Payment
+            {step === 1 && <Step1ProjectType data={data} update={update} />}
+            {step === 2 && <Step2ProjectDetails data={data} update={update} />}
+            {step === 3 && <Step3Business data={data} update={update} />}
+            {step === 4 && <Step4Branding data={data} update={update} />}
+            {step === 5 && <Step5Team data={data} update={update} />}
+            {step === 6 && <Step6Store data={data} update={update} />}
+            {step === 7 && <Step7Contact data={data} update={update} />}
+            {step === 8 && (
+              <Step8Payment
                 data={data}
                 update={update}
                 onEdit={(s) => {
@@ -195,13 +199,12 @@ const Onboarding = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Nav buttons */}
         <div className="flex items-center justify-between mt-10 pt-6 border-t border-border">
           <Button variant="ghost" onClick={step === 1 ? () => navigate("/pricing") : goBack}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             {step === 1 ? "Back to pricing" : "Back"}
           </Button>
-          {step < 6 ? (
+          {step < TOTAL_STEPS ? (
             <Button onClick={goNext}>
               Next <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
