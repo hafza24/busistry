@@ -115,6 +115,8 @@ export type Database = {
           phone: string | null
           plan_id: string | null
           product_count_estimate: number | null
+          project_details: Json
+          project_type: string | null
           reference_websites: string | null
           screenshot_url: string | null
           shipping_requirements: string | null
@@ -154,6 +156,8 @@ export type Database = {
           phone?: string | null
           plan_id?: string | null
           product_count_estimate?: number | null
+          project_details?: Json
+          project_type?: string | null
           reference_websites?: string | null
           screenshot_url?: string | null
           shipping_requirements?: string | null
@@ -193,6 +197,8 @@ export type Database = {
           phone?: string | null
           plan_id?: string | null
           product_count_estimate?: number | null
+          project_details?: Json
+          project_type?: string | null
           reference_websites?: string | null
           screenshot_url?: string | null
           shipping_requirements?: string | null
