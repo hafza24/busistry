@@ -27,6 +27,53 @@ const fmt = (v: unknown): string => {
   return String(v);
 };
 
+const PROJECT_TYPE_LABELS: Record<string, string> = {
+  ecommerce: "eCommerce Store",
+  agency: "Agency Website",
+  booking: "Booking System",
+  business: "Business Website",
+  management: "Management System",
+};
+
+const projectDetailRows = (type: string | undefined, d: Record<string, any>) => {
+  if (!type) return [];
+  switch (type) {
+    case "ecommerce":
+      return [
+        { label: "Selling", value: fmt(d.selling) },
+        { label: "Products", value: fmt(d.num_products) },
+        { label: "Payment gateway setup", value: fmt(d.payment_gateway_setup) },
+        { label: "Has product images", value: fmt(d.has_images) },
+      ];
+    case "agency":
+      return [
+        { label: "Services offered", value: fmt(d.services_offered) },
+        { label: "Pages", value: fmt(d.num_pages) },
+        { label: "Portfolio section", value: fmt(d.portfolio) },
+      ];
+    case "booking":
+      return [
+        { label: "Booking type", value: fmt(d.booking_type) },
+        { label: "Time slots", value: fmt(d.time_slots) },
+        { label: "Payment at booking", value: fmt(d.booking_payment) },
+      ];
+    case "business":
+      return [
+        { label: "Business type", value: fmt(d.business_subtype) },
+        { label: "Pages", value: fmt(d.pages) },
+        { label: "Contact method", value: fmt(d.contact_method) },
+      ];
+    case "management":
+      return [
+        { label: "System type", value: fmt(d.system_type) },
+        { label: "User roles", value: fmt(d.user_roles_text) },
+        { label: "Complexity", value: fmt(d.complexity) },
+      ];
+    default:
+      return [];
+  }
+};
+
 const RecapSection = ({
   step,
   title,
@@ -111,6 +158,20 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       <div className="space-y-3">
         <RecapSection
           step={1}
+          title="Project type"
+          onEdit={onEdit}
+          rows={[
+            { label: "Type", value: data.project_type ? PROJECT_TYPE_LABELS[data.project_type] ?? data.project_type : "—" },
+          ]}
+        />
+        <RecapSection
+          step={2}
+          title="Project details"
+          onEdit={onEdit}
+          rows={projectDetailRows(data.project_type, data.project_details ?? {})}
+        />
+        <RecapSection
+          step={3}
           title="Business basics"
           onEdit={onEdit}
           rows={[
@@ -121,7 +182,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           ]}
         />
         <RecapSection
-          step={2}
+          step={4}
           title="Branding & design"
           onEdit={onEdit}
           rows={[
@@ -143,7 +204,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           ]}
         />
         <RecapSection
-          step={3}
+          step={5}
           title="Team"
           onEdit={onEdit}
           rows={[
@@ -163,7 +224,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           ]}
         />
         <RecapSection
-          step={4}
+          step={6}
           title="Store requirements"
           onEdit={onEdit}
           rows={[
@@ -175,7 +236,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           ]}
         />
         <RecapSection
-          step={5}
+          step={7}
           title="Contact"
           onEdit={onEdit}
           rows={[
