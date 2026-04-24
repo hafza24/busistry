@@ -243,6 +243,29 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
         />
         <RecapSection
           step={7}
+          title="Add-ons"
+          onEdit={onEdit}
+          rows={
+            selections.length > 0
+              ? selections.map((s) => ({
+                  label: s.addon?.name ?? "Add-on",
+                  value: (
+                    <span className="tabular-nums">
+                      PKR {(s.price_snapshot_pkr * (s.quantity ?? 1)).toLocaleString()}
+                      {s.pricing_type_snapshot === "monthly" && (
+                        <span className="text-muted-foreground"> / mo</span>
+                      )}
+                      {s.quantity > 1 && (
+                        <span className="text-muted-foreground text-xs ml-1">×{s.quantity}</span>
+                      )}
+                    </span>
+                  ),
+                }))
+              : [{ label: "Selected", value: "None — you can add these later" }]
+          }
+        />
+        <RecapSection
+          step={8}
           title="Contact"
           onEdit={onEdit}
           rows={[
@@ -256,29 +279,58 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       </div>
 
       <div className="pt-2">
-        <h3 className="text-sm font-semibold text-foreground">Plan & payment</h3>
+        <h3 className="text-sm font-semibold text-foreground">Order summary</h3>
       </div>
 
       <Card className="border-border/60">
         <CardContent className="pt-5 space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Plan</span>
-            <span className="font-medium text-foreground">{plan?.name ?? "—"}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Type</span>
-            <span className="capitalize text-foreground">{plan?.type ?? "—"}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Price</span>
-            <span className="font-semibold text-foreground">
-              {isFree ? "Free" : plan ? `PKR ${plan.price_pkr.toLocaleString()}` : "—"}
+            <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
+            <span className="font-medium text-foreground tabular-nums">
+              {isFree ? "Free" : plan ? `PKR ${planPrice.toLocaleString()}` : "—"}
             </span>
           </div>
+
+          {selections.length > 0 && (
+            <div className="border-t border-border/50 pt-2 mt-2 space-y-1.5">
+              <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
+                Add-ons
+              </div>
+              {selections.map((s) => (
+                <div key={s.addon_id} className="flex justify-between text-sm">
+                  <span className="text-foreground">
+                    {s.addon?.name ?? "Add-on"}
+                    {s.quantity > 1 && (
+                      <span className="text-muted-foreground"> × {s.quantity}</span>
+                    )}
+                  </span>
+                  <span className="tabular-nums text-foreground">
+                    PKR {(s.price_snapshot_pkr * (s.quantity ?? 1)).toLocaleString()}
+                    {s.pricing_type_snapshot === "monthly" && (
+                      <span className="text-muted-foreground text-xs"> / mo</span>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="border-t border-border/50 pt-3 mt-2 flex justify-between items-baseline">
+            <span className="font-semibold text-foreground">Total today</span>
+            <span className="text-lg font-bold text-primary tabular-nums">
+              PKR {grandToday.toLocaleString()}
+            </span>
+          </div>
+          {addonTotals.monthly > 0 && (
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Recurring monthly</span>
+              <span className="tabular-nums">PKR {addonTotals.monthly.toLocaleString()} / mo</span>
+            </div>
+          )}
           {plan?.duration_days && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Duration</span>
-              <span className="text-foreground">{plan.duration_days} days</span>
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Plan duration</span>
+              <span>{plan.duration_days} days</span>
             </div>
           )}
         </CardContent>
