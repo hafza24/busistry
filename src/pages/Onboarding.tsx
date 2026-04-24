@@ -22,11 +22,12 @@ import Step3Business from "@/components/onboarding/Step1Business";
 import Step4Branding from "@/components/onboarding/Step2Branding";
 import Step5Team from "@/components/onboarding/Step3Team";
 import Step6Store from "@/components/onboarding/Step4Store";
-import Step7Contact from "@/components/onboarding/Step5Contact";
-import Step8Payment from "@/components/onboarding/Step6Payment";
+import StepAddons from "@/components/onboarding/StepAddons";
+import Step8Contact from "@/components/onboarding/Step5Contact";
+import Step9Payment from "@/components/onboarding/Step6Payment";
 import SelectedTemplateBanner from "@/components/onboarding/SelectedTemplateBanner";
 
-const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Contact", "Confirm"];
+const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Enhance", "Contact", "Confirm"];
 const TOTAL_STEPS = STEP_LABELS.length;
 
 const Onboarding = () => {
@@ -98,8 +99,9 @@ const Onboarding = () => {
       case 4: return !!data.font_style;
       case 5: return true;
       case 6: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
-      case 7: return !!data.full_name && !!data.email && !!data.phone;
-      case 8: return !!data.terms_accepted;
+      case 7: return true; // Add-ons step is always optional
+      case 8: return !!data.full_name && !!data.email && !!data.phone;
+      case 9: return !!data.terms_accepted;
       default: return false;
     }
   };
@@ -212,9 +214,10 @@ const Onboarding = () => {
             {step === 4 && <Step4Branding data={data} update={update} />}
             {step === 5 && <Step5Team data={data} update={update} />}
             {step === 6 && <Step6Store data={data} update={update} />}
-            {step === 7 && <Step7Contact data={data} update={update} />}
-            {step === 8 && (
-              <Step8Payment
+            {step === 7 && <StepAddons data={data} update={update} />}
+            {step === 8 && <Step8Contact data={data} update={update} />}
+            {step === 9 && (
+              <Step9Payment
                 data={data}
                 update={update}
                 onEdit={(s) => {

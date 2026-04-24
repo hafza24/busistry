@@ -14,6 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
+      addons: {
+        Row: {
+          applicable_plans: Json
+          created_at: string
+          dependencies: Json
+          description: string | null
+          icon: string | null
+          id: string
+          is_enabled: boolean
+          is_popular: boolean
+          is_recommended: boolean
+          name: string
+          per_unit_label: string | null
+          price_pkr: number
+          pricing_type: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          applicable_plans?: Json
+          created_at?: string
+          dependencies?: Json
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          is_recommended?: boolean
+          name: string
+          per_unit_label?: string | null
+          price_pkr?: number
+          pricing_type?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          applicable_plans?: Json
+          created_at?: string
+          dependencies?: Json
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          is_recommended?: boolean
+          name?: string
+          per_unit_label?: string | null
+          price_pkr?: number
+          pricing_type?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string
@@ -90,6 +144,51 @@ export type Database = {
           video_url?: string | null
         }
         Relationships: []
+      }
+      onboarding_addons: {
+        Row: {
+          addon_id: string
+          created_at: string
+          id: string
+          price_snapshot_pkr: number
+          pricing_type_snapshot: string
+          quantity: number
+          submission_id: string
+        }
+        Insert: {
+          addon_id: string
+          created_at?: string
+          id?: string
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: string
+          quantity?: number
+          submission_id: string
+        }
+        Update: {
+          addon_id?: string
+          created_at?: string
+          id?: string
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: string
+          quantity?: number
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "onboarding_addons_addon_id_fkey"
+            columns: ["addon_id"]
+            isOneToOne: false
+            referencedRelation: "addons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "onboarding_addons_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "onboarding_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       onboarding_submissions: {
         Row: {
