@@ -389,7 +389,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                 type="number"
                 value={data.amount ?? ""}
                 onChange={(e) => update({ amount: e.target.value ? Number(e.target.value) : undefined })}
-                placeholder={plan?.price_pkr?.toString()}
+                placeholder={grandToday ? grandToday.toString() : plan?.price_pkr?.toString()}
               />
             </div>
           </div>
