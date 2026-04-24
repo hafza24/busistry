@@ -9,6 +9,7 @@ import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
+import AdminAddonManagement from "@/components/admin/AdminAddonManagement";
 
 const viewTitles: Record<string, string> = {
   orders: "Website Orders",
@@ -16,6 +17,7 @@ const viewTitles: Record<string, string> = {
   users: "User Management",
   templates: "Template Management",
   plans: "Plan Management",
+  addons: "Add-on Management",
 };
 
 const AdminDashboard = () => {
@@ -44,6 +46,7 @@ const AdminDashboard = () => {
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
       case "plans": return <AdminPlanManagement />;
+      case "addons": return <AdminAddonManagement />;
       default: return <AdminWebsiteOrders />;
     }
   };
