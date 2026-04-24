@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
+import { useSubmissionAddons, calcAddonTotals } from "@/hooks/useAddons";
 
 interface Props {
   data: OnboardingData;
@@ -131,6 +132,11 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
     },
     enabled: !!data.plan_id,
   });
+
+  const { data: selections = [] } = useSubmissionAddons(data.id);
+  const addonTotals = calcAddonTotals(selections);
+  const planPrice = plan?.price_pkr ?? 0;
+  const grandToday = planPrice + addonTotals.oneTime;
 
   const isFree = plan?.type === "free" || plan?.price_pkr === 0;
 
