@@ -10,6 +10,10 @@ import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 import AdminAddonManagement from "@/components/admin/AdminAddonManagement";
+import AdminWebsiteProducts from "@/components/admin/AdminWebsiteProducts";
+import AdminIntegrations from "@/components/admin/AdminIntegrations";
+import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
+import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
 
 const viewTitles: Record<string, string> = {
   orders: "Website Orders",
@@ -17,7 +21,11 @@ const viewTitles: Record<string, string> = {
   users: "User Management",
   templates: "Template Management",
   plans: "Plan Management",
-  addons: "Add-on Management",
+  addons: "Add-on Management (Legacy)",
+  website_products: "Website Products",
+  integrations: "Integrations",
+  store_addons: "Add-on Orders",
+  upgrades: "Upgrade Orders",
 };
 
 const AdminDashboard = () => {
