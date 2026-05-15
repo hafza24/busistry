@@ -66,6 +66,9 @@ const StoreDashboard = () => {
       case "products": return <ProductManager storeId={store.id} />;
       case "categories": return <CategoryManager storeId={store.id} />;
       case "orders": return <OrderManager storeId={store.id} />;
+      case "marketplace": return <MarketplaceBrowser storeId={store.id} />;
+      case "addons": return <MyAddons storeId={store.id} />;
+      case "upgrade": return <UpgradePlan storeId={store.id} />;
       case "settings": return <StoreSettingsEditor storeId={store.id} />;
       default: return <StoreOverview storeId={store.id} />;
     }
