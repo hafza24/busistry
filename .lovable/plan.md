@@ -1,100 +1,129 @@
+## Goal
 
-# Busistree SaaS Platform — Implementation Plan
+Expand Busistry's catalog from a single "Website" product into **three distinct product types**, gate add-ons behind owning a website, and add an **Upgrade / Limit Increase** order flow.
 
-## Phase 1: Foundation & Public Website
+---
 
-### Database Setup (Supabase via Lovable Cloud)
-- **profiles** table (name, phone, avatar)
-- **user_roles** table (admin, user) with secure role-checking function
-- **templates** table (name, niche, description, preview_images, demo_url, features, available_plans)
-- **plans** table (name, type: free/rent/buy, price_pkr, max_products, max_categories, duration_days, features)
-- **store_requests** table (user_id, store_name, template_id, plan_id, status, payment_method, transaction_id, amount, screenshot_url, created_at)
-- **stores** table (user_id, name, subdomain_slug, template_id, plan_id, status, activated_at, expires_at, product_count, category_count)
-- **product_packs** table (name, niche, product_count, price_pkr, description)
-- **learning_articles** table (title, content, category, video_url)
-- Storage bucket for payment screenshots
+## 1. Three product types
 
-### Authentication
-- Email/password signup & login
-- Google OAuth sign-in
-- Auto-create profile on signup
-- Admin role assigned manually via database
+### A. Website (main product) — already exists
+- Bought via Templates → Onboarding → Plan + Add-ons.
+- Prerequisite for everything else. User must own at least one **active website** before they can buy B or C.
 
-### Public Website Pages
-- **Homepage** — Hero section ("Launch Your Online Store in Minutes"), How It Works steps, template showcase, pricing cards, success stories, CTA
-- **Browse Templates** — Grid of templates filtered by niche (Clothing, Perfume, Jewelry, Electronics, Bakery, Cosmetics, Digital), each with preview images, features, demo link, and "Launch Store" button
-- **Pricing** — Three sections: Free, Rent (Starter/Business/Pro), Buy (Basic/Advanced/Premium) with PKR pricing and feature comparison
-- **How It Works** — Step-by-step visual guide
-- **Contact** — Contact form
-- **Login / Register** — Auth pages
+### B. Page / Section / Popup add-ons (per-website)
+A new catalog of installable building blocks the user attaches to an existing website:
+- **Pages** — e.g. About, Services, Pricing, Blog, Portfolio
+- **Sections** — e.g. Testimonials, FAQ, Hero variants, Pricing table, Stats counter
+- **Popups** — e.g. Newsletter signup, Exit-intent discount, Cookie consent, Promo banner
 
-## Phase 2: User Dashboard
+Each item has: name, type (page/section/popup), description, **preview image + live demo URL**, price (PKR, one-time), category, applicable templates, enabled flag.
 
-### My Stores Section
-- List of user's stores with: store name, plan, status badge, expiry date, manage button
-- Store request tracking with status pipeline: Pending → Under Review → Approved → Rejected → Activated
+Browsing UX: marketplace grid filterable by type with preview modal (image + iframe demo + "Add to my website" CTA → checkout).
 
-### Store Request Flow
-1. User picks template → selects plan → enters store name
-2. If paid plan: shown payment details (Easypaisa/JazzCash/NayaPay/Raast — Hafza Azam, 03157224340)
-3. User fills payment confirmation form: name, email, store name, template, plan, payment method, transaction ID, amount, screenshot upload
-4. Request submitted with "Pending" status
+### C. Integrations (per-website)
+Plug-ins the team configures on the user's WordPress site:
+- WhatsApp chat button
+- Mailbox / contact form to inbox
+- Google Analytics, Meta Pixel, Mailchimp, Instagram feed, Live chat, etc.
 
-### Store Management
-- View store details
-- Submit renewal payment (for rent plans)
-- Request plan upgrade
-- Contact support
+Each integration has: name, description, icon, price (one-time setup or monthly), required credentials schema (jsonb — e.g. WhatsApp number, SMTP host), enabled flag.
 
-## Phase 3: Admin Dashboard
+---
 
-### Payment Requests Management
-- Table view: user, store name, template, plan, payment method, transaction ID, amount, screenshot preview, status
-- Actions: Approve, Reject, Request More Info
-- On approval: store status changes to "Activated", expiry date set, user notified
+## 2. Upgrade / Limit Increase flow
 
-### Store Management
-- View all stores with status, plan, expiry
-- Suspend/reactivate stores
-- Modify product/category limits
-- Delete inactive stores
+A new **"Upgrade Plan"** section in the user dashboard (and per-store page) where the user can place an order to:
+- **Upgrade plan tier** (Free → Rent → Buy, or higher tier)
+- **Increase product limit** (+50, +100, +500 products)
+- **Increase category limit** (+5, +10)
+- **Extend hosting** (renew duration_days)
 
-### User Management
-- View all registered users
-- View user's stores and requests
+Each option has a price. Submitting creates an `upgrade_order` (manual payment via JazzCash/Easypaisa screenshot, same flow as website orders). Admin approves → store limits/plan/expiry updated.
 
-### Template Management
-- Add/edit/delete templates
-- Assign niches and available plans
+---
 
-### Plan & Settings Management
-- Edit plan pricing, limits, features
-- Configure product pack pricing
-- Platform-wide settings
+## 3. Database changes (new migration)
 
-## Phase 4: Growth Features
+```text
+website_products            -- catalog for B (pages/sections/popups)
+  id, type ('page'|'section'|'popup'), name, slug, description,
+  price_pkr, preview_image_url, demo_url, category, 
+  applicable_templates jsonb, is_enabled, sort_order
 
-### Product Packs Marketplace
-- Browse pre-loaded product packs by niche (Perfume, Cosmetics, Fashion, Bakery)
-- Purchase packs as add-ons (Basic 2000 PKR, Premium 5000 PKR)
+integrations                -- catalog for C
+  id, name, slug, description, icon, price_pkr,
+  pricing_type ('one_time'|'monthly'), credential_schema jsonb,
+  is_enabled, sort_order
 
-### Store Setup Assistance
-- Paid setup services (Basic 5000 PKR, Advanced 10000 PKR)
-- Request form with service selection
+store_addons                -- junction: which B/C items a store has
+  id, store_id, item_type ('product'|'integration'),
+  item_id, status ('pending'|'active'), 
+  price_snapshot_pkr, config jsonb, created_at
 
-### Business Learning Center
-- Articles and guides organized by topic: pricing, suppliers, promotion, photography, social media marketing
-- Video tutorial embeds
+upgrade_orders              -- C: upgrade/limit orders
+  id, user_id, store_id, upgrade_type
+  ('plan_change'|'product_limit'|'category_limit'|'extend_duration'),
+  details jsonb (target_plan_id, qty, etc.),
+  amount, payment_method, transaction_id, screenshot_url,
+  status ('pending'|'approved'|'rejected'), admin_notes,
+  created_at, updated_at
+```
 
-## Design Direction
-- Clean, modern SaaS aesthetic
-- Brand colors: Green/teal primary (growth/business), white backgrounds
-- Mobile-responsive throughout
-- PKR currency formatting everywhere
-- Urdu-friendly layout considerations (LTR but with Pakistani context)
+RLS: public SELECT on enabled catalog rows; users manage their own `store_addons` / `upgrade_orders` via store ownership; admins full access.
 
-## Technical Notes
-- Store "activation" will update the database record (actual WordPress deployment would be a separate external process)
-- Email notifications via Lovable Cloud transactional emails
-- File uploads for payment screenshots via Supabase Storage
-- RLS policies ensuring users only see their own data, admins see everything
+---
+
+## 4. UI work
+
+**User-facing (Store Dashboard `/store/:id`)** — new sidebar items:
+- **Marketplace → Pages / Sections / Popups** (browse + preview + buy)
+- **Marketplace → Integrations** (browse + buy + provide credentials)
+- **My Add-ons** (list of installed B/C items + status)
+- **Upgrade Plan** (4 cards: change plan, +products, +categories, +duration → checkout form)
+
+Public **Marketplace page** `/marketplace` for browsing pages/sections/popups/integrations (gated CTA: "Sign in & select a store to install").
+
+**Admin (`/admin`)** — new sidebar items:
+- **Website Products** (CRUD pages/sections/popups + upload preview images)
+- **Integrations** (CRUD + credential schema editor)
+- **Upgrade Orders** (approve/reject, on approve auto-update store plan/limits/expiry)
+- **Store Add-ons** (mark `pending` → `active` after install)
+
+---
+
+## 5. Files to create / edit
+
+**New**
+- `supabase/migrations/<ts>_marketplace_and_upgrades.sql`
+- `src/hooks/useWebsiteProducts.ts`, `useIntegrations.ts`, `useStoreAddons.ts`, `useUpgradeOrders.ts`
+- `src/pages/Marketplace.tsx` (public)
+- `src/components/store/MarketplaceBrowser.tsx` (in store dashboard)
+- `src/components/store/MyAddons.tsx`
+- `src/components/store/UpgradePlan.tsx`
+- `src/components/admin/AdminWebsiteProducts.tsx`
+- `src/components/admin/AdminIntegrations.tsx`
+- `src/components/admin/AdminUpgradeOrders.tsx`
+- `src/components/marketplace/PreviewModal.tsx`
+
+**Edit**
+- `src/App.tsx` — add `/marketplace` route
+- `src/pages/StoreDashboard.tsx` + `StoreDashboardSidebar.tsx` — new tabs
+- `src/pages/AdminDashboard.tsx` + `AdminSidebar.tsx` — new tabs
+- `src/components/Navbar.tsx` — add Marketplace link
+
+---
+
+## 6. Out of scope (clarify later if needed)
+- Auto-installation of pages/integrations onto WordPress (manual fulfillment by admin team for now — same 24–48h promise).
+- Per-integration recurring billing automation (recurring shown but charged manually each cycle).
+- Refunds / partial cancellations of add-ons.
+
+---
+
+## Open questions
+
+1. **Preview demo URL** for pages/sections/popups — should I allow both an iframe demo URL **and** a static image, or image only for v1? (iframe gives "real" preview but needs CORS-friendly hosts).
+2. **Upgrade pricing** — should the price be a fixed per-unit value the admin sets (e.g. "+50 products = PKR 1500"), or computed from a formula? Recommend admin-managed fixed tiers in a `upgrade_options` table.
+3. **Marketplace gating** — public browse + login-to-buy, or fully behind auth? Recommend public browse for SEO/conversion.
+
+I'll proceed with the recommendations above unless you say otherwise.

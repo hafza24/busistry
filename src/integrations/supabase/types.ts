@@ -115,6 +115,57 @@ export type Database = {
           },
         ]
       }
+      integrations: {
+        Row: {
+          category: string | null
+          created_at: string
+          credential_schema: Json
+          description: string | null
+          icon: string | null
+          id: string
+          is_enabled: boolean
+          is_popular: boolean
+          name: string
+          price_pkr: number
+          pricing_type: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          credential_schema?: Json
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          name: string
+          price_pkr?: number
+          pricing_type?: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          credential_schema?: Json
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          name?: string
+          price_pkr?: number
+          pricing_type?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       learning_articles: {
         Row: {
           category: string
@@ -591,6 +642,60 @@ export type Database = {
         }
         Relationships: []
       }
+      store_addons: {
+        Row: {
+          admin_notes: string | null
+          config: Json
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          payment_method: string | null
+          price_snapshot_pkr: number
+          pricing_type_snapshot: string
+          screenshot_url: string | null
+          status: string
+          store_id: string
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          payment_method?: string | null
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: string
+          screenshot_url?: string | null
+          status?: string
+          store_id: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          payment_method?: string | null
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: string
+          screenshot_url?: string | null
+          status?: string
+          store_id?: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       store_requests: {
         Row: {
           admin_notes: string | null
@@ -806,6 +911,87 @@ export type Database = {
         }
         Relationships: []
       }
+      upgrade_options: {
+        Row: {
+          created_at: string
+          id: string
+          is_enabled: boolean
+          label: string
+          price_pkr: number
+          quantity: number
+          sort_order: number
+          upgrade_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          label: string
+          price_pkr?: number
+          quantity?: number
+          sort_order?: number
+          upgrade_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          label?: string
+          price_pkr?: number
+          quantity?: number
+          sort_order?: number
+          upgrade_type?: string
+        }
+        Relationships: []
+      }
+      upgrade_orders: {
+        Row: {
+          admin_notes: string | null
+          amount: number
+          created_at: string
+          details: Json
+          id: string
+          payment_method: string | null
+          screenshot_url: string | null
+          status: string
+          store_id: string
+          transaction_id: string | null
+          updated_at: string
+          upgrade_type: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount?: number
+          created_at?: string
+          details?: Json
+          id?: string
+          payment_method?: string | null
+          screenshot_url?: string | null
+          status?: string
+          store_id: string
+          transaction_id?: string | null
+          updated_at?: string
+          upgrade_type: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number
+          created_at?: string
+          details?: Json
+          id?: string
+          payment_method?: string | null
+          screenshot_url?: string | null
+          status?: string
+          store_id?: string
+          transaction_id?: string | null
+          updated_at?: string
+          upgrade_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -905,6 +1091,60 @@ export type Database = {
           wordpress_password?: string | null
           wordpress_url?: string | null
           wordpress_username?: string | null
+        }
+        Relationships: []
+      }
+      website_products: {
+        Row: {
+          applicable_templates: Json
+          category: string | null
+          created_at: string
+          demo_url: string | null
+          description: string | null
+          id: string
+          is_enabled: boolean
+          is_popular: boolean
+          name: string
+          preview_image_url: string | null
+          price_pkr: number
+          slug: string
+          sort_order: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          applicable_templates?: Json
+          category?: string | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          name: string
+          preview_image_url?: string | null
+          price_pkr?: number
+          slug: string
+          sort_order?: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          applicable_templates?: Json
+          category?: string | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          name?: string
+          preview_image_url?: string | null
+          price_pkr?: number
+          slug?: string
+          sort_order?: number
+          type?: string
+          updated_at?: string
         }
         Relationships: []
       }
