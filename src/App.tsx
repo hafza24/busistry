@@ -10,10 +10,12 @@ import Templates from "./pages/Templates";
 import Pricing from "./pages/Pricing";
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
+import Marketplace from "./pages/Marketplace";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Onboarding from "./pages/Onboarding";
 import AdminDashboard from "./pages/AdminDashboard";
+import StoreDashboard from "./pages/StoreDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,12 +32,14 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/templates" element={<Templates />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/contact" element={<Contact />} />
             </Route>
             <Route path="/auth" element={<Auth />} />
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/store/:storeId" element={<StoreDashboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -11,12 +11,18 @@ import ProductManager from "@/components/store/ProductManager";
 import CategoryManager from "@/components/store/CategoryManager";
 import OrderManager from "@/components/store/OrderManager";
 import StoreSettingsEditor from "@/components/store/StoreSettingsEditor";
+import MarketplaceBrowser from "@/components/store/MarketplaceBrowser";
+import MyAddons from "@/components/store/MyAddons";
+import UpgradePlan from "@/components/store/UpgradePlan";
 
 const viewTitles: Record<string, string> = {
   overview: "Overview",
   products: "Products",
   categories: "Categories",
   orders: "Orders",
+  marketplace: "Marketplace",
+  addons: "My Add-ons",
+  upgrade: "Upgrade Plan",
   settings: "Site Settings",
 };
 
@@ -60,6 +66,9 @@ const StoreDashboard = () => {
       case "products": return <ProductManager storeId={store.id} />;
       case "categories": return <CategoryManager storeId={store.id} />;
       case "orders": return <OrderManager storeId={store.id} />;
+      case "marketplace": return <MarketplaceBrowser storeId={store.id} />;
+      case "addons": return <MyAddons storeId={store.id} />;
+      case "upgrade": return <UpgradePlan storeId={store.id} />;
       case "settings": return <StoreSettingsEditor storeId={store.id} />;
       default: return <StoreOverview storeId={store.id} />;
     }
