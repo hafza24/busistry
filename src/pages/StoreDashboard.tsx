@@ -11,12 +11,18 @@ import ProductManager from "@/components/store/ProductManager";
 import CategoryManager from "@/components/store/CategoryManager";
 import OrderManager from "@/components/store/OrderManager";
 import StoreSettingsEditor from "@/components/store/StoreSettingsEditor";
+import MarketplaceBrowser from "@/components/store/MarketplaceBrowser";
+import MyAddons from "@/components/store/MyAddons";
+import UpgradePlan from "@/components/store/UpgradePlan";
 
 const viewTitles: Record<string, string> = {
   overview: "Overview",
   products: "Products",
   categories: "Categories",
   orders: "Orders",
+  marketplace: "Marketplace",
+  addons: "My Add-ons",
+  upgrade: "Upgrade Plan",
   settings: "Site Settings",
 };
 
