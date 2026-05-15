@@ -10,10 +10,12 @@ import Templates from "./pages/Templates";
 import Pricing from "./pages/Pricing";
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
+import Marketplace from "./pages/Marketplace";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Onboarding from "./pages/Onboarding";
 import AdminDashboard from "./pages/AdminDashboard";
+import StoreDashboard from "./pages/StoreDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
