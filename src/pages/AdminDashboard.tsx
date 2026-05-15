@@ -55,6 +55,10 @@ const AdminDashboard = () => {
       case "templates": return <AdminTemplateManagement />;
       case "plans": return <AdminPlanManagement />;
       case "addons": return <AdminAddonManagement />;
+      case "website_products": return <AdminWebsiteProducts />;
+      case "integrations": return <AdminIntegrations />;
+      case "store_addons": return <AdminStoreAddons />;
+      case "upgrades": return <AdminUpgradeOrders />;
       default: return <AdminWebsiteOrders />;
     }
   };
