@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -22,6 +23,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
+          <img src={logo} alt="Busistree" className="h-8 w-8 object-contain" />
           Busistree<span className="text-primary">.</span>
         </Link>
 
