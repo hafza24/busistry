@@ -7,8 +7,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <img src={logo} alt="Busistree" className="h-8 w-8 object-contain" />
-            <h3 className="text-lg font-bold tracking-tight text-foreground">Busistree<span className="text-primary">.</span></h3>
+            <img src={logo} alt="Busistree" className="h-10 w-auto object-contain" />
           </div>
           <p className="text-sm text-muted-foreground">
             A digital studio building brands, websites, and growth systems for ambitious businesses.
