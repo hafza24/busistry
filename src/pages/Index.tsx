@@ -392,7 +392,7 @@ const Index = () => {
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              Why Busistry
+              Why Busistree
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
               Faster than DIY. Cheaper than hiring.
@@ -401,7 +401,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto bg-card border border-border rounded-2xl overflow-hidden">
             <div className="grid grid-cols-4 bg-secondary/50 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               <div className="p-4">Feature</div>
-              <div className="p-4 text-center text-primary">Busistry</div>
+              <div className="p-4 text-center text-primary">Busistree</div>
               <div className="p-4 text-center">Shopify DIY</div>
               <div className="p-4 text-center">Hire dev</div>
             </div>
