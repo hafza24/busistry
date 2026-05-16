@@ -9,8 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import CheckoutDialog from "./CheckoutDialog";
+import WebsiteSelectionModal from "./WebsiteSelectionModal";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
+import { useStores } from "@/hooks/useStores";
+import { Badge as BadgeUI } from "@/components/ui/badge";
+import { Globe } from "lucide-react";
 
 interface Props {
   /** When provided, items will be installed onto this store with no store-picker */
@@ -24,13 +28,18 @@ export default function MarketplaceGrid({ storeId }: Props) {
   const navigate = useNavigate();
   const { data: products = [] } = useWebsiteProducts();
   const { data: integrations = [] } = useIntegrations();
+  const { data: stores = [] } = useStores();
   const createAddon = useCreateStoreAddon();
 
   const [tab, setTab] = useState("all");
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState<any | null>(null);
-  const [checkout, setCheckout] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [pendingItem, setPendingItem] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [websitePicker, setWebsitePicker] = useState(false);
+  const [checkout, setCheckout] = useState<{ kind: "product" | "integration"; item: any; storeId: string } | null>(null);
   const [config, setConfig] = useState<Record<string, any>>({});
+
+  const activeStores = (stores ?? []).filter((s: any) => s.status === "activated" || s.status === "approved");
 
   const filteredProducts = useMemo(() => {
     return products.filter((p: any) => {
@@ -48,7 +57,20 @@ export default function MarketplaceGrid({ storeId }: Props) {
   const onBuy = (kind: "product" | "integration", item: any) => {
     if (!user) { navigate("/auth"); return; }
     setConfig({});
-    setCheckout({ kind, item });
+    // If a storeId is forced (e.g. from store dashboard) skip selection.
+    if (storeId) {
+      setCheckout({ kind, item, storeId });
+      return;
+    }
+    // Otherwise require website selection first (enforces dependency rule).
+    setPendingItem({ kind, item });
+    setWebsitePicker(true);
+  };
+
+  const handleWebsiteChosen = (chosenStoreId: string) => {
+    if (!pendingItem) return;
+    setCheckout({ ...pendingItem, storeId: chosenStoreId });
+    setPendingItem(null);
   };
 
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
@@ -181,29 +203,43 @@ export default function MarketplaceGrid({ storeId }: Props) {
         </DialogContent>
       </Dialog>
 
+      <WebsiteSelectionModal
+        open={websitePicker}
+        onOpenChange={(v) => { setWebsitePicker(v); if (!v) setPendingItem(null); }}
+        onConfirm={handleWebsiteChosen}
+        itemName={pendingItem?.item?.name}
+      />
+
       {checkout && (
         <CheckoutDialog
           open={!!checkout}
           onOpenChange={(v) => !v && setCheckout(null)}
           title={`Order: ${checkout.item.name}`}
           amount={checkout.item.price_pkr}
-          storeId={storeId}
+          storeId={checkout.storeId}
           configFields={
-            checkout.kind === "integration" && Array.isArray(checkout.item.credential_schema) && checkout.item.credential_schema.length > 0 ? (
-              <div className="space-y-2 p-3 rounded-md border bg-muted/30">
-                <p className="text-sm font-medium">Configuration</p>
-                {checkout.item.credential_schema.map((field: any) => (
-                  <div key={field.key} className="space-y-1">
-                    <Label className="text-xs">{field.label || field.key}</Label>
-                    <Input
-                      placeholder={field.placeholder}
-                      value={config[field.key] ?? ""}
-                      onChange={(e) => setConfig((c) => ({ ...c, [field.key]: e.target.value }))}
-                    />
-                  </div>
-                ))}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 p-2 rounded-md bg-primary/5 border border-primary/20 text-sm">
+                <Globe className="h-4 w-4 text-primary" />
+                <span className="text-muted-foreground">Linked website:</span>
+                <span className="font-medium">{activeStores.find((s: any) => s.id === checkout.storeId)?.name ?? "—"}</span>
               </div>
-            ) : null
+              {checkout.kind === "integration" && Array.isArray(checkout.item.credential_schema) && checkout.item.credential_schema.length > 0 && (
+                <div className="space-y-2 p-3 rounded-md border bg-muted/30">
+                  <p className="text-sm font-medium">Configuration</p>
+                  {checkout.item.credential_schema.map((field: any) => (
+                    <div key={field.key} className="space-y-1">
+                      <Label className="text-xs">{field.label || field.key}</Label>
+                      <Input
+                        placeholder={field.placeholder}
+                        value={config[field.key] ?? ""}
+                        onChange={(e) => setConfig((c) => ({ ...c, [field.key]: e.target.value }))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           }
           onSubmit={handleCheckoutSubmit}
         />
