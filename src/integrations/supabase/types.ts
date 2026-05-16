@@ -1150,7 +1150,27 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_store_settings: {
+        Row: {
+          banner_url: string | null
+          contact_phone: string | null
+          description: string | null
+          id: string | null
+          logo_url: string | null
+          primary_color: string | null
+          secondary_color: string | null
+          store_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_settings_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: true
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       has_role: {
