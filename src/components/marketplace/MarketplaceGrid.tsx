@@ -28,13 +28,18 @@ export default function MarketplaceGrid({ storeId }: Props) {
   const navigate = useNavigate();
   const { data: products = [] } = useWebsiteProducts();
   const { data: integrations = [] } = useIntegrations();
+  const { data: stores = [] } = useStores();
   const createAddon = useCreateStoreAddon();
 
   const [tab, setTab] = useState("all");
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState<any | null>(null);
-  const [checkout, setCheckout] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [pendingItem, setPendingItem] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [websitePicker, setWebsitePicker] = useState(false);
+  const [checkout, setCheckout] = useState<{ kind: "product" | "integration"; item: any; storeId: string } | null>(null);
   const [config, setConfig] = useState<Record<string, any>>({});
+
+  const activeStores = (stores ?? []).filter((s: any) => s.status === "activated" || s.status === "approved");
 
   const filteredProducts = useMemo(() => {
     return products.filter((p: any) => {
