@@ -203,29 +203,43 @@ export default function MarketplaceGrid({ storeId }: Props) {
         </DialogContent>
       </Dialog>
 
+      <WebsiteSelectionModal
+        open={websitePicker}
+        onOpenChange={(v) => { setWebsitePicker(v); if (!v) setPendingItem(null); }}
+        onConfirm={handleWebsiteChosen}
+        itemName={pendingItem?.item?.name}
+      />
+
       {checkout && (
         <CheckoutDialog
           open={!!checkout}
           onOpenChange={(v) => !v && setCheckout(null)}
           title={`Order: ${checkout.item.name}`}
           amount={checkout.item.price_pkr}
-          storeId={storeId}
+          storeId={checkout.storeId}
           configFields={
-            checkout.kind === "integration" && Array.isArray(checkout.item.credential_schema) && checkout.item.credential_schema.length > 0 ? (
-              <div className="space-y-2 p-3 rounded-md border bg-muted/30">
-                <p className="text-sm font-medium">Configuration</p>
-                {checkout.item.credential_schema.map((field: any) => (
-                  <div key={field.key} className="space-y-1">
-                    <Label className="text-xs">{field.label || field.key}</Label>
-                    <Input
-                      placeholder={field.placeholder}
-                      value={config[field.key] ?? ""}
-                      onChange={(e) => setConfig((c) => ({ ...c, [field.key]: e.target.value }))}
-                    />
-                  </div>
-                ))}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 p-2 rounded-md bg-primary/5 border border-primary/20 text-sm">
+                <Globe className="h-4 w-4 text-primary" />
+                <span className="text-muted-foreground">Linked website:</span>
+                <span className="font-medium">{activeStores.find((s: any) => s.id === checkout.storeId)?.name ?? "—"}</span>
               </div>
-            ) : null
+              {checkout.kind === "integration" && Array.isArray(checkout.item.credential_schema) && checkout.item.credential_schema.length > 0 && (
+                <div className="space-y-2 p-3 rounded-md border bg-muted/30">
+                  <p className="text-sm font-medium">Configuration</p>
+                  {checkout.item.credential_schema.map((field: any) => (
+                    <div key={field.key} className="space-y-1">
+                      <Label className="text-xs">{field.label || field.key}</Label>
+                      <Input
+                        placeholder={field.placeholder}
+                        value={config[field.key] ?? ""}
+                        onChange={(e) => setConfig((c) => ({ ...c, [field.key]: e.target.value }))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           }
           onSubmit={handleCheckoutSubmit}
         />
