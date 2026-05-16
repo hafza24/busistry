@@ -9,8 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import CheckoutDialog from "./CheckoutDialog";
+import WebsiteSelectionModal from "./WebsiteSelectionModal";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
+import { useStores } from "@/hooks/useStores";
+import { Badge as BadgeUI } from "@/components/ui/badge";
+import { Globe } from "lucide-react";
 
 interface Props {
   /** When provided, items will be installed onto this store with no store-picker */
