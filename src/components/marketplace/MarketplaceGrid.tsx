@@ -57,7 +57,20 @@ export default function MarketplaceGrid({ storeId }: Props) {
   const onBuy = (kind: "product" | "integration", item: any) => {
     if (!user) { navigate("/auth"); return; }
     setConfig({});
-    setCheckout({ kind, item });
+    // If a storeId is forced (e.g. from store dashboard) skip selection.
+    if (storeId) {
+      setCheckout({ kind, item, storeId });
+      return;
+    }
+    // Otherwise require website selection first (enforces dependency rule).
+    setPendingItem({ kind, item });
+    setWebsitePicker(true);
+  };
+
+  const handleWebsiteChosen = (chosenStoreId: string) => {
+    if (!pendingItem) return;
+    setCheckout({ ...pendingItem, storeId: chosenStoreId });
+    setPendingItem(null);
   };
 
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
