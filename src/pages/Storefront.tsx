@@ -47,7 +47,7 @@ const Storefront = () => {
     queryKey: ["storefront-settings", store?.id],
     enabled: !!store,
     queryFn: async () => {
-      const { data } = await supabase.from("store_settings").select("*").eq("store_id", store!.id).maybeSingle();
+      const { data } = await (supabase as any).from("public_store_settings").select("*").eq("store_id", store!.id).maybeSingle();
       return data;
     },
   });
