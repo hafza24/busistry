@@ -22,9 +22,8 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
-          <img src={logo} alt="Busistree" className="h-8 w-8 object-contain" />
-          Busistree<span className="text-primary">.</span>
+        <Link to="/" className="flex items-center gap-2">
+          <img src={logo} alt="Busistree" className="h-10 w-auto object-contain" />
         </Link>
 
         {/* Desktop nav */}

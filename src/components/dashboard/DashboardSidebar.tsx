@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Globe, Plus, User, LogOut, Home, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 interface DashboardSidebarProps {
   activeView: string;
@@ -27,7 +28,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
     <Sidebar>
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sidebar-foreground hover:text-sidebar-primary transition-colors">
-          <span className="font-display font-bold text-lg">Busistree</span>
+          <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
         </button>
       </SidebarHeader>
       <SidebarContent>
