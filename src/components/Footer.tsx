@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
 const Footer = () => (
   <footer className="border-t border-border bg-secondary/30">
     <div className="container py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-lg font-bold tracking-tight text-foreground mb-3">Busistry<span className="text-primary">.</span></h3>
+          <div className="flex items-center gap-2 mb-3">
+            <img src={logo} alt="Busistree" className="h-8 w-8 object-contain" />
+            <h3 className="text-lg font-bold tracking-tight text-foreground">Busistree<span className="text-primary">.</span></h3>
+          </div>
           <p className="text-sm text-muted-foreground">
             A digital studio building brands, websites, and growth systems for ambitious businesses.
           </p>
@@ -30,7 +34,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Busistry. All rights reserved.
+        © {new Date().getFullYear()} Busistree. All rights reserved.
       </div>
     </div>
   </footer>

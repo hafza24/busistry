@@ -199,7 +199,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                   View upload
                 </a>
               ) : data.needs_logo_design ? (
-                "Needs design by Busistry"
+                "Needs design by Busistree"
               ) : (
                 "—"
               ),
@@ -420,7 +420,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           onCheckedChange={(v) => update({ terms_accepted: !!v })}
         />
         <Label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer font-normal">
-          I agree to Busistry's terms & conditions and authorize the team to begin building my store using the
+          I agree to Busistree's terms & conditions and authorize the team to begin building my store using the
           information I've shared.
         </Label>
       </div>
