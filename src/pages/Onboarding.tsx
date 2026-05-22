@@ -26,6 +26,7 @@ import StepAddons from "@/components/onboarding/StepAddons";
 import Step8Contact from "@/components/onboarding/Step5Contact";
 import Step9Payment from "@/components/onboarding/Step6Payment";
 import SelectedTemplateBanner from "@/components/onboarding/SelectedTemplateBanner";
+import PlanSummaryCard from "@/components/onboarding/PlanSummaryCard";
 
 const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Enhance", "Contact", "Confirm"];
 const TOTAL_STEPS = STEP_LABELS.length;
@@ -195,7 +196,8 @@ const Onboarding = () => {
             ))}
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 space-y-3">
+          <PlanSummaryCard planId={data.plan_id ?? planId} />
           <SelectedTemplateBanner templateId={data.template_id ?? templateId} />
         </div>
         </div>
