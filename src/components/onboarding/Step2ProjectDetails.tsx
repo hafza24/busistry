@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Lock } from "lucide-react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
+import { usePlan } from "@/hooks/usePlan";
 
 interface Props {
   data: OnboardingData;
@@ -35,6 +38,16 @@ const YesNo = ({ value, onChange }: { value?: string; onChange: (v: string) => v
 const Step2ProjectDetails = ({ data, update }: Props) => {
   const d = data.project_details ?? {};
   const type = data.project_type;
+  const { data: plan } = usePlan(data.plan_id);
+  const planProducts = plan?.max_products;
+
+  // Auto-fill ecommerce num_products from plan when available
+  useEffect(() => {
+    if (type === "ecommerce" && planProducts != null && d.num_products !== planProducts) {
+      setDetail(data, update, "num_products", planProducts);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planProducts, type]);
 
   // ECOMMERCE
   if (type === "ecommerce") {
@@ -55,15 +68,30 @@ const Step2ProjectDetails = ({ data, update }: Props) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="num_products">Number of products (approx)</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="num_products" className="flex items-center gap-1.5">
+              Products included
+              {planProducts != null && <Lock className="h-3 w-3 text-muted-foreground" />}
+            </Label>
+            {planProducts != null && (
+              <span className="text-[11px] text-muted-foreground">Included in {plan?.name}</span>
+            )}
+          </div>
           <Input
             id="num_products"
             type="number"
             min={0}
-            value={d.num_products ?? ""}
+            value={planProducts ?? d.num_products ?? ""}
             onChange={(e) => setDetail(data, update, "num_products", e.target.value ? Number(e.target.value) : undefined)}
             placeholder="e.g. 25"
+            readOnly={planProducts != null}
+            className={planProducts != null ? "bg-muted/50 cursor-not-allowed" : ""}
           />
+          {planProducts != null && (
+            <p className="text-xs text-muted-foreground">
+              Need more? Buy extra product capacity from the marketplace anytime.
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
