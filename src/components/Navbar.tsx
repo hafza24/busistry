@@ -2,8 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -18,13 +19,34 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-lg">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Busistree" className="h-10 w-auto object-contain" />
+    <nav
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        scrolled
+          ? "border-border bg-background/85 backdrop-blur-xl shadow-soft"
+          : "border-transparent bg-background/60 backdrop-blur-md"
+      }`}
+    >
+      <div className={`container flex items-center justify-between transition-all duration-300 ${scrolled ? "h-14" : "h-16 md:h-20"}`}>
+        <Link to="/" className="flex items-center gap-2 group">
+          <img
+            src={logo}
+            alt="Busistree"
+            className={`w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_18px_hsl(var(--primary-glow)/0.5)] ${
+              scrolled ? "h-8 md:h-9" : "h-9 md:h-12"
+            }`}
+          />
         </Link>
+
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
@@ -32,10 +54,10 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`relative px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                 location.pathname === link.to
                   ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  : "text-muted-foreground hover:text-foreground hover:bg-primary/5"
               }`}
             >
               {link.label}

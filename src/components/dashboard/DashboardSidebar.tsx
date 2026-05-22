@@ -28,7 +28,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
     <Sidebar>
       <SidebarHeader className="p-4 border-b border-sidebar-border">
         <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sidebar-foreground hover:text-sidebar-primary transition-colors">
-          <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
+          <img src={logo} alt="Busistree" className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 hover:scale-105" />
         </button>
       </SidebarHeader>
       <SidebarContent>
