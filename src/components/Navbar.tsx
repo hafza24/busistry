@@ -2,8 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+
 
 const navLinks = [
   { to: "/", label: "Home" },
