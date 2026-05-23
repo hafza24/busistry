@@ -210,10 +210,30 @@ const AdminTemplateManagement = () => {
                 <Label>Name *</Label>
                 <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
               </div>
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label>Niche *</Label>
-                <Input value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value }))} placeholder="e.g. Clothing" />
+                <Label>Category *</Label>
+                <Select value={form.category} onValueChange={(v) => setForm((f) => ({ ...f, category: v, subcategory: "" }))}>
+                  <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+                  <SelectContent>
+                    {TEMPLATE_CATEGORY_NAMES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </div>
+              <div>
+                <Label>Subcategory</Label>
+                <Select value={form.subcategory} onValueChange={(v) => setForm((f) => ({ ...f, subcategory: v }))} disabled={!form.category}>
+                  <SelectTrigger><SelectValue placeholder={form.category ? "Select subcategory" : "Pick category first"} /></SelectTrigger>
+                  <SelectContent>
+                    {(TEMPLATE_CATEGORIES[form.category] || []).map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label>Niche (legacy tag)</Label>
+              <Input value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value }))} placeholder="e.g. Clothing" />
             </div>
 
             <div>
