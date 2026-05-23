@@ -166,7 +166,13 @@ const AdminTemplateManagement = () => {
                     )}
                   </TableCell>
                   <TableCell className="font-medium">{t.name}</TableCell>
-                  <TableCell><Badge variant="secondary">{t.niche}</Badge></TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      {t.category && <Badge variant="default" className="w-fit text-[10px]">{t.category}</Badge>}
+                      {t.subcategory && <Badge variant="outline" className="w-fit text-[10px]">{t.subcategory}</Badge>}
+                      <Badge variant="secondary" className="w-fit text-[10px]">{t.niche}</Badge>
+                    </div>
+                  </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
                     {Array.isArray(t.features) ? (t.features as string[]).slice(0, 3).join(", ") : "—"}
                   </TableCell>
