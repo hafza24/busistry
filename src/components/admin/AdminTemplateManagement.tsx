@@ -10,13 +10,17 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Pencil, Trash2, Upload, LayoutTemplate } from "lucide-react";
 import { toast } from "sonner";
+import { TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_NAMES } from "@/lib/templateCategories";
 
 interface TemplateForm {
   id?: string;
   name: string;
   niche: string;
+  category: string;
+  subcategory: string;
   description: string;
   demo_url: string;
   features: string[];
@@ -25,7 +29,7 @@ interface TemplateForm {
 }
 
 const emptyForm: TemplateForm = {
-  name: "", niche: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
+  name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
 };
 
 const AdminTemplateManagement = () => {
@@ -62,7 +66,9 @@ const AdminTemplateManagement = () => {
 
       const payload = {
         name: t.name,
-        niche: t.niche,
+        niche: t.niche || t.subcategory || t.category,
+        category: t.category || null,
+        subcategory: t.subcategory || null,
         description: t.description || null,
         demo_url: t.demo_url || null,
         features: t.features,
@@ -102,7 +108,9 @@ const AdminTemplateManagement = () => {
 
   const openEdit = (t: any) => {
     setForm({
-      id: t.id, name: t.name, niche: t.niche, description: t.description || "",
+      id: t.id, name: t.name, niche: t.niche,
+      category: t.category || "", subcategory: t.subcategory || "",
+      description: t.description || "",
       demo_url: t.demo_url || "", features: Array.isArray(t.features) ? t.features : [],
       is_active: t.is_active, preview_image_url: t.preview_image_url,
     });
@@ -141,7 +149,7 @@ const AdminTemplateManagement = () => {
               <TableRow>
                 <TableHead>Preview</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Niche</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead>Features</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
@@ -158,7 +166,13 @@ const AdminTemplateManagement = () => {
                     )}
                   </TableCell>
                   <TableCell className="font-medium">{t.name}</TableCell>
-                  <TableCell><Badge variant="secondary">{t.niche}</Badge></TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      {t.category && <Badge variant="default" className="w-fit text-[10px]">{t.category}</Badge>}
+                      {t.subcategory && <Badge variant="outline" className="w-fit text-[10px]">{t.subcategory}</Badge>}
+                      <Badge variant="secondary" className="w-fit text-[10px]">{t.niche}</Badge>
+                    </div>
+                  </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
                     {Array.isArray(t.features) ? (t.features as string[]).slice(0, 3).join(", ") : "—"}
                   </TableCell>
@@ -191,15 +205,35 @@ const AdminTemplateManagement = () => {
             <DialogTitle>{form.id ? "Edit Template" : "Add Template"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            <div>
+              <Label>Name *</Label>
+              <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+            </div>
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label>Name *</Label>
-                <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+                <Label>Category *</Label>
+                <Select value={form.category} onValueChange={(v) => setForm((f) => ({ ...f, category: v, subcategory: "" }))}>
+                  <SelectTrigger><SelectValue placeholder="Select category" /></SelectTrigger>
+                  <SelectContent>
+                    {TEMPLATE_CATEGORY_NAMES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
-                <Label>Niche *</Label>
-                <Input value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value }))} placeholder="e.g. Clothing" />
+                <Label>Subcategory</Label>
+                <Select value={form.subcategory} onValueChange={(v) => setForm((f) => ({ ...f, subcategory: v }))} disabled={!form.category}>
+                  <SelectTrigger><SelectValue placeholder={form.category ? "Select subcategory" : "Pick category first"} /></SelectTrigger>
+                  <SelectContent>
+                    {(TEMPLATE_CATEGORIES[form.category] || []).map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </div>
+            </div>
+
+            <div>
+              <Label>Niche (legacy tag)</Label>
+              <Input value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value }))} placeholder="e.g. Clothing" />
             </div>
 
             <div>
@@ -253,7 +287,7 @@ const AdminTemplateManagement = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
-            <Button disabled={!form.name || !form.niche || upsert.isPending || uploading}
+            <Button disabled={!form.name || !form.category || upsert.isPending || uploading}
               onClick={() => upsert.mutate(form)}>
               {upsert.isPending || uploading ? "Saving..." : "Save"}
             </Button>

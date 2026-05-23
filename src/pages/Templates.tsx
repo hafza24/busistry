@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const Templates = () => {
-  const [activeNiche, setActiveNiche] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeSub, setActiveSub] = useState<string | null>(null);
 
   const { data: templates = [], isLoading } = useQuery({
     queryKey: ["public_templates"],
@@ -24,8 +25,10 @@ const Templates = () => {
     },
   });
 
-  const niches = ["All", ...Array.from(new Set(templates.map((t) => t.niche)))];
-  const filtered = activeNiche === "All" ? templates : templates.filter((t) => t.niche === activeNiche);
+  const categories = ["All", ...Array.from(new Set(templates.map((t) => t.category).filter(Boolean) as string[]))];
+  const inCategory = activeCategory === "All" ? templates : templates.filter((t) => t.category === activeCategory);
+  const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
+  const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
 
   const handleSelect = (id: string) => {
     setPendingTemplate(id);
@@ -41,19 +44,42 @@ const Templates = () => {
           </p>
         </div>
 
-        {/* Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {niches.map((n) => (
+        {/* Category filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-4">
+          {categories.map((n) => (
             <Button
               key={n}
-              variant={activeNiche === n ? "default" : "outline"}
+              variant={activeCategory === n ? "default" : "outline"}
               size="sm"
-              onClick={() => setActiveNiche(n)}
+              onClick={() => { setActiveCategory(n); setActiveSub(null); }}
             >
               {n}
             </Button>
           ))}
         </div>
+
+        {/* Subcategory filter */}
+        {subcategories.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <Button
+              variant={activeSub === null ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => setActiveSub(null)}
+            >
+              All {activeCategory !== "All" ? activeCategory : ""}
+            </Button>
+            {subcategories.map((s) => (
+              <Button
+                key={s}
+                variant={activeSub === s ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setActiveSub(s)}
+              >
+                {s}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {isLoading ? (
           <div className="flex justify-center py-20">
@@ -75,7 +101,10 @@ const Templates = () => {
                     </div>
                   )}
                   <CardContent className="p-5 flex-1">
-                    <Badge variant="secondary" className="mb-2">{t.niche}</Badge>
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {t.category && <Badge variant="default" className="text-[10px]">{t.category}</Badge>}
+                      {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
+                    </div>
                     <h3 className="font-semibold font-display text-lg text-foreground">{t.name}</h3>
                     {t.description && <p className="text-sm text-muted-foreground mt-1 mb-3 line-clamp-2">{t.description}</p>}
                     <div className="flex flex-wrap gap-1">
