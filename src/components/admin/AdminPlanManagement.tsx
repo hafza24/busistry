@@ -231,6 +231,46 @@ const AdminPlanManagement = () => {
                 <Label>Max Categories</Label>
                 <Input type="number" value={form.max_categories} onChange={(e) => setForm((f) => ({ ...f, max_categories: Number(e.target.value) }))} />
               </div>
+              <div>
+                <Label>Max Pages</Label>
+                <Input type="number" value={form.max_pages} onChange={(e) => setForm((f) => ({ ...f, max_pages: Number(e.target.value) }))} />
+              </div>
+              <div>
+                <Label>Email Accounts</Label>
+                <Input type="number" value={form.email_accounts} onChange={(e) => setForm((f) => ({ ...f, email_accounts: Number(e.target.value) }))} />
+              </div>
+              <div>
+                <Label>Team Users</Label>
+                <Input type="number" value={form.team_users} onChange={(e) => setForm((f) => ({ ...f, team_users: Number(e.target.value) }))} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>Domain Type</Label>
+                <Select value={form.domain_type} onValueChange={(v) => setForm((f) => ({ ...f, domain_type: v }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="subdomain">Subdomain</SelectItem>
+                    <SelectItem value="custom">Own Domain</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Platform Type</Label>
+                <Select value={form.platform_type} onValueChange={(v) => setForm((f) => ({ ...f, platform_type: v }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="wordpress">WordPress</SelectItem>
+                    <SelectItem value="shopify">Shopify</SelectItem>
+                    <SelectItem value="coded">Custom Coded</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
+              Payment method is always <span className="font-medium text-foreground">Manual / Cash on Delivery</span>. Configure gateways under Integrations.
             </div>
 
             <div>
