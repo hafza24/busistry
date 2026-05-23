@@ -10,13 +10,17 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Pencil, Trash2, Upload, LayoutTemplate } from "lucide-react";
 import { toast } from "sonner";
+import { TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_NAMES } from "@/lib/templateCategories";
 
 interface TemplateForm {
   id?: string;
   name: string;
   niche: string;
+  category: string;
+  subcategory: string;
   description: string;
   demo_url: string;
   features: string[];
@@ -25,7 +29,7 @@ interface TemplateForm {
 }
 
 const emptyForm: TemplateForm = {
-  name: "", niche: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
+  name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
 };
 
 const AdminTemplateManagement = () => {
