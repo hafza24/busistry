@@ -24,6 +24,11 @@ interface PlanForm {
   price_pkr: number;
   max_products: number;
   max_categories: number;
+  max_pages: number;
+  domain_type: string;
+  platform_type: string;
+  email_accounts: number;
+  team_users: number;
   duration_days: number | null;
   features: string[];
   is_active: boolean;
@@ -31,6 +36,8 @@ interface PlanForm {
 
 const emptyForm: PlanForm = {
   name: "", type: "free", price_pkr: 0, max_products: 10, max_categories: 5,
+  max_pages: 5, domain_type: "subdomain", platform_type: "wordpress",
+  email_accounts: 0, team_users: 1,
   duration_days: null, features: [], is_active: true,
 };
 
