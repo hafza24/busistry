@@ -24,6 +24,11 @@ interface PlanForm {
   price_pkr: number;
   max_products: number;
   max_categories: number;
+  max_pages: number;
+  domain_type: string;
+  platform_type: string;
+  email_accounts: number;
+  team_users: number;
   duration_days: number | null;
   features: string[];
   is_active: boolean;
@@ -31,6 +36,8 @@ interface PlanForm {
 
 const emptyForm: PlanForm = {
   name: "", type: "free", price_pkr: 0, max_products: 10, max_categories: 5,
+  max_pages: 5, domain_type: "subdomain", platform_type: "wordpress",
+  email_accounts: 0, team_users: 1,
   duration_days: null, features: [], is_active: true,
 };
 
@@ -57,6 +64,11 @@ const AdminPlanManagement = () => {
         price_pkr: p.price_pkr,
         max_products: p.max_products,
         max_categories: p.max_categories,
+        max_pages: p.max_pages,
+        domain_type: p.domain_type,
+        platform_type: p.platform_type,
+        email_accounts: p.email_accounts,
+        team_users: p.team_users,
         duration_days: p.duration_days,
         features: p.features,
         is_active: p.is_active,
@@ -95,6 +107,11 @@ const AdminPlanManagement = () => {
     setForm({
       id: p.id, name: p.name, type: p.type, price_pkr: p.price_pkr,
       max_products: p.max_products, max_categories: p.max_categories,
+      max_pages: p.max_pages ?? 5,
+      domain_type: p.domain_type ?? "subdomain",
+      platform_type: p.platform_type ?? "wordpress",
+      email_accounts: p.email_accounts ?? 0,
+      team_users: p.team_users ?? 1,
       duration_days: p.duration_days, features: Array.isArray(p.features) ? p.features : [],
       is_active: p.is_active,
     });
@@ -147,7 +164,9 @@ const AdminPlanManagement = () => {
                   <TableCell><Badge variant="secondary">{p.type}</Badge></TableCell>
                   <TableCell>{p.price_pkr.toLocaleString()}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">
-                    {p.max_products} products · {p.max_categories} categories
+                    {p.max_products} products · {p.max_categories} categories · {(p as any).max_pages ?? 0} pages
+                    <br />
+                    {(p as any).platform_type ?? "—"} · {(p as any).domain_type ?? "—"} · {(p as any).email_accounts ?? 0} emails · {(p as any).team_users ?? 1} users
                   </TableCell>
                   <TableCell className="text-sm">
                     {p.duration_days ? `${p.duration_days} days` : "Lifetime"}
@@ -212,6 +231,46 @@ const AdminPlanManagement = () => {
                 <Label>Max Categories</Label>
                 <Input type="number" value={form.max_categories} onChange={(e) => setForm((f) => ({ ...f, max_categories: Number(e.target.value) }))} />
               </div>
+              <div>
+                <Label>Max Pages</Label>
+                <Input type="number" value={form.max_pages} onChange={(e) => setForm((f) => ({ ...f, max_pages: Number(e.target.value) }))} />
+              </div>
+              <div>
+                <Label>Email Accounts</Label>
+                <Input type="number" value={form.email_accounts} onChange={(e) => setForm((f) => ({ ...f, email_accounts: Number(e.target.value) }))} />
+              </div>
+              <div>
+                <Label>Team Users</Label>
+                <Input type="number" value={form.team_users} onChange={(e) => setForm((f) => ({ ...f, team_users: Number(e.target.value) }))} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>Domain Type</Label>
+                <Select value={form.domain_type} onValueChange={(v) => setForm((f) => ({ ...f, domain_type: v }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="subdomain">Subdomain</SelectItem>
+                    <SelectItem value="custom">Own Domain</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Platform Type</Label>
+                <Select value={form.platform_type} onValueChange={(v) => setForm((f) => ({ ...f, platform_type: v }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="wordpress">WordPress</SelectItem>
+                    <SelectItem value="shopify">Shopify</SelectItem>
+                    <SelectItem value="coded">Custom Coded</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
+              Payment method is always <span className="font-medium text-foreground">Manual / Cash on Delivery</span>. Configure gateways under Integrations.
             </div>
 
             <div>

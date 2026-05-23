@@ -480,38 +480,53 @@ export type Database = {
       plans: {
         Row: {
           created_at: string
+          domain_type: string
           duration_days: number | null
+          email_accounts: number
           features: Json | null
           id: string
           is_active: boolean
           max_categories: number
+          max_pages: number
           max_products: number
           name: string
+          platform_type: string
           price_pkr: number
+          team_users: number
           type: Database["public"]["Enums"]["plan_type"]
         }
         Insert: {
           created_at?: string
+          domain_type?: string
           duration_days?: number | null
+          email_accounts?: number
           features?: Json | null
           id?: string
           is_active?: boolean
           max_categories?: number
+          max_pages?: number
           max_products?: number
           name: string
+          platform_type?: string
           price_pkr?: number
+          team_users?: number
           type: Database["public"]["Enums"]["plan_type"]
         }
         Update: {
           created_at?: string
+          domain_type?: string
           duration_days?: number | null
+          email_accounts?: number
           features?: Json | null
           id?: string
           is_active?: boolean
           max_categories?: number
+          max_pages?: number
           max_products?: number
           name?: string
+          platform_type?: string
           price_pkr?: number
+          team_users?: number
           type?: Database["public"]["Enums"]["plan_type"]
         }
         Relationships: []
