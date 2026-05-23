@@ -890,6 +890,7 @@ export type Database = {
       templates: {
         Row: {
           available_plans: Json | null
+          category: string | null
           created_at: string
           demo_url: string | null
           description: string | null
@@ -899,9 +900,11 @@ export type Database = {
           name: string
           niche: string
           preview_image_url: string | null
+          subcategory: string | null
         }
         Insert: {
           available_plans?: Json | null
+          category?: string | null
           created_at?: string
           demo_url?: string | null
           description?: string | null
@@ -911,9 +914,11 @@ export type Database = {
           name: string
           niche: string
           preview_image_url?: string | null
+          subcategory?: string | null
         }
         Update: {
           available_plans?: Json | null
+          category?: string | null
           created_at?: string
           demo_url?: string | null
           description?: string | null
@@ -923,6 +928,7 @@ export type Database = {
           name?: string
           niche?: string
           preview_image_url?: string | null
+          subcategory?: string | null
         }
         Relationships: []
       }
