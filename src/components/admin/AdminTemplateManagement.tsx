@@ -149,7 +149,7 @@ const AdminTemplateManagement = () => {
               <TableRow>
                 <TableHead>Preview</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Niche</TableHead>
+                <TableHead>Category</TableHead>
                 <TableHead>Features</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
