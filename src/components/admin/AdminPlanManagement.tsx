@@ -164,7 +164,9 @@ const AdminPlanManagement = () => {
                   <TableCell><Badge variant="secondary">{p.type}</Badge></TableCell>
                   <TableCell>{p.price_pkr.toLocaleString()}</TableCell>
                   <TableCell className="text-xs text-muted-foreground">
-                    {p.max_products} products · {p.max_categories} categories
+                    {p.max_products} products · {p.max_categories} categories · {(p as any).max_pages ?? 0} pages
+                    <br />
+                    {(p as any).platform_type ?? "—"} · {(p as any).domain_type ?? "—"} · {(p as any).email_accounts ?? 0} emails · {(p as any).team_users ?? 1} users
                   </TableCell>
                   <TableCell className="text-sm">
                     {p.duration_days ? `${p.duration_days} days` : "Lifetime"}
