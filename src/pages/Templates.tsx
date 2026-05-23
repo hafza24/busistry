@@ -44,19 +44,42 @@ const Templates = () => {
           </p>
         </div>
 
-        {/* Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {niches.map((n) => (
+        {/* Category filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-4">
+          {categories.map((n) => (
             <Button
               key={n}
-              variant={activeNiche === n ? "default" : "outline"}
+              variant={activeCategory === n ? "default" : "outline"}
               size="sm"
-              onClick={() => setActiveNiche(n)}
+              onClick={() => { setActiveCategory(n); setActiveSub(null); }}
             >
               {n}
             </Button>
           ))}
         </div>
+
+        {/* Subcategory filter */}
+        {subcategories.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <Button
+              variant={activeSub === null ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => setActiveSub(null)}
+            >
+              All {activeCategory !== "All" ? activeCategory : ""}
+            </Button>
+            {subcategories.map((s) => (
+              <Button
+                key={s}
+                variant={activeSub === s ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setActiveSub(s)}
+              >
+                {s}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {isLoading ? (
           <div className="flex justify-center py-20">
