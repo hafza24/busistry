@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const Templates = () => {
-  const [activeNiche, setActiveNiche] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeSub, setActiveSub] = useState<string | null>(null);
 
   const { data: templates = [], isLoading } = useQuery({
     queryKey: ["public_templates"],
@@ -24,8 +25,10 @@ const Templates = () => {
     },
   });
 
-  const niches = ["All", ...Array.from(new Set(templates.map((t) => t.niche)))];
-  const filtered = activeNiche === "All" ? templates : templates.filter((t) => t.niche === activeNiche);
+  const categories = ["All", ...Array.from(new Set(templates.map((t) => t.category).filter(Boolean) as string[]))];
+  const inCategory = activeCategory === "All" ? templates : templates.filter((t) => t.category === activeCategory);
+  const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
+  const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
 
   const handleSelect = (id: string) => {
     setPendingTemplate(id);
