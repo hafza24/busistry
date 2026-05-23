@@ -287,7 +287,7 @@ const AdminTemplateManagement = () => {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>Cancel</Button>
-            <Button disabled={!form.name || !form.niche || upsert.isPending || uploading}
+            <Button disabled={!form.name || !form.category || upsert.isPending || uploading}
               onClick={() => upsert.mutate(form)}>
               {upsert.isPending || uploading ? "Saving..." : "Save"}
             </Button>
