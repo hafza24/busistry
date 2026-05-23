@@ -107,6 +107,11 @@ const AdminPlanManagement = () => {
     setForm({
       id: p.id, name: p.name, type: p.type, price_pkr: p.price_pkr,
       max_products: p.max_products, max_categories: p.max_categories,
+      max_pages: p.max_pages ?? 5,
+      domain_type: p.domain_type ?? "subdomain",
+      platform_type: p.platform_type ?? "wordpress",
+      email_accounts: p.email_accounts ?? 0,
+      team_users: p.team_users ?? 1,
       duration_days: p.duration_days, features: Array.isArray(p.features) ? p.features : [],
       is_active: p.is_active,
     });
