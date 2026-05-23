@@ -66,7 +66,7 @@ const AdminTemplateManagement = () => {
 
       const payload = {
         name: t.name,
-        niche: t.niche,
+        niche: t.niche || t.subcategory || t.category,
         category: t.category || null,
         subcategory: t.subcategory || null,
         description: t.description || null,
