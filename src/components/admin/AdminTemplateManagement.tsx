@@ -108,7 +108,9 @@ const AdminTemplateManagement = () => {
 
   const openEdit = (t: any) => {
     setForm({
-      id: t.id, name: t.name, niche: t.niche, description: t.description || "",
+      id: t.id, name: t.name, niche: t.niche,
+      category: t.category || "", subcategory: t.subcategory || "",
+      description: t.description || "",
       demo_url: t.demo_url || "", features: Array.isArray(t.features) ? t.features : [],
       is_active: t.is_active, preview_image_url: t.preview_image_url,
     });
