@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Lock } from "lucide-react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
 import { usePlan } from "@/hooks/usePlan";
+import LockedTile from "./LockedTile";
 
 interface Props {
   data: OnboardingData;
@@ -17,7 +16,7 @@ const Step4Store = ({ data, update }: Props) => {
   const { data: plan } = usePlan(data.plan_id);
   const planProducts = plan?.max_products;
 
-  // Auto-fill from plan if not yet set or out of sync
+  // Keep store-level product count in sync with the plan
   useEffect(() => {
     if (planProducts != null && data.product_count_estimate !== planProducts) {
       update({ product_count_estimate: planProducts });
@@ -26,7 +25,20 @@ const Step4Store = ({ data, update }: Props) => {
   }, [planProducts]);
 
   return (
-    <StepShell title="Store requirements" subtitle="The technical bits — kept simple.">
+    <StepShell title="Store requirements" subtitle="Just the bits we can't pre-configure.">
+      {/* Locked plan summary tiles */}
+      {plan && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <LockedTile label="Products" value={`${plan.max_products}`} hint={`${plan.name} plan`} />
+          <LockedTile label="Categories" value={`${plan.max_categories}`} />
+          <LockedTile label="Pages" value={`${plan.max_pages ?? 5}`} />
+          <LockedTile
+            label="Platform"
+            value={(plan.platform_type ?? "wordpress").replace(/^\w/, (c) => c.toUpperCase())}
+          />
+        </div>
+      )}
+
       <div className="space-y-2">
         <Label>Type of store</Label>
         <Select value={data.store_type ?? ""} onValueChange={(v) => update({ store_type: v })}>
@@ -41,41 +53,14 @@ const Step4Store = ({ data, update }: Props) => {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="product_count" className="flex items-center gap-1.5">
-            Products included
-            {planProducts != null && <Lock className="h-3 w-3 text-muted-foreground" />}
-          </Label>
-          {planProducts != null && (
-            <span className="text-[11px] text-muted-foreground">Included in {plan?.name}</span>
-          )}
-        </div>
-        <Input
-          id="product_count"
-          type="number"
-          min={0}
-          value={planProducts ?? data.product_count_estimate ?? ""}
-          onChange={(e) => update({ product_count_estimate: e.target.value ? Number(e.target.value) : undefined })}
-          placeholder="e.g. 25"
-          readOnly={planProducts != null}
-          className={planProducts != null ? "bg-muted/50 cursor-not-allowed" : ""}
-        />
-        {planProducts != null && (
-          <p className="text-xs text-muted-foreground">
-            Need more than {planProducts} products? You can purchase additional capacity from the marketplace after launch.
-          </p>
-        )}
-      </div>
-
-      <div className="space-y-2">
         <Label>Payment gateway preference</Label>
         <Select value={data.payment_gateway ?? ""} onValueChange={(v) => update({ payment_gateway: v })}>
           <SelectTrigger><SelectValue placeholder="Pick a gateway" /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="stripe">Stripe</SelectItem>
-            <SelectItem value="paypal">PayPal</SelectItem>
             <SelectItem value="cod">Cash on Delivery</SelectItem>
             <SelectItem value="jazzcash_easypaisa">JazzCash / Easypaisa</SelectItem>
+            <SelectItem value="stripe">Stripe</SelectItem>
+            <SelectItem value="paypal">PayPal</SelectItem>
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
@@ -94,7 +79,7 @@ const Step4Store = ({ data, update }: Props) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="features">Special features needed</Label>
+        <Label htmlFor="features">Anything special?</Label>
         <Textarea
           id="features"
           value={data.special_features ?? ""}

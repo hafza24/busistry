@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Crown, Lock, Pencil } from "lucide-react";
 import { usePlan } from "@/hooks/usePlan";
+import LockedTile from "./LockedTile";
 
 interface Props {
   planId?: string | null;
@@ -39,10 +40,15 @@ const PlanSummaryCard = ({ planId }: Props) => {
   const features: string[] = Array.isArray(plan.features) ? (plan.features as string[]) : [];
   const isFree = plan.type === "free" || plan.price_pkr === 0;
 
-  const includedRows = [
-    { label: "Products included", value: `${plan.max_products} products` },
-    { label: "Categories included", value: `${plan.max_categories} categories` },
-    ...(plan.duration_days ? [{ label: "Plan duration", value: `${plan.duration_days} days` }] : []),
+  const tiles = [
+    { label: "Pages", value: `${plan.max_pages ?? 5}` },
+    { label: "Products", value: `${plan.max_products}` },
+    { label: "Categories", value: `${plan.max_categories}` },
+    { label: "Team users", value: `${plan.team_users ?? 1}` },
+    { label: "Email accounts", value: `${plan.email_accounts ?? 0}` },
+    { label: "Domain", value: plan.domain_type === "own" ? "Own domain" : "Subdomain" },
+    { label: "Platform", value: (plan.platform_type ?? "wordpress").replace(/^\w/, (c) => c.toUpperCase()) },
+    ...(plan.duration_days ? [{ label: "Duration", value: `${plan.duration_days} days` }] : []),
   ];
 
   return (
@@ -51,14 +57,12 @@ const PlanSummaryCard = ({ planId }: Props) => {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-              <Crown className="h-4.5 w-4.5 text-primary" />
+              <Crown className="h-4 w-4 text-primary" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold text-foreground">{plan.name} Plan</h3>
-                <Badge variant="secondary" className="text-[10px] uppercase tracking-wider">
-                  Selected
-                </Badge>
+                <Badge variant="secondary" className="text-[10px] uppercase tracking-wider">Selected</Badge>
               </div>
               <p className="text-sm text-muted-foreground mt-0.5">
                 {isFree ? "Free" : `PKR ${plan.price_pkr.toLocaleString()}`}
@@ -76,20 +80,9 @@ const PlanSummaryCard = ({ planId }: Props) => {
           </Button>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-3">
-          {includedRows.map((r) => (
-            <div
-              key={r.label}
-              className="rounded-md border border-border/60 bg-muted/40 px-3 py-2"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
-                  {r.label}
-                </span>
-                <Lock className="h-3 w-3 text-muted-foreground" />
-              </div>
-              <div className="text-sm font-semibold text-foreground tabular-nums">{r.value}</div>
-            </div>
+        <div className="grid gap-2 grid-cols-2 sm:grid-cols-4">
+          {tiles.map((t) => (
+            <LockedTile key={t.label} label={t.label} value={t.value} />
           ))}
         </div>
 
@@ -105,7 +98,7 @@ const PlanSummaryCard = ({ planId }: Props) => {
 
         <p className="text-[11px] text-muted-foreground flex items-center gap-1.5 pt-1 border-t border-border/40">
           <Lock className="h-3 w-3" />
-          Limits above are included in your plan. Need more? You can buy upgrades from the marketplace anytime.
+          Limits above are included in your plan. Need more? Buy upgrades from the marketplace anytime.
         </p>
       </CardContent>
     </Card>
