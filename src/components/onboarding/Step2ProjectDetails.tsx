@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Lock } from "lucide-react";
+import { Lock, Sparkles } from "lucide-react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
 import { usePlan } from "@/hooks/usePlan";
+import { useTemplate } from "@/hooks/useTemplate";
+import { getPreset, FIELD_LABELS, ConditionalField } from "@/lib/templatePresets";
 
 interface Props {
   data: OnboardingData;
@@ -35,244 +36,239 @@ const YesNo = ({ value, onChange }: { value?: string; onChange: (v: string) => v
   </RadioGroup>
 );
 
-const Step2ProjectDetails = ({ data, update }: Props) => {
+const ConditionalInput = ({
+  field,
+  data,
+  update,
+}: {
+  field: ConditionalField;
+  data: OnboardingData;
+  update: (p: Partial<OnboardingData>) => void;
+}) => {
   const d = data.project_details ?? {};
-  const type = data.project_type;
-  const { data: plan } = usePlan(data.plan_id);
-  const planProducts = plan?.max_products;
+  const val = d[field];
+  const set = (v: any) => setDetail(data, update, field, v);
+  const label = FIELD_LABELS[field];
 
-  // Auto-fill ecommerce num_products from plan when available
+  switch (field) {
+    case "shipping_regions":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input value={val ?? ""} onChange={(e) => set(e.target.value)} placeholder="e.g. Pakistan, UAE, Worldwide" />
+        </div>
+      );
+    case "payment_gateway":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Select value={val ?? ""} onValueChange={set}>
+            <SelectTrigger><SelectValue placeholder="Pick a gateway" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="cod">Cash on Delivery</SelectItem>
+              <SelectItem value="jazzcash_easypaisa">JazzCash / Easypaisa</SelectItem>
+              <SelectItem value="stripe">Stripe</SelectItem>
+              <SelectItem value="paypal">PayPal</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      );
+    case "tax_setup":
+      return (
+        <div className="space-y-2">
+          <Label>{label} required?</Label>
+          <YesNo value={val} onChange={set} />
+        </div>
+      );
+    case "dine_in_takeaway":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Select value={val ?? ""} onValueChange={set}>
+            <SelectTrigger><SelectValue placeholder="Pick one" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="dine_in">Dine-in</SelectItem>
+              <SelectItem value="takeaway">Takeaway</SelectItem>
+              <SelectItem value="both">Both</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      );
+    case "menu_type":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input value={val ?? ""} onChange={(e) => set(e.target.value)} placeholder="e.g. À la carte, Buffet, Set menu" />
+        </div>
+      );
+    case "reservation_system":
+      return (
+        <div className="space-y-2">
+          <Label>{label}?</Label>
+          <YesNo value={val} onChange={set} />
+        </div>
+      );
+    case "event_date":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input type="date" value={val ?? ""} onChange={(e) => set(e.target.value)} />
+        </div>
+      );
+    case "venue":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input value={val ?? ""} onChange={(e) => set(e.target.value)} placeholder="Venue name & address" />
+        </div>
+      );
+    case "rsvp_limit":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input type="number" min={0} value={val ?? ""} onChange={(e) => set(e.target.value ? Number(e.target.value) : undefined)} placeholder="e.g. 200" />
+        </div>
+      );
+    case "num_authors":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Input type="number" min={1} value={val ?? ""} onChange={(e) => set(e.target.value ? Number(e.target.value) : undefined)} placeholder="e.g. 3" />
+        </div>
+      );
+    case "newsletter":
+      return (
+        <div className="space-y-2">
+          <Label>{label}?</Label>
+          <YesNo value={val} onChange={set} />
+        </div>
+      );
+    case "departments":
+      return (
+        <div className="space-y-2">
+          <Label>{label}</Label>
+          <Textarea rows={2} value={val ?? ""} onChange={(e) => set(e.target.value)} placeholder="e.g. Programs, Volunteers, Fundraising" />
+        </div>
+      );
+    case "donation_system":
+      return (
+        <div className="space-y-2">
+          <Label>{label}?</Label>
+          <YesNo value={val} onChange={set} />
+        </div>
+      );
+    case "member_portal":
+      return (
+        <div className="space-y-2">
+          <Label>{label}?</Label>
+          <YesNo value={val} onChange={set} />
+        </div>
+      );
+  }
+};
+
+const Step2ProjectDetails = ({ data, update }: Props) => {
+  const { data: plan } = usePlan(data.plan_id);
+  const { data: template } = useTemplate(data.template_id);
+  const preset = useMemo(() => getPreset(template?.category, template?.subcategory), [template]);
+
+  // Mark details as auto-configured so step validation passes
   useEffect(() => {
-    if (type === "ecommerce" && planProducts != null && d.num_products !== planProducts) {
-      setDetail(data, update, "num_products", planProducts);
+    if (!template) return;
+    const d = data.project_details ?? {};
+    if (!d.auto_configured) {
+      update({
+        project_details: {
+          ...d,
+          auto_configured: true,
+          included_pages: preset.pages,
+          included_modules: preset.modules,
+          num_products: plan?.max_products,
+          num_pages: plan?.max_pages,
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [planProducts, type]);
+  }, [template, plan]);
 
-  // ECOMMERCE
-  if (type === "ecommerce") {
+  if (!template) {
     return (
-      <StepShell title="Tell us about your store" subtitle="A few quick details so we can build it right.">
-        <div className="space-y-2">
-          <Label>What are you selling?</Label>
-          <Select value={d.selling ?? ""} onValueChange={(v) => setDetail(data, update, "selling", v)}>
-            <SelectTrigger><SelectValue placeholder="Pick a category" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="clothing">Clothing & Fashion</SelectItem>
-              <SelectItem value="electronics">Electronics</SelectItem>
-              <SelectItem value="beauty">Beauty & Cosmetics</SelectItem>
-              <SelectItem value="home">Home & Lifestyle</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="num_products" className="flex items-center gap-1.5">
-              Products included
-              {planProducts != null && <Lock className="h-3 w-3 text-muted-foreground" />}
-            </Label>
-            {planProducts != null && (
-              <span className="text-[11px] text-muted-foreground">Included in {plan?.name}</span>
-            )}
-          </div>
-          <Input
-            id="num_products"
-            type="number"
-            min={0}
-            value={planProducts ?? d.num_products ?? ""}
-            onChange={(e) => setDetail(data, update, "num_products", e.target.value ? Number(e.target.value) : undefined)}
-            placeholder="e.g. 25"
-            readOnly={planProducts != null}
-            className={planProducts != null ? "bg-muted/50 cursor-not-allowed" : ""}
-          />
-          {planProducts != null && (
-            <p className="text-xs text-muted-foreground">
-              Need more? Buy extra product capacity from the marketplace anytime.
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label>Need payment gateway setup?</Label>
-          <YesNo value={d.payment_gateway_setup} onChange={(v) => setDetail(data, update, "payment_gateway_setup", v)} />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Do you have product images ready?</Label>
-          <YesNo value={d.has_images} onChange={(v) => setDetail(data, update, "has_images", v)} />
-          <p className="text-xs text-muted-foreground">You'll be able to send images later — we'll guide you.</p>
-        </div>
-      </StepShell>
-    );
-  }
-
-  // AGENCY
-  if (type === "agency") {
-    return (
-      <StepShell title="Tell us about your agency" subtitle="Help us shape the right structure.">
-        <div className="space-y-2">
-          <Label htmlFor="services_offered">Services offered</Label>
-          <Textarea
-            id="services_offered"
-            value={d.services_offered ?? ""}
-            onChange={(e) => setDetail(data, update, "services_offered", e.target.value)}
-            placeholder="e.g. Marketing, Design, Development"
-            rows={3}
-            maxLength={400}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="num_pages">Number of pages needed</Label>
-          <Input
-            id="num_pages"
-            type="number"
-            min={1}
-            value={d.num_pages ?? ""}
-            onChange={(e) => setDetail(data, update, "num_pages", e.target.value ? Number(e.target.value) : undefined)}
-            placeholder="e.g. 5"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Portfolio section required?</Label>
-          <YesNo value={d.portfolio} onChange={(v) => setDetail(data, update, "portfolio", v)} />
-        </div>
-      </StepShell>
-    );
-  }
-
-  // BOOKING
-  if (type === "booking") {
-    return (
-      <StepShell title="Booking system details" subtitle="What kind of bookings do you take?">
-        <div className="space-y-2">
-          <Label>Booking type</Label>
-          <Select value={d.booking_type ?? ""} onValueChange={(v) => setDetail(data, update, "booking_type", v)}>
-            <SelectTrigger><SelectValue placeholder="Pick a type" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="appointments">Appointments</SelectItem>
-              <SelectItem value="hotel">Hotel / Stays</SelectItem>
-              <SelectItem value="events">Events</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Time slot system needed?</Label>
-          <YesNo value={d.time_slots} onChange={(v) => setDetail(data, update, "time_slots", v)} />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Payment required at booking?</Label>
-          <YesNo value={d.booking_payment} onChange={(v) => setDetail(data, update, "booking_payment", v)} />
-        </div>
-      </StepShell>
-    );
-  }
-
-  // BUSINESS
-  if (type === "business") {
-    const pages = (d.pages ?? []) as string[];
-    const togglePage = (p: string) => {
-      setDetail(data, update, "pages", pages.includes(p) ? pages.filter((x) => x !== p) : [...pages, p]);
-    };
-    return (
-      <StepShell title="Business website details" subtitle="A few details about your company.">
-        <div className="space-y-2">
-          <Label htmlFor="business_subtype">Business type</Label>
-          <Input
-            id="business_subtype"
-            value={d.business_subtype ?? ""}
-            onChange={(e) => setDetail(data, update, "business_subtype", e.target.value)}
-            placeholder="e.g. Law firm, Clinic, Restaurant"
-            maxLength={100}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Pages needed</Label>
-          <div className="grid grid-cols-2 gap-2">
-            {["Home", "About", "Services", "Contact", "Blog", "Gallery"].map((p) => (
-              <label key={p} className="flex items-center gap-2 p-2.5 rounded-lg border border-border cursor-pointer hover:bg-secondary/50">
-                <Checkbox checked={pages.includes(p)} onCheckedChange={() => togglePage(p)} />
-                <span className="text-sm">{p}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Preferred contact method</Label>
-          <RadioGroup
-            value={d.contact_method ?? ""}
-            onValueChange={(v) => setDetail(data, update, "contact_method", v)}
-            className="flex gap-6"
-          >
-            {["Form", "WhatsApp", "Both"].map((m) => (
-              <label key={m} className="flex items-center gap-2 cursor-pointer">
-                <RadioGroupItem value={m.toLowerCase()} /> <span className="text-sm">{m}</span>
-              </label>
-            ))}
-          </RadioGroup>
-        </div>
-      </StepShell>
-    );
-  }
-
-  // MANAGEMENT
-  if (type === "management") {
-    return (
-      <StepShell title="Management system details" subtitle="So we can scope it correctly.">
-        <div className="space-y-2">
-          <Label>System type</Label>
-          <Select value={d.system_type ?? ""} onValueChange={(v) => setDetail(data, update, "system_type", v)}>
-            <SelectTrigger><SelectValue placeholder="Pick a system" /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="inventory">Inventory</SelectItem>
-              <SelectItem value="crm">CRM</SelectItem>
-              <SelectItem value="school">School / LMS</SelectItem>
-              <SelectItem value="hr">HR</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="user_roles_text">User roles required</Label>
-          <Input
-            id="user_roles_text"
-            value={d.user_roles_text ?? ""}
-            onChange={(e) => setDetail(data, update, "user_roles_text", e.target.value)}
-            placeholder="e.g. Admin, Manager, Staff"
-            maxLength={200}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label>Dashboard complexity</Label>
-          <RadioGroup
-            value={d.complexity ?? ""}
-            onValueChange={(v) => setDetail(data, update, "complexity", v)}
-            className="flex gap-6"
-          >
-            {["Basic", "Advanced"].map((m) => (
-              <label key={m} className="flex items-center gap-2 cursor-pointer">
-                <RadioGroupItem value={m.toLowerCase()} /> <span className="text-sm">{m}</span>
-              </label>
-            ))}
-          </RadioGroup>
-        </div>
+      <StepShell title="Select a template first" subtitle="Pick a template so we can auto-configure your pages and modules.">
+        <p className="text-sm text-muted-foreground">
+          Head to the <a href="/templates" className="text-primary underline">templates page</a> and choose one to continue.
+        </p>
       </StepShell>
     );
   }
 
   return (
-    <StepShell title="Project details" subtitle="Pick a project type in the previous step to continue.">
-      <p className="text-sm text-muted-foreground">No project type selected yet.</p>
+    <StepShell
+      title="Auto-configured for you"
+      subtitle="Your template and plan already define most of the structure. Just confirm the details below."
+    >
+      {/* Locked pages */}
+      <section className="rounded-xl border border-primary/15 bg-gradient-to-br from-primary/5 via-background to-background p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Included pages
+          </div>
+          <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
+            <Lock className="h-3 w-3" /> Configured by template
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {preset.pages.map((p) => (
+            <span key={p} className="text-xs px-2.5 py-1 rounded-md border border-primary/20 bg-primary/5 text-foreground/90">
+              {p}
+            </span>
+          ))}
+        </div>
+        {plan?.max_pages != null && preset.pages.length > plan.max_pages && (
+          <p className="text-[11px] text-muted-foreground">
+            Your plan covers {plan.max_pages} pages. Extra pages can be purchased from the marketplace.
+          </p>
+        )}
+      </section>
+
+      {/* Locked modules */}
+      {preset.modules.length > 0 && (
+        <section className="rounded-xl border border-accent/20 bg-gradient-to-br from-accent/5 via-background to-background p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Sparkles className="h-4 w-4 text-accent" />
+              Included modules
+            </div>
+            <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
+              <Lock className="h-3 w-3" /> Included in template
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {preset.modules.map((m) => (
+              <span key={m} className="text-xs px-2.5 py-1 rounded-md border border-accent/20 bg-accent/5 text-foreground/90">
+                {m}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Conditional, template-specific questions */}
+      {preset.conditionalFields.length > 0 && (
+        <div className="space-y-4 pt-2">
+          <div className="text-sm font-semibold text-foreground">A few quick details</div>
+          {preset.conditionalFields.map((f) => (
+            <ConditionalInput key={f} field={f} data={data} update={update} />
+          ))}
+        </div>
+      )}
+
+      {preset.conditionalFields.length === 0 && (
+        <p className="text-sm text-muted-foreground">
+          Everything's pre-configured for this template — continue to the next step.
+        </p>
+      )}
     </StepShell>
   );
 };

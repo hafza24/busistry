@@ -25,8 +25,9 @@ import Step6Store from "@/components/onboarding/Step4Store";
 import StepAddons from "@/components/onboarding/StepAddons";
 import Step8Contact from "@/components/onboarding/Step5Contact";
 import Step9Payment from "@/components/onboarding/Step6Payment";
-import SelectedTemplateBanner from "@/components/onboarding/SelectedTemplateBanner";
+
 import PlanSummaryCard from "@/components/onboarding/PlanSummaryCard";
+import TemplateSummaryCard from "@/components/onboarding/TemplateSummaryCard";
 
 const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Enhance", "Contact", "Confirm"];
 const TOTAL_STEPS = STEP_LABELS.length;
@@ -75,21 +76,8 @@ const Onboarding = () => {
   }, [loading]);
 
   const detailsValid = (): boolean => {
-    const d = data.project_details ?? {};
-    switch (data.project_type) {
-      case "ecommerce":
-        return !!d.selling && d.num_products !== undefined && !!d.payment_gateway_setup && !!d.has_images;
-      case "agency":
-        return !!d.services_offered && d.num_pages !== undefined && !!d.portfolio;
-      case "booking":
-        return !!d.booking_type && !!d.time_slots && !!d.booking_payment;
-      case "business":
-        return !!d.business_subtype && Array.isArray(d.pages) && d.pages.length > 0 && !!d.contact_method;
-      case "management":
-        return !!d.system_type && !!d.user_roles_text && !!d.complexity;
-      default:
-        return false;
-    }
+    // Step 2 is auto-configured from template/plan; require a template.
+    return !!(data.template_id);
   };
 
   const canProceed = (s: number): boolean => {
@@ -198,7 +186,7 @@ const Onboarding = () => {
 
         <div className="mb-6 space-y-3">
           <PlanSummaryCard planId={data.plan_id ?? planId} />
-          <SelectedTemplateBanner templateId={data.template_id ?? templateId} />
+          <TemplateSummaryCard templateId={data.template_id ?? templateId} />
         </div>
         </div>
 
