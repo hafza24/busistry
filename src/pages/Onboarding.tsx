@@ -186,7 +186,7 @@ const Onboarding = () => {
 
         <div className="mb-6 space-y-3">
           <PlanSummaryCard planId={data.plan_id ?? planId} />
-          <SelectedTemplateBanner templateId={data.template_id ?? templateId} />
+          <TemplateSummaryCard templateId={data.template_id ?? templateId} />
         </div>
         </div>
 
