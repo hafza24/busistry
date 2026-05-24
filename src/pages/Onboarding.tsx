@@ -60,8 +60,6 @@ const Onboarding = () => {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _ = null;
       const params = new URLSearchParams();
       if (planId) params.set("plan", planId);
       if (templateId) params.set("template", templateId);
