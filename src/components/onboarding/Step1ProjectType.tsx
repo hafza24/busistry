@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { ShoppingBag, Briefcase, Calendar, Globe, LayoutDashboard } from "lucide-react";
+import { ShoppingBag, Briefcase, Calendar, Globe, LayoutDashboard, Lock } from "lucide-react";
+import { useTemplate } from "@/hooks/useTemplate";
+import { CATEGORY_TO_PROJECT_TYPE } from "@/lib/templatePresets";
 
 interface Props {
   data: OnboardingData;
