@@ -127,6 +127,32 @@ export const getPreset = (category?: string | null, subcategory?: string | null)
   };
 };
 
+// Prefer per-template DB overrides; fall back to category/subcategory defaults.
+export const getPresetForTemplate = (template?: {
+  category?: string | null;
+  subcategory?: string | null;
+  preset_pages?: unknown;
+  preset_modules?: unknown;
+  preset_conditional_fields?: unknown;
+} | null): TemplatePreset => {
+  const base = getPreset(template?.category, template?.subcategory);
+  const arr = (v: unknown): string[] | null =>
+    Array.isArray(v) && v.length > 0 ? (v as string[]) : null;
+  return {
+    pages: arr(template?.preset_pages) ?? base.pages,
+    modules: arr(template?.preset_modules) ?? base.modules,
+    conditionalFields: (arr(template?.preset_conditional_fields) as ConditionalField[] | null) ?? base.conditionalFields,
+  };
+};
+
+export const ALL_CONDITIONAL_FIELDS: ConditionalField[] = [
+  "shipping_regions", "payment_gateway", "tax_setup",
+  "dine_in_takeaway", "menu_type", "reservation_system",
+  "event_date", "venue", "rsvp_limit",
+  "num_authors", "newsletter",
+  "departments", "donation_system", "member_portal",
+];
+
 export const FIELD_LABELS: Record<ConditionalField, string> = {
   shipping_regions: "Shipping regions",
   payment_gateway: "Payment gateway",
