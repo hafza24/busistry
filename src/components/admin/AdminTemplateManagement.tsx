@@ -291,6 +291,74 @@ const AdminTemplateManagement = () => {
               </div>
             </div>
 
+
+            {/* Onboarding presets */}
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-semibold">Onboarding presets</Label>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={!form.category}
+                  onClick={() => {
+                    const base = getPreset(form.category, form.subcategory);
+                    setForm((f) => ({
+                      ...f,
+                      preset_pages: f.preset_pages.length ? f.preset_pages : base.pages,
+                      preset_modules: f.preset_modules.length ? f.preset_modules : base.modules,
+                      preset_conditional_fields: f.preset_conditional_fields.length ? f.preset_conditional_fields : base.conditionalFields,
+                    }));
+                  }}
+                >
+                  Fill from category defaults
+                </Button>
+              </div>
+
+              <TagListEditor
+                label="Included pages"
+                placeholder="e.g. Home"
+                value={form.preset_pages}
+                onChange={(v) => setForm((f) => ({ ...f, preset_pages: v }))}
+              />
+              <TagListEditor
+                label="Included modules"
+                placeholder="e.g. Reviews"
+                value={form.preset_modules}
+                onChange={(v) => setForm((f) => ({ ...f, preset_modules: v }))}
+              />
+
+              <div>
+                <Label className="text-xs text-muted-foreground">Conditional questions to ask</Label>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {ALL_CONDITIONAL_FIELDS.map((f) => {
+                    const active = form.preset_conditional_fields.includes(f);
+                    return (
+                      <Badge
+                        key={f}
+                        variant={active ? "default" : "outline"}
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setForm((s) => ({
+                            ...s,
+                            preset_conditional_fields: active
+                              ? s.preset_conditional_fields.filter((x) => x !== f)
+                              : [...s.preset_conditional_fields, f],
+                          }))
+                        }
+                      >
+                        {FIELD_LABELS[f]}
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <p className="text-[11px] text-muted-foreground">
+                If left empty, defaults from the selected category/subcategory will be used.
+              </p>
+            </div>
+
             <div className="flex items-center gap-2">
               <Switch checked={form.is_active} onCheckedChange={(v) => setForm((f) => ({ ...f, is_active: v }))} />
               <Label>Active</Label>
