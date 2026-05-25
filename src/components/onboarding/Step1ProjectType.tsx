@@ -19,8 +19,19 @@ export const PROJECT_TYPES = [
 ];
 
 const Step1ProjectType = ({ data, update }: Props) => {
+  const { data: template } = useTemplate(data.template_id);
+  const autoType = template?.category ? CATEGORY_TO_PROJECT_TYPE[template.category] : undefined;
+  const locked = !!autoType;
+
+  useEffect(() => {
+    if (autoType && data.project_type !== autoType) {
+      update({ project_type: autoType });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoType]);
+
   const select = (value: string) => {
-    // Reset project_details when type changes
+    if (locked) return;
     if (data.project_type !== value) {
       update({ project_type: value, project_details: {} });
     } else {
@@ -29,7 +40,15 @@ const Step1ProjectType = ({ data, update }: Props) => {
   };
 
   return (
-    <StepShell title="What are you building?" subtitle="Pick the option closest to your project — we'll tailor the next step.">
+    <StepShell
+      title={locked ? "Project type set by your template" : "What are you building?"}
+      subtitle={locked ? "We picked this based on the template you chose. Continue when ready." : "Pick the option closest to your project — we'll tailor the next step."}
+    >
+      {locked && (
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground -mt-2">
+          <Lock className="h-3 w-3" /> Auto-selected from template
+        </div>
+      )}
       <div className="grid sm:grid-cols-2 gap-3">
         {PROJECT_TYPES.map((t) => {
           const selected = data.project_type === t.value;
