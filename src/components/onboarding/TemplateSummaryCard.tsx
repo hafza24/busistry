@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Lock, LayoutTemplate, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTemplate } from "@/hooks/useTemplate";
-import { getPreset } from "@/lib/templatePresets";
+import { getPresetForTemplate } from "@/lib/templatePresets";
 
 interface Props {
   templateId?: string | null;
@@ -36,7 +36,7 @@ const TemplateSummaryCard = ({ templateId }: Props) => {
     );
   }
 
-  const preset = getPreset(template.category, template.subcategory);
+  const preset = getPresetForTemplate(template);
 
   return (
     <Card className="border-accent/30 bg-gradient-to-br from-accent/5 via-background to-background overflow-hidden">
