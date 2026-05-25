@@ -50,14 +50,15 @@ const Step1ProjectType = ({ data, update }: Props) => {
         </div>
       )}
       <div className="grid sm:grid-cols-2 gap-3">
-        {PROJECT_TYPES.map((t) => {
+        {(locked ? PROJECT_TYPES.filter((t) => t.value === autoType) : PROJECT_TYPES).map((t) => {
           const selected = data.project_type === t.value;
           return (
             <button
               key={t.value}
               type="button"
               onClick={() => select(t.value)}
-              className={`text-left p-5 rounded-xl border-2 transition-all hover:shadow-md ${
+              disabled={locked}
+              className={`text-left p-5 rounded-xl border-2 transition-all ${locked ? "cursor-default" : "hover:shadow-md"} ${
                 selected ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/40"
               }`}
             >
