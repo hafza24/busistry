@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Pencil, Trash2, Upload, LayoutTemplate } from "lucide-react";
 import { toast } from "sonner";
 import { TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_NAMES } from "@/lib/templateCategories";
+import { ALL_CONDITIONAL_FIELDS, FIELD_LABELS, ConditionalField, getPreset } from "@/lib/templatePresets";
 
 interface TemplateForm {
   id?: string;
@@ -26,10 +27,14 @@ interface TemplateForm {
   features: string[];
   is_active: boolean;
   preview_image_url: string | null;
+  preset_pages: string[];
+  preset_modules: string[];
+  preset_conditional_fields: ConditionalField[];
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
+  preset_pages: [], preset_modules: [], preset_conditional_fields: [],
 };
 
 const AdminTemplateManagement = () => {
@@ -74,6 +79,9 @@ const AdminTemplateManagement = () => {
         features: t.features,
         is_active: t.is_active,
         preview_image_url,
+        preset_pages: t.preset_pages,
+        preset_modules: t.preset_modules,
+        preset_conditional_fields: t.preset_conditional_fields,
       };
 
       if (t.id) {
@@ -113,6 +121,9 @@ const AdminTemplateManagement = () => {
       description: t.description || "",
       demo_url: t.demo_url || "", features: Array.isArray(t.features) ? t.features : [],
       is_active: t.is_active, preview_image_url: t.preview_image_url,
+      preset_pages: Array.isArray(t.preset_pages) ? t.preset_pages : [],
+      preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
+      preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
     });
     setOpen(true);
   };
