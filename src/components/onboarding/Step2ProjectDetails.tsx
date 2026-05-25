@@ -177,18 +177,23 @@ const Step2ProjectDetails = ({ data, update }: Props) => {
   useEffect(() => {
     if (!template) return;
     const d = data.project_details ?? {};
+    const category = template.category ?? "";
+    const autoBusinessType = CATEGORY_TO_BUSINESS_TYPE[category];
+    const autoProjectType = CATEGORY_TO_PROJECT_TYPE[category];
+    const patch: Partial<OnboardingData> = {};
+    if (autoBusinessType && data.business_type !== autoBusinessType) patch.business_type = autoBusinessType;
+    if (autoProjectType && !data.project_type) patch.project_type = autoProjectType;
     if (!d.auto_configured) {
-      update({
-        project_details: {
-          ...d,
-          auto_configured: true,
-          included_pages: preset.pages,
-          included_modules: preset.modules,
-          num_products: plan?.max_products,
-          num_pages: plan?.max_pages,
-        },
-      });
+      patch.project_details = {
+        ...d,
+        auto_configured: true,
+        included_pages: preset.pages,
+        included_modules: preset.modules,
+        num_products: plan?.max_products,
+        num_pages: plan?.max_pages,
+      };
     }
+    if (Object.keys(patch).length) update(patch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [template, plan]);
 
