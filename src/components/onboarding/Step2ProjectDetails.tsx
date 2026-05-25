@@ -171,7 +171,7 @@ const ConditionalInput = ({
 const Step2ProjectDetails = ({ data, update }: Props) => {
   const { data: plan } = usePlan(data.plan_id);
   const { data: template } = useTemplate(data.template_id);
-  const preset = useMemo(() => getPreset(template?.category, template?.subcategory), [template]);
+  const preset = useMemo(() => getPresetForTemplate(template), [template]);
 
   // Mark details as auto-configured so step validation passes
   useEffect(() => {
