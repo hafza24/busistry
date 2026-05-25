@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Pencil, Trash2, Upload, LayoutTemplate } from "lucide-react";
 import { toast } from "sonner";
 import { TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_NAMES } from "@/lib/templateCategories";
+import { ALL_CONDITIONAL_FIELDS, FIELD_LABELS, ConditionalField, getPreset } from "@/lib/templatePresets";
 
 interface TemplateForm {
   id?: string;
@@ -26,10 +27,14 @@ interface TemplateForm {
   features: string[];
   is_active: boolean;
   preview_image_url: string | null;
+  preset_pages: string[];
+  preset_modules: string[];
+  preset_conditional_fields: ConditionalField[];
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
+  preset_pages: [], preset_modules: [], preset_conditional_fields: [],
 };
 
 const AdminTemplateManagement = () => {
@@ -74,6 +79,9 @@ const AdminTemplateManagement = () => {
         features: t.features,
         is_active: t.is_active,
         preview_image_url,
+        preset_pages: t.preset_pages,
+        preset_modules: t.preset_modules,
+        preset_conditional_fields: t.preset_conditional_fields,
       };
 
       if (t.id) {
@@ -113,6 +121,9 @@ const AdminTemplateManagement = () => {
       description: t.description || "",
       demo_url: t.demo_url || "", features: Array.isArray(t.features) ? t.features : [],
       is_active: t.is_active, preview_image_url: t.preview_image_url,
+      preset_pages: Array.isArray(t.preset_pages) ? t.preset_pages : [],
+      preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
+      preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
     });
     setOpen(true);
   };
@@ -280,6 +291,74 @@ const AdminTemplateManagement = () => {
               </div>
             </div>
 
+
+            {/* Onboarding presets */}
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-semibold">Onboarding presets</Label>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={!form.category}
+                  onClick={() => {
+                    const base = getPreset(form.category, form.subcategory);
+                    setForm((f) => ({
+                      ...f,
+                      preset_pages: f.preset_pages.length ? f.preset_pages : base.pages,
+                      preset_modules: f.preset_modules.length ? f.preset_modules : base.modules,
+                      preset_conditional_fields: f.preset_conditional_fields.length ? f.preset_conditional_fields : base.conditionalFields,
+                    }));
+                  }}
+                >
+                  Fill from category defaults
+                </Button>
+              </div>
+
+              <TagListEditor
+                label="Included pages"
+                placeholder="e.g. Home"
+                value={form.preset_pages}
+                onChange={(v) => setForm((f) => ({ ...f, preset_pages: v }))}
+              />
+              <TagListEditor
+                label="Included modules"
+                placeholder="e.g. Reviews"
+                value={form.preset_modules}
+                onChange={(v) => setForm((f) => ({ ...f, preset_modules: v }))}
+              />
+
+              <div>
+                <Label className="text-xs text-muted-foreground">Conditional questions to ask</Label>
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {ALL_CONDITIONAL_FIELDS.map((f) => {
+                    const active = form.preset_conditional_fields.includes(f);
+                    return (
+                      <Badge
+                        key={f}
+                        variant={active ? "default" : "outline"}
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setForm((s) => ({
+                            ...s,
+                            preset_conditional_fields: active
+                              ? s.preset_conditional_fields.filter((x) => x !== f)
+                              : [...s.preset_conditional_fields, f],
+                          }))
+                        }
+                      >
+                        {FIELD_LABELS[f]}
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <p className="text-[11px] text-muted-foreground">
+                If left empty, defaults from the selected category/subcategory will be used.
+              </p>
+            </div>
+
             <div className="flex items-center gap-2">
               <Switch checked={form.is_active} onCheckedChange={(v) => setForm((f) => ({ ...f, is_active: v }))} />
               <Label>Active</Label>
@@ -294,6 +373,53 @@ const AdminTemplateManagement = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    </div>
+  );
+};
+
+const TagListEditor = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder?: string;
+  value: string[];
+  onChange: (v: string[]) => void;
+}) => {
+  const [draft, setDraft] = useState("");
+  const add = () => {
+    const t = draft.trim();
+    if (!t || value.includes(t)) return;
+    onChange([...value, t]);
+    setDraft("");
+  };
+  return (
+    <div>
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <div className="flex gap-2 mt-1">
+        <Input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder={placeholder}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }}
+        />
+        <Button type="button" size="sm" variant="outline" onClick={add}>Add</Button>
+      </div>
+      <div className="flex flex-wrap gap-1 mt-2">
+        {value.map((v, i) => (
+          <Badge
+            key={`${v}-${i}`}
+            variant="secondary"
+            className="cursor-pointer"
+            onClick={() => onChange(value.filter((_, idx) => idx !== i))}
+          >
+            {v} ×
+          </Badge>
+        ))}
+        {value.length === 0 && <span className="text-[11px] text-muted-foreground">None — using defaults</span>}
+      </div>
     </div>
   );
 };

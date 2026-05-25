@@ -899,6 +899,9 @@ export type Database = {
           is_active: boolean
           name: string
           niche: string
+          preset_conditional_fields: Json
+          preset_modules: Json
+          preset_pages: Json
           preview_image_url: string | null
           subcategory: string | null
         }
@@ -913,6 +916,9 @@ export type Database = {
           is_active?: boolean
           name: string
           niche: string
+          preset_conditional_fields?: Json
+          preset_modules?: Json
+          preset_pages?: Json
           preview_image_url?: string | null
           subcategory?: string | null
         }
@@ -927,6 +933,9 @@ export type Database = {
           is_active?: boolean
           name?: string
           niche?: string
+          preset_conditional_fields?: Json
+          preset_modules?: Json
+          preset_pages?: Json
           preview_image_url?: string | null
           subcategory?: string | null
         }
