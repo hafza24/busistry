@@ -9,7 +9,7 @@ import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
 import { usePlan } from "@/hooks/usePlan";
 import { useTemplate } from "@/hooks/useTemplate";
-import { getPreset, FIELD_LABELS, ConditionalField } from "@/lib/templatePresets";
+import { getPreset, FIELD_LABELS, ConditionalField, CATEGORY_TO_BUSINESS_TYPE, CATEGORY_TO_PROJECT_TYPE } from "@/lib/templatePresets";
 
 interface Props {
   data: OnboardingData;
