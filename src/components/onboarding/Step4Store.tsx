@@ -16,11 +16,16 @@ const Step4Store = ({ data, update }: Props) => {
   const { data: plan } = usePlan(data.plan_id);
   const planProducts = plan?.max_products;
 
-  // Keep store-level product count in sync with the plan
+  // Keep store-level product count in sync with the plan + default payment to COD
   useEffect(() => {
+    const patch: Partial<OnboardingData> = {};
     if (planProducts != null && data.product_count_estimate !== planProducts) {
-      update({ product_count_estimate: planProducts });
+      patch.product_count_estimate = planProducts;
     }
+    if (!data.payment_gateway) {
+      patch.payment_gateway = data.project_details?.payment_gateway ?? "cod";
+    }
+    if (Object.keys(patch).length) update(patch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planProducts]);
 
@@ -50,32 +55,6 @@ const Step4Store = ({ data, update }: Props) => {
             <SelectItem value="mixed">Mixed</SelectItem>
           </SelectContent>
         </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>Payment gateway preference</Label>
-        <Select value={data.payment_gateway ?? ""} onValueChange={(v) => update({ payment_gateway: v })}>
-          <SelectTrigger><SelectValue placeholder="Pick a gateway" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="cod">Cash on Delivery</SelectItem>
-            <SelectItem value="jazzcash_easypaisa">JazzCash / Easypaisa</SelectItem>
-            <SelectItem value="stripe">Stripe</SelectItem>
-            <SelectItem value="paypal">PayPal</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="shipping">Shipping requirements</Label>
-        <Textarea
-          id="shipping"
-          value={data.shipping_requirements ?? ""}
-          onChange={(e) => update({ shipping_requirements: e.target.value })}
-          placeholder="Domestic, international, free shipping rules, carriers, etc."
-          rows={3}
-          maxLength={500}
-        />
       </div>
 
       <div className="space-y-2">

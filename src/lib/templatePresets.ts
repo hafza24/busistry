@@ -143,3 +143,32 @@ export const FIELD_LABELS: Record<ConditionalField, string> = {
   donation_system: "Donation system",
   member_portal: "Member portal",
 };
+
+// Map template category -> business_type + project_type so the form auto-fills.
+export const CATEGORY_TO_BUSINESS_TYPE: Record<string, string> = {
+  Ecommerce: "ecommerce",
+  Portfolio: "portfolio",
+  Business: "agency",
+  "Management System": "saas",
+  Organization: "other",
+  "News/Blog": "other",
+  Social: "other",
+  Invite: "other",
+  Wishes: "other",
+  Forms: "other",
+  Education: "other",
+};
+
+export const CATEGORY_TO_PROJECT_TYPE: Record<string, string> = {
+  Ecommerce: "ecommerce",
+  Business: "business",
+  Portfolio: "business",
+  "Management System": "management",
+  Organization: "business",
+  "News/Blog": "business",
+  Social: "business",
+  Invite: "booking",
+  Wishes: "business",
+  Forms: "business",
+  Education: "booking",
+};
