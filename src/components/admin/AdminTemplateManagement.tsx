@@ -377,4 +377,51 @@ const AdminTemplateManagement = () => {
   );
 };
 
+const TagListEditor = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder?: string;
+  value: string[];
+  onChange: (v: string[]) => void;
+}) => {
+  const [draft, setDraft] = useState("");
+  const add = () => {
+    const t = draft.trim();
+    if (!t || value.includes(t)) return;
+    onChange([...value, t]);
+    setDraft("");
+  };
+  return (
+    <div>
+      <Label className="text-xs text-muted-foreground">{label}</Label>
+      <div className="flex gap-2 mt-1">
+        <Input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder={placeholder}
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }}
+        />
+        <Button type="button" size="sm" variant="outline" onClick={add}>Add</Button>
+      </div>
+      <div className="flex flex-wrap gap-1 mt-2">
+        {value.map((v, i) => (
+          <Badge
+            key={`${v}-${i}`}
+            variant="secondary"
+            className="cursor-pointer"
+            onClick={() => onChange(value.filter((_, idx) => idx !== i))}
+          >
+            {v} ×
+          </Badge>
+        ))}
+        {value.length === 0 && <span className="text-[11px] text-muted-foreground">None — using defaults</span>}
+      </div>
+    </div>
+  );
+};
+
 export default AdminTemplateManagement;
