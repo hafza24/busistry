@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
 import { Search, CreditCard, CheckCircle, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,11 @@ const steps = [
 
 const HowItWorks = () => (
   <div className="py-16">
+    <SEO
+      title="How It Works — Busistree"
+      description="Four steps from template to live website: browse, choose a plan, we set it up, and you start selling. Delivered in 24–48 hours."
+      path="/how-it-works"
+    />
     <div className="container max-w-3xl">
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold font-display text-foreground mb-4">How It Works</h1>
