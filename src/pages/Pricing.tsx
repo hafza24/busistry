@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,11 @@ const Pricing = () => {
 
   return (
     <div className="py-16">
+      <SEO
+        title="Pricing — Busistree website & store plans"
+        description="Simple, transparent PKR pricing for free, rent, and buy plans. No hidden fees. Pay via JazzCash, Easypaisa, NayaPay, Raast, or bank transfer."
+        path="/pricing"
+      />
       <div className="container">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold font-display text-foreground mb-4">Simple, Transparent Pricing</h1>

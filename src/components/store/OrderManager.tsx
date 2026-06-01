@@ -92,7 +92,7 @@ const OrderManager = ({ storeId }: Props) => {
                   <TableCell><Badge variant="outline" className={statusColors[order.status] || ""}>{order.status}</Badge></TableCell>
                   <TableCell className="text-muted-foreground text-sm">{format(new Date(order.created_at), "dd MMM yyyy")}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => openDetail(order)}><Eye className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => openDetail(order)} aria-label="View order details"><Eye className="h-4 w-4" aria-hidden="true" /></Button>
                   </TableCell>
                 </TableRow>
               ))}

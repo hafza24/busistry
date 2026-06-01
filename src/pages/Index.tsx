@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -127,6 +128,11 @@ const Index = () => {
 
   return (
     <div>
+      <SEO
+        title="Busistree — Launch your online store in 48 hours"
+        description="Done-for-you WordPress websites and ecommerce stores for Pakistani businesses. Pick a template, fill a smart form, go live in 24–48 hours."
+        path="/"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border/60">
         <div className="absolute inset-0 -z-10">

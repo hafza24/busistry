@@ -126,8 +126,8 @@ const ProductManager = ({ storeId }: Props) => {
                   <TableCell><Badge variant={p.stock > 0 ? "secondary" : "destructive"}>{p.stock}</Badge></TableCell>
                   <TableCell><Badge variant={p.is_active ? "default" : "outline"}>{p.is_active ? "Yes" : "No"}</Badge></TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(p.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => openEdit(p)} aria-label="Edit product"><Pencil className="h-4 w-4" aria-hidden="true" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(p.id)} aria-label="Delete product"><Trash2 className="h-4 w-4 text-destructive" aria-hidden="true" /></Button>
                   </TableCell>
                 </TableRow>
               ))}

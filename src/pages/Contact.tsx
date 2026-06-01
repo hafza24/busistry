@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,11 @@ const Contact = () => {
 
   return (
     <div className="py-16">
+      <SEO
+        title="Contact — Busistree"
+        description="Get in touch with the Busistree team. We typically respond within one business day."
+        path="/contact"
+      />
       <div className="container max-w-2xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold font-display text-foreground mb-4">Contact Us</h1>

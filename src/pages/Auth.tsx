@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -61,6 +62,12 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/30 px-4">
+      <SEO
+        title={isLogin ? "Sign In — Busistree" : "Create your account — Busistree"}
+        description="Sign in to manage your Busistree websites, stores, and orders."
+        path="/auth"
+        noindex
+      />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold font-display text-foreground">

@@ -176,8 +176,8 @@ const AdminWebsiteOrders = () => {
                 <TableCell><Badge className={statusColors[order.status] || ""}>{order.status.replace("_", " ")}</Badge></TableCell>
                 <TableCell>{format(new Date(order.created_at), "dd MMM yyyy")}</TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="icon" onClick={() => openDetail(order)}>
-                    <Eye className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" onClick={() => openDetail(order)} aria-label="View order details">
+                    <Eye className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </TableCell>
               </TableRow>

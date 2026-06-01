@@ -111,8 +111,8 @@ const Step3Team = ({ data, update }: Props) => {
                   value={m.role}
                   onChange={(e) => updateMember(i, { role: e.target.value })}
                 />
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeMember(i)}>
-                  <X className="h-4 w-4" />
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeMember(i)} aria-label="Remove team member">
+                  <X className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </div>
             ))}

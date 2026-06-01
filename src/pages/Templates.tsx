@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -36,6 +37,11 @@ const Templates = () => {
 
   return (
     <div className="py-16">
+      <SEO
+        title="Website & Store Templates — Busistree"
+        description="Browse ecommerce, portfolio, blog, organization and event templates. Each one is fully customized with your brand and launched in 24–48 hours."
+        path="/templates"
+      />
       <div className="container">
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Choose your template</h1>
