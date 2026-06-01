@@ -102,8 +102,8 @@ const CategoryManager = ({ storeId }: Props) => {
                     <Switch checked={cat.is_active} onCheckedChange={() => toggleActive(cat)} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => openEdit(cat)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(cat.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => openEdit(cat)} aria-label="Edit category"><Pencil className="h-4 w-4" aria-hidden="true" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(cat.id)} aria-label="Delete category"><Trash2 className="h-4 w-4 text-destructive" aria-hidden="true" /></Button>
                   </TableCell>
                 </TableRow>
               ))}

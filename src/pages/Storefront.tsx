@@ -265,9 +265,9 @@ const Storefront = () => {
                     <p className="text-xs text-muted-foreground">PKR {Number(item.product.price).toLocaleString()}</p>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQty(item.product.id, -1)}><Minus className="h-3 w-3" /></Button>
-                    <span className="w-6 text-center text-sm">{item.quantity}</span>
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQty(item.product.id, 1)}><Plus className="h-3 w-3" /></Button>
+                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQty(item.product.id, -1)} aria-label="Decrease quantity"><Minus className="h-3 w-3" aria-hidden="true" /></Button>
+                    <span className="w-6 text-center text-sm" aria-live="polite">{item.quantity}</span>
+                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQty(item.product.id, 1)} aria-label="Increase quantity"><Plus className="h-3 w-3" aria-hidden="true" /></Button>
                   </div>
                   <span className="text-sm font-medium w-20 text-right">PKR {(Number(item.product.price) * item.quantity).toLocaleString()}</span>
                 </div>
