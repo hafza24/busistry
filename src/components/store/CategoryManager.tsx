@@ -9,8 +9,11 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
 
 interface Props {
   storeId: string;
@@ -19,7 +22,7 @@ interface Props {
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 const CategoryManager = ({ storeId }: Props) => {
-  const { data: categories, isLoading } = useCategories(storeId);
+  const { data: categories, isLoading, isError, refetch } = useCategories(storeId);
   const createMut = useCreateCategory();
   const updateMut = useUpdateCategory();
   const deleteMut = useDeleteCategory();
@@ -71,7 +74,19 @@ const CategoryManager = ({ storeId }: Props) => {
     await updateMut.mutateAsync({ id: cat.id, store_id: storeId, is_active: !cat.is_active });
   };
 
-  if (isLoading) return <div className="py-12 text-center text-muted-foreground">Loading categories...</div>;
+  if (isLoading) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Categories</h2>
+      <TableSkeleton columns={4} rows={5} />
+    </div>
+  );
+
+  if (isError) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Categories</h2>
+      <ErrorState message="We couldn't load your categories." onRetry={() => refetch()} />
+    </div>
+  );
 
   return (
     <div className="space-y-6">
