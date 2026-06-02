@@ -3,6 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { FileText, Clock, CheckCircle2, XCircle, AlertCircle, Zap } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
+import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
 
 const statusConfig: Record<string, { color: string; icon: typeof Clock; label: string }> = {
   pending: { color: "bg-yellow-100 text-yellow-800 border-yellow-200", icon: Clock, label: "Pending" },
@@ -47,24 +50,29 @@ const StatusPipeline = ({ currentStatus }: { currentStatus: string }) => {
 };
 
 const MyRequests = () => {
-  const { data: requests, isLoading } = useStoreRequests();
+  const { data: requests, isLoading, isError, refetch } = useStoreRequests();
 
   if (isLoading) {
-    return <div className="flex items-center justify-center py-12 text-muted-foreground">Loading requests...</div>;
+    return (
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold font-display text-foreground">My Requests</h2>
+        <CardGridSkeleton count={3} columns={1} />
+      </div>
+    );
   }
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold font-display text-foreground">My Requests</h2>
 
-      {!requests || requests.length === 0 ? (
-        <Card className="border-dashed border-2 border-border">
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold font-display text-foreground mb-2">No requests yet</h3>
-            <p className="text-muted-foreground">Your store requests will appear here once you launch a store.</p>
-          </CardContent>
-        </Card>
+      {isError ? (
+        <ErrorState message="We couldn't load your requests." onRetry={() => refetch()} />
+      ) : !requests || requests.length === 0 ? (
+        <EmptyState
+          icon={FileText}
+          title="No requests yet"
+          description="Your store requests will appear here once you launch a store."
+        />
       ) : (
         <div className="space-y-4">
           {requests.map((req) => {

@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Globe, Clock, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
+import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
 
 const statusConfig: Record<string, { color: string; label: string }> = {
   pending: { color: "bg-yellow-100 text-yellow-800", label: "Pending" },
@@ -69,7 +72,7 @@ const DecryptedCredentials = ({ orderId, hasUrl }: { orderId: string; hasUrl: bo
 const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
   const { user } = useAuth();
 
-  const { data: orders, isLoading } = useQuery({
+  const { data: orders, isLoading, isError, refetch } = useQuery({
     queryKey: ["website_orders", user?.id],
     enabled: !!user,
     queryFn: async () => {
@@ -88,18 +91,18 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
     },
   });
 
-  if (isLoading) return <div className="text-center text-muted-foreground py-8">Loading orders...</div>;
+  if (isLoading) return <CardGridSkeleton count={3} columns={1} />;
+
+  if (isError) return <ErrorState message="We couldn't load your website orders." onRetry={() => refetch()} />;
 
   if (!orders?.length) {
     return (
-      <Card className="text-center py-12">
-        <CardContent>
-          <Globe className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold font-display mb-2">No orders yet</h3>
-          <p className="text-muted-foreground mb-4">Order your first website and we'll build it for you!</p>
-          <Button onClick={onNewOrder}>Order a Website</Button>
-        </CardContent>
-      </Card>
+      <EmptyState
+        icon={Globe}
+        title="No orders yet"
+        description="Order your first website and we'll build it for you!"
+        action={<Button onClick={onNewOrder}>Order a Website</Button>}
+      />
     );
   }
 

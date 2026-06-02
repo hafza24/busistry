@@ -4,11 +4,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Users } from "lucide-react";
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
+import { ErrorState } from "@/components/ui/error-state";
 
 const AdminUserManagement = () => {
-  const { data: profiles, isLoading } = useAllProfiles();
+  const { data: profiles, isLoading, isError, refetch } = useAllProfiles();
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading users...</div>;
+  if (isLoading) return <TableSkeleton columns={3} rows={6} />;
+  if (isError) return <ErrorState message="We couldn't load users." onRetry={() => refetch()} />;
 
   return (
     <div className="space-y-4">
