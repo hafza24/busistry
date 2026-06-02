@@ -9,8 +9,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { ShoppingCart, Plus, Minus, Trash2, Store, Search } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Trash2, Store, Search, PackageSearch } from "lucide-react";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ProductGridSkeleton } from "@/components/ui/loading-skeletons";
+import { EmptyState } from "@/components/ui/empty-state";
 
 interface CartItem {
   product: any;
@@ -28,7 +31,7 @@ const Storefront = () => {
   const [customerForm, setCustomerForm] = useState({ name: "", phone: "", email: "", address: "" });
   const [submitting, setSubmitting] = useState(false);
 
-  const { data: store, isLoading: storeLoading } = useQuery({
+  const { data: store, isLoading: storeLoading, isError: storeError } = useQuery({
     queryKey: ["storefront-store", slug],
     enabled: !!slug,
     queryFn: async () => {
@@ -61,7 +64,7 @@ const Storefront = () => {
     },
   });
 
-  const { data: products } = useQuery({
+  const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ["storefront-products", store?.id],
     enabled: !!store,
     queryFn: async () => {
@@ -137,13 +140,28 @@ const Storefront = () => {
 
   const primaryColor = settings?.primary_color || "#16a34a";
 
-  if (storeLoading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading store...</div>;
-  if (!store) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <Store className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+  if (storeLoading) return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Skeleton className="h-8 w-40" />
+          <Skeleton className="h-9 w-24" />
+        </div>
+      </header>
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <Skeleton className="h-10 w-full max-w-sm mb-6" />
+        <ProductGridSkeleton count={8} />
+      </div>
+    </div>
+  );
+  if (storeError || !store) return (
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="text-center max-w-md">
+        <div className="rounded-full bg-muted p-4 inline-flex mb-4">
+          <Store className="h-10 w-10 text-muted-foreground" aria-hidden="true" />
+        </div>
         <h1 className="text-2xl font-bold font-display mb-2">Store Not Found</h1>
-        <p className="text-muted-foreground">This store doesn't exist or is not active.</p>
+        <p className="text-muted-foreground">This store doesn't exist or is not currently active. Please check the link and try again.</p>
       </div>
     </div>
   );
@@ -191,31 +209,49 @@ const Storefront = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filteredProducts?.map((p) => (
-            <Card key={p.id} className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelectedProduct(p)}>
-              <div className="aspect-square bg-muted">
-                {(p.images as string[])?.length > 0 ? (
-                  <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">No image</div>
-                )}
-              </div>
-              <CardContent className="p-3">
-                <h3 className="font-medium text-sm truncate">{p.name}</h3>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
-                  {p.compare_at_price && (
-                    <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+        {productsLoading ? (
+          <ProductGridSkeleton count={8} />
+        ) : filteredProducts && filteredProducts.length > 0 ? (
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {filteredProducts.map((p) => (
+              <Card key={p.id} className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelectedProduct(p)}>
+                <div className="aspect-square bg-muted">
+                  {(p.images as string[])?.length > 0 ? (
+                    <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No image</div>
                   )}
                 </div>
-                {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        {filteredProducts?.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground">No products found.</div>
+                <CardContent className="p-3">
+                  <h3 className="font-medium text-sm truncate">{p.name}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
+                    {p.compare_at_price && (
+                      <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+                    )}
+                  </div>
+                  {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={PackageSearch}
+            title={searchQuery || selectedCategory ? "No matching products" : "No products yet"}
+            description={
+              searchQuery || selectedCategory
+                ? "Try adjusting your search or category filter."
+                : "This store hasn't added any products yet. Please check back soon."
+            }
+            action={
+              (searchQuery || selectedCategory) ? (
+                <Button variant="outline" onClick={() => { setSearchQuery(""); setSelectedCategory(null); }}>
+                  Clear filters
+                </Button>
+              ) : undefined
+            }
+          />
         )}
       </div>
 

@@ -11,6 +11,8 @@ import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
 import { Eye } from "lucide-react";
 import { toast } from "sonner";
+import { ErrorState } from "@/components/ui/error-state";
+import { TableSkeleton, StatCardsSkeleton } from "@/components/ui/loading-skeletons";
 
 interface Props { storeId: string; }
 
@@ -26,7 +28,7 @@ const statusColors: Record<string, string> = {
 const statuses = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"];
 
 const OrderManager = ({ storeId }: Props) => {
-  const { data: orders, isLoading } = useOrders(storeId);
+  const { data: orders, isLoading, isError, refetch } = useOrders(storeId);
   const updateStatus = useUpdateOrderStatus();
   const [selected, setSelected] = useState<any>(null);
   const [newStatus, setNewStatus] = useState("");
@@ -47,7 +49,20 @@ const OrderManager = ({ storeId }: Props) => {
     } catch (e: any) { toast.error(e.message); }
   };
 
-  if (isLoading) return <div className="py-12 text-center text-muted-foreground">Loading orders...</div>;
+  if (isLoading) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Orders</h2>
+      <StatCardsSkeleton count={3} />
+      <TableSkeleton columns={6} rows={6} />
+    </div>
+  );
+
+  if (isError) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Orders</h2>
+      <ErrorState message="We couldn't load your orders." onRetry={() => refetch()} />
+    </div>
+  );
 
   const summary = {
     total: orders?.length || 0,

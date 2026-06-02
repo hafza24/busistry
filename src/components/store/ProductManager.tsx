@@ -10,9 +10,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Package } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { ErrorState } from "@/components/ui/error-state";
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
 
 interface Props { storeId: string; }
 
@@ -21,7 +23,7 @@ const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").repla
 const emptyForm = { name: "", slug: "", description: "", price: "", compare_at_price: "", stock: "0", category_id: "", is_active: true, images: [] as string[] };
 
 const ProductManager = ({ storeId }: Props) => {
-  const { data: products, isLoading } = useProducts(storeId);
+  const { data: products, isLoading, isError, refetch } = useProducts(storeId);
   const { data: categories } = useCategories(storeId);
   const createMut = useCreateProduct();
   const updateMut = useUpdateProduct();
@@ -87,7 +89,19 @@ const ProductManager = ({ storeId }: Props) => {
     try { await deleteMut.mutateAsync({ id, store_id: storeId }); toast.success("Deleted"); } catch (e: any) { toast.error(e.message); }
   };
 
-  if (isLoading) return <div className="py-12 text-center text-muted-foreground">Loading products...</div>;
+  if (isLoading) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Products</h2>
+      <TableSkeleton columns={7} rows={6} />
+    </div>
+  );
+
+  if (isError) return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold font-display text-foreground">Products</h2>
+      <ErrorState message="We couldn't load your products." onRetry={() => refetch()} />
+    </div>
+  );
 
   return (
     <div className="space-y-6">
