@@ -4,6 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import { format } from "date-fns";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
+import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -13,7 +16,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function MyAddons({ storeId }: { storeId: string }) {
-  const { data: addons = [], isLoading } = useStoreAddons(storeId);
+  const { data: addons = [], isLoading, isError, refetch } = useStoreAddons(storeId);
   const { data: products = [] } = useWebsiteProducts();
   const { data: integrations = [] } = useIntegrations();
 
@@ -22,18 +25,26 @@ export default function MyAddons({ storeId }: { storeId: string }) {
     return (list as any[]).find((x) => x.id === a.item_id);
   };
 
-  if (isLoading) return <div className="text-muted-foreground">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <h2 className="font-display text-2xl font-bold">My Add-ons</h2>
+        <CardGridSkeleton count={3} columns={1} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
       <h2 className="font-display text-2xl font-bold">My Add-ons</h2>
-      {addons.length === 0 ? (
-        <Card className="border-dashed border-2">
-          <CardContent className="py-12 text-center text-muted-foreground">
-            <Sparkles className="h-10 w-10 mx-auto mb-3 opacity-40" />
-            <p>No add-ons installed yet. Browse the marketplace to add features.</p>
-          </CardContent>
-        </Card>
+      {isError ? (
+        <ErrorState message="We couldn't load your add-ons." onRetry={() => refetch()} />
+      ) : addons.length === 0 ? (
+        <EmptyState
+          icon={Sparkles}
+          title="No add-ons installed yet"
+          description="Browse the marketplace to add features to your store."
+        />
       ) : (
         <div className="grid gap-3">
           {addons.map((a: any) => {

@@ -1,3 +1,4 @@
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { useState } from "react";
 import { useAllIntegrations, useUpsertIntegration, useDeleteIntegration } from "@/hooks/useMarketplace";
 import { Card, CardContent } from "@/components/ui/card";
@@ -44,7 +45,7 @@ export default function AdminIntegrations() {
         <Button onClick={() => setEditing({ ...empty })}><Plus className="h-4 w-4 mr-2" /> New</Button>
       </div>
 
-      {isLoading ? <p className="text-muted-foreground">Loading...</p> : (
+      {isLoading ? <TableSkeleton columns={4} rows={5} /> : (
         <div className="grid gap-3">
           {data.map((i: any) => (
             <Card key={i.id}>

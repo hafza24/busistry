@@ -8,6 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Store, Package, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
+import { TableSkeleton, StatCardsSkeleton } from "@/components/ui/loading-skeletons";
+import { ErrorState } from "@/components/ui/error-state";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -17,7 +19,7 @@ const statusColors: Record<string, string> = {
 };
 
 const AdminStoreManagement = () => {
-  const { data: stores, isLoading } = useAllStores();
+  const { data: stores, isLoading, isError, refetch } = useAllStores();
   const updateStatus = useUpdateStoreStatus();
   const navigate = useNavigate();
 
@@ -30,7 +32,13 @@ const AdminStoreManagement = () => {
     }
   };
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading stores...</div>;
+  if (isLoading) return (
+    <div className="space-y-4">
+      <StatCardsSkeleton count={3} />
+      <TableSkeleton columns={8} rows={6} />
+    </div>
+  );
+  if (isError) return <ErrorState message="We couldn't load stores." onRetry={() => refetch()} />;
 
   return (
     <div className="space-y-4">

@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CheckCircle, XCircle, Eye, Clock, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
+import { ErrorState } from "@/components/ui/error-state";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -23,7 +25,7 @@ const statusColors: Record<string, string> = {
 };
 
 const AdminRequestManagement = () => {
-  const { data: requests, isLoading } = useAllStoreRequests();
+  const { data: requests, isLoading, isError, refetch } = useAllStoreRequests();
   const { data: plans } = usePlans();
   const updateStatus = useUpdateRequestStatus();
   const activateStore = useActivateStore();
@@ -70,7 +72,8 @@ const AdminRequestManagement = () => {
     } catch { toast.error("Failed to activate store"); }
   };
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading requests...</div>;
+  if (isLoading) return <TableSkeleton columns={8} rows={6} />;
+  if (isError) return <ErrorState message="We couldn't load requests." onRetry={() => refetch()} />;
 
   return (
     <div className="space-y-4">
