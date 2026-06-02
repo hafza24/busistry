@@ -39,7 +39,7 @@ export default function AdminWebsiteProducts() {
         <Button onClick={() => setEditing({ ...empty })}><Plus className="h-4 w-4 mr-2" /> New</Button>
       </div>
 
-      {isLoading ? <p className="text-muted-foreground">Loading...</p> : (
+      {isLoading ? <TableSkeleton columns={4} rows={5} /> : (
         <div className="grid gap-3">
           {data.map((p: any) => (
             <Card key={p.id}>

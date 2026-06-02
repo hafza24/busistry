@@ -139,7 +139,7 @@ const AdminTemplateManagement = () => {
     setForm((f) => ({ ...f, features: f.features.filter((_, i) => i !== idx) }));
   };
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading templates...</div>;
+  if (isLoading) return <TableSkeleton columns={5} rows={6} />;
 
   return (
     <div className="space-y-4">

@@ -142,7 +142,7 @@ const AdminAddonManagement = () => {
     setOpen(true);
   };
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading add-ons…</div>;
+  if (isLoading) return <TableSkeleton columns={6} rows={6} />;
 
   return (
     <div className="space-y-4">

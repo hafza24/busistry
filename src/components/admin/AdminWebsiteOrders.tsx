@@ -131,7 +131,7 @@ const AdminWebsiteOrders = () => {
     completed: orders?.filter((o: any) => o.status === "completed").length || 0,
   };
 
-  if (isLoading) return <div className="text-center text-muted-foreground py-8">Loading...</div>;
+  if (isLoading) return <TableSkeleton columns={7} rows={6} />;
 
   return (
     <div className="space-y-6">

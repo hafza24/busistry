@@ -129,7 +129,7 @@ const AdminPlanManagement = () => {
     setForm((f) => ({ ...f, features: f.features.filter((_, i) => i !== idx) }));
   };
 
-  if (isLoading) return <div className="text-muted-foreground p-4">Loading plans...</div>;
+  if (isLoading) return <TableSkeleton columns={5} rows={5} />;
 
   return (
     <div className="space-y-4">
