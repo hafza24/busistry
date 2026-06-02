@@ -1,3 +1,4 @@
+import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { useState } from "react";
 import { useAllIntegrations, useUpsertIntegration, useDeleteIntegration } from "@/hooks/useMarketplace";
 import { Card, CardContent } from "@/components/ui/card";
