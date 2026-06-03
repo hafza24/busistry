@@ -13,8 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, ArrowRight, Check, Loader2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Loader2, CheckCircle2, Save } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AutoSaveIndicator from "@/components/onboarding/AutoSaveIndicator";
 
 import Step1ProjectType from "@/components/onboarding/Step1ProjectType";
 import Step2ProjectDetails from "@/components/onboarding/Step2ProjectDetails";
@@ -57,6 +58,7 @@ const Onboarding = () => {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [showResumeBanner, setShowResumeBanner] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -71,6 +73,7 @@ const Onboarding = () => {
   useEffect(() => {
     if (!loading && data.current_step && data.current_step !== step) {
       setStep(Math.min(TOTAL_STEPS, data.current_step));
+      if (data.current_step > 1) setShowResumeBanner(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
@@ -164,16 +167,30 @@ const Onboarding = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-2xl mx-auto px-4 py-8 md:py-14">
+        {showResumeBanner && (
+          <div className="mb-4 flex items-start gap-3 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3">
+            <Save className="h-4 w-4 mt-0.5 text-primary shrink-0" />
+            <div className="flex-1 text-sm">
+              <p className="font-medium text-foreground">Welcome back — picking up where you left off.</p>
+              <p className="text-muted-foreground text-xs mt-0.5">
+                Your progress is automatically saved. You can close this tab and continue any time.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowResumeBanner(false)}
+              className="text-xs text-muted-foreground hover:text-foreground"
+              aria-label="Dismiss"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
+
         <div className="mb-8 space-y-3">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>Step {step} of {TOTAL_STEPS} — {STEP_LABELS[step - 1]}</span>
-            <span className="flex items-center gap-1.5">
-              {saving ? (
-                <><Loader2 className="h-3 w-3 animate-spin" /> Saving…</>
-              ) : (
-                <><Check className="h-3 w-3" /> Auto-saved</>
-              )}
-            </span>
+            <AutoSaveIndicator saving={saving} hasDraftId={!!data.id} />
           </div>
           <Progress value={progressValue} className="h-1.5" />
           <div className="hidden md:flex justify-between text-[11px] text-muted-foreground">
