@@ -1,5 +1,5 @@
+import { Fragment } from "react";
 import SEO from "@/components/SEO";
-import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -201,8 +201,8 @@ const ComparisonMatrix = () => (
           </thead>
           <tbody>
             {MATRIX.map((group) => (
-              <>
-                <tr key={group.group} className="bg-muted/40">
+              <Fragment key={group.group}>
+                <tr className="bg-muted/40">
                   <td colSpan={5} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {group.group}
                   </td>
@@ -217,7 +217,7 @@ const ComparisonMatrix = () => (
                     ))}
                   </tr>
                 ))}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>
