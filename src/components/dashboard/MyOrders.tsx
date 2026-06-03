@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
+import { OrderStatusTimeline } from "@/components/orders/OrderStatusTimeline";
 
 const statusConfig: Record<string, { color: string; label: string }> = {
   pending: { color: "bg-yellow-100 text-yellow-800", label: "Pending" },
@@ -123,7 +124,7 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
                 <Badge className={cfg.color}>{cfg.label}</Badge>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-4">
               <div className="grid gap-2 md:grid-cols-3 text-sm">
                 <p><strong>Template:</strong> {order.templates?.name || "—"}</p>
                 <p><strong>Plan:</strong> {order.plans?.name || "—"} ({order.plans?.type})</p>
@@ -133,12 +134,14 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
                 </p>
               </div>
 
+              <OrderStatusTimeline
+                status={order.status}
+                updatedAt={order.updated_at ?? order.created_at}
+                note={order.admin_notes}
+              />
+
               {order.status === "completed" && order.wordpress_url && (
                 <DecryptedCredentials orderId={order.id} hasUrl={!!order.wordpress_url} />
-              )}
-
-              {order.admin_notes && (
-                <p className="text-sm text-muted-foreground border-l-2 border-primary/30 pl-3">{order.admin_notes}</p>
               )}
             </CardContent>
           </Card>
