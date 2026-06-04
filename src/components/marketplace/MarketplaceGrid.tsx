@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useAuth } from "@/contexts/AuthContext";
 import CheckoutDialog from "./CheckoutDialog";
 import WebsiteSelectionModal from "./WebsiteSelectionModal";
@@ -123,9 +124,15 @@ export default function MarketplaceGrid({ storeId }: Props) {
                 <Card key={p.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
                   <div className="aspect-video bg-muted relative overflow-hidden">
                     {p.preview_image_url ? (
-                      <img src={p.preview_image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      <OptimizedImage
+                        src={p.preview_image_url}
+                        alt={p.name}
+                        width={480}
+                        height={270}
+                        className="group-hover:scale-105 transition-transform"
+                      />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" /></div>
+                      <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" aria-hidden="true" /></div>
                     )}
                     {p.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
                   </div>
