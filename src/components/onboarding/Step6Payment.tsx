@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
-import { Upload, Loader2, Pencil } from "lucide-react";
+import { Upload, Loader2, Pencil, Copy, CheckCircle2, Clock, ShieldCheck, Smartphone, Banknote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -338,6 +338,54 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
 
       {!isFree && (
         <>
+          <div className="pt-2">
+            <h3 className="text-sm font-semibold text-foreground">Payment Center</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Send PKR {grandToday.toLocaleString()} via any method below, then upload your receipt.
+            </p>
+          </div>
+
+          {/* Trust / verification timeline */}
+          <div className="rounded-lg border border-border bg-card p-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
+              What happens next
+            </div>
+            <ol className="grid gap-2 sm:grid-cols-3 text-xs">
+              {[
+                { icon: Upload, label: "Submit payment", eta: "Now" },
+                { icon: Clock, label: "Manual review", eta: "~5–30 min" },
+                { icon: CheckCircle2, label: "Build starts", eta: "Same day" },
+              ].map((s, i) => (
+                <li key={i} className="flex items-start gap-2 rounded-md bg-muted/40 p-2">
+                  <s.icon className="h-4 w-4 text-primary mt-0.5" aria-hidden="true" />
+                  <div>
+                    <div className="font-medium text-foreground">{s.label}</div>
+                    <div className="text-muted-foreground">{s.eta}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Payment account details */}
+          <div className="rounded-lg border border-border bg-card p-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Smartphone className="h-4 w-4 text-primary" aria-hidden="true" />
+              Send payment to
+            </div>
+            <div className="grid sm:grid-cols-2 gap-2 text-sm">
+              <AccountRow method="JazzCash / Easypaisa" account="0315 7224340" name="Busistree" />
+              <AccountRow method="NayaPay / Raast" account="busistree@nayapay" name="Busistree" />
+              <AccountRow method="Bank Transfer" account="PK00 MEZN 0000 0000 0000 00" name="Busistree (Meezan)" />
+              <AccountRow method="Reference" account={`BST-${(data.id ?? "").slice(0, 8).toUpperCase() || "NEW"}`} name="Include in payment note" />
+            </div>
+            <p className="text-[11px] text-muted-foreground flex items-center gap-1">
+              <Banknote className="h-3 w-3" aria-hidden="true" />
+              Tap any value to copy. Your reference helps us match your payment quickly.
+            </p>
+          </div>
+
           <div className="space-y-2">
             <Label>Billing cycle</Label>
             <RadioGroup
@@ -359,9 +407,9 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           </div>
 
           <div className="space-y-2">
-            <Label>Payment method</Label>
+            <Label htmlFor="pay-method">Payment method used</Label>
             <Select value={data.payment_method ?? ""} onValueChange={(v) => update({ payment_method: v })}>
-              <SelectTrigger><SelectValue placeholder="Pick a method" /></SelectTrigger>
+              <SelectTrigger id="pay-method"><SelectValue placeholder="Pick a method" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="easypaisa">Easypaisa</SelectItem>
                 <SelectItem value="jazzcash">JazzCash</SelectItem>
@@ -395,17 +443,22 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           </div>
 
           <div className="space-y-2">
-            <Label>Payment screenshot (optional)</Label>
-            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+            <Label htmlFor="pay-ss">Payment screenshot</Label>
+            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
               <input type="file" accept="image/*" id="pay-ss" className="hidden" onChange={handleScreenshot} />
               <label htmlFor="pay-ss" className="cursor-pointer block">
                 {uploading ? (
-                  <Loader2 className="h-6 w-6 mx-auto text-muted-foreground animate-spin" />
+                  <Loader2 className="h-6 w-6 mx-auto text-muted-foreground animate-spin" aria-label="Uploading" />
+                ) : data.screenshot_url ? (
+                  <CheckCircle2 className="h-6 w-6 mx-auto text-primary mb-2" aria-hidden="true" />
                 ) : (
-                  <Upload className="h-6 w-6 mx-auto text-muted-foreground mb-2" />
+                  <Upload className="h-6 w-6 mx-auto text-muted-foreground mb-2" aria-hidden="true" />
                 )}
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground">
                   {data.screenshot_url ? "Screenshot uploaded — click to replace" : "Upload payment proof"}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  PNG, JPG up to 5MB. Helps us verify within minutes.
                 </p>
               </label>
             </div>
