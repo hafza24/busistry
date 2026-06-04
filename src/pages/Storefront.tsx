@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductGridSkeleton } from "@/components/ui/loading-skeletons";
 import { EmptyState } from "@/components/ui/empty-state";
+import SEO from "@/components/SEO";
 
 interface CartItem {
   product: any;
@@ -166,8 +167,26 @@ const Storefront = () => {
     </div>
   );
 
+  const seoTitle = `${store.name} — Online Store`;
+  const seoDesc = (settings?.description as string | undefined)?.slice(0, 155) ||
+    `Shop ${store.name} online. Browse products and order with cash on delivery, powered by Busistree.`;
+  const seoImage = (settings?.banner_url || settings?.logo_url) as string | undefined;
+  const storeJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    name: store.name,
+    description: seoDesc,
+    ...(seoImage ? { image: seoImage } : {}),
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={`/store/${slug}`}
+        jsonLd={storeJsonLd}
+      />
       {/* Header */}
       <header className="border-b border-border sticky top-0 bg-background/95 backdrop-blur z-40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">

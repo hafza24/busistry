@@ -164,7 +164,7 @@ const renderCell = (value: Cell) => {
   if (value === true)
     return <Check className="h-4 w-4 text-primary mx-auto" aria-label="Included" />;
   if (value === false)
-    return <Minus className="h-4 w-4 text-muted-foreground/50 mx-auto" aria-label="Not included" />;
+    return <Minus className="h-4 w-4 text-muted-foreground mx-auto" aria-label="Not included" />;
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
