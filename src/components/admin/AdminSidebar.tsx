@@ -56,8 +56,8 @@ const AdminSidebar = ({ activeView, onViewChange }: AdminSidebarProps) => {
       <SidebarFooter className="p-4 space-y-2">
         <div className="text-xs text-muted-foreground truncate">{user?.email}</div>
         <div className="flex gap-2">
-          <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")}><Home className="h-4 w-4" /></Button>
-          <Button variant="ghost" size="sm" onClick={signOut}><LogOut className="h-4 w-4" /></Button>
+          <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")} aria-label="Go to user dashboard"><Home className="h-4 w-4" aria-hidden="true" /></Button>
+          <Button variant="ghost" size="sm" onClick={signOut} aria-label="Sign out"><LogOut className="h-4 w-4" aria-hidden="true" /></Button>
         </div>
       </SidebarFooter>
     </Sidebar>
