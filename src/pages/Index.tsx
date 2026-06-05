@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import TrustBadges from "@/components/TrustBadges";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -177,6 +178,8 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      <TrustBadges />
 
       {/* Template Showcase */}
       <section className="py-20 md:py-28 border-b border-border/60">
