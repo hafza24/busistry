@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# Busistree
 
-## Project info
+A SaaS portal that helps Pakistani businesses request, launch, and manage WordPress-powered storefronts — paired with a managed marketplace, growth add-ons, and a multi-tenant admin console.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+> Localized for Pakistan: **PKR pricing** and manual mobile-wallet payments (JazzCash, Easypaisa, NayaPay, Raast, Bank Transfer).
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## What's inside
 
-**Use Lovable**
+- **Public site** — Marketing pages: Home, Templates, Pricing, How It Works, Marketplace, Contact.
+- **Onboarding wizard** — Multi-step request flow: Project Type → Details → Branding → Team → Store Setup → Contact → Add-ons → Payment.
+- **Customer dashboard** — Track requests/orders, manage activated stores, browse marketplace add-ons, upgrade plans.
+- **Store dashboard** (per activated store) — Products, Categories, Orders, Settings, Add-ons, Plan upgrades.
+- **Admin console** — Approve requests, manage stores, plans, templates, add-ons, integrations, website orders, users.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Tech stack
 
-Changes made via Lovable will be committed automatically to this repo.
+| Layer | Choice |
+|------|--------|
+| Build | Vite 5 + React 18 + TypeScript 5 |
+| Styling | Tailwind CSS v3 + shadcn/ui |
+| State / data | TanStack Query, React Context |
+| Routing | react-router-dom v6 (lazy-loaded routes) |
+| Backend | Supabase (Auth, Postgres + RLS, Storage, Edge Functions) |
+| Validation | Zod |
+| Notifications | Sonner |
+| Animation | Framer Motion (respects `prefers-reduced-motion`) |
 
-**Use your preferred IDE**
+## Getting started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# 1. Install
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# 2. Run dev server
+npm run dev    # http://localhost:8080
 ```
 
-**Edit a file directly in GitHub**
+Supabase is wired in via `src/integrations/supabase/client.ts`. Lovable Cloud manages the project keys — no `.env` setup required in dev.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── App.tsx                  # Routes (lazy-loaded), QueryClient, ErrorBoundary
+├── pages/                   # Route entry points
+├── components/
+│   ├── admin/               # Admin console panels
+│   ├── dashboard/           # Customer dashboard sections
+│   ├── onboarding/          # Wizard steps
+│   ├── store/               # Per-store dashboard sections
+│   ├── marketplace/         # Marketplace browsing + checkout
+│   ├── orders/              # Order timeline + status mapping
+│   └── ui/                  # shadcn primitives + project-wide UI
+├── hooks/                   # Data hooks (useStores, useAdmin, …)
+├── contexts/AuthContext.tsx # Supabase auth session
+├── lib/validation.ts        # Zod schemas (auth, contact, onboarding)
+└── integrations/supabase/   # Generated client + types
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Conventions
 
-## What technologies are used for this project?
+- **Design tokens only.** Never use raw color classes (`text-white`, `bg-black`) in components — use HSL semantic tokens defined in `src/index.css` and `tailwind.config.ts`.
+- **Roles in a dedicated table.** Roles live in `public.user_roles`; check via the `has_role()` SECURITY DEFINER function. Never store roles on `profiles`.
+- **Toasts via Sonner.** Use `toast` from `sonner` (or the `useToast()` shim in `src/hooks/use-toast.ts`).
+- **Forms validated with Zod.** Centralize schemas in `src/lib/validation.ts`.
+- **Images.** Prefer `<OptimizedImage />` from `src/components/ui/optimized-image.tsx` for lazy loading + CLS prevention.
 
-This project is built with:
+## Security & compliance
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Row-Level Security is enabled on every public-schema table.
+- Sensitive credentials (e.g. WordPress logins on `website_orders`) are handled through the `manage-credentials` Edge Function with `CREDENTIALS_ENCRYPTION_KEY`.
+- Auth includes failed-login throttling (5 attempts → 60s cooldown) on the client.
+- Admin destructive actions go through a typed-phrase `ConfirmDialog`.
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Open the [Lovable project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click **Share → Publish**. Connect a custom domain under **Project → Settings → Domains**.
 
-## Can I connect a custom domain to my Lovable project?
+## License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Proprietary © Busistree. All rights reserved.
