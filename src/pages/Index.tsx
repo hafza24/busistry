@@ -178,6 +178,8 @@ const Index = () => {
         </div>
       </section>
 
+      <TrustBadges />
+
       {/* Template Showcase */}
       <section className="py-20 md:py-28 border-b border-border/60">
         <div className="container">
