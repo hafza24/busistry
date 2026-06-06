@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, User, ArrowRight, ShieldAlert } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { signInSchema, signUpSchema } from "@/lib/validation";
+import { logAudit } from "@/lib/audit";
 
 const MAX_ATTEMPTS = 5;
 const COOLDOWN_SECONDS = 60;
@@ -121,9 +122,11 @@ const Auth = () => {
         });
         if (error) {
           registerFailedAttempt();
+          logAudit({ action: "login.failed", actorEmail: parsed.data.email, metadata: { reason: error.message } });
           throw error;
         }
         clearAttempts();
+        logAudit({ action: "login.success", actorEmail: parsed.data.email });
         navigate("/dashboard");
       } else {
         const d = parsed.data as { email: string; password: string; fullName: string };
@@ -136,6 +139,7 @@ const Auth = () => {
           },
         });
         if (error) throw error;
+        logAudit({ action: "signup.success", actorEmail: d.email });
         toast({ title: "Account created!", description: "Check your email to verify your account." });
       }
     } catch (error: any) {
