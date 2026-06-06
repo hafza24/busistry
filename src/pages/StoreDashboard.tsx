@@ -14,6 +14,8 @@ import StoreSettingsEditor from "@/components/store/StoreSettingsEditor";
 import MarketplaceBrowser from "@/components/store/MarketplaceBrowser";
 import MyAddons from "@/components/store/MyAddons";
 import UpgradePlan from "@/components/store/UpgradePlan";
+import TeamMembers from "@/components/store/TeamMembers";
+import WhiteLabelSettings from "@/components/store/WhiteLabelSettings";
 
 const viewTitles: Record<string, string> = {
   overview: "Overview",
@@ -23,6 +25,8 @@ const viewTitles: Record<string, string> = {
   marketplace: "Marketplace",
   addons: "My Add-ons",
   upgrade: "Upgrade Plan",
+  team: "Team",
+  whitelabel: "White-Label",
   settings: "Site Settings",
 };
 
@@ -69,6 +73,8 @@ const StoreDashboard = () => {
       case "marketplace": return <MarketplaceBrowser storeId={store.id} />;
       case "addons": return <MyAddons storeId={store.id} />;
       case "upgrade": return <UpgradePlan storeId={store.id} />;
+      case "team": return <TeamMembers storeId={store.id} />;
+      case "whitelabel": return <WhiteLabelSettings storeId={store.id} />;
       case "settings": return <StoreSettingsEditor storeId={store.id} />;
       default: return <StoreOverview storeId={store.id} />;
     }
