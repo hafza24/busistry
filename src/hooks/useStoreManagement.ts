@@ -166,6 +166,7 @@ export function useUpsertStoreSettings() {
       store_id: string; logo_url?: string; banner_url?: string;
       description?: string; contact_email?: string; contact_phone?: string;
       address?: string; primary_color?: string; secondary_color?: string;
+      brand_name?: string; custom_domain?: string; accent_color?: string; favicon_url?: string;
     }) => {
       const { data, error } = await supabase.from("store_settings").upsert(
         { ...values, updated_at: new Date().toISOString() },

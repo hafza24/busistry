@@ -68,6 +68,45 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_email: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          ip_address: string | null
+          metadata: Json
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          ip_address?: string | null
+          metadata?: Json
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string
@@ -776,12 +815,16 @@ export type Database = {
       }
       store_settings: {
         Row: {
+          accent_color: string | null
           address: string | null
           banner_url: string | null
+          brand_name: string | null
           contact_email: string | null
           contact_phone: string | null
           created_at: string
+          custom_domain: string | null
           description: string | null
+          favicon_url: string | null
           id: string
           logo_url: string | null
           primary_color: string | null
@@ -790,12 +833,16 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          accent_color?: string | null
           address?: string | null
           banner_url?: string | null
+          brand_name?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
+          custom_domain?: string | null
           description?: string | null
+          favicon_url?: string | null
           id?: string
           logo_url?: string | null
           primary_color?: string | null
@@ -804,12 +851,16 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          accent_color?: string | null
           address?: string | null
           banner_url?: string | null
+          brand_name?: string | null
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string
+          custom_domain?: string | null
           description?: string | null
+          favicon_url?: string | null
           id?: string
           logo_url?: string | null
           primary_color?: string | null
@@ -826,6 +877,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      store_team_members: {
+        Row: {
+          created_at: string
+          id: string
+          invited_email: string | null
+          role: string
+          store_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invited_email?: string | null
+          role?: string
+          store_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invited_email?: string | null
+          role?: string
+          store_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       stores: {
         Row: {
@@ -1212,7 +1293,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "user" | "owner" | "manager" | "staff"
       payment_method:
         | "easypaisa"
         | "jazzcash"
@@ -1355,7 +1436,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "user", "owner", "manager", "staff"],
       payment_method: [
         "easypaisa",
         "jazzcash",

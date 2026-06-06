@@ -21,7 +21,7 @@ const Footer = () => (
         ))}
       </ul>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-3">
             <img src={logo} alt="Busistree" className="h-9 sm:h-10 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105" />
@@ -45,6 +45,15 @@ const Footer = () => (
             <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
             <li><a href="/sitemap.xml" className="hover:text-foreground transition-colors">Sitemap</a></li>
             <li><a href="/robots.txt" className="hover:text-foreground transition-colors">Robots</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold font-display mb-3 text-foreground">Legal</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li><Link to="/legal/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/legal/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
+            <li><Link to="/legal/refund" className="hover:text-foreground transition-colors">Refund Policy</Link></li>
+            <li><Link to="/legal/data-protection" className="hover:text-foreground transition-colors">Data Protection</Link></li>
           </ul>
         </div>
         <div>

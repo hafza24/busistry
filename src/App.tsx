@@ -23,6 +23,10 @@ const Onboarding = lazy(() => import("./pages/Onboarding"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StoreDashboard = lazy(() => import("./pages/StoreDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Privacy = lazy(() => import("./pages/legal/Privacy"));
+const Terms = lazy(() => import("./pages/legal/Terms"));
+const Refund = lazy(() => import("./pages/legal/Refund"));
+const DataProtection = lazy(() => import("./pages/legal/DataProtection"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,6 +62,10 @@ const App = () => (
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/legal/privacy" element={<Privacy />} />
+                    <Route path="/legal/terms" element={<Terms />} />
+                    <Route path="/legal/refund" element={<Refund />} />
+                    <Route path="/legal/data-protection" element={<DataProtection />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
