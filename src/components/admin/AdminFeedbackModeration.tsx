@@ -20,6 +20,19 @@ import { toast } from "sonner";
 import { Check, X, Star, StarOff, Search, MessageSquare } from "lucide-react";
 import { logAudit, type AuditAction } from "@/lib/audit";
 import AdminFeedbackDetailDialog from "./AdminFeedbackDetailDialog";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+
+type PendingAction = {
+  id: string;
+  subject: string;
+  patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>;
+  action: AuditAction;
+  title: string;
+  description: string;
+  confirmLabel: string;
+  destructive?: boolean;
+  successMsg: string;
+} | null;
 
 type FilterStatus = "all" | "pending" | "approved" | "rejected";
 
