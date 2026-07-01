@@ -12,6 +12,17 @@ import { Check, X, Star, StarOff, Mail, Phone, User, Calendar, ScrollText } from
 import { toast } from "sonner";
 import { logAudit, type AuditAction } from "@/lib/audit";
 import { useState } from "react";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+
+type PendingAction = {
+  patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>;
+  action: AuditAction;
+  title: string;
+  description: string;
+  confirmLabel: string;
+  destructive?: boolean;
+  successMsg: string;
+} | null;
 
 interface Props {
   submissionId: string | null;
