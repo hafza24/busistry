@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { toast as sonner } from "sonner";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { User, Building2, MapPin, Share2, Camera, Loader2, Trash2 } from "lucide-react";
 
 type ProfileState = {
@@ -50,6 +52,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [removeOpen, setRemoveOpen] = useState(false);
 
   const set = <K extends keyof ProfileState>(k: K, v: ProfileState[K]) => setP((prev) => ({ ...prev, [k]: v }));
 
@@ -89,23 +93,37 @@ const UserProfile = () => {
     return publicUrl.slice(idx + marker.length);
   };
 
-  const handleAvatar = async (file: File) => {
-    if (!user) return;
+  const validateFile = (file: File): boolean => {
     if (!file.type.startsWith("image/")) {
-      toast({ title: "Unsupported file", description: "Please choose a JPG, PNG, or WebP image.", variant: "destructive" });
-      return;
+      sonner.error("Unsupported file", { description: "Please choose a JPG, PNG, or WebP image." });
+      return false;
     }
     if (file.size > 4 * 1024 * 1024) {
-      toast({ title: "Image too large", description: "Max 4 MB.", variant: "destructive" });
-      return;
+      sonner.error("Image too large", { description: "Maximum size is 4 MB." });
+      return false;
     }
+    return true;
+  };
+
+  const onFilePicked = (file: File) => {
+    if (!validateFile(file)) return;
+    if (p.avatar_url) {
+      // Existing avatar → require confirmation before replacing
+      setPendingFile(file);
+    } else {
+      void uploadAvatar(file);
+    }
+  };
+
+  const uploadAvatar = async (file: File) => {
+    if (!user) return;
     setUploading(true);
     const previousUrl = p.avatar_url;
     const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
     const path = `avatars/${user.id}/${Date.now()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("store-assets").upload(path, file, { upsert: true, contentType: file.type });
     if (upErr) {
-      toast({ title: "Upload failed", description: upErr.message, variant: "destructive" });
+      sonner.error("Upload failed", { description: upErr.message });
       setUploading(false);
       return;
     }
@@ -113,20 +131,30 @@ const UserProfile = () => {
     const url = data.publicUrl;
     const { error: dbErr } = await supabase.from("profiles").update({ avatar_url: url, updated_at: new Date().toISOString() }).eq("id", user.id);
     if (dbErr) {
-      // Roll back the just-uploaded file so we don't leave orphans
       await supabase.storage.from("store-assets").remove([path]);
-      toast({ title: "Save failed", description: dbErr.message, variant: "destructive" });
+      sonner.error("Couldn't save avatar", { description: dbErr.message });
       setUploading(false);
       return;
     }
     set("avatar_url", url);
-    // Best-effort cleanup of the previous avatar file
     const prevPath = previousUrl ? extractStoragePath(previousUrl) : null;
     if (prevPath && prevPath !== path && prevPath.startsWith(`avatars/${user.id}/`)) {
       await supabase.storage.from("store-assets").remove([prevPath]);
     }
-    toast({ title: previousUrl ? "Avatar replaced" : "Avatar uploaded" });
+    if (previousUrl) {
+      sonner.success("Avatar replaced", { description: "Your new profile photo is live." });
+    } else {
+      sonner.success("Avatar uploaded", { description: "Your profile photo is now visible." });
+    }
     setUploading(false);
+  };
+
+  const confirmReplace = async () => {
+    if (pendingFile) {
+      const f = pendingFile;
+      setPendingFile(null);
+      await uploadAvatar(f);
+    }
   };
 
   const handleRemoveAvatar = async () => {
@@ -135,7 +163,7 @@ const UserProfile = () => {
     const prevPath = extractStoragePath(p.avatar_url);
     const { error } = await supabase.from("profiles").update({ avatar_url: null, updated_at: new Date().toISOString() }).eq("id", user.id);
     if (error) {
-      toast({ title: "Remove failed", description: error.message, variant: "destructive" });
+      sonner.error("Couldn't remove avatar", { description: error.message });
       setUploading(false);
       return;
     }
@@ -143,9 +171,10 @@ const UserProfile = () => {
       await supabase.storage.from("store-assets").remove([prevPath]);
     }
     set("avatar_url", "");
-    toast({ title: "Avatar removed" });
+    sonner.success("Avatar removed", { description: "Your profile now shows your initials." });
     setUploading(false);
   };
+
 
 
   const handleSave = async () => {
@@ -235,7 +264,7 @@ const UserProfile = () => {
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={handleRemoveAvatar}
+                    onClick={() => setRemoveOpen(true)}
                     disabled={uploading}
                     className="text-destructive hover:text-destructive"
                   >
@@ -248,7 +277,7 @@ const UserProfile = () => {
                 type="file"
                 accept="image/png,image/jpeg,image/webp"
                 className="hidden"
-                onChange={(e) => { const f = e.target.files?.[0]; if (f) handleAvatar(f); e.target.value = ""; }}
+                onChange={(e) => { const f = e.target.files?.[0]; if (f) onFilePicked(f); e.target.value = ""; }}
               />
             </div>
           </div>
@@ -379,6 +408,25 @@ const UserProfile = () => {
           {saving ? "Saving..." : "Save Changes"}
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={!!pendingFile}
+        onOpenChange={(o) => { if (!o) setPendingFile(null); }}
+        title="Replace your avatar?"
+        description={`This will replace your current profile photo${pendingFile ? ` with "${pendingFile.name}"` : ""}. Your old photo will be deleted.`}
+        confirmLabel="Replace avatar"
+        onConfirm={confirmReplace}
+      />
+
+      <ConfirmDialog
+        open={removeOpen}
+        onOpenChange={setRemoveOpen}
+        title="Remove your avatar?"
+        description="Your profile photo will be permanently deleted. You'll see your initials until you upload a new one."
+        confirmLabel="Remove avatar"
+        destructive
+        onConfirm={handleRemoveAvatar}
+      />
     </div>
   );
 };
