@@ -93,23 +93,37 @@ const UserProfile = () => {
     return publicUrl.slice(idx + marker.length);
   };
 
-  const handleAvatar = async (file: File) => {
-    if (!user) return;
+  const validateFile = (file: File): boolean => {
     if (!file.type.startsWith("image/")) {
-      toast({ title: "Unsupported file", description: "Please choose a JPG, PNG, or WebP image.", variant: "destructive" });
-      return;
+      sonner.error("Unsupported file", { description: "Please choose a JPG, PNG, or WebP image." });
+      return false;
     }
     if (file.size > 4 * 1024 * 1024) {
-      toast({ title: "Image too large", description: "Max 4 MB.", variant: "destructive" });
-      return;
+      sonner.error("Image too large", { description: "Maximum size is 4 MB." });
+      return false;
     }
+    return true;
+  };
+
+  const onFilePicked = (file: File) => {
+    if (!validateFile(file)) return;
+    if (p.avatar_url) {
+      // Existing avatar → require confirmation before replacing
+      setPendingFile(file);
+    } else {
+      void uploadAvatar(file);
+    }
+  };
+
+  const uploadAvatar = async (file: File) => {
+    if (!user) return;
     setUploading(true);
     const previousUrl = p.avatar_url;
     const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
     const path = `avatars/${user.id}/${Date.now()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("store-assets").upload(path, file, { upsert: true, contentType: file.type });
     if (upErr) {
-      toast({ title: "Upload failed", description: upErr.message, variant: "destructive" });
+      sonner.error("Upload failed", { description: upErr.message });
       setUploading(false);
       return;
     }
@@ -117,20 +131,30 @@ const UserProfile = () => {
     const url = data.publicUrl;
     const { error: dbErr } = await supabase.from("profiles").update({ avatar_url: url, updated_at: new Date().toISOString() }).eq("id", user.id);
     if (dbErr) {
-      // Roll back the just-uploaded file so we don't leave orphans
       await supabase.storage.from("store-assets").remove([path]);
-      toast({ title: "Save failed", description: dbErr.message, variant: "destructive" });
+      sonner.error("Couldn't save avatar", { description: dbErr.message });
       setUploading(false);
       return;
     }
     set("avatar_url", url);
-    // Best-effort cleanup of the previous avatar file
     const prevPath = previousUrl ? extractStoragePath(previousUrl) : null;
     if (prevPath && prevPath !== path && prevPath.startsWith(`avatars/${user.id}/`)) {
       await supabase.storage.from("store-assets").remove([prevPath]);
     }
-    toast({ title: previousUrl ? "Avatar replaced" : "Avatar uploaded" });
+    if (previousUrl) {
+      sonner.success("Avatar replaced", { description: "Your new profile photo is live." });
+    } else {
+      sonner.success("Avatar uploaded", { description: "Your profile photo is now visible." });
+    }
     setUploading(false);
+  };
+
+  const confirmReplace = async () => {
+    if (pendingFile) {
+      const f = pendingFile;
+      setPendingFile(null);
+      await uploadAvatar(f);
+    }
   };
 
   const handleRemoveAvatar = async () => {
@@ -139,7 +163,7 @@ const UserProfile = () => {
     const prevPath = extractStoragePath(p.avatar_url);
     const { error } = await supabase.from("profiles").update({ avatar_url: null, updated_at: new Date().toISOString() }).eq("id", user.id);
     if (error) {
-      toast({ title: "Remove failed", description: error.message, variant: "destructive" });
+      sonner.error("Couldn't remove avatar", { description: error.message });
       setUploading(false);
       return;
     }
@@ -147,9 +171,10 @@ const UserProfile = () => {
       await supabase.storage.from("store-assets").remove([prevPath]);
     }
     set("avatar_url", "");
-    toast({ title: "Avatar removed" });
+    sonner.success("Avatar removed", { description: "Your profile now shows your initials." });
     setUploading(false);
   };
+
 
 
   const handleSave = async () => {
