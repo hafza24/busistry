@@ -11,6 +11,13 @@ import { toast } from "sonner";
 
 type BreakdownItem = { label: string; amount: number; kind: "plan" | "addon" };
 
+const pkrFormatter = new Intl.NumberFormat("en-PK", {
+  style: "currency",
+  currency: "PKR",
+  maximumFractionDigits: 0,
+});
+const formatPKR = (n: number) => pkrFormatter.format(Number(n) || 0);
+
 function useBreakdown(s: SubscriptionRow) {
   const [items, setItems] = useState<BreakdownItem[] | null>(null);
   const [loading, setLoading] = useState(false);
