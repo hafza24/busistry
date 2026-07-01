@@ -959,34 +959,79 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address_line: string | null
           avatar_url: string | null
+          bio: string | null
+          business_name: string | null
+          city: string | null
+          country: string | null
           created_at: string
+          date_of_birth: string | null
+          facebook_url: string | null
           full_name: string | null
+          gender: string | null
           id: string
+          instagram_url: string | null
+          linkedin_url: string | null
           newsletter_subscribed: boolean
           newsletter_subscribed_at: string | null
           phone: string | null
+          postal_code: string | null
+          province: string | null
+          twitter_url: string | null
           updated_at: string
+          website_url: string | null
+          whatsapp: string | null
         }
         Insert: {
+          address_line?: string | null
           avatar_url?: string | null
+          bio?: string | null
+          business_name?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          facebook_url?: string | null
           full_name?: string | null
+          gender?: string | null
           id: string
+          instagram_url?: string | null
+          linkedin_url?: string | null
           newsletter_subscribed?: boolean
           newsletter_subscribed_at?: string | null
           phone?: string | null
+          postal_code?: string | null
+          province?: string | null
+          twitter_url?: string | null
           updated_at?: string
+          website_url?: string | null
+          whatsapp?: string | null
         }
         Update: {
+          address_line?: string | null
           avatar_url?: string | null
+          bio?: string | null
+          business_name?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          facebook_url?: string | null
           full_name?: string | null
+          gender?: string | null
           id?: string
+          instagram_url?: string | null
+          linkedin_url?: string | null
           newsletter_subscribed?: boolean
           newsletter_subscribed_at?: string | null
           phone?: string | null
+          postal_code?: string | null
+          province?: string | null
+          twitter_url?: string | null
           updated_at?: string
+          website_url?: string | null
+          whatsapp?: string | null
         }
         Relationships: []
       }
