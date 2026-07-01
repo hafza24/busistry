@@ -250,6 +250,12 @@ const AdminFeedbackModeration = () => {
           </PaginationContent>
         </Pagination>
       )}
+
+      <AdminFeedbackDetailDialog
+        submissionId={detailId}
+        open={!!detailId}
+        onOpenChange={(o) => { if (!o) setDetailId(null); }}
+      />
     </div>
   );
 };
