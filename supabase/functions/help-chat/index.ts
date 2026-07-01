@@ -87,26 +87,61 @@ ${knowledge || "(No articles available yet.)"}`;
       await admin.from("chat_threads").update({ title: message.slice(0, 60) }).eq("id", threadId);
     }
 
-    // Call Google Gemini directly via OpenAI-compatible endpoint (free tier)
-    const aiRes = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${geminiKey}`,
-      },
-      body: JSON.stringify({
-        model: "gemini-2.0-flash",
-        messages,
-        stream: true,
-      }),
+    // Ordered provider fallback chain. Tries each in order; on rate-limit,
+    // quota, auth, or 5xx errors, moves to the next configured provider.
+    type Provider = { name: string; url: string; key: string; model: string; extraHeaders?: Record<string, string> };
+    const providers: Provider[] = [];
+    if (geminiKey) providers.push({
+      name: "gemini", model: "gemini-2.0-flash", key: geminiKey,
+      url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+    });
+    if (groqKey) providers.push({
+      name: "groq", model: "llama-3.3-70b-versatile", key: groqKey,
+      url: "https://api.groq.com/openai/v1/chat/completions",
+    });
+    if (mistralKey) providers.push({
+      name: "mistral", model: "mistral-small-latest", key: mistralKey,
+      url: "https://api.mistral.ai/v1/chat/completions",
+    });
+    if (openrouterKey) providers.push({
+      name: "openrouter", model: "google/gemini-2.0-flash-exp:free", key: openrouterKey,
+      url: "https://openrouter.ai/api/v1/chat/completions",
+      extraHeaders: { "HTTP-Referer": "https://busistry.lovable.app", "X-Title": "Busistree Help Center" },
     });
 
-    if (!aiRes.ok) {
-      const text = await aiRes.text();
-      if (aiRes.status === 429) return json({ error: "Rate limited, try again shortly" }, 429);
-      if (aiRes.status === 402) return json({ error: "AI credits exhausted" }, 402);
-      return json({ error: `AI error: ${text.slice(0, 200)}` }, 500);
+    if (providers.length === 0) return json({ error: "No AI provider configured" }, 500);
+
+    let aiRes: Response | null = null;
+    let usedProvider = "";
+    const failures: string[] = [];
+    for (const p of providers) {
+      try {
+        const res = await fetch(p.url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${p.key}`,
+            ...(p.extraHeaders || {}),
+          },
+          body: JSON.stringify({ model: p.model, messages, stream: true }),
+        });
+        // Retry on: 401/403 (bad/expired key), 402 (credits), 429 (rate),
+        // 5xx (upstream). 400 = bad request, don't loop.
+        if (res.ok) { aiRes = res; usedProvider = p.name; break; }
+        const txt = await res.text().catch(() => "");
+        failures.push(`${p.name}:${res.status}`);
+        console.log(`[help-chat] ${p.name} failed ${res.status}: ${txt.slice(0, 200)}`);
+        if (res.status === 400) { /* bad request — don't try others with same body unless auth */ }
+      } catch (e) {
+        failures.push(`${p.name}:network`);
+        console.log(`[help-chat] ${p.name} network error: ${(e as Error).message}`);
+      }
     }
+
+    if (!aiRes) {
+      return json({ error: `All AI providers failed: ${failures.join(", ")}` }, 502);
+    }
+    console.log(`[help-chat] using provider: ${usedProvider}`);
 
     let fullText = "";
     const stream = new ReadableStream({
