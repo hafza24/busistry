@@ -120,13 +120,13 @@ function BreakdownList({ s }: { s: SubscriptionRow }) {
                 <span className="truncate">{it.label}</span>
               </div>
               <span className="font-medium tabular-nums flex-shrink-0">
-                PKR {it.amount.toLocaleString()}
+                {formatPKR(it.amount)}
               </span>
             </div>
           ))}
           <div className="px-3 py-2 flex items-center justify-between gap-3 text-sm bg-muted/40">
             <span className="font-semibold">Total / {s.cycle_days} days</span>
-            <span className="font-bold tabular-nums">PKR {subtotal.toLocaleString()}</span>
+            <span className="font-bold tabular-nums">{formatPKR(subtotal)}</span>
           </div>
         </>
       )}
