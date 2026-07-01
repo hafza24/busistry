@@ -15,6 +15,7 @@ import AdminIntegrations from "@/components/admin/AdminIntegrations";
 import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
 import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
 import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
+import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration";
 
 const viewTitles: Record<string, string> = {
   orders: "Website Orders",
@@ -27,6 +28,7 @@ const viewTitles: Record<string, string> = {
   integrations: "Integrations",
   store_addons: "Add-on Orders",
   upgrades: "Upgrade Orders",
+  feedback: "Feedback Moderation",
   audit: "Audit Logs",
 };
 
@@ -61,6 +63,7 @@ const AdminDashboard = () => {
       case "integrations": return <AdminIntegrations />;
       case "store_addons": return <AdminStoreAddons />;
       case "upgrades": return <AdminUpgradeOrders />;
+      case "feedback": return <AdminFeedbackModeration />;
       case "audit": return <AdminAuditLogs />;
       default: return <AdminWebsiteOrders />;
     }

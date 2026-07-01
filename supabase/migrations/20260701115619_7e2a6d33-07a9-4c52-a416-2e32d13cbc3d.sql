@@ -1,0 +1,1 @@
+CREATE POLICY "Admins read all feedback_submissions" ON public.feedback_submissions FOR SELECT USING (public.has_role(auth.uid(), 'admin'::public.app_role));

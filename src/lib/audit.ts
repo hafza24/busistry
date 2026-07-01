@@ -15,7 +15,11 @@ export type AuditAction =
   | "store.activated"
   | "team.member_added"
   | "team.member_removed"
-  | "team.role_changed";
+  | "team.role_changed"
+  | "feedback.approved"
+  | "feedback.rejected"
+  | "feedback.featured"
+  | "feedback.unfeatured";
 
 interface LogInput {
   action: AuditAction;
