@@ -45,6 +45,7 @@ const AdminFeedbackModeration = () => {
   const [page, setPage] = useState(1);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [pending, setPending] = useState<PendingAction>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-feedback", status, search, page],
