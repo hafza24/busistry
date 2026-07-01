@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/pagination";
 import { toast } from "sonner";
 import { Check, X, Star, StarOff, Search, MessageSquare } from "lucide-react";
-import { logAudit } from "@/lib/audit";
+import { logAudit, type AuditAction } from "@/lib/audit";
 
 type FilterStatus = "all" | "pending" | "approved" | "rejected";
 
@@ -63,8 +63,8 @@ const AdminFeedbackModeration = () => {
 
   const mutate = async (
     id: string,
-    patch: Record<string, unknown>,
-    action: string,
+    patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>,
+    action: AuditAction,
   ) => {
     setBusyId(id);
     try {
@@ -73,7 +73,7 @@ const AdminFeedbackModeration = () => {
         .update(patch)
         .eq("id", id);
       if (error) throw error;
-      logAudit({ action, entityType: "feedback", entityId: id, metadata: patch });
+      logAudit({ action, entityType: "feedback", entityId: id, metadata: patch as Record<string, unknown> });
       toast.success("Updated");
       qc.invalidateQueries({ queryKey: ["admin-feedback"] });
       qc.invalidateQueries({ queryKey: ["public-reviews"] });
