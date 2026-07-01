@@ -20,8 +20,8 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
-    if (!lovableKey) return json({ error: "AI not configured" }, 500);
+    const openrouterKey = Deno.env.get("OPENROUTER_API_KEY");
+    if (!openrouterKey) return json({ error: "AI not configured (missing OPENROUTER_API_KEY)" }, 500);
 
     const userClient = createClient(supabaseUrl, anonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
