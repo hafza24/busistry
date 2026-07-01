@@ -264,7 +264,7 @@ const UserProfile = () => {
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={handleRemoveAvatar}
+                    onClick={() => setRemoveOpen(true)}
                     disabled={uploading}
                     className="text-destructive hover:text-destructive"
                   >
