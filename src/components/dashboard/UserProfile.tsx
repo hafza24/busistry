@@ -408,6 +408,25 @@ const UserProfile = () => {
           {saving ? "Saving..." : "Save Changes"}
         </Button>
       </div>
+
+      <ConfirmDialog
+        open={!!pendingFile}
+        onOpenChange={(o) => { if (!o) setPendingFile(null); }}
+        title="Replace your avatar?"
+        description={`This will replace your current profile photo${pendingFile ? ` with "${pendingFile.name}"` : ""}. Your old photo will be deleted.`}
+        confirmLabel="Replace avatar"
+        onConfirm={confirmReplace}
+      />
+
+      <ConfirmDialog
+        open={removeOpen}
+        onOpenChange={setRemoveOpen}
+        title="Remove your avatar?"
+        description="Your profile photo will be permanently deleted. You'll see your initials until you upload a new one."
+        confirmLabel="Remove avatar"
+        destructive
+        onConfirm={handleRemoveAvatar}
+      />
     </div>
   );
 };
