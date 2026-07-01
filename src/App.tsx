@@ -70,6 +70,7 @@ const App = () => (
                     <Route path="/legal/refund" element={<Refund />} />
                     <Route path="/legal/data-protection" element={<DataProtection />} />
                     <Route path="/help" element={<Help />} />
+                    <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
