@@ -29,15 +29,13 @@ const ReviewsSection = () => {
     queryKey: ["public-reviews"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("feedback_submissions")
-        .select("id, subject, message, rating, created_at")
-        .eq("approved", true)
-        .not("rating", "is", null)
+        .from("public_feedback_reviews" as any)
+        .select("id, subject, message, rating, featured, created_at")
         .order("featured", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(6);
       if (error) throw error;
-      return data ?? [];
+      return (data ?? []) as any[];
     },
   });
 

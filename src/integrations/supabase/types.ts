@@ -1828,6 +1828,33 @@ export type Database = {
       }
     }
     Views: {
+      public_feedback_reviews: {
+        Row: {
+          created_at: string | null
+          featured: boolean | null
+          id: string | null
+          message: string | null
+          rating: number | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          message?: string | null
+          rating?: number | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          message?: string | null
+          rating?: number | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
       public_store_settings: {
         Row: {
           banner_url: string | null
