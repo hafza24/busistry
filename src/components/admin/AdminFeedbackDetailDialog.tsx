@@ -253,28 +253,17 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={busy}>Close</Button>
           <div className="flex gap-2 flex-wrap">
             {submission && submission.status !== "rejected" && (
-              <Button
-                variant="outline"
-                disabled={busy}
-                onClick={() => act({ approved: false, status: "rejected" }, "feedback.rejected")}
-              >
+              <Button variant="outline" disabled={busy} onClick={askReject}>
                 <X className="h-4 w-4 mr-1.5" aria-hidden="true" /> Reject
               </Button>
             )}
             {submission && !submission.approved && (
-              <Button
-                disabled={busy}
-                onClick={() => act({ approved: true, status: "approved", approved_at: new Date().toISOString() }, "feedback.approved")}
-              >
+              <Button disabled={busy} onClick={askApprove}>
                 <Check className="h-4 w-4 mr-1.5" aria-hidden="true" /> Approve
               </Button>
             )}
             {submission?.approved && (
-              <Button
-                variant="secondary"
-                disabled={busy}
-                onClick={() => act({ featured: !submission.featured }, submission.featured ? "feedback.unfeatured" : "feedback.featured")}
-              >
+              <Button variant="secondary" disabled={busy} onClick={askToggleFeature}>
                 {submission.featured
                   ? <><StarOff className="h-4 w-4 mr-1.5" aria-hidden="true" /> Unfeature</>
                   : <><Star className="h-4 w-4 mr-1.5" aria-hidden="true" /> Feature</>}
@@ -283,6 +272,20 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
           </div>
         </DialogFooter>
       </DialogContent>
+
+      <ConfirmDialog
+        open={!!pending}
+        onOpenChange={(o) => { if (!o) setPending(null); }}
+        title={pending?.title ?? ""}
+        description={pending?.description ?? ""}
+        confirmLabel={pending?.confirmLabel ?? "Confirm"}
+        destructive={pending?.destructive}
+        onConfirm={async () => {
+          if (!pending) return;
+          await act(pending.patch, pending.action, pending.successMsg);
+          setPending(null);
+        }}
+      />
     </Dialog>
   );
 };
