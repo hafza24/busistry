@@ -86,17 +86,17 @@ const stageIndex = (s: TimelineStage) =>
 export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   const [loadingProof, setLoadingProof] = useState(false);
+  const [addons, setAddons] = useState<AddonRow[]>([]);
+  const [loadingAddons, setLoadingAddons] = useState(false);
 
   useEffect(() => {
     setSignedUrl(null);
     if (!open || !order?.screenshot_url) return;
-    // screenshot_url may already be a public URL or a storage path — try both.
     const raw = order.screenshot_url;
     if (raw.startsWith("http")) {
       setSignedUrl(raw);
       return;
     }
-    // Try to sign it from the payment-screenshots bucket
     setLoadingProof(true);
     const path = raw.replace(/^payment-screenshots\//, "");
     supabase.storage
@@ -107,6 +107,20 @@ export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
       })
       .finally(() => setLoadingProof(false));
   }, [open, order?.screenshot_url]);
+
+  useEffect(() => {
+    setAddons([]);
+    if (!open || !order?.onboarding_submission_id) return;
+    setLoadingAddons(true);
+    supabase
+      .from("onboarding_addons")
+      .select("id, quantity, price_snapshot_pkr, pricing_type_snapshot, addons(name, icon, per_unit_label)")
+      .eq("submission_id", order.onboarding_submission_id)
+      .then(({ data }) => {
+        setAddons((data as any) || []);
+      })
+      .then(() => setLoadingAddons(false));
+  }, [open, order?.onboarding_submission_id]);
 
   if (!order) return null;
 
