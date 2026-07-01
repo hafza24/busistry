@@ -57,6 +57,7 @@ const AdminDashboard = () => {
   const renderView = () => {
     switch (activeView) {
       case "orders": return <AdminWebsiteOrders />;
+      case "subscriptions": return <AdminSubscriptions />;
       case "requests": return <AdminRequestManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
@@ -79,9 +80,10 @@ const AdminDashboard = () => {
         <SidebarInset>
           <header className="flex h-14 items-center gap-2 border-b border-border px-6">
             <SidebarTrigger />
-            <h1 className="text-lg font-semibold font-display text-foreground">
+            <h1 className="text-lg font-semibold font-display text-foreground flex-1">
               {viewTitles[activeView] ?? "Admin"}
             </h1>
+            <NotificationBell audience="admin" />
           </header>
           <main className="flex-1 p-6">{renderView()}</main>
         </SidebarInset>
