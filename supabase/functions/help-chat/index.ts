@@ -51,6 +51,38 @@ Deno.serve(async (req) => {
       thread_id: threadId, role: "user", content: message, author_id: user.id,
     });
 
+    // Auto-escalate: if the user asks for a human/admin/agent/support person,
+    // switch the thread to human mode and stream a short confirmation instead
+    // of calling the AI. Admins will see it in the support inbox.
+    const escalateRegex = /\b(human|agent|admin|support\s*(agent|person|rep|representative)?|real\s*person|live\s*(chat|agent|person)|talk\s*to\s*(someone|a\s*human|a\s*person|support)|customer\s*(service|support|care)|contact\s*support|speak\s*to\s*(someone|human|agent))\b/i;
+    if (escalateRegex.test(message)) {
+      await admin.from("chat_threads").update({
+        mode: "human",
+        last_message_at: new Date().toISOString(),
+        ...(thread.title === "New conversation" ? { title: message.slice(0, 60) } : {}),
+      }).eq("id", threadId);
+
+      await admin.from("chat_messages").insert({
+        thread_id: threadId, role: "system",
+        content: "Escalated to a human agent. An admin will reply here shortly.",
+      });
+
+      const reply = "I've forwarded your request to our human support team. An admin will reply here shortly — you'll see their messages appear in this same chat.";
+      await admin.from("chat_messages").insert({
+        thread_id: threadId, role: "assistant", content: reply,
+      });
+
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(reply));
+          controller.close();
+        },
+      });
+      return new Response(stream, {
+        headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" },
+      });
+    }
+
     // Load history
     const { data: history } = await admin
       .from("chat_messages").select("role, content")
