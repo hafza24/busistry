@@ -59,6 +59,12 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
                   <span>Help Center</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => navigate("/help/chat")} tooltip="Support Chat">
+                  <MessageCircle className="h-4 w-4" />
+                  <span>Support Chat</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
             <div className="px-2 mt-2">
               <FeedbackDialog
