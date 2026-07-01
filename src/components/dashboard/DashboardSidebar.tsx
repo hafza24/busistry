@@ -38,12 +38,6 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton onClick={() => navigate("/templates")} tooltip="Start a new website order">
-                  <Plus className="h-4 w-4" />
-                  <span>Order Website</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton isActive={activeView === item.id} onClick={() => onViewChange(item.id)} tooltip={item.label}>
