@@ -173,7 +173,51 @@ export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
             />
           </section>
 
+          {/* Add-ons */}
+          <section>
+            <SectionTitle>Add-ons Ordered</SectionTitle>
+            {loadingAddons ? (
+              <div className="rounded-lg border border-border/60 p-4 text-sm text-muted-foreground flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" /> Loading add-ons…
+              </div>
+            ) : addons.length === 0 ? (
+              <div className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground text-center">
+                No add-ons included in this order.
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {addons.map((a) => {
+                  const unit = a.pricing_type_snapshot === "per_unit" ? ` × ${a.quantity}` : "";
+                  const total = a.price_snapshot_pkr * (a.pricing_type_snapshot === "per_unit" ? a.quantity : 1);
+                  return (
+                    <div
+                      key={a.id}
+                      className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="h-8 w-8 rounded-md bg-primary/10 text-primary grid place-items-center flex-shrink-0">
+                          <Sparkles className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium truncate">{a.addons?.name || "Add-on"}{unit}</div>
+                          {a.addons?.per_unit_label && a.pricing_type_snapshot === "per_unit" && (
+                            <div className="text-xs text-muted-foreground">{a.addons.per_unit_label}</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-sm font-semibold text-foreground flex-shrink-0">
+                        PKR {total.toLocaleString()}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
           <Separator />
+
+
 
           {/* Status timeline */}
           <section>
