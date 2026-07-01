@@ -112,7 +112,7 @@ const UserProfile = () => {
   const handleSave = async () => {
     if (!user) return;
     setSaving(true);
-    const payload: Record<string, unknown> = {
+    const payload = {
       full_name: p.full_name.trim() || null,
       phone: p.phone.trim() || null,
       whatsapp: p.whatsapp.trim() || null,
@@ -132,7 +132,7 @@ const UserProfile = () => {
       linkedin_url: p.linkedin_url.trim() || null,
       updated_at: new Date().toISOString(),
     };
-    const { error } = await supabase.from("profiles").update(payload).eq("id", user.id);
+    const { error } = await supabase.from("profiles").update(payload as never).eq("id", user.id);
     if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
     else toast({ title: "Profile saved" });
     setSaving(false);
