@@ -207,33 +207,52 @@ const UserProfile = () => {
           <CardDescription>Basic details about you.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={p.avatar_url || ""} />
-                <AvatarFallback className="text-2xl bg-primary/10 text-primary">{initial}</AvatarFallback>
-              </Avatar>
-              <button
-                type="button"
-                onClick={() => fileRef.current?.click()}
-                className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-primary text-primary-foreground shadow hover:opacity-90"
-                aria-label="Change avatar"
-              >
-                {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Camera className="h-3.5 w-3.5" />}
-              </button>
+          <div className="flex items-center gap-5 flex-wrap">
+            <Avatar className="h-24 w-24 border border-border">
+              <AvatarImage src={p.avatar_url || ""} alt="Your avatar" />
+              <AvatarFallback className="text-2xl bg-primary/10 text-primary">{initial}</AvatarFallback>
+            </Avatar>
+
+            <div className="flex-1 min-w-[240px] space-y-2">
+              <div className="text-sm font-medium text-foreground">Profile photo</div>
+              <p className="text-xs text-muted-foreground">Square JPG, PNG or WebP — up to 4 MB.</p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Button
+                  type="button"
+                  variant={p.avatar_url ? "outline" : "default"}
+                  size="sm"
+                  onClick={() => fileRef.current?.click()}
+                  disabled={uploading}
+                >
+                  {uploading ? (
+                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Uploading...</>
+                  ) : (
+                    <><Camera className="h-4 w-4 mr-2" /> {p.avatar_url ? "Replace avatar" : "Upload avatar"}</>
+                  )}
+                </Button>
+                {p.avatar_url && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleRemoveAvatar}
+                    disabled={uploading}
+                    className="text-destructive hover:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" /> Remove
+                  </Button>
+                )}
+              </div>
               <input
                 ref={fileRef}
                 type="file"
-                accept="image/*"
+                accept="image/png,image/jpeg,image/webp"
                 className="hidden"
                 onChange={(e) => { const f = e.target.files?.[0]; if (f) handleAvatar(f); e.target.value = ""; }}
               />
             </div>
-            <div className="text-sm text-muted-foreground">
-              <div>Upload a square image — up to 4 MB.</div>
-              <div>JPG or PNG recommended.</div>
-            </div>
           </div>
+
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
