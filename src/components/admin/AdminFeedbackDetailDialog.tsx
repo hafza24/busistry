@@ -87,6 +87,7 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
   const act = async (
     patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>,
     action: AuditAction,
+    successMsg: string,
   ) => {
     if (!submission) return;
     setBusy(true);
@@ -96,18 +97,61 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
         .update(patch)
         .eq("id", submission.id);
       if (error) throw error;
-      await logAudit({ action, entityType: "feedback", entityId: submission.id, metadata: patch as Record<string, unknown> });
-      toast.success("Updated");
+
+      const audit = await logAudit({
+        action, entityType: "feedback", entityId: submission.id,
+        metadata: patch as Record<string, unknown>,
+      });
+      if (!audit.ok) {
+        toast.warning(`${successMsg} — audit log failed`, {
+          description: audit.error ?? "The action succeeded but was not recorded in the audit trail.",
+        });
+      } else {
+        toast.success(successMsg);
+      }
+
       qc.invalidateQueries({ queryKey: ["admin-feedback"] });
       qc.invalidateQueries({ queryKey: ["admin-feedback-detail", submission.id] });
       qc.invalidateQueries({ queryKey: ["admin-feedback-history", submission.id] });
       qc.invalidateQueries({ queryKey: ["public-reviews"] });
       qc.invalidateQueries({ queryKey: ["feedback-stats"] });
     } catch (e: any) {
-      toast.error(e?.message ?? "Failed to update");
+      toast.error("Action failed", { description: e?.message ?? "Please try again." });
     } finally {
       setBusy(false);
     }
+  };
+
+  const askReject = () => setPending({
+    patch: { approved: false, status: "rejected" },
+    action: "feedback.rejected",
+    title: "Reject feedback?",
+    description: "This submission will be hidden from public reviews. You can approve it again later.",
+    confirmLabel: "Reject",
+    destructive: true,
+    successMsg: "Feedback rejected",
+  });
+  const askApprove = () => setPending({
+    patch: { approved: true, status: "approved", approved_at: new Date().toISOString() },
+    action: "feedback.approved",
+    title: "Approve feedback?",
+    description: "This submission will become publicly visible in reviews.",
+    confirmLabel: "Approve",
+    successMsg: "Feedback approved and published",
+  });
+  const askToggleFeature = () => {
+    if (!submission) return;
+    const featured = !!submission.featured;
+    setPending({
+      patch: { featured: !featured },
+      action: featured ? "feedback.unfeatured" : "feedback.featured",
+      title: featured ? "Remove from featured?" : "Feature this review?",
+      description: featured
+        ? "This review will no longer be highlighted on the homepage."
+        : "This review will be pinned as a featured review on the homepage.",
+      confirmLabel: featured ? "Unfeature" : "Feature",
+      successMsg: featured ? "Removed from featured" : "Marked as featured",
+    });
   };
 
   return (
