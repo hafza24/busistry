@@ -239,22 +239,22 @@ const AdminFeedbackModeration = () => {
                       <div className="flex justify-end gap-1">
                         <Button size="sm" variant="ghost" onClick={() => setDetailId(r.id)} aria-label="View details">View</Button>
                         {!r.approved && r.status !== "rejected" && (
-                          <Button size="sm" variant="default" disabled={busyId === r.id} onClick={() => approve(r.id)} aria-label="Approve">
+                          <Button size="sm" variant="default" disabled={busyId === r.id} onClick={() => askApprove(r.id, r.subject)} aria-label="Approve">
                             <Check className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
                         {r.status !== "rejected" && (
-                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => reject(r.id)} aria-label="Reject">
+                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => askReject(r.id, r.subject)} aria-label="Reject">
                             <X className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
                         {r.approved && (
-                          <Button size="sm" variant="ghost" disabled={busyId === r.id} onClick={() => toggleFeature(r.id, r.featured)} aria-label={r.featured ? "Unfeature" : "Feature"}>
+                          <Button size="sm" variant="ghost" disabled={busyId === r.id} onClick={() => askToggleFeature(r.id, r.subject, r.featured)} aria-label={r.featured ? "Unfeature" : "Feature"}>
                             {r.featured ? <StarOff className="h-4 w-4" aria-hidden="true" /> : <Star className="h-4 w-4" aria-hidden="true" />}
                           </Button>
                         )}
                         {r.status === "rejected" && (
-                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => approve(r.id)} aria-label="Approve">
+                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => askApprove(r.id, r.subject)} aria-label="Approve">
                             <Check className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
