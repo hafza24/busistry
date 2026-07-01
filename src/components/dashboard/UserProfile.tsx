@@ -89,8 +89,8 @@ const UserProfile = () => {
       return;
     }
     setUploading(true);
-    const ext = file.name.split(".").pop() || "jpg";
-    const path = `avatars/${user.id}-${Date.now()}.${ext}`;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const path = `avatars/${user.id}/${Date.now()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("store-assets").upload(path, file, { upsert: true, contentType: file.type });
     if (upErr) {
       toast({ title: "Upload failed", description: upErr.message, variant: "destructive" });
