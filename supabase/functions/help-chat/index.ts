@@ -20,8 +20,8 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
-    if (!lovableKey) return json({ error: "AI not configured" }, 500);
+    const openrouterKey = Deno.env.get("OPENROUTER_API_KEY");
+    if (!openrouterKey) return json({ error: "AI not configured (missing OPENROUTER_API_KEY)" }, 500);
 
     const userClient = createClient(supabaseUrl, anonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
@@ -85,15 +85,17 @@ ${knowledge || "(No articles available yet.)"}`;
       await admin.from("chat_threads").update({ title: message.slice(0, 60) }).eq("id", threadId);
     }
 
-    // Call Lovable AI Gateway (streaming)
-    const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Call OpenRouter directly (free model)
+    const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${lovableKey}`,
+        "Authorization": `Bearer ${openrouterKey}`,
+        "HTTP-Referer": "https://busistry.lovable.app",
+        "X-Title": "Busistree Help Center",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.0-flash-exp:free",
         messages,
         stream: true,
       }),
