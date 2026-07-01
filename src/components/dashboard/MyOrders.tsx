@@ -256,18 +256,18 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
       </div>
 
       {/* Orders */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {orders.map((order: any) => {
           const cfg = statusConfig[order.status as StatusKey] || statusConfig.pending;
           const StatusIcon = cfg.icon;
           const spinning = order.status === "in_progress";
+          const expanded = expandedId === order.id;
 
           return (
             <Card
               key={order.id}
-              className="group relative overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5"
+              className="group relative overflow-hidden transition-all hover:shadow-md"
             >
-              {/* Status accent stripe */}
               <div
                 className={cn(
                   "absolute inset-x-0 top-0 h-1 bg-gradient-to-r",
@@ -275,72 +275,87 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
                 )}
               />
 
-              <CardContent className="p-5 space-y-5">
-                {/* Header row */}
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div className="flex items-start gap-3 min-w-0">
-                    <div className="h-11 w-11 rounded-lg bg-primary/10 text-primary grid place-items-center flex-shrink-0">
+              <CardContent className="p-4 space-y-3">
+                {/* Compact header row (always visible) */}
+                <button
+                  type="button"
+                  onClick={() => setExpandedId(expanded ? null : order.id)}
+                  className="w-full flex items-center justify-between gap-3 text-left"
+                  aria-expanded={expanded}
+                >
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary grid place-items-center flex-shrink-0">
                       <Globe className="h-5 w-5" />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="font-display font-semibold text-lg text-foreground truncate">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display font-semibold text-base text-foreground truncate">
                         {order.store_name}
                       </h3>
-                      <p className="text-xs text-muted-foreground font-mono">
-                        #{order.id.slice(0, 8)}
+                      <p className="text-xs text-muted-foreground font-mono truncate">
+                        #{order.id.slice(0, 8)} · {format(new Date(order.created_at), "dd MMM yyyy")}
                       </p>
                     </div>
                   </div>
 
-                  <Badge
-                    variant="outline"
-                    className={cn("gap-1.5 py-1 px-2.5 font-medium border", cfg.badge)}
-                  >
-                    <StatusIcon className={cn("h-3.5 w-3.5", spinning && "animate-spin")} />
-                    {cfg.label}
-                  </Badge>
-                </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Badge
+                      variant="outline"
+                      className={cn("gap-1.5 py-1 px-2.5 font-medium border", cfg.badge)}
+                    >
+                      <StatusIcon className={cn("h-3.5 w-3.5", spinning && "animate-spin")} />
+                      {cfg.label}
+                    </Badge>
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 text-muted-foreground transition-transform",
+                        expanded && "rotate-180",
+                      )}
+                    />
+                  </div>
+                </button>
 
-                {/* Meta chips */}
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <MetaChip icon={Layers} label="Template" value={order.templates?.name || "—"} />
-                  <MetaChip
-                    icon={Package}
-                    label="Plan"
-                    value={order.plans?.name ? `${order.plans.name} · ${order.plans.type}` : "—"}
-                  />
-                  <MetaChip
-                    icon={Clock}
-                    label="Ordered"
-                    value={format(new Date(order.created_at), "dd MMM yyyy")}
-                  />
-                </div>
+                {/* Expanded details */}
+                {expanded && (
+                  <div className="space-y-4 pt-2 border-t border-border/60 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="flex flex-wrap gap-2 text-xs pt-3">
+                      <MetaChip icon={Layers} label="Template" value={order.templates?.name || "—"} />
+                      <MetaChip
+                        icon={Package}
+                        label="Plan"
+                        value={order.plans?.name ? `${order.plans.name} · ${order.plans.type}` : "—"}
+                      />
+                      <MetaChip
+                        icon={Clock}
+                        label="Ordered"
+                        value={format(new Date(order.created_at), "dd MMM yyyy")}
+                      />
+                    </div>
 
-                {/* Timeline */}
-                <div className="rounded-lg border border-border/60 bg-muted/30 p-4">
-                  <OrderStatusTimeline
-                    status={order.status}
-                    updatedAt={order.updated_at ?? order.created_at}
-                    note={order.admin_notes}
-                  />
-                </div>
+                    <div className="rounded-lg border border-border/60 bg-muted/30 p-4">
+                      <OrderStatusTimeline
+                        status={order.status}
+                        updatedAt={order.updated_at ?? order.created_at}
+                        note={order.admin_notes}
+                      />
+                    </div>
 
-                {/* Credentials */}
-                {order.status === "completed" && (
-                  <DecryptedCredentials orderId={order.id} hasUrl={true} />
+                    {order.status === "completed" && (
+                      <DecryptedCredentials orderId={order.id} hasUrl={true} />
+                    )}
+
+                    <div className="flex justify-end pt-1">
+                      <Button variant="outline" size="sm" onClick={() => setDetailOrder(order)}>
+                        View details
+                      </Button>
+                    </div>
+                  </div>
                 )}
-
-                {/* Actions */}
-                <div className="flex justify-end pt-1">
-                  <Button variant="outline" size="sm" onClick={() => setDetailOrder(order)}>
-                    View details
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           );
         })}
       </div>
+
 
       <OrderDetailsSheet
         order={detailOrder}
