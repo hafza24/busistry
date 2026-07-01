@@ -50,7 +50,20 @@ export default function MySubscriptions() {
                     <CalendarClock className="h-4 w-4" />
                     Renews {format(new Date(s.current_period_end), "MMM d, yyyy")}
                   </div>
-                  <div className="font-semibold">PKR {Number(s.amount_pkr).toLocaleString()} / {s.cycle_days} days</div>
+                </div>
+                <div className={`rounded-lg border p-3 flex items-center justify-between gap-3 ${expired || urgent ? "border-primary/40 bg-primary/5" : "border-border bg-muted/30"}`}>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-muted-foreground">Renewal price</div>
+                    <div className="text-lg font-bold text-foreground leading-tight">
+                      PKR {Number(s.amount_pkr).toLocaleString()}
+                    </div>
+                    <div className="text-xs text-muted-foreground">every {s.cycle_days} days</div>
+                  </div>
+                  {(expired || urgent) && (
+                    <Badge variant={expired ? "destructive" : "secondary"} className="whitespace-nowrap">
+                      {expired ? "Renew now" : "Renew soon"}
+                    </Badge>
+                  )}
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t">
                   <div className="text-sm">
