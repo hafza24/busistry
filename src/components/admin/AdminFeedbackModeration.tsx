@@ -156,9 +156,10 @@ const AdminFeedbackModeration = () => {
               </TableHeader>
               <TableBody>
                 {data.rows.map((r) => (
-                  <TableRow key={r.id}>
+                  <TableRow key={r.id} className="cursor-pointer" onClick={() => setDetailId(r.id)}>
                     <TableCell className="max-w-md">
-                      <div className="font-medium line-clamp-1">{r.subject}</div>
+                      <button type="button" className="text-left w-full" onClick={(e) => { e.stopPropagation(); setDetailId(r.id); }} aria-label={`View ${r.subject}`}>
+                      <div className="font-medium line-clamp-1 hover:underline">{r.subject}</div></button>
                       <div className="text-xs text-muted-foreground line-clamp-2 mt-0.5">{r.message}</div>
                       <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                         {r.category && <Badge variant="outline" className="text-[10px]">{r.category}</Badge>}
@@ -186,8 +187,9 @@ const AdminFeedbackModeration = () => {
                     <TableCell className="text-xs text-muted-foreground">
                       {new Date(r.created_at).toLocaleDateString()}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex justify-end gap-1">
+                        <Button size="sm" variant="ghost" onClick={() => setDetailId(r.id)} aria-label="View details">View</Button>
                         {!r.approved && r.status !== "rejected" && (
                           <Button size="sm" variant="default" disabled={busyId === r.id} onClick={() => approve(r.id)} aria-label="Approve">
                             <Check className="h-4 w-4" aria-hidden="true" />
