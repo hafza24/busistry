@@ -49,8 +49,17 @@ type OrderRow = {
   transaction_id: string | null;
   screenshot_url: string | null;
   domain_preference: string | null;
+  onboarding_submission_id?: string | null;
   plans?: { name: string; type: string; price_pkr: number } | null;
   templates?: { name: string; niche: string } | null;
+};
+
+type AddonRow = {
+  id: string;
+  quantity: number;
+  price_snapshot_pkr: number;
+  pricing_type_snapshot: string | null;
+  addons: { name: string; icon: string | null; per_unit_label: string | null } | null;
 };
 
 interface Props {
