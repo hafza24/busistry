@@ -19,6 +19,7 @@ import {
 import { toast } from "sonner";
 import { Check, X, Star, StarOff, Search, MessageSquare } from "lucide-react";
 import { logAudit, type AuditAction } from "@/lib/audit";
+import AdminFeedbackDetailDialog from "./AdminFeedbackDetailDialog";
 
 type FilterStatus = "all" | "pending" | "approved" | "rejected";
 
@@ -30,6 +31,7 @@ const AdminFeedbackModeration = () => {
   const [status, setStatus] = useState<FilterStatus>("pending");
   const [page, setPage] = useState(1);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-feedback", status, search, page],
