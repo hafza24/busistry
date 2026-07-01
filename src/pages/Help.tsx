@@ -91,6 +91,21 @@ const Help = () => {
             {user && <TabsTrigger value="tickets">My Tickets</TabsTrigger>}
           </TabsList>
 
+          <div className="mb-6">
+            <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/30">
+              <CardContent className="flex items-center justify-between gap-4 py-4">
+                <div>
+                  <div className="font-semibold">Need instant answers?</div>
+                  <div className="text-sm text-muted-foreground">Chat with our AI assistant or escalate to a human agent.</div>
+                </div>
+                <Button asChild>
+                  <Link to="/help/chat">Start chat</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+
           <TabsContent value="browse" className="space-y-8">
             {!search && featured.length > 0 && (
               <div>

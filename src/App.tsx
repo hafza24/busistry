@@ -29,6 +29,7 @@ const Refund = lazy(() => import("./pages/legal/Refund"));
 const DataProtection = lazy(() => import("./pages/legal/DataProtection"));
 const Help = lazy(() => import("./pages/Help"));
 const HelpArticle = lazy(() => import("./pages/HelpArticle"));
+const HelpChat = lazy(() => import("./pages/HelpChat"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +70,7 @@ const App = () => (
                     <Route path="/legal/refund" element={<Refund />} />
                     <Route path="/legal/data-protection" element={<DataProtection />} />
                     <Route path="/help" element={<Help />} />
+                    <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />

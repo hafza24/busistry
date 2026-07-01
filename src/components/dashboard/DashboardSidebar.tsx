@@ -5,7 +5,7 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Globe, Plus, User, LogOut, Home, ShieldCheck, MessageSquarePlus, Repeat, LifeBuoy } from "lucide-react";
+import { Globe, Plus, User, LogOut, Home, ShieldCheck, MessageSquarePlus, Repeat, LifeBuoy, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import logo from "@/assets/logo.png";
@@ -57,6 +57,12 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
                 <SidebarMenuButton onClick={() => navigate("/help")} tooltip="Help Center">
                   <LifeBuoy className="h-4 w-4" />
                   <span>Help Center</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => navigate("/help/chat")} tooltip="Support Chat">
+                  <MessageCircle className="h-4 w-4" />
+                  <span>Support Chat</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
