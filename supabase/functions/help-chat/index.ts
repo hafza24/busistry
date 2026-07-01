@@ -85,17 +85,15 @@ ${knowledge || "(No articles available yet.)"}`;
       await admin.from("chat_threads").update({ title: message.slice(0, 60) }).eq("id", threadId);
     }
 
-    // Call OpenRouter directly (free model)
-    const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    // Call Google Gemini directly via OpenAI-compatible endpoint (free tier)
+    const aiRes = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${openrouterKey}`,
-        "HTTP-Referer": "https://busistry.lovable.app",
-        "X-Title": "Busistree Help Center",
+        "Authorization": `Bearer ${geminiKey}`,
       },
       body: JSON.stringify({
-        model: "google/gemini-2.0-flash-exp:free",
+        model: "gemini-2.0-flash",
         messages,
         stream: true,
       }),
