@@ -30,13 +30,14 @@ interface LogInput {
 }
 
 /**
- * Best-effort audit logger. Never throws — failures are swallowed
- * so they don't disrupt the user flow.
+ * Best-effort audit logger. Never throws — returns { ok, error } so callers
+ * can surface a non-blocking warning when audit logging fails.
  */
-export async function logAudit({ action, entityType, entityId, metadata, actorEmail }: LogInput) {
+export async function logAudit({ action, entityType, entityId, metadata, actorEmail }: LogInput):
+  Promise<{ ok: boolean; error?: string }> {
   try {
     const { data: { user } } = await supabase.auth.getUser();
-    await supabase.from("audit_logs").insert({
+    const { error } = await supabase.from("audit_logs").insert({
       user_id: user?.id ?? null,
       actor_email: actorEmail ?? user?.email ?? null,
       action,
@@ -45,7 +46,9 @@ export async function logAudit({ action, entityType, entityId, metadata, actorEm
       metadata: (metadata ?? {}) as never,
       user_agent: typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
     });
-  } catch {
-    /* swallow */
+    if (error) return { ok: false, error: error.message };
+    return { ok: true };
+  } catch (e: any) {
+    return { ok: false, error: e?.message ?? "Unknown audit error" };
   }
 }
