@@ -523,6 +523,56 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          audience: string
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          metadata: Json
+          read_at: string | null
+          subscription_id: string | null
+          title: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          audience?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
+          subscription_id?: string | null
+          title: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          audience?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          metadata?: Json
+          read_at?: string | null
+          subscription_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       onboarding_addons: {
         Row: {
           addon_id: string
@@ -1402,6 +1452,63 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscriptions: {
+        Row: {
+          amount_pkr: number
+          auto_renew: boolean
+          created_at: string
+          current_period_end: string
+          current_period_start: string
+          cycle_days: number
+          id: string
+          label: string
+          last_reminder_at: string | null
+          last_reminder_day: number | null
+          source_id: string
+          source_type: string
+          status: string
+          store_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_pkr?: number
+          auto_renew?: boolean
+          created_at?: string
+          current_period_end: string
+          current_period_start?: string
+          cycle_days?: number
+          id?: string
+          label: string
+          last_reminder_at?: string | null
+          last_reminder_day?: number | null
+          source_id: string
+          source_type: string
+          status?: string
+          store_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_pkr?: number
+          auto_renew?: boolean
+          created_at?: string
+          current_period_end?: string
+          current_period_start?: string
+          cycle_days?: number
+          id?: string
+          label?: string
+          last_reminder_at?: string | null
+          last_reminder_day?: number | null
+          source_id?: string
+          source_type?: string
+          status?: string
+          store_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       templates: {
         Row: {
