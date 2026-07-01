@@ -35,6 +35,7 @@ const viewTitles: Record<string, string> = {
   upgrades: "Upgrade Orders",
   feedback: "Feedback Moderation",
   help_center: "Help Center",
+  support_chat: "Support Chat",
   audit: "Audit Logs",
 };
 
