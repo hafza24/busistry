@@ -50,6 +50,7 @@ const actionLabel = (a: string) =>
 const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) => {
   const qc = useQueryClient();
   const [busy, setBusy] = useState(false);
+  const [pending, setPending] = useState<PendingAction>(null);
 
   const { data: submission, isLoading } = useQuery({
     queryKey: ["admin-feedback-detail", submissionId],
