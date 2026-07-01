@@ -81,6 +81,7 @@ const AdminFeedbackModeration = () => {
     id: string,
     patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>,
     action: AuditAction,
+    successMsg: string,
   ) => {
     setBusyId(id);
     try {
@@ -89,28 +90,61 @@ const AdminFeedbackModeration = () => {
         .update(patch)
         .eq("id", id);
       if (error) throw error;
-      logAudit({ action, entityType: "feedback", entityId: id, metadata: patch as Record<string, unknown> });
-      toast.success("Updated");
+
+      const audit = await logAudit({
+        action,
+        entityType: "feedback",
+        entityId: id,
+        metadata: patch as Record<string, unknown>,
+      });
+      if (!audit.ok) {
+        toast.warning(`${successMsg} — audit log failed`, {
+          description: audit.error ?? "The action succeeded but was not recorded in the audit trail.",
+        });
+      } else {
+        toast.success(successMsg);
+      }
+
       qc.invalidateQueries({ queryKey: ["admin-feedback"] });
       qc.invalidateQueries({ queryKey: ["public-reviews"] });
       qc.invalidateQueries({ queryKey: ["feedback-stats"] });
     } catch (e: any) {
-      toast.error(e?.message ?? "Failed to update");
+      toast.error("Action failed", { description: e?.message ?? "Please try again." });
     } finally {
       setBusyId(null);
     }
   };
 
-  const approve = (id: string) =>
-    mutate(
-      id,
-      { approved: true, status: "approved", approved_at: new Date().toISOString() },
-      "feedback.approved",
-    );
-  const reject = (id: string) =>
-    mutate(id, { approved: false, status: "rejected" }, "feedback.rejected");
-  const toggleFeature = (id: string, featured: boolean) =>
-    mutate(id, { featured: !featured }, featured ? "feedback.unfeatured" : "feedback.featured");
+  const askApprove = (id: string, subject: string) => setPending({
+    id, subject,
+    patch: { approved: true, status: "approved", approved_at: new Date().toISOString() },
+    action: "feedback.approved",
+    title: "Approve feedback?",
+    description: `"${subject}" will become publicly visible in reviews.`,
+    confirmLabel: "Approve",
+    successMsg: "Feedback approved and published",
+  });
+  const askReject = (id: string, subject: string) => setPending({
+    id, subject,
+    patch: { approved: false, status: "rejected" },
+    action: "feedback.rejected",
+    title: "Reject feedback?",
+    description: `"${subject}" will be hidden from public reviews. This can be reversed later.`,
+    confirmLabel: "Reject",
+    destructive: true,
+    successMsg: "Feedback rejected",
+  });
+  const askToggleFeature = (id: string, subject: string, featured: boolean) => setPending({
+    id, subject,
+    patch: { featured: !featured },
+    action: featured ? "feedback.unfeatured" : "feedback.featured",
+    title: featured ? "Remove from featured?" : "Feature this review?",
+    description: featured
+      ? `"${subject}" will no longer be highlighted on the homepage.`
+      : `"${subject}" will be pinned as a featured review on the homepage.`,
+    confirmLabel: featured ? "Unfeature" : "Feature",
+    successMsg: featured ? "Removed from featured" : "Marked as featured",
+  });
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
