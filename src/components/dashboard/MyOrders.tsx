@@ -328,11 +328,24 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
                 {order.status === "completed" && (
                   <DecryptedCredentials orderId={order.id} hasUrl={true} />
                 )}
+
+                {/* Actions */}
+                <div className="flex justify-end pt-1">
+                  <Button variant="outline" size="sm" onClick={() => setDetailOrder(order)}>
+                    View details
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           );
         })}
       </div>
+
+      <OrderDetailsSheet
+        order={detailOrder}
+        open={!!detailOrder}
+        onOpenChange={(o) => { if (!o) setDetailOrder(null); }}
+      />
     </div>
   );
 };
