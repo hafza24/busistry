@@ -85,15 +85,17 @@ ${knowledge || "(No articles available yet.)"}`;
       await admin.from("chat_threads").update({ title: message.slice(0, 60) }).eq("id", threadId);
     }
 
-    // Call Lovable AI Gateway (streaming)
-    const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Call OpenRouter directly (free model)
+    const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${lovableKey}`,
+        "Authorization": `Bearer ${openrouterKey}`,
+        "HTTP-Referer": "https://busistry.lovable.app",
+        "X-Title": "Busistree Help Center",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "google/gemini-2.0-flash-exp:free",
         messages,
         stream: true,
       }),
