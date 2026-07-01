@@ -20,6 +20,19 @@ import { toast } from "sonner";
 import { Check, X, Star, StarOff, Search, MessageSquare } from "lucide-react";
 import { logAudit, type AuditAction } from "@/lib/audit";
 import AdminFeedbackDetailDialog from "./AdminFeedbackDetailDialog";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+
+type PendingAction = {
+  id: string;
+  subject: string;
+  patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>;
+  action: AuditAction;
+  title: string;
+  description: string;
+  confirmLabel: string;
+  destructive?: boolean;
+  successMsg: string;
+} | null;
 
 type FilterStatus = "all" | "pending" | "approved" | "rejected";
 
@@ -32,6 +45,7 @@ const AdminFeedbackModeration = () => {
   const [page, setPage] = useState(1);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [pending, setPending] = useState<PendingAction>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin-feedback", status, search, page],
@@ -67,6 +81,7 @@ const AdminFeedbackModeration = () => {
     id: string,
     patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>,
     action: AuditAction,
+    successMsg: string,
   ) => {
     setBusyId(id);
     try {
@@ -75,28 +90,61 @@ const AdminFeedbackModeration = () => {
         .update(patch)
         .eq("id", id);
       if (error) throw error;
-      logAudit({ action, entityType: "feedback", entityId: id, metadata: patch as Record<string, unknown> });
-      toast.success("Updated");
+
+      const audit = await logAudit({
+        action,
+        entityType: "feedback",
+        entityId: id,
+        metadata: patch as Record<string, unknown>,
+      });
+      if (!audit.ok) {
+        toast.warning(`${successMsg} — audit log failed`, {
+          description: audit.error ?? "The action succeeded but was not recorded in the audit trail.",
+        });
+      } else {
+        toast.success(successMsg);
+      }
+
       qc.invalidateQueries({ queryKey: ["admin-feedback"] });
       qc.invalidateQueries({ queryKey: ["public-reviews"] });
       qc.invalidateQueries({ queryKey: ["feedback-stats"] });
     } catch (e: any) {
-      toast.error(e?.message ?? "Failed to update");
+      toast.error("Action failed", { description: e?.message ?? "Please try again." });
     } finally {
       setBusyId(null);
     }
   };
 
-  const approve = (id: string) =>
-    mutate(
-      id,
-      { approved: true, status: "approved", approved_at: new Date().toISOString() },
-      "feedback.approved",
-    );
-  const reject = (id: string) =>
-    mutate(id, { approved: false, status: "rejected" }, "feedback.rejected");
-  const toggleFeature = (id: string, featured: boolean) =>
-    mutate(id, { featured: !featured }, featured ? "feedback.unfeatured" : "feedback.featured");
+  const askApprove = (id: string, subject: string) => setPending({
+    id, subject,
+    patch: { approved: true, status: "approved", approved_at: new Date().toISOString() },
+    action: "feedback.approved",
+    title: "Approve feedback?",
+    description: `"${subject}" will become publicly visible in reviews.`,
+    confirmLabel: "Approve",
+    successMsg: "Feedback approved and published",
+  });
+  const askReject = (id: string, subject: string) => setPending({
+    id, subject,
+    patch: { approved: false, status: "rejected" },
+    action: "feedback.rejected",
+    title: "Reject feedback?",
+    description: `"${subject}" will be hidden from public reviews. This can be reversed later.`,
+    confirmLabel: "Reject",
+    destructive: true,
+    successMsg: "Feedback rejected",
+  });
+  const askToggleFeature = (id: string, subject: string, featured: boolean) => setPending({
+    id, subject,
+    patch: { featured: !featured },
+    action: featured ? "feedback.unfeatured" : "feedback.featured",
+    title: featured ? "Remove from featured?" : "Feature this review?",
+    description: featured
+      ? `"${subject}" will no longer be highlighted on the homepage.`
+      : `"${subject}" will be pinned as a featured review on the homepage.`,
+    confirmLabel: featured ? "Unfeature" : "Feature",
+    successMsg: featured ? "Removed from featured" : "Marked as featured",
+  });
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -191,22 +239,22 @@ const AdminFeedbackModeration = () => {
                       <div className="flex justify-end gap-1">
                         <Button size="sm" variant="ghost" onClick={() => setDetailId(r.id)} aria-label="View details">View</Button>
                         {!r.approved && r.status !== "rejected" && (
-                          <Button size="sm" variant="default" disabled={busyId === r.id} onClick={() => approve(r.id)} aria-label="Approve">
+                          <Button size="sm" variant="default" disabled={busyId === r.id} onClick={() => askApprove(r.id, r.subject)} aria-label="Approve">
                             <Check className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
                         {r.status !== "rejected" && (
-                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => reject(r.id)} aria-label="Reject">
+                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => askReject(r.id, r.subject)} aria-label="Reject">
                             <X className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
                         {r.approved && (
-                          <Button size="sm" variant="ghost" disabled={busyId === r.id} onClick={() => toggleFeature(r.id, r.featured)} aria-label={r.featured ? "Unfeature" : "Feature"}>
+                          <Button size="sm" variant="ghost" disabled={busyId === r.id} onClick={() => askToggleFeature(r.id, r.subject, r.featured)} aria-label={r.featured ? "Unfeature" : "Feature"}>
                             {r.featured ? <StarOff className="h-4 w-4" aria-hidden="true" /> : <Star className="h-4 w-4" aria-hidden="true" />}
                           </Button>
                         )}
                         {r.status === "rejected" && (
-                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => approve(r.id)} aria-label="Approve">
+                          <Button size="sm" variant="outline" disabled={busyId === r.id} onClick={() => askApprove(r.id, r.subject)} aria-label="Approve">
                             <Check className="h-4 w-4" aria-hidden="true" />
                           </Button>
                         )}
@@ -255,6 +303,20 @@ const AdminFeedbackModeration = () => {
         submissionId={detailId}
         open={!!detailId}
         onOpenChange={(o) => { if (!o) setDetailId(null); }}
+      />
+
+      <ConfirmDialog
+        open={!!pending}
+        onOpenChange={(o) => { if (!o) setPending(null); }}
+        title={pending?.title ?? ""}
+        description={pending?.description ?? ""}
+        confirmLabel={pending?.confirmLabel ?? "Confirm"}
+        destructive={pending?.destructive}
+        onConfirm={async () => {
+          if (!pending) return;
+          await mutate(pending.id, pending.patch, pending.action, pending.successMsg);
+          setPending(null);
+        }}
       />
     </div>
   );

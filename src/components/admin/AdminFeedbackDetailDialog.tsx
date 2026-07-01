@@ -12,6 +12,17 @@ import { Check, X, Star, StarOff, Mail, Phone, User, Calendar, ScrollText } from
 import { toast } from "sonner";
 import { logAudit, type AuditAction } from "@/lib/audit";
 import { useState } from "react";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+
+type PendingAction = {
+  patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>;
+  action: AuditAction;
+  title: string;
+  description: string;
+  confirmLabel: string;
+  destructive?: boolean;
+  successMsg: string;
+} | null;
 
 interface Props {
   submissionId: string | null;
@@ -39,6 +50,7 @@ const actionLabel = (a: string) =>
 const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) => {
   const qc = useQueryClient();
   const [busy, setBusy] = useState(false);
+  const [pending, setPending] = useState<PendingAction>(null);
 
   const { data: submission, isLoading } = useQuery({
     queryKey: ["admin-feedback-detail", submissionId],
@@ -75,6 +87,7 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
   const act = async (
     patch: Partial<{ approved: boolean; status: string; approved_at: string; featured: boolean }>,
     action: AuditAction,
+    successMsg: string,
   ) => {
     if (!submission) return;
     setBusy(true);
@@ -84,18 +97,61 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
         .update(patch)
         .eq("id", submission.id);
       if (error) throw error;
-      await logAudit({ action, entityType: "feedback", entityId: submission.id, metadata: patch as Record<string, unknown> });
-      toast.success("Updated");
+
+      const audit = await logAudit({
+        action, entityType: "feedback", entityId: submission.id,
+        metadata: patch as Record<string, unknown>,
+      });
+      if (!audit.ok) {
+        toast.warning(`${successMsg} — audit log failed`, {
+          description: audit.error ?? "The action succeeded but was not recorded in the audit trail.",
+        });
+      } else {
+        toast.success(successMsg);
+      }
+
       qc.invalidateQueries({ queryKey: ["admin-feedback"] });
       qc.invalidateQueries({ queryKey: ["admin-feedback-detail", submission.id] });
       qc.invalidateQueries({ queryKey: ["admin-feedback-history", submission.id] });
       qc.invalidateQueries({ queryKey: ["public-reviews"] });
       qc.invalidateQueries({ queryKey: ["feedback-stats"] });
     } catch (e: any) {
-      toast.error(e?.message ?? "Failed to update");
+      toast.error("Action failed", { description: e?.message ?? "Please try again." });
     } finally {
       setBusy(false);
     }
+  };
+
+  const askReject = () => setPending({
+    patch: { approved: false, status: "rejected" },
+    action: "feedback.rejected",
+    title: "Reject feedback?",
+    description: "This submission will be hidden from public reviews. You can approve it again later.",
+    confirmLabel: "Reject",
+    destructive: true,
+    successMsg: "Feedback rejected",
+  });
+  const askApprove = () => setPending({
+    patch: { approved: true, status: "approved", approved_at: new Date().toISOString() },
+    action: "feedback.approved",
+    title: "Approve feedback?",
+    description: "This submission will become publicly visible in reviews.",
+    confirmLabel: "Approve",
+    successMsg: "Feedback approved and published",
+  });
+  const askToggleFeature = () => {
+    if (!submission) return;
+    const featured = !!submission.featured;
+    setPending({
+      patch: { featured: !featured },
+      action: featured ? "feedback.unfeatured" : "feedback.featured",
+      title: featured ? "Remove from featured?" : "Feature this review?",
+      description: featured
+        ? "This review will no longer be highlighted on the homepage."
+        : "This review will be pinned as a featured review on the homepage.",
+      confirmLabel: featured ? "Unfeature" : "Feature",
+      successMsg: featured ? "Removed from featured" : "Marked as featured",
+    });
   };
 
   return (
@@ -197,28 +253,17 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={busy}>Close</Button>
           <div className="flex gap-2 flex-wrap">
             {submission && submission.status !== "rejected" && (
-              <Button
-                variant="outline"
-                disabled={busy}
-                onClick={() => act({ approved: false, status: "rejected" }, "feedback.rejected")}
-              >
+              <Button variant="outline" disabled={busy} onClick={askReject}>
                 <X className="h-4 w-4 mr-1.5" aria-hidden="true" /> Reject
               </Button>
             )}
             {submission && !submission.approved && (
-              <Button
-                disabled={busy}
-                onClick={() => act({ approved: true, status: "approved", approved_at: new Date().toISOString() }, "feedback.approved")}
-              >
+              <Button disabled={busy} onClick={askApprove}>
                 <Check className="h-4 w-4 mr-1.5" aria-hidden="true" /> Approve
               </Button>
             )}
             {submission?.approved && (
-              <Button
-                variant="secondary"
-                disabled={busy}
-                onClick={() => act({ featured: !submission.featured }, submission.featured ? "feedback.unfeatured" : "feedback.featured")}
-              >
+              <Button variant="secondary" disabled={busy} onClick={askToggleFeature}>
                 {submission.featured
                   ? <><StarOff className="h-4 w-4 mr-1.5" aria-hidden="true" /> Unfeature</>
                   : <><Star className="h-4 w-4 mr-1.5" aria-hidden="true" /> Feature</>}
@@ -227,6 +272,20 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
           </div>
         </DialogFooter>
       </DialogContent>
+
+      <ConfirmDialog
+        open={!!pending}
+        onOpenChange={(o) => { if (!o) setPending(null); }}
+        title={pending?.title ?? ""}
+        description={pending?.description ?? ""}
+        confirmLabel={pending?.confirmLabel ?? "Confirm"}
+        destructive={pending?.destructive}
+        onConfirm={async () => {
+          if (!pending) return;
+          await act(pending.patch, pending.action, pending.successMsg);
+          setPending(null);
+        }}
+      />
     </Dialog>
   );
 };
