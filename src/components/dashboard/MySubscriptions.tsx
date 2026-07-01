@@ -1,11 +1,131 @@
-import { useSubscriptions, useToggleAutoRenew } from "@/hooks/useNotifications";
+import { useEffect, useState } from "react";
+import { useSubscriptions, useToggleAutoRenew, SubscriptionRow } from "@/hooks/useNotifications";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { format, differenceInDays } from "date-fns";
-import { Repeat, CalendarClock, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Repeat, CalendarClock, AlertTriangle, CheckCircle2, Package, Sparkles, Loader2 } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { toast } from "sonner";
+
+type BreakdownItem = { label: string; amount: number; kind: "plan" | "addon" };
+
+function useBreakdown(s: SubscriptionRow) {
+  const [items, setItems] = useState<BreakdownItem[] | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      setLoading(true);
+      const base: BreakdownItem[] = [];
+
+      if (s.source_type === "website_order") {
+        const { data: order } = await supabase
+          .from("website_orders")
+          .select("onboarding_submission_id, plans(name, price_pkr)")
+          .eq("id", s.source_id)
+          .maybeSingle();
+
+        if (order?.plans) {
+          base.push({ label: `${(order.plans as any).name} plan`, amount: Number((order.plans as any).price_pkr) || 0, kind: "plan" });
+        }
+        const submissionId = (order as any)?.onboarding_submission_id;
+        if (submissionId) {
+          const { data: addons } = await supabase
+            .from("onboarding_addons")
+            .select("quantity, price_snapshot_pkr, pricing_type_snapshot, addons(name)")
+            .eq("submission_id", submissionId);
+          (addons || []).forEach((a: any) => {
+            const qty = a.pricing_type_snapshot === "per_unit" ? a.quantity : 1;
+            base.push({
+              label: `${a.addons?.name || "Add-on"}${qty > 1 ? ` × ${qty}` : ""}`,
+              amount: (Number(a.price_snapshot_pkr) || 0) * qty,
+              kind: "addon",
+            });
+          });
+        }
+      } else if (s.source_type === "store_addon" || s.source_type === "addon") {
+        const { data: sa } = await supabase
+          .from("store_addons")
+          .select("price_snapshot_pkr, pricing_type_snapshot, config, addons:item_id(name)")
+          .eq("id", s.source_id)
+          .maybeSingle();
+        if (sa) {
+          base.push({
+            label: (sa as any).addons?.name || s.label,
+            amount: Number((sa as any).price_snapshot_pkr) || Number(s.amount_pkr) || 0,
+            kind: "addon",
+          });
+        }
+      } else if (s.source_type === "upgrade_order") {
+        const { data: up } = await supabase
+          .from("upgrade_orders")
+          .select("upgrade_type, amount")
+          .eq("id", s.source_id)
+          .maybeSingle();
+        if (up) {
+          base.push({ label: `${(up as any).upgrade_type} upgrade`, amount: Number((up as any).amount) || 0, kind: "plan" });
+        }
+      }
+
+      // Fallback: if we found nothing, show the subscription itself as one line.
+      if (base.length === 0) {
+        base.push({ label: s.label, amount: Number(s.amount_pkr) || 0, kind: "plan" });
+      }
+
+      if (!cancelled) {
+        setItems(base);
+        setLoading(false);
+      }
+    };
+    load();
+    return () => { cancelled = true; };
+  }, [s.id, s.source_id, s.source_type, s.label, s.amount_pkr]);
+
+  return { items, loading };
+}
+
+function BreakdownList({ s }: { s: SubscriptionRow }) {
+  const { items, loading } = useBreakdown(s);
+  const subtotal = (items || []).reduce((sum, i) => sum + i.amount, 0);
+
+  return (
+    <div className="rounded-lg border border-border/60 bg-muted/20 divide-y divide-border/60">
+      <div className="px-3 py-2 text-xs uppercase tracking-wide text-muted-foreground font-medium">
+        Renewal breakdown
+      </div>
+      {loading || !items ? (
+        <div className="px-3 py-3 text-sm text-muted-foreground flex items-center gap-2">
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading items…
+        </div>
+      ) : (
+        <>
+          {items.map((it, idx) => (
+            <div key={idx} className="px-3 py-2 flex items-center justify-between gap-3 text-sm">
+              <div className="flex items-center gap-2 min-w-0">
+                {it.kind === "plan" ? (
+                  <Package className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                )}
+                <span className="truncate">{it.label}</span>
+              </div>
+              <span className="font-medium tabular-nums flex-shrink-0">
+                PKR {it.amount.toLocaleString()}
+              </span>
+            </div>
+          ))}
+          <div className="px-3 py-2 flex items-center justify-between gap-3 text-sm bg-muted/40">
+            <span className="font-semibold">Total / {s.cycle_days} days</span>
+            <span className="font-bold tabular-nums">PKR {subtotal.toLocaleString()}</span>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function MySubscriptions() {
   const { data: subs = [], isLoading } = useSubscriptions("own");
@@ -51,6 +171,9 @@ export default function MySubscriptions() {
                     Renews {format(new Date(s.current_period_end), "MMM d, yyyy")}
                   </div>
                 </div>
+
+                <BreakdownList s={s} />
+
                 <div className={`rounded-lg border p-3 flex items-center justify-between gap-3 ${expired || urgent ? "border-primary/40 bg-primary/5" : "border-border bg-muted/30"}`}>
                   <div>
                     <div className="text-xs uppercase tracking-wide text-muted-foreground">Renewal price</div>
