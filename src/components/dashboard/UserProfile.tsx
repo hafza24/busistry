@@ -82,13 +82,25 @@ const UserProfile = () => {
     });
   }, [user]);
 
+  const extractStoragePath = (publicUrl: string): string | null => {
+    const marker = "/store-assets/";
+    const idx = publicUrl.indexOf(marker);
+    if (idx === -1) return null;
+    return publicUrl.slice(idx + marker.length);
+  };
+
   const handleAvatar = async (file: File) => {
     if (!user) return;
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Unsupported file", description: "Please choose a JPG, PNG, or WebP image.", variant: "destructive" });
+      return;
+    }
     if (file.size > 4 * 1024 * 1024) {
       toast({ title: "Image too large", description: "Max 4 MB.", variant: "destructive" });
       return;
     }
     setUploading(true);
+    const previousUrl = p.avatar_url;
     const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
     const path = `avatars/${user.id}/${Date.now()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("store-assets").upload(path, file, { upsert: true, contentType: file.type });
@@ -101,13 +113,40 @@ const UserProfile = () => {
     const url = data.publicUrl;
     const { error: dbErr } = await supabase.from("profiles").update({ avatar_url: url, updated_at: new Date().toISOString() }).eq("id", user.id);
     if (dbErr) {
+      // Roll back the just-uploaded file so we don't leave orphans
+      await supabase.storage.from("store-assets").remove([path]);
       toast({ title: "Save failed", description: dbErr.message, variant: "destructive" });
-    } else {
-      set("avatar_url", url);
-      toast({ title: "Avatar updated" });
+      setUploading(false);
+      return;
     }
+    set("avatar_url", url);
+    // Best-effort cleanup of the previous avatar file
+    const prevPath = previousUrl ? extractStoragePath(previousUrl) : null;
+    if (prevPath && prevPath !== path && prevPath.startsWith(`avatars/${user.id}/`)) {
+      await supabase.storage.from("store-assets").remove([prevPath]);
+    }
+    toast({ title: previousUrl ? "Avatar replaced" : "Avatar uploaded" });
     setUploading(false);
   };
+
+  const handleRemoveAvatar = async () => {
+    if (!user || !p.avatar_url) return;
+    setUploading(true);
+    const prevPath = extractStoragePath(p.avatar_url);
+    const { error } = await supabase.from("profiles").update({ avatar_url: null, updated_at: new Date().toISOString() }).eq("id", user.id);
+    if (error) {
+      toast({ title: "Remove failed", description: error.message, variant: "destructive" });
+      setUploading(false);
+      return;
+    }
+    if (prevPath && prevPath.startsWith(`avatars/${user.id}/`)) {
+      await supabase.storage.from("store-assets").remove([prevPath]);
+    }
+    set("avatar_url", "");
+    toast({ title: "Avatar removed" });
+    setUploading(false);
+  };
+
 
   const handleSave = async () => {
     if (!user) return;
