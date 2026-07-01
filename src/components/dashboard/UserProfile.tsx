@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { toast as sonner } from "sonner";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { User, Building2, MapPin, Share2, Camera, Loader2, Trash2 } from "lucide-react";
 
 type ProfileState = {
