@@ -68,6 +68,33 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_snapshots: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          meta: Json | null
+          snapshot_date: string
+          value: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          meta?: Json | null
+          snapshot_date: string
+          value?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          meta?: Json | null
+          snapshot_date?: string
+          value?: number | null
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -153,6 +180,267 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      feedback_submissions: {
+        Row: {
+          admin_notes: string | null
+          allow_contact: boolean
+          approved: boolean
+          approved_at: string | null
+          approved_by: string | null
+          category: string | null
+          created_at: string
+          email: string | null
+          featured: boolean
+          id: string
+          message: string
+          order_id: string | null
+          phone: string | null
+          rating: number | null
+          status: string
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          allow_contact?: boolean
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
+          category?: string | null
+          created_at?: string
+          email?: string | null
+          featured?: boolean
+          id?: string
+          message: string
+          order_id?: string | null
+          phone?: string | null
+          rating?: number | null
+          status?: string
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          allow_contact?: boolean
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
+          category?: string | null
+          created_at?: string
+          email?: string | null
+          featured?: boolean
+          id?: string
+          message?: string
+          order_id?: string | null
+          phone?: string | null
+          rating?: number | null
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      financial_assets: {
+        Row: {
+          category: string
+          created_at: string
+          current_value: number | null
+          depreciation: number | null
+          id: string
+          name: string
+          notes: string | null
+          purchase_cost: number | null
+          purchase_date: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          current_value?: number | null
+          depreciation?: number | null
+          id?: string
+          name: string
+          notes?: string | null
+          purchase_cost?: number | null
+          purchase_date?: string | null
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          current_value?: number | null
+          depreciation?: number | null
+          id?: string
+          name?: string
+          notes?: string | null
+          purchase_cost?: number | null
+          purchase_date?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      financial_expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          id: string
+          name: string
+          payment_method: string | null
+          receipt_url: string | null
+          updated_at: string
+          vendor: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          created_by?: string | null
+          date: string
+          description?: string | null
+          id?: string
+          name: string
+          payment_method?: string | null
+          receipt_url?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          name?: string
+          payment_method?: string | null
+          receipt_url?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Relationships: []
+      }
+      financial_investments: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          current_value: number | null
+          date: string
+          id: string
+          investment_type: string
+          name: string
+          notes: string | null
+          roi: number | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          current_value?: number | null
+          date: string
+          id?: string
+          investment_type: string
+          name: string
+          notes?: string | null
+          roi?: number | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          current_value?: number | null
+          date?: string
+          id?: string
+          investment_type?: string
+          name?: string
+          notes?: string | null
+          roi?: number | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      financial_reports: {
+        Row: {
+          generated_at: string
+          generated_by: string | null
+          id: string
+          name: string
+          params: Json | null
+          report_type: string
+          result_url: string | null
+        }
+        Insert: {
+          generated_at?: string
+          generated_by?: string | null
+          id?: string
+          name: string
+          params?: Json | null
+          report_type: string
+          result_url?: string | null
+        }
+        Update: {
+          generated_at?: string
+          generated_by?: string | null
+          id?: string
+          name?: string
+          params?: Json | null
+          report_type?: string
+          result_url?: string | null
+        }
+        Relationships: []
+      }
+      financial_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          id: string
+          reference_id: string | null
+          transaction_date: string
+          type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          transaction_date?: string
+          type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          transaction_date?: string
+          type?: string
+        }
+        Relationships: []
       }
       integrations: {
         Row: {
@@ -675,6 +963,8 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          newsletter_subscribed: boolean
+          newsletter_subscribed_at: string | null
           phone: string | null
           updated_at: string
         }
@@ -683,6 +973,8 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          newsletter_subscribed?: boolean
+          newsletter_subscribed_at?: string | null
           phone?: string | null
           updated_at?: string
         }
@@ -691,8 +983,106 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          newsletter_subscribed?: boolean
+          newsletter_subscribed_at?: string | null
           phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      site_popups: {
+        Row: {
+          animation: string | null
+          background_color: string | null
+          border_radius: number | null
+          button_color: string | null
+          button_text: string | null
+          button_url: string | null
+          clicks: number | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          popup_layout: string | null
+          popup_type: string | null
+          position: string | null
+          priority: number | null
+          secondary_button_text: string | null
+          secondary_button_url: string | null
+          shadow: boolean | null
+          show_once: boolean | null
+          start_date: string | null
+          target_audience: string[] | null
+          target_pages: string[] | null
+          text_color: string | null
+          title: string | null
+          updated_at: string | null
+          views: number | null
+        }
+        Insert: {
+          animation?: string | null
+          background_color?: string | null
+          border_radius?: number | null
+          button_color?: string | null
+          button_text?: string | null
+          button_url?: string | null
+          clicks?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          popup_layout?: string | null
+          popup_type?: string | null
+          position?: string | null
+          priority?: number | null
+          secondary_button_text?: string | null
+          secondary_button_url?: string | null
+          shadow?: boolean | null
+          show_once?: boolean | null
+          start_date?: string | null
+          target_audience?: string[] | null
+          target_pages?: string[] | null
+          text_color?: string | null
+          title?: string | null
+          updated_at?: string | null
+          views?: number | null
+        }
+        Update: {
+          animation?: string | null
+          background_color?: string | null
+          border_radius?: number | null
+          button_color?: string | null
+          button_text?: string | null
+          button_url?: string | null
+          clicks?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          popup_layout?: string | null
+          popup_type?: string | null
+          position?: string | null
+          priority?: number | null
+          secondary_button_text?: string | null
+          secondary_button_url?: string | null
+          shadow?: boolean | null
+          show_once?: boolean | null
+          start_date?: string | null
+          target_audience?: string[] | null
+          target_pages?: string[] | null
+          text_color?: string | null
+          title?: string | null
+          updated_at?: string | null
+          views?: number | null
         }
         Relationships: []
       }
@@ -1135,6 +1525,7 @@ export type Database = {
           domain_preference: string | null
           id: string
           logo_url: string | null
+          onboarding_submission_id: string | null
           payment_method: string | null
           plan_id: string
           screenshot_url: string | null
@@ -1162,6 +1553,7 @@ export type Database = {
           domain_preference?: string | null
           id?: string
           logo_url?: string | null
+          onboarding_submission_id?: string | null
           payment_method?: string | null
           plan_id: string
           screenshot_url?: string | null
@@ -1189,6 +1581,7 @@ export type Database = {
           domain_preference?: string | null
           id?: string
           logo_url?: string | null
+          onboarding_submission_id?: string | null
           payment_method?: string | null
           plan_id?: string
           screenshot_url?: string | null
@@ -1203,7 +1596,29 @@ export type Database = {
           wordpress_url?: string | null
           wordpress_username?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "website_orders_onboarding_submission_id_fkey"
+            columns: ["onboarding_submission_id"]
+            isOneToOne: false
+            referencedRelation: "onboarding_submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "website_orders_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "website_orders_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       website_products: {
         Row: {
@@ -1284,12 +1699,138 @@ export type Database = {
       }
     }
     Functions: {
+      admin_active_returning_users: {
+        Args: { days?: number }
+        Returns: {
+          active_users: number
+          returning_users: number
+        }[]
+      }
+      admin_dashboard_stats: {
+        Args: never
+        Returns: {
+          active_popups: number
+          total_orders: number
+          total_plans: number
+          total_revenue: number
+          total_templates: number
+          total_users: number
+        }[]
+      }
+      admin_new_users_month: {
+        Args: never
+        Returns: {
+          count: number
+        }[]
+      }
+      admin_new_users_today: {
+        Args: never
+        Returns: {
+          count: number
+        }[]
+      }
+      admin_period_metrics: {
+        Args: { days?: number }
+        Returns: {
+          current_orders: number
+          current_revenue: number
+          current_users: number
+          order_growth: number
+          previous_orders: number
+          previous_revenue: number
+          previous_users: number
+          revenue_growth: number
+          user_growth: number
+        }[]
+      }
+      admin_recent_activity: {
+        Args: { limit_count?: number }
+        Returns: {
+          action: string
+          created_at: string
+          details: Json
+          id: string
+          type: string
+          user_email: string
+          user_id: string
+        }[]
+      }
+      admin_revenue_summary: {
+        Args: never
+        Returns: {
+          month: number
+          today: number
+          week: number
+          year: number
+        }[]
+      }
+      admin_total_users: {
+        Args: never
+        Returns: {
+          count: number
+        }[]
+      }
+      create_order_with_items: {
+        Args: {
+          p_customer_address: string
+          p_customer_email: string
+          p_customer_name: string
+          p_customer_phone: string
+          p_items: Json
+          p_order_number: string
+          p_store_id: string
+          p_subtotal: number
+          p_total: number
+        }
+        Returns: {
+          order_id: string
+        }[]
+      }
+      get_feedback_rating_distribution: {
+        Args: never
+        Returns: {
+          avg_rating: number
+          rating_1: number
+          rating_2: number
+          rating_3: number
+          rating_4: number
+          rating_5: number
+          total_reviews: number
+        }[]
+      }
+      get_feedback_rating_stats: {
+        Args: never
+        Returns: {
+          avg_rating: number
+          total_reviews: number
+        }[]
+      }
+      get_website_order_credentials: {
+        Args: { p_order_id: string }
+        Returns: {
+          wordpress_password: string
+          wordpress_url: string
+          wordpress_username: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_popup_clicks: { Args: { popup_id: string }; Returns: undefined }
+      increment_popup_views: { Args: { popup_id: string }; Returns: undefined }
+      is_admin: { Args: never; Returns: boolean }
+      set_website_order_credentials: {
+        Args: {
+          p_order_id: string
+          p_wordpress_password: string
+          p_wordpress_url: string
+          p_wordpress_username: string
+        }
+        Returns: undefined
       }
     }
     Enums: {
@@ -1301,6 +1842,32 @@ export type Database = {
         | "raast"
         | "bank_transfer"
       plan_type: "free" | "rent" | "buy"
+      popup_animation_type:
+        | "fade"
+        | "scale"
+        | "slide-up"
+        | "slide-down"
+        | "slide-left"
+        | "slide-right"
+        | "bounce"
+        | "flip"
+        | "rotate"
+      popup_color_scheme:
+        | "primary"
+        | "success"
+        | "error"
+        | "warning"
+        | "info"
+        | "dark"
+        | "light"
+        | "gradient"
+      popup_position_type:
+        | "center"
+        | "top-left"
+        | "top-right"
+        | "bottom-left"
+        | "bottom-right"
+      popup_trigger_type: "time" | "scroll" | "exit" | "click" | "hover"
       store_status:
         | "pending"
         | "under_review"
@@ -1445,6 +2012,35 @@ export const Constants = {
         "bank_transfer",
       ],
       plan_type: ["free", "rent", "buy"],
+      popup_animation_type: [
+        "fade",
+        "scale",
+        "slide-up",
+        "slide-down",
+        "slide-left",
+        "slide-right",
+        "bounce",
+        "flip",
+        "rotate",
+      ],
+      popup_color_scheme: [
+        "primary",
+        "success",
+        "error",
+        "warning",
+        "info",
+        "dark",
+        "light",
+        "gradient",
+      ],
+      popup_position_type: [
+        "center",
+        "top-left",
+        "top-right",
+        "bottom-left",
+        "bottom-right",
+      ],
+      popup_trigger_type: ["time", "scroll", "exit", "click", "hover"],
       store_status: [
         "pending",
         "under_review",
