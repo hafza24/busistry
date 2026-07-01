@@ -20,8 +20,8 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const openrouterKey = Deno.env.get("OPENROUTER_API_KEY");
-    if (!openrouterKey) return json({ error: "AI not configured (missing OPENROUTER_API_KEY)" }, 500);
+    const geminiKey = Deno.env.get("GEMINI_API_KEY");
+    if (!geminiKey) return json({ error: "AI not configured (missing GEMINI_API_KEY)" }, 500);
 
     const userClient = createClient(supabaseUrl, anonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
