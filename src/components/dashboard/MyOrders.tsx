@@ -208,6 +208,7 @@ const CredentialRow = ({
 const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
   const { user } = useAuth();
   const [detailOrder, setDetailOrder] = useState<any | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
 
   const { data: orders, isLoading, isError, refetch } = useQuery({
