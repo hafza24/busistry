@@ -26,6 +26,7 @@ import {
   FileText,
   Wallet,
   Hash,
+  Sparkles,
 } from "lucide-react";
 import { format } from "date-fns";
 import { OrderStatusTimeline, mapStatusToStage, TimelineStage } from "@/components/orders/OrderStatusTimeline";
