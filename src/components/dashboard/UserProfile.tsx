@@ -52,6 +52,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [removeOpen, setRemoveOpen] = useState(false);
 
   const set = <K extends keyof ProfileState>(k: K, v: ProfileState[K]) => setP((prev) => ({ ...prev, [k]: v }));
 
