@@ -25,6 +25,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
 import { OrderStatusTimeline } from "@/components/orders/OrderStatusTimeline";
+import { OrderDetailsSheet } from "@/components/orders/OrderDetailsSheet";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
