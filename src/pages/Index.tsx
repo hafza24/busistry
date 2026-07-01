@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import TrustBadges from "@/components/TrustBadges";
+import ReviewsSection from "@/components/feedback/ReviewsSection";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -434,6 +435,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <ReviewsSection />
 
       {/* FAQ */}
       <section className="py-20 md:py-28 border-b border-border/60">

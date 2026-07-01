@@ -5,8 +5,9 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Globe, Plus, User, LogOut, Home, ShieldCheck } from "lucide-react";
+import { Globe, Plus, User, LogOut, Home, ShieldCheck, MessageSquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import logo from "@/assets/logo.png";
 
 interface DashboardSidebarProps {
@@ -51,6 +52,20 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Help us improve</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <div className="px-2">
+              <FeedbackDialog
+                trigger={
+                  <Button variant="outline" size="sm" className="w-full justify-start">
+                    <MessageSquarePlus className="h-4 w-4 mr-2" /> Leave feedback
+                  </Button>
+                }
+              />
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
