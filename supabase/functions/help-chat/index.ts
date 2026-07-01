@@ -20,8 +20,8 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const openrouterKey = Deno.env.get("OPENROUTER_API_KEY");
-    if (!openrouterKey) return json({ error: "AI not configured (missing OPENROUTER_API_KEY)" }, 500);
+    const geminiKey = Deno.env.get("GEMINI_API_KEY");
+    if (!geminiKey) return json({ error: "AI not configured (missing GEMINI_API_KEY)" }, 500);
 
     const userClient = createClient(supabaseUrl, anonKey, {
       global: { headers: { Authorization: `Bearer ${jwt}` } },
@@ -85,17 +85,15 @@ ${knowledge || "(No articles available yet.)"}`;
       await admin.from("chat_threads").update({ title: message.slice(0, 60) }).eq("id", threadId);
     }
 
-    // Call OpenRouter directly (free model)
-    const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    // Call Google Gemini directly via OpenAI-compatible endpoint (free tier)
+    const aiRes = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${openrouterKey}`,
-        "HTTP-Referer": "https://busistry.lovable.app",
-        "X-Title": "Busistree Help Center",
+        "Authorization": `Bearer ${geminiKey}`,
       },
       body: JSON.stringify({
-        model: "google/gemini-2.0-flash-exp:free",
+        model: "gemini-2.0-flash",
         messages,
         stream: true,
       }),
