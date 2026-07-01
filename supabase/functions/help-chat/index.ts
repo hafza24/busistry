@@ -124,6 +124,10 @@ ${knowledge || "(No articles available yet.)"}`;
     // quota, auth, or 5xx errors, moves to the next configured provider.
     type Provider = { name: string; url: string; key: string; model: string; extraHeaders?: Record<string, string> };
     const providers: Provider[] = [];
+    if (lovableKey) providers.push({
+      name: "lovable", model: "google/gemini-2.5-flash", key: lovableKey,
+      url: "https://ai.gateway.lovable.dev/v1/chat/completions",
+    });
     if (geminiKey) providers.push({
       name: "gemini", model: "gemini-2.0-flash", key: geminiKey,
       url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
