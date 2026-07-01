@@ -26,6 +26,7 @@ import {
   FileText,
   Wallet,
   Hash,
+  Sparkles,
 } from "lucide-react";
 import { format } from "date-fns";
 import { OrderStatusTimeline, mapStatusToStage, TimelineStage } from "@/components/orders/OrderStatusTimeline";
@@ -48,8 +49,17 @@ type OrderRow = {
   transaction_id: string | null;
   screenshot_url: string | null;
   domain_preference: string | null;
+  onboarding_submission_id?: string | null;
   plans?: { name: string; type: string; price_pkr: number } | null;
   templates?: { name: string; niche: string } | null;
+};
+
+type AddonRow = {
+  id: string;
+  quantity: number;
+  price_snapshot_pkr: number;
+  pricing_type_snapshot: string | null;
+  addons: { name: string; icon: string | null; per_unit_label: string | null } | null;
 };
 
 interface Props {
@@ -76,17 +86,17 @@ const stageIndex = (s: TimelineStage) =>
 export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   const [loadingProof, setLoadingProof] = useState(false);
+  const [addons, setAddons] = useState<AddonRow[]>([]);
+  const [loadingAddons, setLoadingAddons] = useState(false);
 
   useEffect(() => {
     setSignedUrl(null);
     if (!open || !order?.screenshot_url) return;
-    // screenshot_url may already be a public URL or a storage path — try both.
     const raw = order.screenshot_url;
     if (raw.startsWith("http")) {
       setSignedUrl(raw);
       return;
     }
-    // Try to sign it from the payment-screenshots bucket
     setLoadingProof(true);
     const path = raw.replace(/^payment-screenshots\//, "");
     supabase.storage
@@ -97,6 +107,20 @@ export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
       })
       .finally(() => setLoadingProof(false));
   }, [open, order?.screenshot_url]);
+
+  useEffect(() => {
+    setAddons([]);
+    if (!open || !order?.onboarding_submission_id) return;
+    setLoadingAddons(true);
+    supabase
+      .from("onboarding_addons")
+      .select("id, quantity, price_snapshot_pkr, pricing_type_snapshot, addons(name, icon, per_unit_label)")
+      .eq("submission_id", order.onboarding_submission_id)
+      .then(({ data }) => {
+        setAddons((data as any) || []);
+      })
+      .then(() => setLoadingAddons(false));
+  }, [open, order?.onboarding_submission_id]);
 
   if (!order) return null;
 
@@ -149,7 +173,51 @@ export const OrderDetailsSheet = ({ order, open, onOpenChange }: Props) => {
             />
           </section>
 
+          {/* Add-ons */}
+          <section>
+            <SectionTitle>Add-ons Ordered</SectionTitle>
+            {loadingAddons ? (
+              <div className="rounded-lg border border-border/60 p-4 text-sm text-muted-foreground flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" /> Loading add-ons…
+              </div>
+            ) : addons.length === 0 ? (
+              <div className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground text-center">
+                No add-ons included in this order.
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {addons.map((a) => {
+                  const unit = a.pricing_type_snapshot === "per_unit" ? ` × ${a.quantity}` : "";
+                  const total = a.price_snapshot_pkr * (a.pricing_type_snapshot === "per_unit" ? a.quantity : 1);
+                  return (
+                    <div
+                      key={a.id}
+                      className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="h-8 w-8 rounded-md bg-primary/10 text-primary grid place-items-center flex-shrink-0">
+                          <Sparkles className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium truncate">{a.addons?.name || "Add-on"}{unit}</div>
+                          {a.addons?.per_unit_label && a.pricing_type_snapshot === "per_unit" && (
+                            <div className="text-xs text-muted-foreground">{a.addons.per_unit_label}</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-sm font-semibold text-foreground flex-shrink-0">
+                        PKR {total.toLocaleString()}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
           <Separator />
+
+
 
           {/* Status timeline */}
           <section>

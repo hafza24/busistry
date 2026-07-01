@@ -218,7 +218,7 @@ const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
       const { data, error } = await supabase
         .from("website_orders")
         .select(
-          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, plans(name, type, price_pkr), templates(name, niche)",
+          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, onboarding_submission_id, plans(name, type, price_pkr), templates(name, niche)",
         )
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false });
