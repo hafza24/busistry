@@ -12,6 +12,7 @@ const navLinks = [
   { to: "/marketplace", label: "Marketplace" },
   { to: "/pricing", label: "Pricing" },
   { to: "/how-it-works", label: "How It Works" },
+  { to: "/help", label: "Help" },
   { to: "/contact", label: "Contact" },
 ];
 
