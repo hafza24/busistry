@@ -104,29 +104,26 @@ const Storefront = () => {
     setSubmitting(true);
     try {
       const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
-      const { data: order, error: orderError } = await supabase.from("orders").insert({
-        store_id: store!.id,
-        order_number: orderNumber,
-        customer_name: customerForm.name,
-        customer_email: customerForm.email,
-        customer_phone: customerForm.phone,
-        customer_address: customerForm.address,
-        subtotal: cartTotal,
-        total: cartTotal,
-        status: "pending",
-      }).select().single();
-      if (orderError) throw orderError;
-
       const items = cart.map((i) => ({
-        order_id: order.id,
         product_id: i.product.id,
         product_name: i.product.name,
         quantity: i.quantity,
         price: Number(i.product.price),
         total: Number(i.product.price) * i.quantity,
       }));
-      const { error: itemsError } = await supabase.from("order_items").insert(items);
-      if (itemsError) throw itemsError;
+      const { error: rpcError } = await supabase.rpc("create_order_with_items", {
+        p_store_id: store!.id,
+        p_order_number: orderNumber,
+        p_customer_name: customerForm.name,
+        p_customer_email: customerForm.email,
+        p_customer_phone: customerForm.phone,
+        p_customer_address: customerForm.address,
+        p_subtotal: cartTotal,
+        p_total: cartTotal,
+        p_items: items as any,
+      });
+      if (rpcError) throw rpcError;
+
 
       toast.success(`Order ${orderNumber} placed successfully!`);
       setCart([]);
