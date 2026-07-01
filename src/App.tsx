@@ -75,6 +75,7 @@ const App = () => (
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/help/chat" element={<HelpChat />} />
                   <Route path="/store/:storeId" element={<StoreDashboard />} />
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="*" element={<NotFound />} />
