@@ -26,6 +26,7 @@ const menuItems = [
   { id: "users", label: "Users", icon: Users },
   { id: "feedback", label: "Feedback", icon: MessageSquare },
   { id: "help_center", label: "Help Center", icon: LifeBuoy },
+  { id: "support_chat", label: "Support Chat", icon: MessageCircle },
   { id: "audit", label: "Audit Logs", icon: ScrollText },
 ];
 
