@@ -16,9 +16,12 @@ import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
 import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
 import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
 import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration";
+import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
+import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
   orders: "Website Orders",
+  subscriptions: "Recurring Subscriptions",
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",

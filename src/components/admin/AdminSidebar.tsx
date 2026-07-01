@@ -5,7 +5,7 @@ import {
   SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { ClipboardList, Users, Home, LogOut, ShieldCheck, LayoutTemplate, Globe, CreditCard, Sparkles, FileText, Plug, TrendingUp, ScrollText, MessageSquare } from "lucide-react";
+import { ClipboardList, Users, Home, LogOut, ShieldCheck, LayoutTemplate, Globe, CreditCard, Sparkles, FileText, Plug, TrendingUp, ScrollText, MessageSquare, Repeat } from "lucide-react";
 
 interface AdminSidebarProps {
   activeView: string;
@@ -14,6 +14,7 @@ interface AdminSidebarProps {
 
 const menuItems = [
   { id: "orders", label: "Website Orders", icon: Globe },
+  { id: "subscriptions", label: "Subscriptions", icon: Repeat },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
   { id: "plans", label: "Plans", icon: CreditCard },
   { id: "addons", label: "Add-ons (legacy)", icon: Sparkles },
