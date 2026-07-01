@@ -206,6 +206,8 @@ const CredentialRow = ({
 
 const MyOrders = ({ onNewOrder }: MyOrdersProps) => {
   const { user } = useAuth();
+  const [detailOrder, setDetailOrder] = useState<any | null>(null);
+
 
   const { data: orders, isLoading, isError, refetch } = useQuery({
     queryKey: ["website_orders", user?.id],
