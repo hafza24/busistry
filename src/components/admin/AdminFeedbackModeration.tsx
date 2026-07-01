@@ -304,6 +304,20 @@ const AdminFeedbackModeration = () => {
         open={!!detailId}
         onOpenChange={(o) => { if (!o) setDetailId(null); }}
       />
+
+      <ConfirmDialog
+        open={!!pending}
+        onOpenChange={(o) => { if (!o) setPending(null); }}
+        title={pending?.title ?? ""}
+        description={pending?.description ?? ""}
+        confirmLabel={pending?.confirmLabel ?? "Confirm"}
+        destructive={pending?.destructive}
+        onConfirm={async () => {
+          if (!pending) return;
+          await mutate(pending.id, pending.patch, pending.action, pending.successMsg);
+          setPending(null);
+        }}
+      />
     </div>
   );
 };
