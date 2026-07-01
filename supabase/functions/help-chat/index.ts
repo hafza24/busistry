@@ -124,10 +124,23 @@ ${knowledge || "(No articles available yet.)"}`;
     // quota, auth, or 5xx errors, moves to the next configured provider.
     type Provider = { name: string; url: string; key: string; model: string; extraHeaders?: Record<string, string> };
     const providers: Provider[] = [];
-    if (lovableKey) providers.push({
-      name: "lovable", model: "google/gemini-2.5-flash", key: lovableKey,
-      url: "https://ai.gateway.lovable.dev/v1/chat/completions",
-    });
+    if (lovableKey) {
+      // Multiple Lovable AI Gateway models — each tried in order if previous fails
+      const lovableModels = [
+        "google/gemini-3-flash-preview",
+        "google/gemini-2.5-flash",
+        "google/gemini-2.5-flash-lite",
+        "google/gemini-3.1-flash-lite",
+        "openai/gpt-5-mini",
+        "openai/gpt-5-nano",
+      ];
+      for (const model of lovableModels) {
+        providers.push({
+          name: `lovable:${model}`, model, key: lovableKey,
+          url: "https://ai.gateway.lovable.dev/v1/chat/completions",
+        });
+      }
+    }
     if (geminiKey) providers.push({
       name: "gemini", model: "gemini-2.0-flash", key: geminiKey,
       url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
