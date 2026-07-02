@@ -22,7 +22,7 @@ const menuItems = [
   { id: "integrations", label: "Integrations", icon: Plug },
   { id: "store_addons", label: "Add-on Orders", icon: Sparkles },
   { id: "upgrades", label: "Upgrade Orders", icon: TrendingUp },
-  { id: "requests", label: "Store Requests (Legacy)", icon: ClipboardList },
+  
   { id: "users", label: "Users", icon: Users },
   { id: "feedback", label: "Feedback", icon: MessageSquare },
   { id: "help_center", label: "Help Center", icon: LifeBuoy },
