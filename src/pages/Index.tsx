@@ -453,49 +453,113 @@ const Index = () => {
       </section>
 
       {/* Pricing */}
-      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60">
+      <section className="py-20 md:py-28 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
+          backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
+        }} />
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              Pricing
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+              <CreditCard className="h-3 w-3" /> Pricing
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              Simple plans. No surprises.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              Simple plans.{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                No surprises.
+              </span>
             </h2>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
+              One-time payment in PKR — fully-owned WordPress store, no monthly lock-in.
+            </p>
           </div>
-          <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {displayTiers.map((tier) => (
-              <div
-                key={tier.name}
-                className={`relative bg-card rounded-2xl p-7 border transition-all hover:shadow-xl ${
-                  tier.highlighted ? "border-primary shadow-lg shadow-primary/10 scale-[1.02]" : "border-border"
-                }`}
-              >
-                {tier.highlighted && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">Most popular</Badge>
-                )}
-                <h3 className="text-xl font-semibold text-foreground">{tier.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{tier.blurb}</p>
-                <div className="mt-5 pb-5 border-b border-border">
-                  <div className="text-3xl font-bold text-foreground">{tier.price}</div>
-                  <div className="text-xs text-muted-foreground mt-1">Delivered in {tier.delivery}</div>
-                </div>
-                <ul className="mt-5 space-y-2.5">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-foreground">
-                      <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full mt-7" variant={tier.highlighted ? "default" : "outline"} asChild>
-                  <Link to="/pricing">Start with {tier.name}</Link>
-                </Button>
-              </div>
-            ))}
+          <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
+            {displayTiers.map((tier, idx) => {
+              const priceStr = String(tier.price);
+              const isFree = /free/i.test(priceStr);
+              const numericMatch = priceStr.match(/[\d,]+/);
+              const numericPart = numericMatch ? numericMatch[0] : priceStr;
+              return (
+                <motion.div
+                  key={tier.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.08 }}
+                  className={`group relative rounded-3xl p-8 border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col ${
+                    tier.highlighted
+                      ? "bg-gradient-to-br from-card via-card to-primary/5 border-primary shadow-xl shadow-primary/10 lg:scale-[1.03]"
+                      : "bg-card/80 backdrop-blur border-border hover:border-primary/40"
+                  }`}
+                >
+                  {tier.highlighted && (
+                    <>
+                      <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+                      <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-primary-glow text-primary-foreground shadow-brand border-0">
+                        <Sparkles className="h-3 w-3 mr-1" /> Most popular
+                      </Badge>
+                    </>
+                  )}
+
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-xl font-bold text-foreground">{tier.name}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-6">{tier.blurb}</p>
+
+                  <div className="pb-6 border-b border-border/60">
+                    {isFree ? (
+                      <div className="text-5xl font-extrabold bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                        Free
+                      </div>
+                    ) : (
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-sm font-semibold text-muted-foreground">PKR</span>
+                        <span className="text-5xl font-extrabold text-foreground tracking-tight">{numericPart}</span>
+                      </div>
+                    )}
+                    <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1.5">
+                      <Zap className="h-3 w-3 text-primary" />
+                      Delivered in {tier.delivery}
+                    </div>
+                  </div>
+
+                  <ul className="mt-6 space-y-3 flex-1">
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-foreground">
+                        <div className={`h-5 w-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                          tier.highlighted ? "bg-gradient-to-br from-primary to-primary-glow" : "bg-primary/10"
+                        }`}>
+                          <Check className={`h-3 w-3 ${tier.highlighted ? "text-primary-foreground" : "text-primary"}`} strokeWidth={3} />
+                        </div>
+                        <span className="leading-relaxed">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    className={`w-full mt-8 rounded-full h-12 text-base font-semibold ${
+                      tier.highlighted
+                        ? "bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:opacity-95"
+                        : ""
+                    }`}
+                    variant={tier.highlighted ? "default" : "outline"}
+                    asChild
+                  >
+                    <Link to="/pricing" className="group/btn">
+                      Start with {tier.name}
+                      <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
+                  </Button>
+                </motion.div>
+              );
+            })}
           </div>
+
+          <p className="text-center mt-10 text-sm text-muted-foreground">
+            All plans include free updates for 1 year · Cancel anytime · Pay via JazzCash, Easypaisa or Bank transfer
+          </p>
         </div>
       </section>
+
 
       {/* Social Proof */}
       <section className="py-20 md:py-28 border-b border-border/60">
