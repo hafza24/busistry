@@ -18,7 +18,6 @@ const menuItems = [
   { id: "templates", label: "Templates", icon: LayoutTemplate },
   { id: "plans", label: "Plans", icon: CreditCard },
   { id: "addons", label: "Add-ons", icon: Sparkles },
-  { id: "website_products", label: "Website Products", icon: FileText },
   { id: "store_addons", label: "Add-on Orders", icon: Sparkles },
   { id: "upgrades", label: "Upgrade Orders", icon: TrendingUp },
   
