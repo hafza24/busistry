@@ -138,6 +138,7 @@ const Index = () => {
 
   const displayTiers = (dbPlans && dbPlans.length > 0)
     ? dbPlans.map((p, i, arr) => ({
+        id: p.id as string,
         name: p.name,
         blurb: p.type === "free" ? "Get started free" : p.type === "rent" ? "Flexible rental plan" : "One-time purchase",
         price: p.price_pkr === 0 ? "Free" : `PKR ${p.price_pkr.toLocaleString()}`,
@@ -152,7 +153,7 @@ const Index = () => {
             ],
         highlighted: arr.length > 1 && i === Math.floor(arr.length / 2),
       }))
-    : tiers;
+    : tiers.map((t) => ({ ...t, id: undefined as string | undefined }));
 
   const showcase = (templates && templates.length > 0)
     ? templates
@@ -544,7 +545,7 @@ const Index = () => {
                     variant={tier.highlighted ? "default" : "outline"}
                     asChild
                   >
-                    <Link to="/pricing" className="group/btn">
+                    <Link to={tier.id ? `/onboarding?plan=${tier.id}` : "/pricing"} className="group/btn">
                       Start with {tier.name}
                       <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
                     </Link>
