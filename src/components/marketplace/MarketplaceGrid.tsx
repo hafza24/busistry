@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare } from "lucide-react";
+import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare, MessageCircle } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useAuth } from "@/contexts/AuthContext";
 import CheckoutDialog from "./CheckoutDialog";
@@ -72,6 +72,26 @@ export default function MarketplaceGrid({ storeId }: Props) {
     if (!pendingItem) return;
     setCheckout({ ...pendingItem, storeId: chosenStoreId });
     setPendingItem(null);
+  };
+
+  const SUPPORT_WHATSAPP = "923157224340";
+  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+    const priceLabel = `PKR ${Number(item.price_pkr).toLocaleString()}${item.pricing_type === "monthly" ? " / month" : " one-time"}`;
+    const slug = activeStores[0]?.subdomain_slug;
+    const siteLine = slug
+      ? `My store: ${slug}.busistree.com`
+      : "My store: (not set up yet)";
+    const msg =
+      `Hi Busistree, I'd like to request this ${kind === "integration" ? "integration" : "website add-on"}:\n\n` +
+      `• ${item.name}\n` +
+      `• Price: ${priceLabel}\n` +
+      `• ${siteLine}\n\n` +
+      `Please help me get it installed.`;
+    window.open(
+      `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(msg)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
@@ -148,9 +168,19 @@ export default function MarketplaceGrid({ storeId }: Props) {
                       </div>
                     </div>
                     {p.description && <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>}
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="flex-1" onClick={() => setPreview(p)}>Preview</Button>
-                      <Button size="sm" className="flex-1" onClick={() => onBuy("product", p)}>Add</Button>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" onClick={() => setPreview(p)}>Preview</Button>
+                      <Button size="sm" className="flex-1 min-w-[90px]" onClick={() => onBuy("product", p)}>Add</Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => requestOnWhatsApp("product", p)}
+                        aria-label={`Request ${p.name} on WhatsApp`}
+                      >
+                        <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
+                        Request on WhatsApp
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -181,7 +211,19 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     </div>
                   </div>
                   {i.description && <p className="text-sm text-muted-foreground line-clamp-3">{i.description}</p>}
-                  <Button size="sm" className="w-full" onClick={() => onBuy("integration", i)}>Install</Button>
+                  <div className="flex flex-col gap-2">
+                    <Button size="sm" className="w-full" onClick={() => onBuy("integration", i)}>Install</Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => requestOnWhatsApp("integration", i)}
+                      aria-label={`Request ${i.name} on WhatsApp`}
+                    >
+                      <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
+                      Request on WhatsApp
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -200,8 +242,12 @@ export default function MarketplaceGrid({ storeId }: Props) {
               {preview.preview_image_url && <img src={preview.preview_image_url} alt={preview.name} className="w-full rounded-lg border" />}
               <div className="flex justify-between items-center pt-2">
                 <p className="text-2xl font-bold text-primary">PKR {preview.price_pkr.toLocaleString()}</p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 justify-end">
                   {preview.demo_url && <Button variant="outline" asChild><a href={preview.demo_url} target="_blank" rel="noopener noreferrer"><ExternalLink className="h-4 w-4 mr-2" />Live demo</a></Button>}
+                  <Button variant="secondary" onClick={() => requestOnWhatsApp("product", preview)}>
+                    <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
+                    Request on WhatsApp
+                  </Button>
                   <Button onClick={() => { setPreview(null); onBuy("product", preview); }}>Add to my website</Button>
                 </div>
               </div>
