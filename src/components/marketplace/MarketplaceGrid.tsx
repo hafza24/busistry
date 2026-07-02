@@ -77,9 +77,12 @@ export default function MarketplaceGrid({ storeId }: Props) {
   };
 
   const SUPPORT_WHATSAPP = "923157224340";
-  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+  const [waPending, setWaPending] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [waPickerOpen, setWaPickerOpen] = useState(false);
+  const [waSelectedStoreId, setWaSelectedStoreId] = useState<string>("");
+
+  const sendWhatsApp = (kind: "product" | "integration", item: any, slug?: string | null) => {
     const priceLabel = `PKR ${Number(item.price_pkr).toLocaleString()}${item.pricing_type === "monthly" ? " / month" : " one-time"}`;
-    const slug = activeStores[0]?.subdomain_slug;
     const siteLine = slug
       ? `My store: ${slug}.busistree.com`
       : "My store: (not set up yet)";
@@ -95,6 +98,25 @@ export default function MarketplaceGrid({ storeId }: Props) {
       "noopener,noreferrer"
     );
   };
+
+  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+    // If a storeId is forced (embedded in store dashboard), use that store directly.
+    if (storeId) {
+      const s = activeStores.find((x: any) => x.id === storeId);
+      sendWhatsApp(kind, item, s?.subdomain_slug);
+      return;
+    }
+    // Exactly one active store → use it.
+    if (activeStores.length === 1) {
+      sendWhatsApp(kind, item, activeStores[0].subdomain_slug);
+      return;
+    }
+    // 0 or multiple → prompt.
+    setWaSelectedStoreId(activeStores[0]?.id ?? "");
+    setWaPending({ kind, item });
+    setWaPickerOpen(true);
+  };
+
 
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
     if (!checkout || !user) return;
