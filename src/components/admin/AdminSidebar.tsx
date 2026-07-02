@@ -17,7 +17,7 @@ const menuItems = [
   { id: "subscriptions", label: "Subscriptions", icon: Repeat },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
   { id: "plans", label: "Plans", icon: CreditCard },
-  
+  { id: "addons", label: "Add-ons (legacy)", icon: Sparkles },
   { id: "website_products", label: "Website Products", icon: FileText },
   { id: "integrations", label: "Integrations", icon: Plug },
   { id: "store_addons", label: "Add-on Orders", icon: Sparkles },
