@@ -1,19 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, LayoutTemplate, ShoppingBag, DollarSign, Rocket, LifeBuoy, Mail, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/templates", label: "Templates" },
-  { to: "/marketplace", label: "Marketplace" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/how-it-works", label: "How It Works" },
-  { to: "/help", label: "Help" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "Home", icon: Home },
+  { to: "/templates", label: "Templates", icon: LayoutTemplate },
+  { to: "/marketplace", label: "Marketplace", icon: ShoppingBag },
+  { to: "/pricing", label: "Pricing", icon: DollarSign },
+  { to: "/how-it-works", label: "How It Works", icon: Rocket },
+  { to: "/help", label: "Help", icon: LifeBuoy },
+  { to: "/contact", label: "Contact", icon: Mail },
 ];
 
 const Navbar = () => {
