@@ -170,17 +170,56 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
 
   const isFree = plan?.type === "free" || plan?.price_pkr === 0;
 
+  const MAX_MB = 5;
+  const ALLOWED = ["image/png", "image/jpeg", "image/jpg", "image/webp", "application/pdf"];
+
   const handleScreenshot = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
+
+    // Validation
+    if (!ALLOWED.includes(file.type)) {
+      toast({
+        title: "Unsupported file type",
+        description: "Upload a PNG, JPG, WEBP image or PDF of your PKR payment receipt.",
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+    if (file.size > MAX_MB * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: `Maximum size is ${MAX_MB} MB. Please compress your screenshot and try again.`,
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+    if (file.size < 3 * 1024) {
+      toast({
+        title: "File looks empty",
+        description: "That file seems too small to be a valid receipt. Please re-upload.",
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+
     setUploading(true);
     try {
-      const ext = file.name.split(".").pop();
+      const ext = file.name.split(".").pop()?.toLowerCase() || "png";
       const path = `${user.id}/onboarding-${Date.now()}.${ext}`;
-      const { error } = await supabase.storage.from("payment-screenshots").upload(path, file);
+      const { error } = await supabase.storage
+        .from("payment-screenshots")
+        .upload(path, file, { contentType: file.type, upsert: false });
       if (error) throw error;
       const { data: pub } = supabase.storage.from("payment-screenshots").getPublicUrl(path);
       update({ screenshot_url: pub.publicUrl });
+      toast({
+        title: "Receipt uploaded",
+        description: "We'll verify your PKR payment and start your build shortly.",
+      });
     } catch (err: any) {
       toast({ title: "Upload failed", description: err.message, variant: "destructive" });
     } finally {
