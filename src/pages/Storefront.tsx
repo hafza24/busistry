@@ -74,6 +74,31 @@ const Storefront = () => {
     },
   });
 
+  const { data: websiteProducts } = useQuery({
+    queryKey: ["storefront-website-products"],
+    queryFn: async () => {
+      const { data } = await supabase.from("website_products").select("*").eq("is_enabled", true).order("sort_order");
+      return data || [];
+    },
+  });
+
+  const [wpPreview, setWpPreview] = useState<any | null>(null);
+
+  const requestAddon = (item: any) => {
+    const phone = (settings?.contact_phone as string | undefined)?.replace(/[^0-9]/g, "");
+    const email = settings?.contact_email as string | undefined;
+    const msg = `Hi ${store?.name}, I'd like to request "${item.name}" (PKR ${Number(item.price_pkr).toLocaleString()}) for your website.`;
+    if (phone) {
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+    } else if (email) {
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Request: ${item.name}`)}&body=${encodeURIComponent(msg)}`;
+    } else {
+      toast.info("This store hasn't set up contact details yet.");
+    }
+  };
+
+  const typeIcon: Record<string, any> = { page: FileText, section: LayoutGrid, popup: MessageSquare };
+
   const filteredProducts = products?.filter((p) => {
     const matchesCategory = !selectedCategory || p.category_id === selectedCategory;
     const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
