@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare } from "lucide-react";
+import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare, MessageCircle } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useAuth } from "@/contexts/AuthContext";
 import CheckoutDialog from "./CheckoutDialog";
