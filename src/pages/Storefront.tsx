@@ -294,7 +294,79 @@ const Storefront = () => {
             }
           />
         )}
+
+        {/* Website Add-ons (Pages, Sections, Popups) */}
+        {websiteProducts && websiteProducts.length > 0 && (
+          <section className="mt-14">
+            <div className="flex items-center gap-2 mb-1">
+              <Sparkles className="h-5 w-5" style={{ color: primaryColor }} aria-hidden="true" />
+              <h2 className="text-xl font-bold font-display">Website Add-ons</h2>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              Browse ready-made pages, sections, and popups. Request one and {store.name} will get it installed for you.
+            </p>
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {websiteProducts.map((wp: any) => {
+                const Icon = typeIcon[wp.type] ?? FileText;
+                return (
+                  <Card key={wp.id} className="overflow-hidden hover:shadow-md transition-shadow">
+                    <div className="aspect-video bg-muted relative">
+                      {wp.preview_image_url ? (
+                        <img src={wp.preview_image_url} alt={wp.name} loading="lazy" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Icon className="h-8 w-8 text-muted-foreground" aria-hidden="true" /></div>
+                      )}
+                      {wp.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
+                    </div>
+                    <CardContent className="p-3 space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <Badge variant="outline" className="mb-1 capitalize text-xs"><Icon className="h-3 w-3 mr-1" aria-hidden="true" />{wp.type}</Badge>
+                          <h3 className="font-medium text-sm truncate">{wp.name}</h3>
+                        </div>
+                        <span className="font-bold text-sm whitespace-nowrap" style={{ color: primaryColor }}>PKR {Number(wp.price_pkr).toLocaleString()}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" className="flex-1" onClick={() => setWpPreview(wp)}>Preview</Button>
+                        <Button size="sm" className="flex-1" onClick={() => requestAddon(wp)}>Request</Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
+
+      {/* Website Product Preview Dialog */}
+      <Dialog open={!!wpPreview} onOpenChange={(o) => !o && setWpPreview(null)}>
+        <DialogContent className="max-w-2xl">
+          {wpPreview && (
+            <>
+              <DialogHeader><DialogTitle>{wpPreview.name}</DialogTitle></DialogHeader>
+              {wpPreview.preview_image_url && (
+                <img src={wpPreview.preview_image_url} alt={wpPreview.name} className="w-full rounded-lg border" />
+              )}
+              {wpPreview.description && <p className="text-sm text-muted-foreground">{wpPreview.description}</p>}
+              <DialogFooter className="flex-col sm:flex-row gap-2">
+                <div className="flex-1 text-left">
+                  <span className="text-xl font-bold" style={{ color: primaryColor }}>PKR {Number(wpPreview.price_pkr).toLocaleString()}</span>
+                </div>
+                {wpPreview.demo_url && (
+                  <Button variant="outline" asChild>
+                    <a href={wpPreview.demo_url} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" aria-hidden="true" /> Live demo
+                    </a>
+                  </Button>
+                )}
+                <Button onClick={() => { requestAddon(wpPreview); setWpPreview(null); }}>Request this</Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       {/* Product Detail Dialog */}
       <Dialog open={!!selectedProduct} onOpenChange={(o) => !o && setSelectedProduct(null)}>
