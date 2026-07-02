@@ -300,16 +300,21 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-20 md:py-28 border-b border-border/60">
+      <section className="py-20 md:py-28 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              Templates
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+              <LayoutDashboard className="h-3 w-3" /> Templates
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              Pick a starting point. <span className="text-muted-foreground">We'll make it yours.</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              Choose your perfect{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                template
+              </span>
             </h2>
-            <p className="mt-4 text-muted-foreground">Fully customizable with your brand.</p>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
+              Hand-picked, conversion-focused designs — fully customizable with your brand.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -322,36 +327,38 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.06 }}
-                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 transition-all duration-300"
                 >
-                  <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 via-secondary to-accent/10 relative overflow-hidden">
+                  <div className="aspect-[4/3] bg-gradient-to-br from-secondary via-background to-secondary/60 relative overflow-hidden">
                     {t.preview_image_url ? (
-                      <img src={t.preview_image_url} alt={t.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                      <img src={t.preview_image_url} alt={t.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <Icon className="h-14 w-14 text-foreground/15" />
+                        <Icon className="h-16 w-16 text-foreground/10" />
                       </div>
                     )}
-                    <Badge variant="secondary" className="absolute top-4 left-4 backdrop-blur">
+                    <Badge variant="secondary" className="absolute top-4 left-4 backdrop-blur-md bg-background/80 border border-border/60 shadow-sm">
                       {t.niche}
                     </Badge>
                   </div>
                   <div className="p-5">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">{t.name}</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-4">{t.name}</h3>
                     <div className="flex gap-2">
                       {t.demo_url ? (
-                        <Button variant="outline" size="sm" className="flex-1" asChild>
+                        <Button variant="outline" size="sm" className="flex-1 rounded-full" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                            Preview Demo <ExternalLink className="h-3 w-3 ml-1.5" />
+                            Preview <ExternalLink className="h-3 w-3 ml-1.5" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" className="flex-1" asChild>
-                          <Link to="/templates">Preview Demo</Link>
+                        <Button variant="outline" size="sm" className="flex-1 rounded-full" asChild>
+                          <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="sm" className="flex-1" asChild>
-                        <Link to="/templates">Select Template</Link>
+                      <Button size="sm" className="flex-1 rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand" asChild>
+                        <Link to="/templates">
+                          Select <ArrowRight className="h-3 w-3 ml-1" />
+                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -361,9 +368,10 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" className="rounded-full group" asChild>
               <Link to="/templates">
-                View all templates <ArrowRight className="h-4 w-4 ml-1" />
+                View all templates
+                <ArrowUpRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </Button>
           </div>
@@ -371,17 +379,26 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60">
+      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
+          backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
+        }} />
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              How it works
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+              <Zap className="h-3 w-3" /> Simple Process
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              From template to launch in 4 simple steps.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              From template to launch in
+              <br />
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                4 simple steps
+              </span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {/* Connecting line for desktop */}
+            <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-border to-transparent" />
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
@@ -389,19 +406,20 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:shadow-md transition-shadow"
+                className="group relative bg-card/80 backdrop-blur border border-border rounded-2xl p-6 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30 transition-all duration-300"
               >
-                <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                  <s.icon className="h-5 w-5 text-primary" />
+                <div className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <s.icon className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-xs font-mono text-muted-foreground mb-2">{s.num}</div>
-                <h3 className="text-lg font-semibold text-foreground mb-1.5">{s.title}</h3>
+                <div className="text-xs font-mono text-muted-foreground mb-2 tracking-widest">{s.num}</div>
+                <h3 className="text-lg font-bold text-foreground mb-2">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* What You Get */}
       <section className="py-20 md:py-28 border-b border-border/60">
