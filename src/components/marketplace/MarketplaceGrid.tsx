@@ -168,9 +168,19 @@ export default function MarketplaceGrid({ storeId }: Props) {
                       </div>
                     </div>
                     {p.description && <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>}
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="flex-1" onClick={() => setPreview(p)}>Preview</Button>
-                      <Button size="sm" className="flex-1" onClick={() => onBuy("product", p)}>Add</Button>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" onClick={() => setPreview(p)}>Preview</Button>
+                      <Button size="sm" className="flex-1 min-w-[90px]" onClick={() => onBuy("product", p)}>Add</Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => requestOnWhatsApp("product", p)}
+                        aria-label={`Request ${p.name} on WhatsApp`}
+                      >
+                        <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
+                        Request on WhatsApp
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
