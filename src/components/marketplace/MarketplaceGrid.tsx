@@ -74,6 +74,26 @@ export default function MarketplaceGrid({ storeId }: Props) {
     setPendingItem(null);
   };
 
+  const SUPPORT_WHATSAPP = "923157224340";
+  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+    const priceLabel = `PKR ${Number(item.price_pkr).toLocaleString()}${item.pricing_type === "monthly" ? " / month" : " one-time"}`;
+    const slug = activeStores[0]?.subdomain_slug;
+    const siteLine = slug
+      ? `My store: ${slug}.busistree.com`
+      : "My store: (not set up yet)";
+    const msg =
+      `Hi Busistree, I'd like to request this ${kind === "integration" ? "integration" : "website add-on"}:\n\n` +
+      `• ${item.name}\n` +
+      `• Price: ${priceLabel}\n` +
+      `• ${siteLine}\n\n` +
+      `Please help me get it installed.`;
+    window.open(
+      `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(msg)}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
     if (!checkout || !user) return;
     await createAddon.mutateAsync({
