@@ -242,8 +242,12 @@ export default function MarketplaceGrid({ storeId }: Props) {
               {preview.preview_image_url && <img src={preview.preview_image_url} alt={preview.name} className="w-full rounded-lg border" />}
               <div className="flex justify-between items-center pt-2">
                 <p className="text-2xl font-bold text-primary">PKR {preview.price_pkr.toLocaleString()}</p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 justify-end">
                   {preview.demo_url && <Button variant="outline" asChild><a href={preview.demo_url} target="_blank" rel="noopener noreferrer"><ExternalLink className="h-4 w-4 mr-2" />Live demo</a></Button>}
+                  <Button variant="secondary" onClick={() => requestOnWhatsApp("product", preview)}>
+                    <MessageCircle className="h-4 w-4 mr-2" aria-hidden="true" />
+                    Request on WhatsApp
+                  </Button>
                   <Button onClick={() => { setPreview(null); onBuy("product", preview); }}>Add to my website</Button>
                 </div>
               </div>
