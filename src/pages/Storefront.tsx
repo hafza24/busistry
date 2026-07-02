@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { ShoppingCart, Plus, Minus, Trash2, Store, Search, PackageSearch } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Trash2, Store, Search, PackageSearch, Sparkles, FileText, LayoutGrid, MessageSquare, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductGridSkeleton } from "@/components/ui/loading-skeletons";
