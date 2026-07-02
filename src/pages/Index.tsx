@@ -360,7 +360,7 @@ const Index = () => {
             </h2>
           </div>
           <div className="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {tiers.map((tier) => (
+            {displayTiers.map((tier) => (
               <div
                 key={tier.name}
                 className={`relative bg-card rounded-2xl p-7 border transition-all hover:shadow-xl ${
