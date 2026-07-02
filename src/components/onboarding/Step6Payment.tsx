@@ -512,9 +512,26 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="pay-ss">Payment screenshot</Label>
+            <Label htmlFor="pay-ss">
+              Payment proof <span className="text-destructive">*</span>
+            </Label>
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-foreground/80 space-y-1">
+              <p className="font-semibold text-foreground">Before uploading — please confirm:</p>
+              <ul className="list-disc pl-4 space-y-0.5 text-muted-foreground">
+                <li>Amount sent equals <span className="font-semibold text-foreground">PKR {grandToday.toLocaleString()}</span> (Pakistani Rupees only).</li>
+                <li>Receipt clearly shows the <span className="font-semibold text-foreground">transaction ID</span>, date, and recipient <span className="font-semibold text-foreground">"Busistree"</span>.</li>
+                <li>Reference note includes <span className="font-mono font-semibold text-foreground">BST-{(data.id ?? "").slice(0, 8).toUpperCase() || "NEW"}</span>.</li>
+                <li>International wire / non-PKR transfers are not accepted at this step.</li>
+              </ul>
+            </div>
             <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
-              <input type="file" accept="image/*" id="pay-ss" className="hidden" onChange={handleScreenshot} />
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/jpg,image/webp,application/pdf"
+                id="pay-ss"
+                className="hidden"
+                onChange={handleScreenshot}
+              />
               <label htmlFor="pay-ss" className="cursor-pointer block">
                 {uploading ? (
                   <Loader2 className="h-6 w-6 mx-auto text-muted-foreground animate-spin" aria-label="Uploading" />
@@ -524,11 +541,22 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                   <Upload className="h-6 w-6 mx-auto text-muted-foreground mb-2" aria-hidden="true" />
                 )}
                 <p className="text-sm text-foreground">
-                  {data.screenshot_url ? "Screenshot uploaded — click to replace" : "Upload payment proof"}
+                  {data.screenshot_url ? "Receipt uploaded — click to replace" : "Upload PKR payment receipt"}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  PNG, JPG up to 5MB. Helps us verify within minutes.
+                  PNG, JPG, WEBP or PDF · max 5 MB · must show PKR amount & transaction ID.
                 </p>
+                {data.screenshot_url && (
+                  <a
+                    href={data.screenshot_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-block mt-2 text-xs text-primary hover:underline"
+                  >
+                    View uploaded receipt
+                  </a>
+                )}
               </label>
             </div>
           </div>
