@@ -9,9 +9,8 @@ import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
-import AdminAddonManagement from "@/components/admin/AdminAddonManagement";
+import AdminAddonsHub from "@/components/admin/AdminAddonsHub";
 import AdminWebsiteProducts from "@/components/admin/AdminWebsiteProducts";
-import AdminIntegrations from "@/components/admin/AdminIntegrations";
 import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
 import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
 import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
@@ -28,9 +27,8 @@ const viewTitles: Record<string, string> = {
   users: "User Management",
   templates: "Template Management",
   plans: "Plan Management",
-  addons: "Add-on Management (Legacy)",
+  addons: "Add-ons & Integrations",
   website_products: "Website Products",
-  integrations: "Integrations",
   store_addons: "Add-on Orders",
   upgrades: "Upgrade Orders",
   feedback: "Feedback Moderation",
@@ -66,9 +64,8 @@ const AdminDashboard = () => {
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
       case "plans": return <AdminPlanManagement />;
-      case "addons": return <AdminAddonManagement />;
+      case "addons": return <AdminAddonsHub />;
       case "website_products": return <AdminWebsiteProducts />;
-      case "integrations": return <AdminIntegrations />;
       case "store_addons": return <AdminStoreAddons />;
       case "upgrades": return <AdminUpgradeOrders />;
       case "feedback": return <AdminFeedbackModeration />;
