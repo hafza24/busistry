@@ -49,44 +49,51 @@ const Navbar = () => {
         </Link>
 
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`relative px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${
-                location.pathname === link.to
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-primary/5"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+        {/* Desktop nav — pill style */}
+        <div className="hidden md:flex items-center gap-1 rounded-full border border-border bg-card/70 backdrop-blur px-1.5 py-1 shadow-soft">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            const active = location.pathname === link.to;
+            return (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  active
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                {link.label}
+                {active && <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary" />}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="hidden md:flex items-center gap-2">
           {user ? (
             <>
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="outline" size="sm" className="rounded-full" asChild>
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
-              <Button variant="outline" size="sm" onClick={signOut}>
+              <Button variant="outline" size="sm" className="rounded-full" onClick={signOut}>
                 Sign Out
               </Button>
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/auth">Sign In</Link>
+              <Button variant="outline" size="sm" className="rounded-full" asChild>
+                <Link to="/auth"><LogIn className="h-3.5 w-3.5" />Sign In</Link>
               </Button>
-              <Button size="sm" asChild>
-                <Link to="/auth">Get Started</Link>
+              <Button size="sm" className="rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand" asChild>
+                <Link to="/auth"><Rocket className="h-3.5 w-3.5" />Get Started</Link>
               </Button>
             </>
           )}
         </div>
+
 
         {/* Mobile toggle */}
         <button
