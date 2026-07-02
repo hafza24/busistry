@@ -166,50 +166,136 @@ const Index = () => {
         description="Done-for-you WordPress websites and ecommerce stores for Pakistani businesses. Pick a template, fill a smart form, go live in 24–48 hours."
         path="/"
       />
-      {/* Hero */}
+      {/* Hero — busistree split layout */}
       <section className="relative overflow-hidden border-b border-border/60">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[600px] w-[1200px] bg-primary/10 blur-3xl rounded-full" />
-        </div>
-        <div className="container py-20 md:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-card text-xs font-medium text-muted-foreground mb-8">
-              <Zap className="h-3 w-3 text-primary" />
-              Stores delivered in 24–48 hours
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Launch your online store in{" "}
-              <span className="text-primary">48 hours</span> — no skills needed.
-            </h1>
-            <p className="mt-7 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Choose a template, submit your details, and we'll build your complete store for you.
-            </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" className="h-12 px-7 text-base group" asChild>
-                <Link to="/templates">
-                  Browse Templates
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" className="h-12 px-7 text-base" asChild>
-                <Link to="/how-it-works">How It Works</Link>
-              </Button>
-            </div>
-            <div className="mt-10 flex items-center justify-center gap-3 md:gap-6 flex-wrap text-sm text-muted-foreground">
-              {trust.map((t) => (
-                <div key={t} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-primary" /> {t}
+        {/* Subtle grid + glow background */}
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,hsl(var(--background)),hsl(var(--secondary)/0.4))]" />
+        <div
+          className="absolute inset-0 -z-10 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage: "radial-gradient(ellipse at center, black 40%, transparent 75%)",
+          }}
+        />
+        <div className="absolute top-10 -left-20 -z-10 h-[500px] w-[500px] rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute top-40 -right-10 -z-10 h-[400px] w-[400px] rounded-full bg-accent/20 blur-3xl" />
+
+        <div className="container py-16 md:py-24 lg:py-28">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
+            {/* Left: copy */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-7 relative"
+            >
+              {/* Floating "Live in 48 hrs" pill */}
+              <div className="hidden md:inline-flex absolute -top-4 -left-2 items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 text-xs font-medium shadow-soft border border-amber-200/60">
+                <Zap className="h-3 w-3" /> Live in 48 hrs
+              </div>
+
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-wider uppercase text-primary mb-7">
+                <Zap className="h-3 w-3" />
+                Launch in 48 hours — Guaranteed
+              </div>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
+                Launch your online store in{" "}
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                  48 hours
+                </span>{" "}
+                — no skills needed.
+              </h1>
+
+              <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+                <span className="font-semibold text-foreground">We build your ecommerce store.</span>{" "}
+                Choose a professionally designed template, submit your details, and our expert team
+                builds your complete, ready-to-launch store — no design or coding skills required.
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                <Button size="lg" className="h-12 px-7 text-base rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand group" asChild>
+                  <Link to="/templates">
+                    Browse Templates
+                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" className="h-12 px-7 text-base rounded-full" asChild>
+                  <Link to="/how-it-works">Watch Demo</Link>
+                </Button>
+              </div>
+
+              <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg text-sm text-muted-foreground">
+                {["No design skills needed", "48-hour delivery", "100% satisfaction guarantee", "Secure & scalable"].map((t) => (
+                  <div key={t} className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-primary shrink-0" /> {t}
+                  </div>
+                ))}
+              </div>
+
+              {/* Stats row */}
+              <div className="mt-10 flex flex-wrap gap-8">
+                {[
+                  { v: "4,800+", l: "Stores launched" },
+                  { v: "48hrs", l: "Average delivery" },
+                  { v: "98%", l: "Client satisfaction" },
+                ].map((s) => (
+                  <div key={s.l}>
+                    <div className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{s.v}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: mockup with floating cards */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="lg:col-span-5 relative"
+            >
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-card via-secondary to-card border border-border shadow-brand">
+                <img
+                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=80"
+                  alt="Modern ecommerce store preview"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating badges */}
+              <div className="absolute -top-3 right-4 md:right-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border shadow-soft text-xs font-medium">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Stores going live now
+              </div>
+
+              <div className="absolute top-1/3 -left-4 md:-left-8 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border shadow-soft text-xs font-medium">
+                <Star className="h-3 w-3 text-amber-500 fill-amber-500" /> 4.9 / 5 rating
+              </div>
+
+              <div className="absolute -bottom-4 right-2 md:right-6 bg-card border border-border rounded-2xl shadow-brand p-3 flex items-center gap-3">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+                  ))}
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <div className="text-xs">
+                  <div className="font-bold text-foreground">4.9 / 5</div>
+                  <div className="text-muted-foreground">from 1,200+ reviews</div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-8 -left-3 md:-left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200/60 shadow-soft text-xs font-medium">
+                <ShoppingBag className="h-3 w-3" /> Store ready
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
+
 
       <TrustBadges />
 
