@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertTriangle, Plus, ArrowRight } from "lucide-react";
 import { Search, ExternalLink, Sparkles, Plug, FileText, LayoutGrid, MessageSquare, MessageCircle } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useAuth } from "@/contexts/AuthContext";
@@ -75,9 +77,12 @@ export default function MarketplaceGrid({ storeId }: Props) {
   };
 
   const SUPPORT_WHATSAPP = "923157224340";
-  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+  const [waPending, setWaPending] = useState<{ kind: "product" | "integration"; item: any } | null>(null);
+  const [waPickerOpen, setWaPickerOpen] = useState(false);
+  const [waSelectedStoreId, setWaSelectedStoreId] = useState<string>("");
+
+  const sendWhatsApp = (kind: "product" | "integration", item: any, slug?: string | null) => {
     const priceLabel = `PKR ${Number(item.price_pkr).toLocaleString()}${item.pricing_type === "monthly" ? " / month" : " one-time"}`;
-    const slug = activeStores[0]?.subdomain_slug;
     const siteLine = slug
       ? `My store: ${slug}.busistree.com`
       : "My store: (not set up yet)";
@@ -93,6 +98,25 @@ export default function MarketplaceGrid({ storeId }: Props) {
       "noopener,noreferrer"
     );
   };
+
+  const requestOnWhatsApp = (kind: "product" | "integration", item: any) => {
+    // If a storeId is forced (embedded in store dashboard), use that store directly.
+    if (storeId) {
+      const s = activeStores.find((x: any) => x.id === storeId);
+      sendWhatsApp(kind, item, s?.subdomain_slug);
+      return;
+    }
+    // Exactly one active store → use it.
+    if (activeStores.length === 1) {
+      sendWhatsApp(kind, item, activeStores[0].subdomain_slug);
+      return;
+    }
+    // 0 or multiple → prompt.
+    setWaSelectedStoreId(activeStores[0]?.id ?? "");
+    setWaPending({ kind, item });
+    setWaPickerOpen(true);
+  };
+
 
   const handleCheckoutSubmit = async ({ storeId: sId, payment_method, transaction_id, screenshot_url }: any) => {
     if (!checkout || !user) return;
@@ -297,6 +321,76 @@ export default function MarketplaceGrid({ storeId }: Props) {
           onSubmit={handleCheckoutSubmit}
         />
       )}
+
+      <Dialog open={waPickerOpen} onOpenChange={(v) => { setWaPickerOpen(v); if (!v) setWaPending(null); }}>
+        <DialogContent className="max-w-md">
+          {activeStores.length === 0 ? (
+            <>
+              <DialogHeader>
+                <div className="mx-auto mb-2 h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center">
+                  <AlertTriangle className="h-6 w-6 text-destructive" />
+                </div>
+                <DialogTitle className="text-center">Choose your store first</DialogTitle>
+                <DialogDescription className="text-center">
+                  You don't have an active store yet. Create one so we can link this request to your subdomain, or send the request without a store.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-2 pt-2">
+                <Button onClick={() => { setWaPickerOpen(false); navigate("/templates"); }}>
+                  <Plus className="h-4 w-4 mr-2" /> Create a store
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (waPending) sendWhatsApp(waPending.kind, waPending.item, null);
+                    setWaPickerOpen(false);
+                    setWaPending(null);
+                  }}
+                >
+                  Send without a store <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+                <Button variant="ghost" onClick={() => setWaPickerOpen(false)}>Cancel</Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2"><Globe className="h-5 w-5 text-primary" /> Which store is this for?</DialogTitle>
+                <DialogDescription>
+                  Pick the store subdomain to include in your WhatsApp request.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-3 py-2">
+                <Label>Your stores</Label>
+                <Select value={waSelectedStoreId} onValueChange={setWaSelectedStoreId}>
+                  <SelectTrigger><SelectValue placeholder="Choose a store" /></SelectTrigger>
+                  <SelectContent>
+                    {activeStores.map((s: any) => (
+                      <SelectItem key={s.id} value={s.id}>
+                        {s.name} {s.subdomain_slug ? `— ${s.subdomain_slug}.busistree.com` : ""}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <DialogFooter>
+                <Button variant="ghost" onClick={() => setWaPickerOpen(false)}>Cancel</Button>
+                <Button
+                  disabled={!waSelectedStoreId}
+                  onClick={() => {
+                    const s = activeStores.find((x: any) => x.id === waSelectedStoreId);
+                    if (waPending) sendWhatsApp(waPending.kind, waPending.item, s?.subdomain_slug);
+                    setWaPickerOpen(false);
+                    setWaPending(null);
+                  }}
+                >
+                  Send request <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
