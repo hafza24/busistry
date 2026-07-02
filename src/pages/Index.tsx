@@ -545,7 +545,7 @@ const Index = () => {
                     variant={tier.highlighted ? "default" : "outline"}
                     asChild
                   >
-                    <Link to="/pricing" className="group/btn">
+                    <Link to={tier.id ? `/onboarding?plan=${tier.id}` : "/pricing"} className="group/btn">
                       Start with {tier.name}
                       <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
                     </Link>
