@@ -192,10 +192,6 @@ const Index = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 relative"
             >
-              {/* Floating "Live in 48 hrs" pill */}
-              <div className="hidden md:inline-flex absolute -top-4 -left-2 items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 text-xs font-medium shadow-soft border border-amber-200/60">
-                <Zap className="h-3 w-3" /> Live in 48 hrs
-              </div>
 
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-wider uppercase text-primary mb-7">
                 <Zap className="h-3 w-3" />
