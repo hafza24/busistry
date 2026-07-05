@@ -9,11 +9,12 @@ const leftLinks = [
   { to: "/", label: "Home" },
   { to: "/templates", label: "Templates" },
   { to: "/marketplace", label: "Marketplace" },
+];
+
+const rightLinks = [
   { to: "/pricing", label: "Pricing" },
   { to: "/contact", label: "Contact" },
 ];
-
-const rightLinks: { to: string; label: string }[] = [];
 
 const allLinks = [...leftLinks, ...rightLinks];
 
@@ -38,8 +39,9 @@ const Navbar = () => {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 pt-6 pb-4 px-4">
-      <div className="relative mx-auto flex items-center justify-center group">
+    <header className="sticky top-0 z-50 pt-4 pb-3 px-3 md:px-6">
+      <div className="relative w-full flex items-center justify-center group">
+
         {/* Central Logo Hub overlay */}
         <Link
           to="/"
@@ -57,7 +59,7 @@ const Navbar = () => {
 
         {/* Main glass nav bar */}
         <nav
-          className={`relative flex items-center w-full max-w-[1000px] px-6 md:px-10 bg-background/40 backdrop-blur-2xl border border-border/60 rounded-[2.5rem] shadow-[0_40px_100px_-20px_hsl(var(--foreground)/0.08)] ring-1 ring-foreground/5 transition-all duration-300 ${
+          className={`relative flex items-center w-full px-4 md:px-8 bg-background/40 backdrop-blur-2xl border border-border/60 rounded-[2.5rem] shadow-[0_40px_100px_-20px_hsl(var(--foreground)/0.08)] ring-1 ring-foreground/5 transition-all duration-300 ${
             scrolled ? "h-16" : "h-20"
           }`}
         >
@@ -131,7 +133,7 @@ const Navbar = () => {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden mt-3 mx-auto max-w-[1000px] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
+          className="md:hidden mt-3 mx-auto w-full rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
         >
           {allLinks.map((link) => (
             <Link
