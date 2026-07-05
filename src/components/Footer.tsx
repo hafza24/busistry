@@ -145,16 +145,6 @@ const Footer = () => {
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-primary-foreground/10 blur-3xl" />
             <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-primary-foreground/10 blur-3xl" />
-            <div
-              className="absolute inset-0 opacity-[0.08]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(hsl(var(--primary-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary-foreground)) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-                maskImage:
-                  "radial-gradient(ellipse at center, black 30%, transparent 75%)",
-              }}
-            />
           </div>
 
           <div className="relative grid md:grid-cols-5 gap-10 items-center">
