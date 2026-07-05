@@ -315,42 +315,69 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.06 }}
-                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 hover:border-primary/40 transition-all duration-300"
+                  className="group relative bg-card/70 backdrop-blur-sm border border-border/70 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1.5 hover:border-primary/50 transition-all duration-500"
                 >
+                  {/* Gradient sheen border on hover */}
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+
                   <div className="aspect-[4/3] bg-gradient-to-br from-secondary via-background to-secondary/60 relative overflow-hidden">
                     {t.preview_image_url ? (
-                      <img src={t.preview_image_url} alt={t.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                      <img
+                        src={t.preview_image_url}
+                        alt={t.name}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <Icon className="h-16 w-16 text-foreground/10" />
+                        <div className="relative">
+                          <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full scale-150" />
+                          <Icon className="relative h-16 w-16 text-primary/40" />
+                        </div>
                       </div>
                     )}
-                    <Badge variant="secondary" className="absolute top-4 left-4 backdrop-blur-md bg-background/80 border border-border/60 shadow-sm">
+
+                    {/* Image overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <Badge
+                      variant="secondary"
+                      className="absolute top-4 left-4 backdrop-blur-md bg-background/85 border border-border/60 shadow-sm text-[11px] font-semibold tracking-wide px-2.5 py-1"
+                    >
                       {t.niche}
                     </Badge>
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold text-foreground mb-4">{t.name}</h3>
+
+                  <div className="p-5 relative">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
+                        {t.name}
+                      </h3>
+                      <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
+                        <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                    </div>
                     <div className="flex gap-2">
                       {t.demo_url ? (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-full" asChild>
+                        <Button variant="outline" size="sm" className="flex-1 rounded-full border-border/70 hover:border-primary/50 hover:bg-primary/5" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
                             Preview <ExternalLink className="h-3 w-3 ml-1.5" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-full" asChild>
+                        <Button variant="outline" size="sm" className="flex-1 rounded-full border-border/70 hover:border-primary/50 hover:bg-primary/5" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="sm" className="flex-1 rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand" asChild>
+                      <Button size="sm" className="flex-1 rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:shadow-lg hover:shadow-primary/25 hover:opacity-95 transition-all" asChild>
                         <Link to="/templates">
-                          Select <ArrowRight className="h-3 w-3 ml-1" />
+                          Select <ArrowRight className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-0.5" />
                         </Link>
                       </Button>
                     </div>
                   </div>
                 </motion.div>
+
               );
             })}
           </div>
