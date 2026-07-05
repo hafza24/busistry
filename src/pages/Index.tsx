@@ -471,14 +471,6 @@ const Index = () => {
             </p>
           </div>
           <PricingSlider tiers={displayTiers} />
-          <p className="text-center mt-4 text-xs text-muted-foreground">
-            Autoplays every 5s · Pauses on hover, focus, or when you interact · Use ← / → to navigate
-          </p>
-
-
-          <p className="text-center mt-10 text-sm text-muted-foreground">
-            All plans include free updates for 1 year · Cancel anytime · Pay via JazzCash, Easypaisa or Bank transfer
-          </p>
         </div>
       </section>
 
