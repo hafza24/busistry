@@ -655,7 +655,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="max-w-4xl mx-auto text-center"
           >
-            <Sparkles className="h-8 w-8 text-primary mx-auto mb-7" />
+            
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
               Start your store today.
             </h2>
