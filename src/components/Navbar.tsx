@@ -1,20 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, Home, LayoutTemplate, ShoppingBag, DollarSign, Rocket, LifeBuoy, Mail, LogIn } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-
-const navLinks = [
-  { to: "/", label: "Home", icon: Home },
-  { to: "/templates", label: "Templates", icon: LayoutTemplate },
-  { to: "/marketplace", label: "Marketplace", icon: ShoppingBag },
-  { to: "/pricing", label: "Pricing", icon: DollarSign },
-  
-  
-  { to: "/contact", label: "Contact", icon: Mail },
+const leftLinks = [
+  { to: "/", label: "Home" },
+  { to: "/templates", label: "Templates" },
+  { to: "/marketplace", label: "Marketplace" },
 ];
+
+const rightLinks = [
+  { to: "/pricing", label: "Pricing" },
+  { to: "/contact", label: "Contact" },
+];
+
+const allLinks = [...leftLinks, ...rightLinks];
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -29,117 +31,142 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const linkClass = (active: boolean) =>
+    `px-4 py-2 text-sm font-bold rounded-xl transition-all ${
+      active
+        ? "text-primary bg-background/70"
+        : "text-muted-foreground hover:text-primary hover:bg-background/60"
+    }`;
+
   return (
-    <nav
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-        scrolled
-          ? "border-border bg-background/85 backdrop-blur-xl shadow-soft"
-          : "border-transparent bg-background/60 backdrop-blur-md"
-      }`}
-    >
-      <div className={`container flex items-center justify-between transition-all duration-300 ${scrolled ? "h-14" : "h-16 md:h-20"}`}>
-        <Link to="/" className="flex items-center gap-2 group">
-          <img
-            src={logo}
-            alt="Busistree"
-            className={`w-auto object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_18px_hsl(var(--primary-glow)/0.5)] ${
-              scrolled ? "h-8 md:h-9" : "h-9 md:h-12"
+    <header className="sticky top-0 z-50 pt-6 pb-4 px-4">
+      <div className="relative mx-auto flex items-center justify-center group">
+        {/* Central Logo Hub overlay */}
+        <Link
+          to="/"
+          className="hidden md:flex absolute left-1/2 -translate-x-1/2 -top-2 z-30 flex-col items-center gap-1 pointer-events-auto"
+          aria-label="Busistree home"
+        >
+          <div
+            className={`relative flex items-center justify-center rounded-[1.75rem] bg-foreground shadow-[0_20px_40px_-12px_hsl(var(--foreground)/0.3)] transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.45)] ${
+              scrolled ? "w-14 h-14" : "w-16 h-16"
             }`}
-          />
+          >
+            <img
+              src={logo}
+              alt="Busistree"
+              className="w-10 h-10 object-contain transition-transform duration-700 group-hover:rotate-[15deg]"
+            />
+          </div>
         </Link>
 
-
-        {/* Desktop nav — pill style */}
-        <div className="hidden md:flex items-center gap-1 rounded-full border border-border bg-card/70 backdrop-blur px-1.5 py-1 shadow-soft">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const active = location.pathname === link.to;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                  active
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                }`}
-              >
-                <Icon className="h-3.5 w-3.5" />
-                {link.label}
-                {active && <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary" />}
-              </Link>
-            );
-          })}
-        </div>
-
-        <div className="hidden md:flex items-center gap-2">
-          {user ? (
-            <>
-              <Button variant="outline" size="sm" className="rounded-full" asChild>
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
-              <Button variant="outline" size="sm" className="rounded-full" onClick={signOut}>
-                Sign Out
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="outline" size="sm" className="rounded-full" asChild>
-                <Link to="/auth"><LogIn className="h-3.5 w-3.5" />Sign In</Link>
-              </Button>
-              <Button size="sm" className="rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand" asChild>
-                <Link to="/auth"><Rocket className="h-3.5 w-3.5" />Get Started</Link>
-              </Button>
-            </>
-          )}
-        </div>
-
-
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          className="md:hidden p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-menu"
+        {/* Main glass nav bar */}
+        <nav
+          className={`relative flex items-center w-full max-w-[1000px] px-6 md:px-10 bg-background/40 backdrop-blur-2xl border border-border/60 rounded-[2.5rem] shadow-[0_40px_100px_-20px_hsl(var(--foreground)/0.08)] ring-1 ring-foreground/5 transition-all duration-300 ${
+            scrolled ? "h-16" : "h-20"
+          }`}
         >
-          {mobileOpen ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
-        </button>
+          {/* Mobile logo (left) */}
+          <Link to="/" className="md:hidden flex items-center gap-2">
+            <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
+          </Link>
+
+          {/* Left links */}
+          <div className="hidden md:flex items-center gap-1 flex-1">
+            {leftLinks.map((link) => (
+              <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Spacer for logo hub */}
+          <div className="hidden md:block w-40 shrink-0" aria-hidden="true" />
+
+          {/* Right links + auth */}
+          <div className="hidden md:flex items-center gap-1 flex-1 justify-end">
+            {rightLinks.map((link) => (
+              <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
+                {link.label}
+              </Link>
+            ))}
+
+            {user ? (
+              <div className="flex items-center gap-2 ml-3">
+                <Button asChild size="sm" className="rounded-xl bg-foreground text-background hover:bg-foreground/90 font-bold gap-2">
+                  <Link to="/dashboard">
+                    Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="rounded-xl font-bold" onClick={signOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 ml-3">
+                <Button asChild variant="ghost" size="sm" className="rounded-xl font-bold">
+                  <Link to="/auth"><LogIn className="h-4 w-4" />Sign In</Link>
+                </Button>
+                <Button asChild size="sm" className="rounded-xl bg-foreground text-background hover:bg-foreground/90 font-bold gap-2">
+                  <Link to="/auth">
+                    Get Started
+                    <Rocket className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            className="md:hidden ml-auto p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </nav>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-border bg-background px-4 pb-4">
-          {navLinks.map((link) => (
+        <div
+          id="mobile-menu"
+          className="md:hidden mt-3 mx-auto max-w-[1000px] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
+        >
+          {allLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
               onClick={() => setMobileOpen(false)}
-              className="block py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+              className="block py-2 text-sm font-semibold text-muted-foreground hover:text-primary"
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-2 border-t border-border mt-2 space-y-2">
+          <div className="pt-3 border-t border-border mt-2 space-y-2">
             {user ? (
               <>
-                <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                <Button size="sm" className="w-full rounded-xl" asChild>
                   <Link to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</Link>
                 </Button>
-                <Button variant="outline" size="sm" className="w-full" onClick={() => { signOut(); setMobileOpen(false); }}>
+                <Button variant="outline" size="sm" className="w-full rounded-xl" onClick={() => { signOut(); setMobileOpen(false); }}>
                   Sign Out
                 </Button>
               </>
             ) : (
-              <Button size="sm" className="w-full" asChild>
+              <Button size="sm" className="w-full rounded-xl" asChild>
                 <Link to="/auth" onClick={() => setMobileOpen(false)}>Get Started</Link>
               </Button>
             )}
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
