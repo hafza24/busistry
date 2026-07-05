@@ -568,7 +568,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              One-time payment in PKR — fully-owned WordPress store, no monthly lock-in.
+              One-time payment in PKR — fully-owned site, no monthly lock-in.
             </p>
           </div>
 
