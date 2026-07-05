@@ -55,10 +55,13 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
   const goTo = useCallback(
     (index: number) => {
       const next = (index + tiers.length) % tiers.length;
+      const wrapped =
+        (index >= tiers.length && activeIndex === tiers.length - 1) ||
+        (index < 0 && activeIndex === 0);
       setActiveIndex(next);
-      scrollToIndex(next);
+      scrollToIndex(next, wrapped ? "auto" : "smooth");
     },
-    [tiers.length, scrollToIndex]
+    [tiers.length, activeIndex, scrollToIndex]
   );
 
   // Track active card via scroll position
@@ -91,13 +94,15 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
     };
   }, []);
 
-  // Autoplay
+  // Autoplay (loops seamlessly)
   useEffect(() => {
     if (isPaused || prefersReducedMotion || tiers.length <= 1) return;
     const id = window.setInterval(() => {
       setActiveIndex((prev) => {
-        const next = (prev + 1) % tiers.length;
-        scrollToIndex(next);
+        const isWrap = prev === tiers.length - 1;
+        const next = isWrap ? 0 : prev + 1;
+        scrollToIndex(next, isWrap ? "auto" : "smooth");
+
         return next;
       });
     }, autoPlayInterval);
