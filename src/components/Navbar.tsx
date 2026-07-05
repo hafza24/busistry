@@ -12,7 +12,7 @@ const navLinks = [
   { to: "/marketplace", label: "Marketplace", icon: ShoppingBag },
   { to: "/pricing", label: "Pricing", icon: DollarSign },
   
-  { to: "/help", label: "Help", icon: LifeBuoy },
+  
   { to: "/contact", label: "Contact", icon: Mail },
 ];
 
