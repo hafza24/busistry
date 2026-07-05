@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const trustRow = [
   { icon: ShieldCheck, label: "Secure Payments", sub: "SSL & PCI aligned" },
@@ -58,14 +59,24 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const value = email.trim().toLowerCase();
+    if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       toast.error("Enter a valid email address");
       return;
     }
+    const { error } = await supabase
+      .from("newsletter_subscribers")
+      .insert({ email: value, source: "footer", status: "subscribed" });
+    if (error && !/duplicate|unique/i.test(error.message)) {
+      toast.error(error.message);
+      return;
+    }
     setSubscribed(true);
-    toast.success("You're subscribed — welcome aboard!");
+    toast.success(
+      error ? "You're already on the list — thanks!" : "You're subscribed — welcome aboard!",
+    );
     setEmail("");
     setTimeout(() => setSubscribed(false), 4000);
   };
