@@ -8,6 +8,7 @@ import AdminWebsiteOrders from "@/components/admin/AdminWebsiteOrders";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
+import AdminSitesForSale from "@/components/admin/AdminSitesForSale";
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 import AdminAddonsHub from "@/components/admin/AdminAddonsHub";
 import AdminWebsiteProducts from "@/components/admin/AdminWebsiteProducts";
