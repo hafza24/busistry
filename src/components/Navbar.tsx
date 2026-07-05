@@ -44,14 +44,14 @@ const Navbar = () => {
         {/* Central Logo Hub overlay */}
         <Link
           to="/"
-          className="hidden md:flex absolute left-1/2 -translate-x-1/2 -top-3 z-30 items-center justify-center pointer-events-auto transition-transform duration-500 group-hover:scale-105"
+          className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 items-center justify-center pointer-events-auto transition-transform duration-500 group-hover:scale-105"
           aria-label="Busistree home"
         >
           <img
             src={logo}
             alt="Busistree"
             className={`w-auto object-contain transition-all duration-300 drop-shadow-[0_10px_25px_hsl(var(--primary)/0.25)] ${
-              scrolled ? "h-14" : "h-16"
+              scrolled ? "h-20" : "h-28"
             }`}
           />
         </Link>
