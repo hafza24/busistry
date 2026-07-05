@@ -489,35 +489,70 @@ const Index = () => {
 
 
       {/* What You Get */}
-      <section className="py-20 md:py-28 border-b border-border/60">
+      <section className="py-20 md:py-28 border-b border-border/60 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-[0.18]" style={{
+          backgroundImage: "radial-gradient(circle at 15% 20%, hsl(var(--primary)/0.2), transparent 40%), radial-gradient(circle at 85% 80%, hsl(var(--accent)/0.15), transparent 45%)",
+        }} />
         <div className="container">
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
-            <div className="lg:col-span-5">
-              <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-                What you get
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-5"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+                <Check className="h-3 w-3" /> What you get
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-                A complete, ready-to-run business website.
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.08]">
+                A complete,{" "}
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                  ready-to-run
+                </span>{" "}
+                business website.
               </h2>
-              <p className="mt-5 text-muted-foreground leading-relaxed">
+              <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
                 Every plan includes everything you need to operate. No surprise add-ons, no hidden fees.
               </p>
-            </div>
+              <div className="mt-7 flex items-center gap-3 text-sm">
+                <div className="flex -space-x-1.5">
+                  {[0,1,2,3].map((n) => (
+                    <div key={n} className="h-6 w-6 rounded-full bg-gradient-to-br from-primary to-accent ring-2 ring-background flex items-center justify-center">
+                      <Check className="h-3 w-3 text-white" strokeWidth={3} />
+                    </div>
+                  ))}
+                </div>
+                <span className="text-muted-foreground">
+                  <span className="font-semibold text-foreground">6 essentials</span> included in every plan
+                </span>
+              </div>
+            </motion.div>
             <div className="lg:col-span-7">
               <div className="grid sm:grid-cols-2 gap-3">
-                {includes.map((f) => (
-                  <div key={f.title} className="flex items-center gap-3 bg-card border border-border rounded-xl p-4">
-                    <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <f.icon className="h-4 w-4 text-primary" />
+                {includes.map((f, i) => (
+                  <motion.div
+                    key={f.title}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05, duration: 0.4 }}
+                    className="group relative flex items-center gap-3 bg-card/90 backdrop-blur border border-border/70 rounded-xl p-4 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-accent/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative h-10 w-10 rounded-lg bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-300">
+                      <f.icon className="h-4 w-4 text-primary" strokeWidth={2.25} />
                     </div>
-                    <span className="text-sm font-medium text-foreground">{f.title}</span>
-                  </div>
+                    <span className="relative text-sm font-semibold text-foreground">{f.title}</span>
+                    <Check className="relative ml-auto h-4 w-4 text-primary/0 group-hover:text-primary/80 transition-colors duration-300" strokeWidth={3} />
+                  </motion.div>
                 ))}
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Pricing */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
