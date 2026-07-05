@@ -67,13 +67,15 @@ const Navbar = () => {
             <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
           </Link>
 
-          {/* Left links */}
-          <div className="hidden md:flex items-center gap-1 flex-1">
-            {leftLinks.map((link) => (
-              <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
-                {link.label}
-              </Link>
-            ))}
+          {/* Left links — grouped pill */}
+          <div className="hidden md:flex items-center flex-1">
+            <div className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/70 backdrop-blur px-1.5 py-1 shadow-sm">
+              {leftLinks.map((link) => (
+                <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Spacer for logo hub */}
