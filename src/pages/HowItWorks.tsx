@@ -20,34 +20,46 @@ const HowItWorks = () => (
     />
     <div className="container max-w-3xl">
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold font-display text-foreground mb-4">How It Works</h1>
-        <p className="text-lg text-muted-foreground">Four simple steps to your online store</p>
+        <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+          Launch your professional online store in four simple steps. We handle the technical heavy lifting while you focus on growth.
+        </p>
       </div>
 
-      <div className="space-y-12">
+      <div className="relative">
+        {/* Vertical connector rail */}
+        <div className="absolute left-[31px] top-8 bottom-8 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 hidden md:block" aria-hidden="true" />
+
         {steps.map((s, i) => (
           <motion.div
             key={s.title}
-            initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex gap-6 items-start"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            className={`relative flex gap-6 md:gap-8 group ${i === steps.length - 1 ? "mb-0" : "mb-12"}`}
           >
-            <div className="h-14 w-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <s.icon className="h-7 w-7 text-primary" />
+            <div className="relative z-10 flex-shrink-0">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/15 shadow-sm group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-300">
+                <s.icon className="h-7 w-7 text-primary" strokeWidth={1.75} />
+              </div>
+              <div className="absolute -right-2 -top-2 w-7 h-7 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-bold border-4 border-background shadow-sm font-display">
+                {i + 1}
+              </div>
             </div>
-            <div>
-              <div className="text-xs font-bold text-primary mb-1">STEP {i + 1}</div>
-              <h3 className="text-xl font-semibold font-display text-foreground mb-2">{s.title}</h3>
-              <p className="text-muted-foreground">{s.desc}</p>
+            <div className="pt-1">
+              <span className="text-xs font-bold tracking-widest text-primary uppercase mb-1 block font-display">
+                Step {i + 1}
+              </span>
+              <h3 className="text-2xl font-bold font-display text-foreground mb-2">{s.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
             </div>
           </motion.div>
         ))}
       </div>
 
       <div className="text-center mt-16">
-        <Button size="lg" asChild>
+        <Button size="lg" asChild className="shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
           <Link to="/templates">Browse Templates</Link>
         </Button>
       </div>
