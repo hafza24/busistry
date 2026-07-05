@@ -142,36 +142,51 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — aligned under navbar */}
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden mt-3 mx-auto w-full rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
+          className="md:hidden mt-3 w-full rounded-3xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.15)] ring-1 ring-foreground/5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200"
         >
-          {allLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMobileOpen(false)}
-              className="block py-2 text-sm font-semibold text-muted-foreground hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="pt-3 border-t border-border mt-2 space-y-2">
+          <nav className="flex flex-col p-2">
+            {allLinks.map((link) => {
+              const active = location.pathname === link.to;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center h-12 px-4 rounded-2xl text-sm font-semibold transition-colors ${
+                    active
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground/80 hover:text-primary hover:bg-secondary"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="border-t border-border/60 p-3 flex flex-col gap-2">
             {user ? (
               <>
-                <Button size="sm" className="w-full rounded-xl" asChild>
+                <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
                   <Link to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</Link>
                 </Button>
-                <Button variant="outline" size="sm" className="w-full rounded-xl" onClick={() => { signOut(); setMobileOpen(false); }}>
+                <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" onClick={() => { signOut(); setMobileOpen(false); }}>
                   Sign Out
                 </Button>
               </>
             ) : (
-              <Button size="sm" className="w-full rounded-xl" asChild>
-                <Link to="/auth" onClick={() => setMobileOpen(false)}>Get Started</Link>
-              </Button>
+              <>
+                <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" asChild>
+                  <Link to="/auth" onClick={() => setMobileOpen(false)}>Sign In</Link>
+                </Button>
+                <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
+                  <Link to="/auth" onClick={() => setMobileOpen(false)}>Get Started</Link>
+                </Button>
+              </>
             )}
           </div>
         </div>
