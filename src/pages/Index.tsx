@@ -180,11 +180,7 @@ const Index = () => {
     },
   ];
 
-  const dbShowcase = (templates && templates.length > 0)
-    ? templates
-    : fallbackTemplates.map((t, i) => ({ id: `static-${i}`, ...t, preview_image_url: null, demo_url: null }));
-
-  const showcase = [...liveSites, ...dbShowcase];
+  const showcase = liveSites;
 
 
   return (
