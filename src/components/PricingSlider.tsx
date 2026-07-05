@@ -177,7 +177,7 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
         aria-roledescription="carousel track"
         aria-label="Use left and right arrow keys to navigate plans"
         onKeyDown={onKeyDown}
-        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 px-4 md:px-6 -mx-4 md:-mx-6 items-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-6 pb-6 px-4 md:px-6 -mx-4 md:-mx-6 items-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {tiers.map((tier, idx) => {
           const priceStr = String(tier.price);
