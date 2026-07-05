@@ -170,19 +170,12 @@ const Index = () => {
       />
       {/* Hero — busistree split layout */}
       <section className="relative overflow-hidden border-b border-border/60">
-        {/* Subtle grid + glow background */}
+        {/* Soft blurred background */}
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,hsl(var(--background)),hsl(var(--secondary)/0.4))]" />
-        <div
-          className="absolute inset-0 -z-10 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-            maskImage: "radial-gradient(ellipse at center, black 40%, transparent 75%)",
-          }}
-        />
-        <div className="absolute top-10 -left-20 -z-10 h-[500px] w-[500px] rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute top-40 -right-10 -z-10 h-[400px] w-[400px] rounded-full bg-accent/20 blur-3xl" />
+        <div className="absolute -top-24 -left-32 -z-10 h-[560px] w-[560px] rounded-full bg-primary/25 blur-[120px]" />
+        <div className="absolute top-32 -right-24 -z-10 h-[480px] w-[480px] rounded-full bg-accent/25 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-primary-glow/20 blur-[120px]" />
+
 
         <div className="container py-16 md:py-24 lg:py-28">
           <div className="grid lg:grid-cols-12 gap-10 items-center">
