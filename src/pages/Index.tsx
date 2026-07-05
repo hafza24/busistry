@@ -637,43 +637,73 @@ const Index = () => {
 
 
       {/* Comparison */}
-      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60">
+      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
+          backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
+        }} />
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              Why Busistree
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+              <Zap className="h-3 w-3" /> Why Busistree
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              Faster than DIY. Cheaper than hiring.
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              Faster than DIY.{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                Cheaper than hiring.
+              </span>
             </h2>
           </div>
-          <div className="max-w-4xl mx-auto bg-card border border-border rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-4 bg-secondary/50 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              <div className="p-4">Feature</div>
-              <div className="p-4 text-center text-primary">Busistree</div>
-              <div className="p-4 text-center">Shopify DIY</div>
-              <div className="p-4 text-center">Hire dev</div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl mx-auto bg-card/90 backdrop-blur border border-border/70 rounded-2xl overflow-hidden shadow-xl shadow-primary/5 relative"
+          >
+            {/* highlighted Busistree column */}
+            <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.08] via-primary/[0.04] to-transparent border-x border-primary/15" />
+
+            <div className="relative grid grid-cols-4 bg-secondary/60 text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground border-b border-border/70">
+              <div className="p-5">Feature</div>
+              <div className="p-5 text-center">
+                <span className="inline-flex items-center gap-1.5 text-primary">
+                  <Sparkles className="h-3 w-3" /> Busistree
+                </span>
+              </div>
+              <div className="p-5 text-center">Shopify DIY</div>
+              <div className="p-5 text-center">Hire dev</div>
             </div>
             {comparison.map((row, i) => (
-              <div
+              <motion.div
                 key={row.feature}
-                className={`grid grid-cols-4 items-center text-sm ${i !== comparison.length - 1 ? "border-b border-border" : ""}`}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className={`relative grid grid-cols-4 items-center text-sm group hover:bg-primary/[0.03] transition-colors ${i !== comparison.length - 1 ? "border-b border-border/60" : ""}`}
               >
-                <div className="p-4 font-medium text-foreground">{row.feature}</div>
-                <div className="p-4 flex justify-center">
-                  {row.busistry ? <Check className="h-5 w-5 text-primary" /> : <X className="h-5 w-5 text-muted-foreground/40" />}
+                <div className="p-5 font-semibold text-foreground">{row.feature}</div>
+                <div className="p-5 flex justify-center">
+                  {row.busistry ? (
+                    <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-md shadow-primary/25 group-hover:scale-110 transition-transform">
+                      <Check className="h-4 w-4 text-white" strokeWidth={3} />
+                    </div>
+                  ) : (
+                    <X className="h-5 w-5 text-muted-foreground/40" />
+                  )}
                 </div>
-                <div className="p-4 flex justify-center">
-                  {row.shopify ? <Check className="h-5 w-5 text-foreground/60" /> : <X className="h-5 w-5 text-muted-foreground/40" />}
+                <div className="p-5 flex justify-center">
+                  {row.shopify ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
                 </div>
-                <div className="p-4 flex justify-center">
-                  {row.dev ? <Check className="h-5 w-5 text-foreground/60" /> : <X className="h-5 w-5 text-muted-foreground/40" />}
+                <div className="p-5 flex justify-center">
+                  {row.dev ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
+
 
       <ReviewsSection />
 
