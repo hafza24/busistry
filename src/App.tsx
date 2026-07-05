@@ -17,6 +17,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
+const SitesForSale = lazy(() => import("./pages/SitesForSale"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
@@ -63,6 +64,7 @@ const App = () => (
                     <Route path="/templates" element={<Templates />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
+                    <Route path="/sites-for-sale" element={<SitesForSale />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/legal/privacy" element={<Privacy />} />

@@ -1146,6 +1146,63 @@ export type Database = {
         }
         Relationships: []
       }
+      sites_for_sale: {
+        Row: {
+          category: string | null
+          created_at: string
+          demo_url: string | null
+          description: string | null
+          features: Json | null
+          id: string
+          is_active: boolean
+          original_price_pkr: number | null
+          preview_image_url: string | null
+          price_pkr: number
+          slug: string | null
+          sort_order: number
+          status: string
+          tech_stack: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          original_price_pkr?: number | null
+          preview_image_url?: string | null
+          price_pkr?: number
+          slug?: string | null
+          sort_order?: number
+          status?: string
+          tech_stack?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          demo_url?: string | null
+          description?: string | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean
+          original_price_pkr?: number | null
+          preview_image_url?: string | null
+          price_pkr?: number
+          slug?: string | null
+          sort_order?: number
+          status?: string
+          tech_stack?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       store_addons: {
         Row: {
           admin_notes: string | null
