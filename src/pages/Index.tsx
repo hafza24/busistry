@@ -177,7 +177,7 @@ const Index = () => {
         <div className="absolute bottom-0 left-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-primary-glow/20 blur-[120px]" />
 
 
-        <div className="container py-16 md:py-24 lg:py-28">
+        <div className="container py-8 md:py-12 lg:py-14">
           <div className="grid lg:grid-cols-12 gap-10 items-center">
             {/* Left: copy */}
             <motion.div
