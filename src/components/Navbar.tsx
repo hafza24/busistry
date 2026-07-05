@@ -9,12 +9,11 @@ const leftLinks = [
   { to: "/", label: "Home" },
   { to: "/templates", label: "Templates" },
   { to: "/marketplace", label: "Marketplace" },
-];
-
-const rightLinks = [
   { to: "/pricing", label: "Pricing" },
   { to: "/contact", label: "Contact" },
 ];
+
+const rightLinks: { to: string; label: string }[] = [];
 
 const allLinks = [...leftLinks, ...rightLinks];
 
