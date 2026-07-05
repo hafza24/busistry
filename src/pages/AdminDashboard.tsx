@@ -36,6 +36,7 @@ const viewTitles: Record<string, string> = {
   help_center: "Help Center",
   support_chat: "Support Chat",
   audit: "Audit Logs",
+  newsletter: "Newsletter Subscribers",
 };
 
 const AdminDashboard = () => {
