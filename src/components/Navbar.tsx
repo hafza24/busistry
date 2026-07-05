@@ -133,7 +133,7 @@ const Navbar = () => {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden mt-3 mx-auto max-w-[1000px] rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
+          className="md:hidden mt-3 mx-auto w-full rounded-2xl border border-border bg-background/95 backdrop-blur-xl shadow-soft p-4"
         >
           {allLinks.map((link) => (
             <Link
