@@ -515,18 +515,6 @@ const Index = () => {
               <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
                 Every plan includes everything you need to operate. No surprise add-ons, no hidden fees.
               </p>
-              <div className="mt-7 flex items-center gap-3 text-sm">
-                <div className="flex -space-x-1.5">
-                  {[0,1,2,3].map((n) => (
-                    <div key={n} className="h-6 w-6 rounded-full bg-gradient-to-br from-primary to-accent ring-2 ring-background flex items-center justify-center">
-                      <Check className="h-3 w-3 text-white" strokeWidth={3} />
-                    </div>
-                  ))}
-                </div>
-                <span className="text-muted-foreground">
-                  <span className="font-semibold text-foreground">6 essentials</span> included in every plan
-                </span>
-              </div>
             </motion.div>
             <div className="lg:col-span-7">
               <div className="grid sm:grid-cols-2 gap-3">
