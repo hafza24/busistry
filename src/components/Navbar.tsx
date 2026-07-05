@@ -5,12 +5,12 @@ import { Menu, X, ArrowRight, Rocket, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-const leftLinks = [
-  { to: "/", label: "Home" },
-  { to: "/templates", label: "Templates" },
-  { to: "/marketplace", label: "Marketplace" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/contact", label: "Contact" },
+const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = [
+  { to: "/", label: "Home", showAt: "md" },
+  { to: "/templates", label: "Templates", showAt: "md" },
+  { to: "/marketplace", label: "Marketplace", showAt: "lg" },
+  { to: "/pricing", label: "Pricing", showAt: "lg" },
+  { to: "/contact", label: "Contact", showAt: "xl" },
 ];
 
 const rightLinks: { to: string; label: string }[] = [];
