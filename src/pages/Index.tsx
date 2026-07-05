@@ -457,19 +457,29 @@ const Index = () => {
         }} />
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
-              <CreditCard className="h-3 w-3" /> Pricing
+            <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/30 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-6 shadow-[0_0_0_1px_hsl(var(--primary)/0.05),0_8px_24px_-8px_hsl(var(--primary)/0.35)] backdrop-blur-sm">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-70 animate-ping" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+              </span>
+              <CreditCard className="h-3 w-3" aria-hidden="true" />
+              <span>Pricing</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
               Simple plans.{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+              <span className="relative inline-block bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
                 No surprises.
+                <span
+                  aria-hidden="true"
+                  className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/0 via-primary/60 to-accent/0"
+                />
               </span>
             </h2>
-            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
+            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
               One-time payment in PKR — fully-owned WordPress store, no monthly lock-in.
             </p>
           </div>
+
           <PricingSlider tiers={displayTiers} />
         </div>
       </section>
