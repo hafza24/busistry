@@ -105,7 +105,7 @@ const comparison = [
   { feature: "Launch in 24–48 hours", busistry: true, shopify: false, dev: false },
   { feature: "No technical skills needed", busistry: true, shopify: false, dev: true },
   { feature: "Fixed upfront price", busistry: true, shopify: true, dev: false },
-  { feature: "Full WordPress ownership", busistry: true, shopify: false, dev: true },
+  { feature: "Full ownership of your site", busistry: true, shopify: false, dev: true },
 ];
 
 const faqs = [
