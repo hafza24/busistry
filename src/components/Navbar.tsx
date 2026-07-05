@@ -44,20 +44,16 @@ const Navbar = () => {
         {/* Central Logo Hub overlay */}
         <Link
           to="/"
-          className="hidden md:flex absolute left-1/2 -translate-x-1/2 -top-2 z-30 flex-col items-center gap-1 pointer-events-auto"
+          className="hidden md:flex absolute left-1/2 -translate-x-1/2 -top-3 z-30 items-center justify-center pointer-events-auto transition-transform duration-500 group-hover:scale-105"
           aria-label="Busistree home"
         >
-          <div
-            className={`relative flex items-center justify-center rounded-[1.75rem] bg-foreground shadow-[0_20px_40px_-12px_hsl(var(--foreground)/0.3)] transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.45)] ${
-              scrolled ? "w-14 h-14" : "w-16 h-16"
+          <img
+            src={logo}
+            alt="Busistree"
+            className={`w-auto object-contain transition-all duration-300 drop-shadow-[0_10px_25px_hsl(var(--primary)/0.25)] ${
+              scrolled ? "h-14" : "h-16"
             }`}
-          >
-            <img
-              src={logo}
-              alt="Busistree"
-              className="w-10 h-10 object-contain transition-transform duration-700 group-hover:rotate-[15deg]"
-            />
-          </div>
+          />
         </Link>
 
         {/* Main glass nav bar */}
