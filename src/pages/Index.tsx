@@ -61,7 +61,7 @@ const steps = [
 const includes = [
   { icon: Globe, title: "Fully designed website / store" },
   { icon: Smartphone, title: "Mobile responsive" },
-  { icon: LayoutDashboard, title: "WordPress dashboard access" },
+  { icon: LayoutDashboard, title: "Easy dashboard access" },
   { icon: CreditCard, title: "Payment & contact integration" },
   { icon: ShoppingBag, title: "Product or service setup" },
   { icon: MessageCircle, title: "WhatsApp integration" },
