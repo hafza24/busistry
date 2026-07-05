@@ -61,7 +61,7 @@ const steps = [
 const includes = [
   { icon: Globe, title: "Fully designed website / store" },
   { icon: Smartphone, title: "Mobile responsive" },
-  { icon: LayoutDashboard, title: "WordPress dashboard access" },
+  { icon: LayoutDashboard, title: "Easy dashboard access" },
   { icon: CreditCard, title: "Payment & contact integration" },
   { icon: ShoppingBag, title: "Product or service setup" },
   { icon: MessageCircle, title: "WhatsApp integration" },
@@ -105,14 +105,14 @@ const comparison = [
   { feature: "Launch in 24–48 hours", busistry: true, shopify: false, dev: false },
   { feature: "No technical skills needed", busistry: true, shopify: false, dev: true },
   { feature: "Fixed upfront price", busistry: true, shopify: true, dev: false },
-  { feature: "Full WordPress ownership", busistry: true, shopify: false, dev: true },
+  { feature: "Full ownership of your site", busistry: true, shopify: false, dev: true },
 ];
 
 const faqs = [
   { q: "How fast will my store be delivered?", a: "Most stores are delivered within 24–48 hours. Larger custom builds take 3–7 days depending on the plan." },
-  { q: "Can I edit the website myself later?", a: "Yes. You get full WordPress dashboard access — edit content, add products, change images, and manage orders any time." },
+  { q: "Can I edit the website myself later?", a: "Yes. You get full dashboard access — edit content, add products, change images, and manage orders any time." },
   { q: "Do I need any technical experience?", a: "Not at all. You pick a template, answer a short form, and we handle everything from design to launch." },
-  { q: "Is it built on WordPress?", a: "Yes. Every store is built on WordPress so you fully own it — no platform lock-in, no monthly subscription traps." },
+  { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
 ];
 
 const Index = () => {
@@ -190,7 +190,7 @@ const Index = () => {
     <div>
       <SEO
         title="Busistree — Launch your online store in 48 hours"
-        description="Done-for-you WordPress websites and ecommerce stores for Pakistani businesses. Pick a template, fill a smart form, go live in 24–48 hours."
+        description="Done-for-you websites and ecommerce stores for Pakistani businesses — custom-coded or WordPress. Pick a template, fill a smart form, go live in 24–48 hours."
         path="/"
       />
       {/* Hero — busistree split layout */}
@@ -568,7 +568,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              One-time payment in PKR — fully-owned WordPress store, no monthly lock-in.
+              One-time payment in PKR — fully-owned site, no monthly lock-in.
             </p>
           </div>
 
