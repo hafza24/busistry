@@ -18,6 +18,7 @@ import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration"
 import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminHelpCenter from "@/components/admin/AdminHelpCenter";
 import AdminSupportChat from "@/components/admin/AdminSupportChat";
+import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
