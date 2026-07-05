@@ -26,6 +26,9 @@ import {
   MousePointerClick,
   ClipboardList,
   Wand2,
+  LayoutTemplate,
+  PencilRuler,
+  Palette,
   Rocket,
   Smartphone,
   CreditCard,
@@ -49,10 +52,10 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: MousePointerClick, title: "Choose Your Template", desc: "Browse our collection of professionally designed templates for any industry.", gradient: "from-blue-500 to-blue-600" },
-  { num: "02", icon: ClipboardList, title: "Complete Smart Form", desc: "Answer a few simple questions about your brand, products, and preferences.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Wand2, title: "We Build & Customize", desc: "Our expert team transforms your template into a unique, fully-functional store.", gradient: "from-emerald-500 to-teal-500" },
-  { num: "04", icon: Rocket, title: "Launch & Grow", desc: "Review your store, request changes, and launch with confidence.", gradient: "from-green-500 to-emerald-600" },
+  { num: "01", icon: LayoutTemplate, title: "Choose Your Template", desc: "Browse our collection of professionally designed templates for any industry.", gradient: "from-sky-500 to-blue-600" },
+  { num: "02", icon: PencilRuler, title: "Complete Smart Form", desc: "Answer a few simple questions about your brand, products, and preferences.", gradient: "from-primary to-primary-glow" },
+  { num: "03", icon: Palette, title: "We Build & Customize", desc: "Our expert team transforms your template into a unique, fully-functional store.", gradient: "from-violet-500 to-fuchsia-500" },
+  { num: "04", icon: Rocket, title: "Launch & Grow", desc: "Review your store, request changes, and launch with confidence.", gradient: "from-emerald-500 to-teal-600" },
 ];
 
 const includes = [
