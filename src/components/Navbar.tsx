@@ -5,12 +5,12 @@ import { Menu, X, ArrowRight, Rocket, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-const leftLinks = [
-  { to: "/", label: "Home" },
-  { to: "/templates", label: "Templates" },
-  { to: "/marketplace", label: "Marketplace" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/contact", label: "Contact" },
+const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = [
+  { to: "/", label: "Home", showAt: "md" },
+  { to: "/templates", label: "Templates", showAt: "md" },
+  { to: "/marketplace", label: "Marketplace", showAt: "lg" },
+  { to: "/pricing", label: "Pricing", showAt: "lg" },
+  { to: "/contact", label: "Contact", showAt: "xl" },
 ];
 
 const rightLinks: { to: string; label: string }[] = [];
@@ -68,18 +68,30 @@ const Navbar = () => {
           </Link>
 
           {/* Left links — grouped pill */}
-          <div className="hidden md:flex items-center flex-1">
-            <div className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/70 backdrop-blur px-1.5 py-1 shadow-sm">
-              {leftLinks.map((link) => (
-                <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
-                  {link.label}
-                </Link>
-              ))}
+          <div className="hidden md:flex items-center flex-1 min-w-0">
+            <div className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/70 backdrop-blur px-1.5 py-1 shadow-sm max-w-full overflow-hidden">
+              {leftLinks.map((link) => {
+                const visibility =
+                  link.showAt === "xl"
+                    ? "hidden xl:inline-flex"
+                    : link.showAt === "lg"
+                    ? "hidden lg:inline-flex"
+                    : "inline-flex";
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className={`${visibility} ${linkClass(location.pathname === link.to)}`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
           {/* Spacer for logo hub */}
-          <div className="hidden md:block w-40 shrink-0" aria-hidden="true" />
+          <div className="hidden md:block w-32 lg:w-40 xl:w-48 shrink-0" aria-hidden="true" />
 
           {/* Right links + auth */}
           <div className="hidden md:flex items-center gap-1 flex-1 justify-end">
