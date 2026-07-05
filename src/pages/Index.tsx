@@ -110,9 +110,9 @@ const comparison = [
 
 const faqs = [
   { q: "How fast will my store be delivered?", a: "Most stores are delivered within 24–48 hours. Larger custom builds take 3–7 days depending on the plan." },
-  { q: "Can I edit the website myself later?", a: "Yes. You get full WordPress dashboard access — edit content, add products, change images, and manage orders any time." },
+  { q: "Can I edit the website myself later?", a: "Yes. You get full dashboard access — edit content, add products, change images, and manage orders any time." },
   { q: "Do I need any technical experience?", a: "Not at all. You pick a template, answer a short form, and we handle everything from design to launch." },
-  { q: "Is it built on WordPress?", a: "Yes. Every store is built on WordPress so you fully own it — no platform lock-in, no monthly subscription traps." },
+  { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
 ];
 
 const Index = () => {
