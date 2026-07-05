@@ -11,7 +11,7 @@ const navLinks = [
   { to: "/templates", label: "Templates", icon: LayoutTemplate },
   { to: "/marketplace", label: "Marketplace", icon: ShoppingBag },
   { to: "/pricing", label: "Pricing", icon: DollarSign },
-  { to: "/how-it-works", label: "How It Works", icon: Rocket },
+  
   { to: "/help", label: "Help", icon: LifeBuoy },
   { to: "/contact", label: "Contact", icon: Mail },
 ];
