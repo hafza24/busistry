@@ -457,8 +457,22 @@ const Index = () => {
                 </div>
 
                 <div className="relative">
-                  <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-6 shadow-lg shadow-primary/10 ring-4 ring-background group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-500`}>
-                    <s.icon className="h-5 w-5 text-white" strokeWidth={2.25} />
+                  <div className={`relative h-12 w-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-6 shadow-lg shadow-primary/10 ring-4 ring-background group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-500`}>
+                    {/* pulsing halo */}
+                    <span className="absolute inset-0 rounded-xl bg-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
+                    {/* shimmer sweep */}
+                    <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                      <span className="absolute -inset-y-2 -left-full w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:left-[150%] transition-all duration-[900ms] ease-out" />
+                    </span>
+                    <s.icon
+                      className={`relative h-5 w-5 text-white drop-shadow transition-transform duration-500 ${
+                        i === 0 ? "group-hover:-translate-y-0.5 group-hover:translate-x-0.5" :
+                        i === 1 ? "group-hover:rotate-[8deg]" :
+                        i === 2 ? "group-hover:rotate-[14deg] group-hover:scale-110" :
+                        "group-hover:-translate-y-1 group-hover:rotate-[-6deg]"
+                      }`}
+                      strokeWidth={2.25}
+                    />
                   </div>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">STEP {s.num}</span>
