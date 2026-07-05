@@ -156,9 +156,35 @@ const Index = () => {
       }))
     : tiers.map((t) => ({ ...t, id: undefined as string | undefined }));
 
-  const showcase = (templates && templates.length > 0)
+  const liveSites = [
+    {
+      id: "live-tutor",
+      name: "Tutor Busistree",
+      niche: "Online Learning",
+      demo_url: "https://tutor.busistree.com",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://tutor.busistree.com",
+    },
+    {
+      id: "live-travellinks",
+      name: "TravelLinks UK",
+      niche: "Travel",
+      demo_url: "https://travellinks.uk",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://travellinks.uk",
+    },
+    {
+      id: "live-booker",
+      name: "Booker Busistree",
+      niche: "Booking",
+      demo_url: "https://booker.busistree.com",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://booker.busistree.com",
+    },
+  ];
+
+  const dbShowcase = (templates && templates.length > 0)
     ? templates
     : fallbackTemplates.map((t, i) => ({ id: `static-${i}`, ...t, preview_image_url: null, demo_url: null }));
+
+  const showcase = [...liveSites, ...dbShowcase];
 
 
   return (
