@@ -28,6 +28,7 @@ const viewTitles: Record<string, string> = {
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
+  sites_for_sale: "Sites on Sale",
   plans: "Plan Management",
   addons: "Add-ons & Integrations",
   website_products: "Website Products",
