@@ -190,7 +190,7 @@ const Index = () => {
     <div>
       <SEO
         title="Busistree — Launch your online store in 48 hours"
-        description="Done-for-you WordPress websites and ecommerce stores for Pakistani businesses. Pick a template, fill a smart form, go live in 24–48 hours."
+        description="Done-for-you websites and ecommerce stores for Pakistani businesses — custom-coded or WordPress. Pick a template, fill a smart form, go live in 24–48 hours."
         path="/"
       />
       {/* Hero — busistree split layout */}
