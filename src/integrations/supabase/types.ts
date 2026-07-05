@@ -455,6 +455,39 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          source: string
+          status: Database["public"]["Enums"]["newsletter_status"]
+          subscribed_at: string
+          unsubscribed_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          source?: string
+          status?: Database["public"]["Enums"]["newsletter_status"]
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string
+          status?: Database["public"]["Enums"]["newsletter_status"]
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           audience: string
@@ -1991,6 +2024,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user" | "owner" | "manager" | "staff"
+      newsletter_status: "subscribed" | "unsubscribed"
       payment_method:
         | "easypaisa"
         | "jazzcash"
@@ -2160,6 +2194,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user", "owner", "manager", "staff"],
+      newsletter_status: ["subscribed", "unsubscribed"],
       payment_method: [
         "easypaisa",
         "jazzcash",
