@@ -144,9 +144,6 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
         Slide {activeIndex + 1} of {tiers.length}: {tiers[activeIndex]?.name}
       </div>
 
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-8 md:w-12 z-10 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-8 md:w-12 z-10 bg-gradient-to-l from-background to-transparent" />
 
       {/* Prev / Next buttons */}
       <Button
