@@ -74,6 +74,7 @@ const AdminDashboard = () => {
       case "help_center": return <AdminHelpCenter />;
       case "support_chat": return <AdminSupportChat />;
       case "audit": return <AdminAuditLogs />;
+      case "newsletter": return <AdminNewsletterSubscribers />;
       default: return <AdminWebsiteOrders />;
     }
   };
