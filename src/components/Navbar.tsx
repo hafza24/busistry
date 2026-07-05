@@ -39,8 +39,9 @@ const Navbar = () => {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 pt-6 pb-4 px-4">
-      <div className="relative mx-auto flex items-center justify-center group">
+    <header className="sticky top-0 z-50 pt-4 pb-3 px-3 md:px-6">
+      <div className="relative w-full flex items-center justify-center group">
+
         {/* Central Logo Hub overlay */}
         <Link
           to="/"
