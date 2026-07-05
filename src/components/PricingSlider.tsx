@@ -230,10 +230,10 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
                     </span>
                   </div>
                 )}
-                <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1.5">
-                  <Zap className="h-3 w-3 text-primary" aria-hidden="true" />
+                <div className="text-xs text-muted-foreground mt-2">
                   Delivered in {tier.delivery}
                 </div>
+
               </div>
 
               <ul className="mt-6 space-y-3 flex-1">
