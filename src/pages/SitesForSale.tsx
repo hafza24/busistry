@@ -5,38 +5,30 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Loader2, Eye, ShoppingCart, Tag, CheckCircle2 } from "lucide-react";
-
-const statusStyles: Record<string, string> = {
-  available: "bg-emerald-100 text-emerald-800",
-  reserved: "bg-amber-100 text-amber-800",
-  sold: "bg-muted text-muted-foreground",
-};
+import { Loader2, Eye, Rocket, Tag, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const SitesForSale = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selected, setSelected] = useState<any>(null);
 
   const { data: sites = [], isLoading } = useQuery({
-    queryKey: ["sites_for_sale"],
+    queryKey: ["templates_on_sale"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("sites_for_sale")
+        .from("templates")
         .select("*")
         .eq("is_active", true)
+        .not("original_price_pkr", "is", null)
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return data;
+      return data as any[];
     },
   });
 
   const categories = ["All", ...Array.from(new Set(sites.map((s) => s.category).filter(Boolean) as string[]))];
   const filtered = activeCategory === "All" ? sites : sites.filter((s) => s.category === activeCategory);
-
-  const waMessage = (title: string) =>
-    `https://wa.me/923000000000?text=${encodeURIComponent(`Hi Busistree, I'm interested in the "${title}" site listed on your Sites on Sale page.`)}`;
 
   return (
     <div className="py-16">
@@ -52,7 +44,7 @@ const SitesForSale = () => {
           </Badge>
           <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Sites on Sale</h1>
           <p className="text-lg text-muted-foreground">
-            Fully-built websites ready to launch. Buy one, we rebrand and hand it over to you.
+            Fully-built websites at a discount. Pick one and we'll rebrand and hand it over.
           </p>
         </div>
 
@@ -77,35 +69,38 @@ const SitesForSale = () => {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-muted-foreground">No sites listed yet. Check back soon.</p>
+            <p className="text-muted-foreground">No sites on sale right now. Check back soon.</p>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((s) => {
               const features = Array.isArray(s.features) ? (s.features as string[]) : [];
+              const techStack = Array.isArray(s.tech_stack) ? (s.tech_stack as string[]) : [];
               const hasDiscount = s.original_price_pkr && Number(s.original_price_pkr) > Number(s.price_pkr);
               return (
                 <Card key={s.id} className="group border-border/50 hover:shadow-xl hover:border-primary/30 transition-all flex flex-col overflow-hidden">
                   <div className="relative">
                     {s.preview_image_url ? (
-                      <img src={s.preview_image_url} alt={s.title} className="h-48 w-full object-cover" loading="lazy" />
+                      <img src={s.preview_image_url} alt={s.name} className="h-48 w-full object-cover" loading="lazy" />
                     ) : (
                       <div className="h-48 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <span className="text-4xl opacity-60">🌐</span>
                       </div>
                     )}
-                    <Badge className={`absolute top-3 right-3 ${statusStyles[s.status] || ""}`}>
-                      {s.status}
-                    </Badge>
+                    {hasDiscount && (
+                      <Badge className="absolute top-3 right-3 bg-emerald-600 text-white">
+                        Sale
+                      </Badge>
+                    )}
                   </div>
                   <CardContent className="p-5 flex-1">
                     <div className="flex flex-wrap gap-1 mb-2">
                       {s.category && <Badge variant="default" className="text-[10px]">{s.category}</Badge>}
-                      {Array.isArray(s.tech_stack) && s.tech_stack.slice(0, 3).map((t: string) => (
+                      {techStack.slice(0, 3).map((t: string) => (
                         <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>
                       ))}
                     </div>
-                    <h3 className="font-semibold font-display text-lg text-foreground">{s.title}</h3>
+                    <h3 className="font-semibold font-display text-lg text-foreground">{s.name}</h3>
                     {s.description && <p className="text-sm text-muted-foreground mt-1 mb-3 line-clamp-2">{s.description}</p>}
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -128,9 +123,10 @@ const SitesForSale = () => {
                     )}
                   </CardContent>
                   <CardFooter className="p-5 pt-0 gap-2">
-                    <Button size="sm" className="flex-1" onClick={() => setSelected(s)} disabled={s.status === "sold"}>
-                      <ShoppingCart className="h-3.5 w-3.5 mr-1" />
-                      {s.status === "sold" ? "Sold" : "Buy Now"}
+                    <Button size="sm" className="flex-1" asChild onClick={() => setPendingTemplate(s.id)}>
+                      <Link to={`/onboarding?template=${s.id}`}>
+                        <Rocket className="h-3.5 w-3.5 mr-1" /> Select Site
+                      </Link>
                     </Button>
                     {s.demo_url && (
                       <Button size="sm" variant="outline" asChild title="Preview demo">
@@ -146,36 +142,6 @@ const SitesForSale = () => {
           </div>
         )}
       </div>
-
-      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
-        <DialogContent className="max-w-lg">
-          {selected && (
-            <>
-              <DialogHeader>
-                <DialogTitle>{selected.title}</DialogTitle>
-              </DialogHeader>
-              {selected.preview_image_url && (
-                <img src={selected.preview_image_url} alt={selected.title} className="w-full h-52 object-cover rounded-md" />
-              )}
-              <p className="text-sm text-muted-foreground">{selected.description}</p>
-              <p className="text-2xl font-bold text-primary">
-                PKR {Number(selected.price_pkr).toLocaleString()}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                To purchase this site, contact us on WhatsApp or email. We'll confirm availability, take payment, then rebrand and hand it over.
-              </p>
-              <DialogFooter className="gap-2">
-                <Button variant="outline" onClick={() => setSelected(null)}>Cancel</Button>
-                <Button asChild>
-                  <a href={waMessage(selected.title)} target="_blank" rel="noopener noreferrer">
-                    Contact on WhatsApp
-                  </a>
-                </Button>
-              </DialogFooter>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

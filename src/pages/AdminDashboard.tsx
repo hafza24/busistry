@@ -8,7 +8,7 @@ import AdminWebsiteOrders from "@/components/admin/AdminWebsiteOrders";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
-import AdminSitesForSale from "@/components/admin/AdminSitesForSale";
+
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 import AdminAddonsHub from "@/components/admin/AdminAddonsHub";
 import AdminWebsiteProducts from "@/components/admin/AdminWebsiteProducts";
@@ -28,7 +28,7 @@ const viewTitles: Record<string, string> = {
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
-  sites_for_sale: "Sites on Sale",
+  
   plans: "Plan Management",
   addons: "Add-ons & Integrations",
   website_products: "Website Products",
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
       case "requests": return <AdminRequestManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
-      case "sites_for_sale": return <AdminSitesForSale />;
+      
       case "plans": return <AdminPlanManagement />;
       case "addons": return <AdminAddonsHub />;
       case "website_products": return <AdminWebsiteProducts />;

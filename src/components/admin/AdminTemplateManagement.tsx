@@ -32,11 +32,12 @@ interface TemplateForm {
   preset_modules: string[];
   preset_conditional_fields: ConditionalField[];
   price_pkr: number;
+  original_price_pkr: number | null;
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
-  preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0,
+  preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0, original_price_pkr: null,
 };
 
 
@@ -86,6 +87,7 @@ const AdminTemplateManagement = () => {
         preset_modules: t.preset_modules,
         preset_conditional_fields: t.preset_conditional_fields,
         price_pkr: t.price_pkr || 0,
+        original_price_pkr: t.original_price_pkr && t.original_price_pkr > 0 ? t.original_price_pkr : null,
       };
 
 
@@ -130,6 +132,7 @@ const AdminTemplateManagement = () => {
       preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
       preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
       price_pkr: t.price_pkr ?? 0,
+      original_price_pkr: t.original_price_pkr != null ? Number(t.original_price_pkr) : null,
     });
     setOpen(true);
   };
@@ -264,15 +267,30 @@ const AdminTemplateManagement = () => {
               <Input value={form.demo_url} onChange={(e) => setForm((f) => ({ ...f, demo_url: e.target.value }))} placeholder="https://..." />
             </div>
 
-            <div>
-              <Label>Price (PKR) — one-time · 0 for free</Label>
-              <Input
-                type="number"
-                min={0}
-                value={form.price_pkr}
-                onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>Sale price (PKR) — 0 for free</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={form.price_pkr}
+                  onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
+                />
+              </div>
+              <div>
+                <Label>Original price (PKR) — optional</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  placeholder="Leave blank if not on sale"
+                  value={form.original_price_pkr ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, original_price_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                />
+              </div>
             </div>
+
+
+
 
 
             <div>
