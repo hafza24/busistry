@@ -240,25 +240,27 @@ const Storefront = () => {
         ) : filteredProducts && filteredProducts.length > 0 ? (
           <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map((p) => (
-              <Card key={p.id} className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelectedProduct(p)}>
-                <div className="aspect-square bg-muted">
-                  {(p.images as string[])?.length > 0 ? (
-                    <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No image</div>
-                  )}
-                </div>
-                <CardContent className="p-3">
-                  <h3 className="font-medium text-sm truncate">{p.name}</h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
-                    {p.compare_at_price && (
-                      <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+              <Link key={p.id} to={`/shop/${slug}/product/${p.slug}`} className="group">
+                <Card className="overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="aspect-square bg-muted overflow-hidden">
+                    {(p.images as string[])?.length > 0 ? (
+                      <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No image</div>
                     )}
                   </div>
-                  {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
-                </CardContent>
-              </Card>
+                  <CardContent className="p-3">
+                    <h3 className="font-medium text-sm truncate">{p.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
+                      {p.compare_at_price && (
+                        <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+                      )}
+                    </div>
+                    {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         ) : (
