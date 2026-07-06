@@ -320,9 +320,9 @@ const Index = () => {
               <LayoutDashboard className="h-3 w-3" /> Templates
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Choose your perfect{" "}
+              Buy Your perfect{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                template
+                Site
               </span>
             </h2>
             <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
