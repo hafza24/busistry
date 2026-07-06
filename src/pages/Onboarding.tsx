@@ -17,20 +17,32 @@ import { ArrowLeft, ArrowRight, Check, Loader2, CheckCircle2, Save } from "lucid
 import { motion, AnimatePresence } from "framer-motion";
 import AutoSaveIndicator from "@/components/onboarding/AutoSaveIndicator";
 
-import Step1ProjectType from "@/components/onboarding/Step1ProjectType";
-import Step2ProjectDetails from "@/components/onboarding/Step2ProjectDetails";
-import Step3Business from "@/components/onboarding/Step1Business";
-import Step4Branding from "@/components/onboarding/Step2Branding";
-import Step5Team from "@/components/onboarding/Step3Team";
-import Step6Store from "@/components/onboarding/Step4Store";
+import StepTemplate from "@/components/onboarding/StepTemplate";
+import StepPlan from "@/components/onboarding/StepPlan";
 import StepAddons from "@/components/onboarding/StepAddons";
-import Step8Contact from "@/components/onboarding/Step5Contact";
-import Step9Payment from "@/components/onboarding/Step6Payment";
+import StepIntegrations from "@/components/onboarding/StepIntegrations";
+import StepBusiness from "@/components/onboarding/Step1Business";
+import StepBranding from "@/components/onboarding/Step2Branding";
+import StepTeam from "@/components/onboarding/Step3Team";
+import StepStore from "@/components/onboarding/Step4Store";
+import StepContact from "@/components/onboarding/Step5Contact";
+import StepPayment from "@/components/onboarding/Step6Payment";
 
 import PlanSummaryCard from "@/components/onboarding/PlanSummaryCard";
 import TemplateSummaryCard from "@/components/onboarding/TemplateSummaryCard";
 
-const STEP_LABELS = ["Project", "Details", "Business", "Branding", "Team", "Store", "Enhance", "Contact", "Confirm"];
+const STEP_LABELS = [
+  "Site",
+  "Plan",
+  "Add-ons",
+  "Integrations",
+  "Business",
+  "Branding",
+  "Team",
+  "Store",
+  "Contact",
+  "Payment",
+];
 const TOTAL_STEPS = STEP_LABELS.length;
 
 const Onboarding = () => {
@@ -48,7 +60,6 @@ const Onboarding = () => {
     [searchParams]
   );
 
-  // Persist these in case the user has to sign in mid-flow
   useEffect(() => {
     if (planId) setPendingPlan(planId);
     if (templateId) setPendingTemplate(templateId);
@@ -78,22 +89,18 @@ const Onboarding = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-  const detailsValid = (): boolean => {
-    // Step 2 is auto-configured from template/plan; require a template.
-    return !!(data.template_id);
-  };
-
   const canProceed = (s: number): boolean => {
     switch (s) {
-      case 1: return !!data.project_type;
-      case 2: return detailsValid();
-      case 3: return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
-      case 4: return !!data.font_style;
-      case 5: return true;
-      case 6: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
-      case 7: return true; // Add-ons step is always optional
-      case 8: return !!data.full_name && !!data.email && !!data.phone;
-      case 9: return !!data.terms_accepted;
+      case 1: return !!data.template_id;
+      case 2: return !!data.plan_id;
+      case 3: return true; // Add-ons optional
+      case 4: return true; // Integrations optional
+      case 5: return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
+      case 6: return !!data.font_style;
+      case 7: return true;
+      case 8: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
+      case 9: return !!data.full_name && !!data.email && !!data.phone;
+      case 10: return !!data.terms_accepted;
       default: return false;
     }
   };
@@ -193,19 +200,14 @@ const Onboarding = () => {
             <AutoSaveIndicator saving={saving} hasDraftId={!!data.id} />
           </div>
           <Progress value={progressValue} className="h-1.5" />
-          <div className="hidden md:flex justify-between text-[11px] text-muted-foreground">
-            {STEP_LABELS.map((label, i) => (
-              <span key={label} className={`${i + 1 <= step ? "text-foreground font-medium" : ""}`}>
-                {label}
-              </span>
-            ))}
         </div>
 
-        <div className="mb-6 space-y-3">
-          <PlanSummaryCard planId={data.plan_id ?? planId} />
-          <TemplateSummaryCard templateId={data.template_id ?? templateId} />
-        </div>
-        </div>
+        {(data.template_id || data.plan_id) && step > 2 && (
+          <div className="mb-6 space-y-3">
+            <TemplateSummaryCard templateId={data.template_id ?? templateId} />
+            <PlanSummaryCard planId={data.plan_id ?? planId} />
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -215,16 +217,17 @@ const Onboarding = () => {
             exit={{ opacity: 0, x: -12 }}
             transition={{ duration: 0.18 }}
           >
-            {step === 1 && <Step1ProjectType data={data} update={update} />}
-            {step === 2 && <Step2ProjectDetails data={data} update={update} />}
-            {step === 3 && <Step3Business data={data} update={update} />}
-            {step === 4 && <Step4Branding data={data} update={update} />}
-            {step === 5 && <Step5Team data={data} update={update} />}
-            {step === 6 && <Step6Store data={data} update={update} />}
-            {step === 7 && <StepAddons data={data} update={update} />}
-            {step === 8 && <Step8Contact data={data} update={update} />}
-            {step === 9 && (
-              <Step9Payment
+            {step === 1 && <StepTemplate data={data} update={update} />}
+            {step === 2 && <StepPlan data={data} update={update} />}
+            {step === 3 && <StepAddons data={data} update={update} />}
+            {step === 4 && <StepIntegrations data={data} update={update} />}
+            {step === 5 && <StepBusiness data={data} update={update} />}
+            {step === 6 && <StepBranding data={data} update={update} />}
+            {step === 7 && <StepTeam data={data} update={update} />}
+            {step === 8 && <StepStore data={data} update={update} />}
+            {step === 9 && <StepContact data={data} update={update} />}
+            {step === 10 && (
+              <StepPayment
                 data={data}
                 update={update}
                 onEdit={(s) => {
@@ -237,9 +240,9 @@ const Onboarding = () => {
         </AnimatePresence>
 
         <div className="flex items-center justify-between mt-10 pt-6 border-t border-border">
-          <Button variant="ghost" onClick={step === 1 ? () => navigate("/pricing") : goBack}>
+          <Button variant="ghost" onClick={step === 1 ? () => navigate("/templates") : goBack}>
             <ArrowLeft className="h-4 w-4 mr-2" />
-            {step === 1 ? "Back to pricing" : "Back"}
+            {step === 1 ? "Back to Sites" : "Back"}
           </Button>
           {step < TOTAL_STEPS ? (
             <Button onClick={goNext}>
