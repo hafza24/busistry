@@ -381,11 +381,23 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       <Card className="border-border/60">
         <CardContent className="pt-5 space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
+            <span className="text-muted-foreground">Site ({template?.name ?? "—"})</span>
             <span className="font-medium text-foreground tabular-nums">
-              {isFree ? "Free" : plan ? `PKR ${planPrice.toLocaleString()}` : "—"}
+              {templatePrice > 0 ? `PKR ${templatePrice.toLocaleString()}` : "Free"}
             </span>
           </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
+            <span className="font-medium text-foreground tabular-nums">
+              {planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free"}
+            </span>
+          </div>
+          {integrationsPrice > 0 && (
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Integrations ({data.selected_integration_ids?.length ?? 0})</span>
+              <span className="font-medium text-foreground tabular-nums">PKR {integrationsPrice.toLocaleString()}</span>
+            </div>
+          )}
 
           {selections.length > 0 && (
             <div className="border-t border-border/50 pt-2 mt-2 space-y-1.5">
@@ -410,6 +422,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
               ))}
             </div>
           )}
+
 
           <div className="border-t border-border/50 pt-3 mt-2 flex justify-between items-baseline">
             <span className="font-semibold text-foreground">Total today</span>
