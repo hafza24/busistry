@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,24 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { ShoppingCart, Plus, Minus, Trash2, Store, Search, PackageSearch, Sparkles, FileText, LayoutGrid, MessageSquare, ExternalLink } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Store, Search, PackageSearch, Sparkles, FileText, LayoutGrid, MessageSquare, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductGridSkeleton } from "@/components/ui/loading-skeletons";
 import { EmptyState } from "@/components/ui/empty-state";
 import SEO from "@/components/SEO";
-
-interface CartItem {
-  product: any;
-  quantity: number;
-}
+import { useStoreCart } from "@/hooks/useStoreCart";
 
 const Storefront = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const { cart, addToCart, updateQty, clearCart, cartTotal, cartCount } = useStoreCart(slug);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [customerForm, setCustomerForm] = useState({ name: "", phone: "", email: "", address: "" });
