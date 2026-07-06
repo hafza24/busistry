@@ -31,12 +31,14 @@ interface TemplateForm {
   preset_pages: string[];
   preset_modules: string[];
   preset_conditional_fields: ConditionalField[];
+  price_pkr: number;
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
-  preset_pages: [], preset_modules: [], preset_conditional_fields: [],
+  preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0,
 };
+
 
 const AdminTemplateManagement = () => {
   const qc = useQueryClient();
