@@ -19,9 +19,19 @@ import { useStoreCart } from "@/hooks/useStoreCart";
 
 const Storefront = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { cart, addToCart, updateQty, clearCart, cartTotal, cartCount } = useStoreCart(slug);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") === "1" && cart.length > 0) {
+      setCheckoutOpen(true);
+      searchParams.delete("checkout");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, cart.length]);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [customerForm, setCustomerForm] = useState({ name: "", phone: "", email: "", address: "" });
