@@ -63,6 +63,7 @@ const App = () => (
                   <Route element={<PublicLayout />}>
                     <Route path="/" element={<Index />} />
                     <Route path="/templates" element={<Templates />} />
+                    <Route path="/templates/booker" element={<BookerTemplate />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/sites-for-sale" element={<SitesForSale />} />
