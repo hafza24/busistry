@@ -5,13 +5,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Rocket, Loader2, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Rocket, Loader2, Eye } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const planParam = searchParams.get("plan");
+
 
   const { data: templates = [], isLoading } = useQuery({
     queryKey: ["public_templates"],
