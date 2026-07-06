@@ -246,85 +246,24 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       <div className="space-y-3">
         <RecapSection
           step={1}
-          title="Project type"
+          title="Site (template)"
           onEdit={onEdit}
           rows={[
-            { label: "Type", value: data.project_type ? PROJECT_TYPE_LABELS[data.project_type] ?? data.project_type : "—" },
+            { label: "Site", value: fmt(template?.name) },
+            { label: "Price", value: templatePrice > 0 ? `PKR ${templatePrice.toLocaleString()}` : "Free" },
           ]}
         />
         <RecapSection
           step={2}
-          title="Project details"
+          title="Plan"
           onEdit={onEdit}
-          rows={projectDetailRows(data.project_type, data.project_details ?? {})}
+          rows={[
+            { label: "Plan", value: fmt(plan?.name) },
+            { label: "Price", value: planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free" },
+          ]}
         />
         <RecapSection
           step={3}
-          title="Business basics"
-          onEdit={onEdit}
-          rows={[
-            { label: "Business name", value: fmt(data.business_name) },
-            { label: "Business type", value: fmt(data.business_type) },
-            { label: "Description", value: fmt(data.business_description) },
-            { label: "Country", value: fmt(data.country) },
-          ]}
-        />
-        <RecapSection
-          step={4}
-          title="Branding & design"
-          onEdit={onEdit}
-          rows={[
-            {
-              label: "Logo",
-              value: data.logo_url ? (
-                <a href={data.logo_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">
-                  View upload
-                </a>
-              ) : data.needs_logo_design ? (
-                "Needs design by Busistree"
-              ) : (
-                "—"
-              ),
-            },
-            { label: "Color palette", value: fmt(data.color_palette) },
-            { label: "Font style", value: fmt(data.font_style) },
-            { label: "References", value: fmt(data.reference_websites) },
-          ]}
-        />
-        <RecapSection
-          step={5}
-          title="Team"
-          onEdit={onEdit}
-          rows={[
-            { label: "Team size", value: fmt(data.team_size) },
-            { label: "Roles", value: fmt(data.team_roles) },
-            {
-              label: "Members",
-              value:
-                data.team_members && data.team_members.length
-                  ? data.team_members.map((m, i) => (
-                      <div key={i}>
-                        {m.name || "Unnamed"} <span className="text-muted-foreground">— {m.role || "—"}</span>
-                      </div>
-                    ))
-                  : "—",
-            },
-          ]}
-        />
-        <RecapSection
-          step={6}
-          title="Store requirements"
-          onEdit={onEdit}
-          rows={[
-            { label: "Store type", value: fmt(data.store_type) },
-            { label: "Products (est.)", value: fmt(data.product_count_estimate) },
-            { label: "Payment gateway", value: fmt(data.payment_gateway) },
-            { label: "Shipping", value: fmt(data.shipping_requirements) },
-            { label: "Special features", value: fmt(data.special_features) },
-          ]}
-        />
-        <RecapSection
-          step={7}
           title="Add-ons"
           onEdit={onEdit}
           rows={
@@ -347,7 +286,81 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           }
         />
         <RecapSection
+          step={4}
+          title="Integrations"
+          onEdit={onEdit}
+          rows={[
+            { label: "Selected", value: (data.selected_integration_ids?.length ?? 0) > 0 ? `${data.selected_integration_ids!.length} integration(s)` : "None" },
+            { label: "Price", value: integrationsPrice > 0 ? `PKR ${integrationsPrice.toLocaleString()}` : "Free" },
+          ]}
+        />
+        <RecapSection
+          step={5}
+          title="Business basics"
+          onEdit={onEdit}
+          rows={[
+            { label: "Business name", value: fmt(data.business_name) },
+            { label: "Business type", value: fmt(data.business_type) },
+            { label: "Description", value: fmt(data.business_description) },
+            { label: "Country", value: fmt(data.country) },
+          ]}
+        />
+        <RecapSection
+          step={6}
+          title="Branding & design"
+          onEdit={onEdit}
+          rows={[
+            {
+              label: "Logo",
+              value: data.logo_url ? (
+                <a href={data.logo_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+                  View upload
+                </a>
+              ) : data.needs_logo_design ? (
+                "Needs design by Busistree"
+              ) : (
+                "—"
+              ),
+            },
+            { label: "Color palette", value: fmt(data.color_palette) },
+            { label: "Font style", value: fmt(data.font_style) },
+            { label: "References", value: fmt(data.reference_websites) },
+          ]}
+        />
+        <RecapSection
+          step={7}
+          title="Team"
+          onEdit={onEdit}
+          rows={[
+            { label: "Team size", value: fmt(data.team_size) },
+            { label: "Roles", value: fmt(data.team_roles) },
+            {
+              label: "Members",
+              value:
+                data.team_members && data.team_members.length
+                  ? data.team_members.map((m, i) => (
+                      <div key={i}>
+                        {m.name || "Unnamed"} <span className="text-muted-foreground">— {m.role || "—"}</span>
+                      </div>
+                    ))
+                  : "—",
+            },
+          ]}
+        />
+        <RecapSection
           step={8}
+          title="Store requirements"
+          onEdit={onEdit}
+          rows={[
+            { label: "Store type", value: fmt(data.store_type) },
+            { label: "Products (est.)", value: fmt(data.product_count_estimate) },
+            { label: "Payment gateway", value: fmt(data.payment_gateway) },
+            { label: "Shipping", value: fmt(data.shipping_requirements) },
+            { label: "Special features", value: fmt(data.special_features) },
+          ]}
+        />
+        <RecapSection
+          step={9}
           title="Contact"
           onEdit={onEdit}
           rows={[
@@ -359,6 +372,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           ]}
         />
       </div>
+
 
       <div className="pt-2">
         <h3 className="text-sm font-semibold text-foreground">Order summary</h3>
