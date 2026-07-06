@@ -163,12 +163,25 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
     enabled: !!data.plan_id,
   });
 
+  const { data: template } = useQuery({
+    queryKey: ["template", data.template_id],
+    queryFn: async () => {
+      if (!data.template_id) return null;
+      const { data: row } = await supabase.from("templates").select("*").eq("id", data.template_id).maybeSingle();
+      return row;
+    },
+    enabled: !!data.template_id,
+  });
+
   const { data: selections = [] } = useSubmissionAddons(data.id);
   const addonTotals = calcAddonTotals(selections);
+  const templatePrice = template?.price_pkr ?? 0;
   const planPrice = plan?.price_pkr ?? 0;
-  const grandToday = planPrice + addonTotals.oneTime;
+  const integrationsPrice = data.integrations_total_pkr ?? 0;
+  const grandToday = templatePrice + planPrice + addonTotals.oneTime + integrationsPrice;
 
-  const isFree = plan?.type === "free" || plan?.price_pkr === 0;
+  const isFree = grandToday === 0;
+
 
   const MAX_MB = 5;
   const ALLOWED = ["image/png", "image/jpeg", "image/jpg", "image/webp", "application/pdf"];
