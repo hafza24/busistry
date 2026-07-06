@@ -600,6 +600,7 @@ export type Database = {
           font_style: string | null
           full_name: string | null
           id: string
+          integrations_total_pkr: number
           logo_url: string | null
           needs_logo_design: boolean
           payment_gateway: string | null
@@ -611,6 +612,7 @@ export type Database = {
           project_type: string | null
           reference_websites: string | null
           screenshot_url: string | null
+          selected_integration_ids: string[]
           shipping_requirements: string | null
           special_features: string | null
           status: string
@@ -642,6 +644,7 @@ export type Database = {
           font_style?: string | null
           full_name?: string | null
           id?: string
+          integrations_total_pkr?: number
           logo_url?: string | null
           needs_logo_design?: boolean
           payment_gateway?: string | null
@@ -653,6 +656,7 @@ export type Database = {
           project_type?: string | null
           reference_websites?: string | null
           screenshot_url?: string | null
+          selected_integration_ids?: string[]
           shipping_requirements?: string | null
           special_features?: string | null
           status?: string
@@ -684,6 +688,7 @@ export type Database = {
           font_style?: string | null
           full_name?: string | null
           id?: string
+          integrations_total_pkr?: number
           logo_url?: string | null
           needs_logo_design?: boolean
           payment_gateway?: string | null
@@ -695,6 +700,7 @@ export type Database = {
           project_type?: string | null
           reference_websites?: string | null
           screenshot_url?: string | null
+          selected_integration_ids?: string[]
           shipping_requirements?: string | null
           special_features?: string | null
           status?: string
