@@ -69,7 +69,7 @@ const TemplatesOnSale = () => {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-muted-foreground">No sites on sale right now. Check back soon.</p>
+            <p className="text-muted-foreground">No Templates on sale right now. Check back soon.</p>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
