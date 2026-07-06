@@ -265,6 +265,17 @@ const AdminTemplateManagement = () => {
             </div>
 
             <div>
+              <Label>Price (PKR) — one-time · 0 for free</Label>
+              <Input
+                type="number"
+                min={0}
+                value={form.price_pkr}
+                onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
+              />
+            </div>
+
+
+            <div>
               <Label>Preview Image</Label>
               <div className="flex items-center gap-3 mt-1">
                 {(form.preview_image_url || imageFile) && (
