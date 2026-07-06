@@ -9,7 +9,7 @@ const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = 
   { to: "/", label: "Home", showAt: "md" },
   { to: "/templates", label: "Templates", showAt: "md" },
   { to: "/marketplace", label: "Addons", showAt: "lg" },
-  { to: "/sites-for-sale", label: "Sale", showAt: "lg" },
+  { to: "/templates-on-sale", label: "Sale", showAt: "lg" },
   { to: "/pricing", label: "Pricing", showAt: "lg" },
   { to: "/contact", label: "Contact", showAt: "xl" },
 ];
