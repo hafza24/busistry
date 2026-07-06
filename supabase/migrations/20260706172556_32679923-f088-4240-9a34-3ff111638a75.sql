@@ -1,0 +1,1 @@
+ALTER TABLE public.templates ADD COLUMN IF NOT EXISTS price_pkr integer NOT NULL DEFAULT 0;

@@ -1599,6 +1599,7 @@ export type Database = {
           preset_modules: Json
           preset_pages: Json
           preview_image_url: string | null
+          price_pkr: number
           subcategory: string | null
         }
         Insert: {
@@ -1616,6 +1617,7 @@ export type Database = {
           preset_modules?: Json
           preset_pages?: Json
           preview_image_url?: string | null
+          price_pkr?: number
           subcategory?: string | null
         }
         Update: {
@@ -1633,6 +1635,7 @@ export type Database = {
           preset_modules?: Json
           preset_pages?: Json
           preview_image_url?: string | null
+          price_pkr?: number
           subcategory?: string | null
         }
         Relationships: []
