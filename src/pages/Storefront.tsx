@@ -355,31 +355,6 @@ const Storefront = () => {
       </Dialog>
 
 
-      {/* Product Detail Dialog */}
-      <Dialog open={!!selectedProduct} onOpenChange={(o) => !o && setSelectedProduct(null)}>
-        <DialogContent className="max-w-md">
-          {selectedProduct && (
-            <>
-              <DialogHeader><DialogTitle>{selectedProduct.name}</DialogTitle></DialogHeader>
-              {(selectedProduct.images as string[])?.length > 0 && (
-                <img src={(selectedProduct.images as string[])[0]} alt="" className="w-full h-64 object-cover rounded" />
-              )}
-              <p className="text-muted-foreground text-sm">{selectedProduct.description || "No description"}</p>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold" style={{ color: primaryColor }}>PKR {Number(selectedProduct.price).toLocaleString()}</span>
-                {selectedProduct.compare_at_price && (
-                  <span className="text-muted-foreground line-through">PKR {Number(selectedProduct.compare_at_price).toLocaleString()}</span>
-                )}
-              </div>
-              <DialogFooter>
-                <Button className="w-full" disabled={selectedProduct.stock <= 0} onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}>
-                  {selectedProduct.stock > 0 ? "Add to Cart" : "Out of Stock"}
-                </Button>
-              </DialogFooter>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
 
       {/* Cart Dialog */}
       <Dialog open={cartOpen} onOpenChange={setCartOpen}>
