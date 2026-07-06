@@ -18,7 +18,7 @@ const menuItems = [
   { id: "products", label: "Products", icon: Package },
   { id: "categories", label: "Categories", icon: FolderTree },
   { id: "orders", label: "Orders", icon: ShoppingCart },
-  { id: "marketplace", label: "Marketplace", icon: Sparkles },
+  { id: "marketplace", label: "Addons", icon: Sparkles },
   { id: "addons", label: "My Add-ons", icon: Plug },
   { id: "upgrade", label: "Upgrade Plan", icon: TrendingUp },
   { id: "team", label: "Team", icon: Users },

@@ -55,7 +55,7 @@ const platformLinks = [
   { to: "/templates", label: "Templates" },
   { to: "/pricing", label: "Pricing" },
   { to: "/how-it-works", label: "How It Works" },
-  { to: "/marketplace", label: "Marketplace" },
+  { to: "/marketplace", label: "Addons" },
 ];
 
 const supportLinks = [
