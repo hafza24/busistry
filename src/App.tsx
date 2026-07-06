@@ -13,6 +13,7 @@ import Index from "./pages/Index";
 
 // Lazy: everything else
 const Templates = lazy(() => import("./pages/Templates"));
+const BookerTemplate = lazy(() => import("./pages/BookerTemplate"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Contact = lazy(() => import("./pages/Contact"));
