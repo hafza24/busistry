@@ -127,9 +127,11 @@ const AdminTemplateManagement = () => {
       preset_pages: Array.isArray(t.preset_pages) ? t.preset_pages : [],
       preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
       preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
+      price_pkr: t.price_pkr ?? 0,
     });
     setOpen(true);
   };
+
 
   const addFeature = () => {
     if (featureInput.trim()) {
