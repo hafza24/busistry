@@ -131,6 +131,7 @@ const AdminTemplateManagement = () => {
       preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
       preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
       price_pkr: t.price_pkr ?? 0,
+      original_price_pkr: t.original_price_pkr != null ? Number(t.original_price_pkr) : null,
     });
     setOpen(true);
   };
