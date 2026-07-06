@@ -146,4 +146,4 @@ const TemplatesOnSale = () => {
   );
 };
 
-export default SitesForSale;
+export default TemplatesOnSale;
