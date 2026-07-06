@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,24 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { ShoppingCart, Plus, Minus, Trash2, Store, Search, PackageSearch, Sparkles, FileText, LayoutGrid, MessageSquare, ExternalLink } from "lucide-react";
+import { ShoppingCart, Plus, Minus, Store, Search, PackageSearch, Sparkles, FileText, LayoutGrid, MessageSquare, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductGridSkeleton } from "@/components/ui/loading-skeletons";
 import { EmptyState } from "@/components/ui/empty-state";
 import SEO from "@/components/SEO";
-
-interface CartItem {
-  product: any;
-  quantity: number;
-}
+import { useStoreCart } from "@/hooks/useStoreCart";
 
 const Storefront = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const { cart, addToCart, updateQty, clearCart, cartTotal, cartCount } = useStoreCart(slug);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [customerForm, setCustomerForm] = useState({ name: "", phone: "", email: "", address: "" });
@@ -105,21 +100,11 @@ const Storefront = () => {
     return matchesCategory && matchesSearch;
   });
 
-  const addToCart = (product: any) => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.product.id === product.id);
-      if (existing) return prev.map((i) => i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i);
-      return [...prev, { product, quantity: 1 }];
-    });
+  const handleAdd = (product: any) => {
+    addToCart(product);
     toast.success(`${product.name} added to cart`);
   };
 
-  const updateQty = (productId: string, delta: number) => {
-    setCart((prev) => prev.map((i) => i.product.id === productId ? { ...i, quantity: Math.max(0, i.quantity + delta) } : i).filter((i) => i.quantity > 0));
-  };
-
-  const cartTotal = cart.reduce((s, i) => s + Number(i.product.price) * i.quantity, 0);
-  const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
 
   const handleCheckout = async () => {
     if (!customerForm.name.trim() || !customerForm.phone.trim() || !customerForm.address.trim()) {
@@ -151,7 +136,7 @@ const Storefront = () => {
 
 
       toast.success(`Order ${orderNumber} placed successfully!`);
-      setCart([]);
+      clearCart();
       setCheckoutOpen(false);
       setCustomerForm({ name: "", phone: "", email: "", address: "" });
     } catch (e: any) {
@@ -255,25 +240,27 @@ const Storefront = () => {
         ) : filteredProducts && filteredProducts.length > 0 ? (
           <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map((p) => (
-              <Card key={p.id} className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setSelectedProduct(p)}>
-                <div className="aspect-square bg-muted">
-                  {(p.images as string[])?.length > 0 ? (
-                    <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No image</div>
-                  )}
-                </div>
-                <CardContent className="p-3">
-                  <h3 className="font-medium text-sm truncate">{p.name}</h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
-                    {p.compare_at_price && (
-                      <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+              <Link key={p.id} to={`/shop/${slug}/product/${p.slug}`} className="group">
+                <Card className="overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="aspect-square bg-muted overflow-hidden">
+                    {(p.images as string[])?.length > 0 ? (
+                      <img src={(p.images as string[])[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No image</div>
                     )}
                   </div>
-                  {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
-                </CardContent>
-              </Card>
+                  <CardContent className="p-3">
+                    <h3 className="font-medium text-sm truncate">{p.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="font-bold text-sm" style={{ color: primaryColor }}>PKR {Number(p.price).toLocaleString()}</span>
+                      {p.compare_at_price && (
+                        <span className="text-xs text-muted-foreground line-through">PKR {Number(p.compare_at_price).toLocaleString()}</span>
+                      )}
+                    </div>
+                    {p.stock <= 0 && <Badge variant="destructive" className="mt-1 text-xs">Out of stock</Badge>}
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         ) : (
@@ -368,31 +355,6 @@ const Storefront = () => {
       </Dialog>
 
 
-      {/* Product Detail Dialog */}
-      <Dialog open={!!selectedProduct} onOpenChange={(o) => !o && setSelectedProduct(null)}>
-        <DialogContent className="max-w-md">
-          {selectedProduct && (
-            <>
-              <DialogHeader><DialogTitle>{selectedProduct.name}</DialogTitle></DialogHeader>
-              {(selectedProduct.images as string[])?.length > 0 && (
-                <img src={(selectedProduct.images as string[])[0]} alt="" className="w-full h-64 object-cover rounded" />
-              )}
-              <p className="text-muted-foreground text-sm">{selectedProduct.description || "No description"}</p>
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold" style={{ color: primaryColor }}>PKR {Number(selectedProduct.price).toLocaleString()}</span>
-                {selectedProduct.compare_at_price && (
-                  <span className="text-muted-foreground line-through">PKR {Number(selectedProduct.compare_at_price).toLocaleString()}</span>
-                )}
-              </div>
-              <DialogFooter>
-                <Button className="w-full" disabled={selectedProduct.stock <= 0} onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}>
-                  {selectedProduct.stock > 0 ? "Add to Cart" : "Out of Stock"}
-                </Button>
-              </DialogFooter>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
 
       {/* Cart Dialog */}
       <Dialog open={cartOpen} onOpenChange={setCartOpen}>
