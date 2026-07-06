@@ -18,7 +18,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
-const SitesForSale = lazy(() => import("./pages/SitesForSale"));
+const TemplatesOnSale = lazy(() => import("./pages/TemplatesOnSale"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
