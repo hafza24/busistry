@@ -5,13 +5,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Rocket, Loader2, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Rocket, Loader2, Eye } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const planParam = searchParams.get("plan");
+
 
   const { data: templates = [], isLoading } = useQuery({
     queryKey: ["public_templates"],
@@ -128,7 +131,7 @@ const Templates = () => {
                       </Button>
                     ) : (
                       <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
-                        <Link to={`/onboarding?template=${t.id}`}>
+                        <Link to={`/onboarding?template=${t.id}${planParam ? `&plan=${planParam}` : ""}`}>
                           <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
                         </Link>
                       </Button>

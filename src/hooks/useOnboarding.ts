@@ -45,6 +45,10 @@ export type OnboardingData = {
   whatsapp?: string;
   business_address?: string;
 
+  // Integrations
+  selected_integration_ids?: string[];
+  integrations_total_pkr?: number;
+
   // Step 6
   billing_cycle?: string;
   payment_method?: string;

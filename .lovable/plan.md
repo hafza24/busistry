@@ -1,64 +1,84 @@
-## Scope
+## Goal
 
-The category/subcategory filter on the public Templates page and the admin Template editor (with Category + Subcategory selects) are **already in place** from the previous turn. This plan focuses on the big ask: revamping onboarding into a premium, auto-configured experience driven by the chosen Plan + Template.
+Replace the current "Plan first" flow with a template-led flow where users pick a Site (template) first, then a plan, then add-ons and theme-relevant integrations, then fill onboarding, then pay a single combined one-time total.
 
-## What changes
+## New Flow
 
-### 1. Template-driven page/feature presets
-New file `src/lib/templatePresets.ts` mapping the existing template **category** values (Ecommerce, Invite, Organization, News/Blog, Social, Portfolio, Business, Education, Management System, Forms, Wishes) to:
-- `pages`: locked included pages (Shop, Product, Cart… / Event Details, RSVP, Countdown… / Articles, Categories…)
-- `modules`: locked modules (Cart/Checkout, Wishlist, RSVP, Newsletter, etc.)
-- `conditionalFields`: which extra questions to ask (shipping/payment/tax for ecommerce; menu/reservation for restaurant; event date/venue for invite; authors/newsletter for blog; departments/donation for organization)
+```text
+1. Templates page        → pick a Site (free or paid one-time)
+2. Plan step             → pick subscription plan (Free plan still available)
+3. Addons step           → optional one-time add-ons (existing marketplace addons)
+4. Integrations step     → one-time integrations filtered by template category
+5. Onboarding steps      → business, branding, team, store, contact
+6. Payment step          → shows combined total, one-time price = template + plan + addons + integrations
+```
 
-A small `useTemplate(templateId)` hook (parallel to `usePlan`) fetches the chosen template so we can read its `category`/`subcategory`.
+Everything (template price, plan price, addons, integrations) is treated as a one-time charge combined at checkout. Free plan + free template = no charge, submit directly.
 
-### 2. New TemplateSummaryCard (locked)
-`src/components/onboarding/TemplateSummaryCard.tsx` — premium glassmorphism card showing the selected template's preview image, category/subcategory, and:
-- Included Pages (locked chips with lock icon, "Configured by template")
-- Included Modules (locked chips)
-- "Change template" link back to /templates
+## Changes
 
-### 3. Upgraded PlanSummaryCard
-Extend the existing card to also surface the new plan fields already on the table: `max_pages`, `domain_type`, `platform_type`, `email_accounts`, `team_users`. Each rendered as a locked metric tile with a lock icon and "Included in plan".
+### Data
+- `templates` already has `price_pkr` — use it as the one-time template cost (0 = free).
+- `plans` already has `price_pkr` — treated as one-time here (no recurring billing change).
+- `integrations` table already exists — add a `price_pkr` column (default 0) and use `category` to filter by template category.
+- `onboarding_submissions` — add `selected_integration_ids uuid[]` and `integrations_total_pkr int` to persist the picks. Addon selection persists in existing `onboarding_addons`.
+- No changes to `subscriptions` semantics for now (Free plan continues to be free).
 
-### 4. Rebuilt Step2 — Auto-Configured Preview
-Replace the current per-type `Step2ProjectDetails` with a section that:
-- Pulls pages/modules from the template preset and renders them as **locked** cards.
-- Pulls the conditional-fields list from the preset, and only shows those questions (e.g. ecommerce → shipping regions + payment gateway + tax; restaurant subcategory → dine-in/takeaway + reservation; invite → event date + venue + RSVP limit; blog → number of authors + newsletter).
-- All values previously asked but already covered by plan/template are skipped (no more "number of pages" or "products included" duplicates).
+### Routing & entry points
+- `/templates` becomes the primary entry point. Selecting a template routes to `/onboarding?template=<id>` (no plan yet).
+- `/pricing` remains reachable but no longer the required start. The "Start" CTA on a plan card routes to `/templates?plan=<id>` (so users can still start from a plan; template step just becomes step 1).
+- Landing page hero CTA points to `/templates`.
 
-### 5. Skip duplicate fields in later steps
-- `Step4Store` (the store step): hide `product_count_estimate` field entirely when plan provides `max_products` — only show payment gateway + special features.
-- `Step3Team`: cap team size at `plan.team_users`; if plan = 1, hide team-members entry and show a locked "1 admin (your plan)" tile with an upgrade hint.
-- `Step1Business` (business basics): keep — these are genuine business inputs.
-- `Step2Branding`: keep — branding is user input.
+### Onboarding restructure (`src/pages/Onboarding.tsx`)
+Rebuild `STEP_LABELS` to:
+```text
+["Site", "Plan", "Add-ons", "Integrations", "Business", "Branding", "Team", "Store", "Contact", "Payment"]
+```
+- Step 1 "Site": new `StepTemplate` component — grid of templates with price badge; sets `template_id`. Skips step if `template` present in URL and user confirms.
+- Step 2 "Plan": new `StepPlan` component — plan cards (reuses `PricingSlider` styling); sets `plan_id`.
+- Step 3 "Add-ons": existing `StepAddons` unchanged.
+- Step 4 "Integrations": new `StepIntegrations` — lists integrations where `category` matches the selected template's category (fallback: show all `is_active`); multi-select with prices; persists ids to `selected_integration_ids`.
+- Steps 5–9: existing Business/Branding/Team/Store/Contact (drop the current Step 2 "Project Details" which was template-picking — now redundant).
+- Step 10 "Payment": existing `Step9Payment`, updated to show line-item totals:
+  ```text
+  Template  PKR x
+  Plan      PKR y
+  Add-ons   PKR z
+  Integrations PKR w
+  ─────────
+  Total     PKR (x+y+z+w)   (one-time)
+  ```
+- Skip payment UI entirely when total = 0; submit directly with `payment_method = "none"`.
 
-### 6. New "Auto-Configured Features" summary step
-Insert a compact, animated **review tile** between Plan/Template summary and the user-input steps showing the merged locked configuration (Pages + Modules + Plan limits) at a glance, so users *see* what they're getting before answering anything.
+### Summary cards
+- `PlanSummaryCard` and `TemplateSummaryCard` stay at the top of onboarding. `TemplateSummaryCard` shows template price when > 0.
 
-### 7. UI polish (Apple/Stripe feel)
-- Locked tiles use `bg-gradient-to-br from-primary/5`, subtle border, lock icon top-right, slight inner shadow — not greyed-out.
-- Framer-motion fade/slide for step transitions (already present, retained).
-- Floating-label inputs in the business-info section.
-- Progress indicator unchanged but step labels updated.
+### Admin
+- `AdminIntegrations` gets a `price_pkr` field on the integration form.
+- No new admin screens.
 
-## Files
+### Files
 
-**Create**
-- `src/lib/templatePresets.ts`
-- `src/hooks/useTemplate.ts`
-- `src/components/onboarding/TemplateSummaryCard.tsx`
-- `src/components/onboarding/LockedTile.tsx` (shared visual primitive)
+New:
+- `src/components/onboarding/StepTemplate.tsx`
+- `src/components/onboarding/StepPlan.tsx`
+- `src/components/onboarding/StepIntegrations.tsx`
+- `src/hooks/useIntegrations.ts` (list active integrations, optional category filter)
 
-**Edit**
-- `src/components/onboarding/PlanSummaryCard.tsx` — add max_pages / domain / platform / email / team tiles
-- `src/components/onboarding/Step2ProjectDetails.tsx` — auto-locked pages/modules + conditional-only fields
-- `src/components/onboarding/Step4Store.tsx` — drop fields the plan already covers
-- `src/components/onboarding/Step3Team.tsx` — cap by plan, lock when team_users=1
-- `src/pages/Onboarding.tsx` — render TemplateSummaryCard next to PlanSummaryCard, adjust step validators
+Edited:
+- `src/pages/Onboarding.tsx` — new step order, wiring, validation.
+- `src/components/onboarding/Step6Payment.tsx` (currently Step9) — combined totals, zero-total path.
+- `src/hooks/useOnboarding.ts` — persist `selected_integration_ids`, `integrations_total_pkr`.
+- `src/pages/Templates.tsx` — CTA → `/onboarding?template=<id>`.
+- `src/pages/Pricing.tsx` — CTA → `/templates?plan=<id>`.
+- `src/pages/Index.tsx` — hero CTA → `/templates`.
+- `src/components/admin/AdminIntegrations.tsx` — add price field.
 
-No database migrations and no changes to existing business logic / orders / marketplace.
+Migration:
+- `ALTER TABLE integrations ADD COLUMN price_pkr integer NOT NULL DEFAULT 0;`
+- `ALTER TABLE onboarding_submissions ADD COLUMN selected_integration_ids uuid[] DEFAULT '{}', ADD COLUMN integrations_total_pkr integer DEFAULT 0;`
 
-## Out of scope (will not touch)
-- Pricing page, Templates page filtering (already shipped).
-- AI-generated suggestions / live website iframe preview / estimated launch time (mentioned by user but vague; would require separate scoping — happy to follow up).
+### Out of scope
+- Recurring billing / actual subscription cycles.
+- Refactoring the existing `UpgradePlan` marketplace flow.
+- Reworking the manual payment approval pipeline (unchanged, just receives a bigger combined amount).

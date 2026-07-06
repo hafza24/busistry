@@ -31,12 +31,14 @@ interface TemplateForm {
   preset_pages: string[];
   preset_modules: string[];
   preset_conditional_fields: ConditionalField[];
+  price_pkr: number;
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
-  preset_pages: [], preset_modules: [], preset_conditional_fields: [],
+  preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0,
 };
+
 
 const AdminTemplateManagement = () => {
   const qc = useQueryClient();
@@ -83,7 +85,9 @@ const AdminTemplateManagement = () => {
         preset_pages: t.preset_pages,
         preset_modules: t.preset_modules,
         preset_conditional_fields: t.preset_conditional_fields,
+        price_pkr: t.price_pkr || 0,
       };
+
 
       if (t.id) {
         const { error } = await supabase.from("templates").update(payload).eq("id", t.id);
@@ -125,9 +129,11 @@ const AdminTemplateManagement = () => {
       preset_pages: Array.isArray(t.preset_pages) ? t.preset_pages : [],
       preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
       preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
+      price_pkr: t.price_pkr ?? 0,
     });
     setOpen(true);
   };
+
 
   const addFeature = () => {
     if (featureInput.trim()) {
@@ -257,6 +263,17 @@ const AdminTemplateManagement = () => {
               <Label>Demo URL</Label>
               <Input value={form.demo_url} onChange={(e) => setForm((f) => ({ ...f, demo_url: e.target.value }))} placeholder="https://..." />
             </div>
+
+            <div>
+              <Label>Price (PKR) — one-time · 0 for free</Label>
+              <Input
+                type="number"
+                min={0}
+                value={form.price_pkr}
+                onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
+              />
+            </div>
+
 
             <div>
               <Label>Preview Image</Label>

@@ -68,10 +68,11 @@ const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular
             ))}
           </ul>
           <Button className="w-full" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
-            <Link to={`/onboarding?plan=${id}`}>
-              Select plan <ArrowRight className="ml-2 h-4 w-4" />
+            <Link to={`/templates?plan=${id}`}>
+              Choose a Site <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
+
         </CardContent>
       </Card>
     </motion.div>
