@@ -211,11 +211,13 @@ const Storefront = () => {
             {settings?.logo_url && <img src={settings.logo_url} alt="" className="h-8 w-8 rounded object-contain" />}
             <h1 className="text-xl font-bold font-display" style={{ color: primaryColor }}>{store.name}</h1>
           </div>
-          <Button variant="outline" className="relative" onClick={() => setCartOpen(true)}>
-            <ShoppingCart className="h-4 w-4 mr-2" /> Cart
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">{cartCount}</span>
-            )}
+          <Button variant="outline" className="relative" asChild>
+            <Link to="/cart">
+              <ShoppingCart className="h-4 w-4 mr-2" aria-hidden="true" /> Cart
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">{cartCount}</span>
+              )}
+            </Link>
           </Button>
         </div>
       </header>
