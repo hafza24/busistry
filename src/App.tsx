@@ -88,6 +88,7 @@ const App = () => (
                   <Route path="/shop/:slug" element={<Storefront />} />
                   <Route path="/shop/:slug/product/:productSlug" element={<ProductPage />} />
                   <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout/:slug" element={<Checkout />} />
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
