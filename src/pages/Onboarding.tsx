@@ -242,7 +242,7 @@ const Onboarding = () => {
         <div className="flex items-center justify-between mt-10 pt-6 border-t border-border">
           <Button variant="ghost" onClick={step === 1 ? () => navigate("/templates") : goBack}>
             <ArrowLeft className="h-4 w-4 mr-2" />
-            {step === 1 ? "Back to Sites" : "Back"}
+            {step === 1 ? "Back to Templates" : "Back"}
           </Button>
           {step < TOTAL_STEPS ? (
             <Button onClick={goNext}>
