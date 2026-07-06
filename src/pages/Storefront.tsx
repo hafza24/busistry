@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,9 +19,19 @@ import { useStoreCart } from "@/hooks/useStoreCart";
 
 const Storefront = () => {
   const { slug } = useParams<{ slug: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { cart, addToCart, updateQty, clearCart, cartTotal, cartCount } = useStoreCart(slug);
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") === "1" && cart.length > 0) {
+      setCheckoutOpen(true);
+      searchParams.delete("checkout");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, cart.length]);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [customerForm, setCustomerForm] = useState({ name: "", phone: "", email: "", address: "" });
@@ -201,11 +211,13 @@ const Storefront = () => {
             {settings?.logo_url && <img src={settings.logo_url} alt="" className="h-8 w-8 rounded object-contain" />}
             <h1 className="text-xl font-bold font-display" style={{ color: primaryColor }}>{store.name}</h1>
           </div>
-          <Button variant="outline" className="relative" onClick={() => setCartOpen(true)}>
-            <ShoppingCart className="h-4 w-4 mr-2" /> Cart
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">{cartCount}</span>
-            )}
+          <Button variant="outline" className="relative" asChild>
+            <Link to="/cart">
+              <ShoppingCart className="h-4 w-4 mr-2" aria-hidden="true" /> Cart
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center">{cartCount}</span>
+              )}
+            </Link>
           </Button>
         </div>
       </header>

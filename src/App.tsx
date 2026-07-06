@@ -26,6 +26,7 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StoreDashboard = lazy(() => import("./pages/StoreDashboard"));
 const Storefront = lazy(() => import("./pages/Storefront"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
+const Cart = lazy(() => import("./pages/Cart"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Privacy = lazy(() => import("./pages/legal/Privacy"));
 const Terms = lazy(() => import("./pages/legal/Terms"));
@@ -85,6 +86,7 @@ const App = () => (
                   <Route path="/store/:storeId" element={<StoreDashboard />} />
                   <Route path="/shop/:slug" element={<Storefront />} />
                   <Route path="/shop/:slug/product/:productSlug" element={<ProductPage />} />
+                  <Route path="/cart" element={<Cart />} />
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
