@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import SEO from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -62,7 +63,30 @@ const BookerTemplate = () => {
         title="Booker by Busistree — Rental Management Template"
         description="Complete point-of-sale and operations platform for rental businesses. Inventory, bookings, invoicing, damage tracking, staff performance and real-time finance."
         path="/templates/booker"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: "Booker by Busistree",
+          description:
+            "Complete point-of-sale and operations platform for rental businesses — inventory, bookings, customers, invoicing and real-time finance.",
+          image: gallery[0].src,
+          brand: { "@type": "Brand", name: "Busistree" },
+          category: "Rental Management Software",
+          url: "https://busistry.lovable.app/templates/booker",
+        }}
       />
+      <Helmet>
+        <meta property="og:type" content="product" />
+        <meta property="og:site_name" content="Busistree" />
+        <meta property="og:image" content={gallery[0].src} />
+        <meta property="og:image:width" content="1600" />
+        <meta property="og:image:height" content="1000" />
+        <meta property="og:image:alt" content="Booker by Busistree — rental management dashboard preview" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={gallery[0].src} />
+        <meta name="twitter:image:alt" content="Booker by Busistree — rental management dashboard preview" />
+        <meta name="keywords" content="rental management, booking software, POS for rentals, inventory, invoicing, Busistree, Booker" />
+      </Helmet>
       <div className="container max-w-6xl">
         <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
           <Link to="/templates">
