@@ -136,7 +136,7 @@ const Storefront = () => {
 
 
       toast.success(`Order ${orderNumber} placed successfully!`);
-      setCart([]);
+      clearCart();
       setCheckoutOpen(false);
       setCustomerForm({ name: "", phone: "", email: "", address: "" });
     } catch (e: any) {
