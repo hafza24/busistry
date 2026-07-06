@@ -68,33 +68,6 @@ export type Database = {
         }
         Relationships: []
       }
-      analytics_snapshots: {
-        Row: {
-          created_at: string
-          id: string
-          key: string
-          meta: Json | null
-          snapshot_date: string
-          value: number | null
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          key: string
-          meta?: Json | null
-          snapshot_date: string
-          value?: number | null
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          key?: string
-          meta?: Json | null
-          snapshot_date?: string
-          value?: number | null
-        }
-        Relationships: []
-      }
       audit_logs: {
         Row: {
           action: string
@@ -879,39 +852,6 @@ export type Database = {
         }
         Relationships: []
       }
-      product_packs: {
-        Row: {
-          created_at: string
-          description: string | null
-          id: string
-          is_active: boolean
-          name: string
-          niche: string
-          price_pkr: number
-          product_count: number
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean
-          name: string
-          niche: string
-          price_pkr?: number
-          product_count?: number
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          is_active?: boolean
-          name?: string
-          niche?: string
-          price_pkr?: number
-          product_count?: number
-        }
-        Relationships: []
-      }
       products: {
         Row: {
           category_id: string | null
@@ -1053,102 +993,6 @@ export type Database = {
           updated_at?: string
           website_url?: string | null
           whatsapp?: string | null
-        }
-        Relationships: []
-      }
-      site_popups: {
-        Row: {
-          animation: string | null
-          background_color: string | null
-          border_radius: number | null
-          button_color: string | null
-          button_text: string | null
-          button_url: string | null
-          clicks: number | null
-          created_at: string | null
-          created_by: string | null
-          description: string | null
-          end_date: string | null
-          id: string
-          image_url: string | null
-          is_active: boolean | null
-          popup_layout: string | null
-          popup_type: string | null
-          position: string | null
-          priority: number | null
-          secondary_button_text: string | null
-          secondary_button_url: string | null
-          shadow: boolean | null
-          show_once: boolean | null
-          start_date: string | null
-          target_audience: string[] | null
-          target_pages: string[] | null
-          text_color: string | null
-          title: string | null
-          updated_at: string | null
-          views: number | null
-        }
-        Insert: {
-          animation?: string | null
-          background_color?: string | null
-          border_radius?: number | null
-          button_color?: string | null
-          button_text?: string | null
-          button_url?: string | null
-          clicks?: number | null
-          created_at?: string | null
-          created_by?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: string
-          image_url?: string | null
-          is_active?: boolean | null
-          popup_layout?: string | null
-          popup_type?: string | null
-          position?: string | null
-          priority?: number | null
-          secondary_button_text?: string | null
-          secondary_button_url?: string | null
-          shadow?: boolean | null
-          show_once?: boolean | null
-          start_date?: string | null
-          target_audience?: string[] | null
-          target_pages?: string[] | null
-          text_color?: string | null
-          title?: string | null
-          updated_at?: string | null
-          views?: number | null
-        }
-        Update: {
-          animation?: string | null
-          background_color?: string | null
-          border_radius?: number | null
-          button_color?: string | null
-          button_text?: string | null
-          button_url?: string | null
-          clicks?: number | null
-          created_at?: string | null
-          created_by?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: string
-          image_url?: string | null
-          is_active?: boolean | null
-          popup_layout?: string | null
-          popup_type?: string | null
-          position?: string | null
-          priority?: number | null
-          secondary_button_text?: string | null
-          secondary_button_url?: string | null
-          shadow?: boolean | null
-          show_once?: boolean | null
-          start_date?: string | null
-          target_audience?: string[] | null
-          target_pages?: string[] | null
-          text_color?: string | null
-          title?: string | null
-          updated_at?: string | null
-          views?: number | null
         }
         Relationships: []
       }
@@ -2075,8 +1919,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      increment_popup_clicks: { Args: { popup_id: string }; Returns: undefined }
-      increment_popup_views: { Args: { popup_id: string }; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       set_website_order_credentials: {
         Args: {
