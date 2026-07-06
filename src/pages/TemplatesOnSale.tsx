@@ -9,7 +9,7 @@ import { Loader2, Eye, Rocket, Tag, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
-const SitesForSale = () => {
+const TemplatesOnSale = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   const { data: sites = [], isLoading } = useQuery({
@@ -33,18 +33,18 @@ const SitesForSale = () => {
   return (
     <div className="py-16">
       <SEO
-        title="Sites on Sale — Ready-made websites | Busistree"
-        description="Buy fully-built, ready-to-launch websites in Pakistan. Coded and WordPress sites, one-time purchase, delivered fast."
-        path="/sites-for-sale"
+        title="Templates on Sale — Ready-made websites | Busistree"
+        description="Buy fully-built, ready-to-launch Templates in Pakistan. Coded and WordPress Templates, one-time purchase, delivered fast."
+        path="/templates-on-sale"
       />
       <div className="container">
         <div className="text-center mb-10 max-w-2xl mx-auto">
           <Badge className="mb-3 bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-primary">
-            <Tag className="h-3 w-3 mr-1" /> Ready-made websites
+            <Tag className="h-3 w-3 mr-1" /> Ready-made Templates
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Sites on Sale</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Templates on Sale</h1>
           <p className="text-lg text-muted-foreground">
-            Fully-built websites at a discount. Pick one and we'll rebrand and hand it over.
+            Fully-built Templates at a discount. Pick one and we'll rebrand and hand it over.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ const SitesForSale = () => {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-muted-foreground">No sites on sale right now. Check back soon.</p>
+            <p className="text-muted-foreground">No Templates on sale right now. Check back soon.</p>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -146,4 +146,4 @@ const SitesForSale = () => {
   );
 };
 
-export default SitesForSale;
+export default TemplatesOnSale;

@@ -39,11 +39,11 @@ const StepTemplate = ({ data, update }: Props) => {
   });
 
   return (
-    <StepShell title="Choose your Site" subtitle="Pick a starting design. Most Sites are free — premium picks are a one-time charge added at checkout.">
+    <StepShell title="Choose your Template" subtitle="Pick a starting design. Most Templates are free — premium picks are a one-time charge added at checkout.">
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search Sites…" className="pl-9" />
+          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search Templates…" className="pl-9" />
         </div>
         <div className="flex gap-1.5 flex-wrap">
           {categories.map((c) => (
@@ -104,7 +104,7 @@ const StepTemplate = ({ data, update }: Props) => {
             );
           })}
           {filtered.length === 0 && (
-            <p className="col-span-full text-center text-sm text-muted-foreground py-8">No Sites match your filters.</p>
+            <p className="col-span-full text-center text-sm text-muted-foreground py-8">No Templates match your filters.</p>
           )}
         </div>
       )}
