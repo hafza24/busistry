@@ -9,7 +9,7 @@ import { Loader2, Eye, Rocket, Tag, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 
-const SitesForSale = () => {
+const TemplatesOnSale = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   const { data: sites = [], isLoading } = useQuery({
@@ -33,18 +33,18 @@ const SitesForSale = () => {
   return (
     <div className="py-16">
       <SEO
-        title="Sites on Sale — Ready-made websites | Busistree"
-        description="Buy fully-built, ready-to-launch websites in Pakistan. Coded and WordPress sites, one-time purchase, delivered fast."
-        path="/sites-for-sale"
+        title="Templates on Sale — Ready-made websites | Busistree"
+        description="Buy fully-built, ready-to-launch Templates in Pakistan. Coded and WordPress Templates, one-time purchase, delivered fast."
+        path="/templates-on-sale"
       />
       <div className="container">
         <div className="text-center mb-10 max-w-2xl mx-auto">
           <Badge className="mb-3 bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-primary">
-            <Tag className="h-3 w-3 mr-1" /> Ready-made websites
+            <Tag className="h-3 w-3 mr-1" /> Ready-made Templates
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Sites on Sale</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Templates on Sale</h1>
           <p className="text-lg text-muted-foreground">
-            Fully-built websites at a discount. Pick one and we'll rebrand and hand it over.
+            Fully-built Templates at a discount. Pick one and we'll rebrand and hand it over.
           </p>
         </div>
 
