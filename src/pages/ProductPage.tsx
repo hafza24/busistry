@@ -164,7 +164,6 @@ const ProductPage = () => {
         title={`${product.name} — ${store.name}`}
         description={seoDesc}
         path={`/shop/${slug}/product/${product.slug}`}
-        image={images[0]}
         jsonLd={productJsonLd}
       />
 
