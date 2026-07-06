@@ -85,7 +85,9 @@ const AdminTemplateManagement = () => {
         preset_pages: t.preset_pages,
         preset_modules: t.preset_modules,
         preset_conditional_fields: t.preset_conditional_fields,
+        price_pkr: t.price_pkr || 0,
       };
+
 
       if (t.id) {
         const { error } = await supabase.from("templates").update(payload).eq("id", t.id);
