@@ -120,11 +120,19 @@ const Templates = () => {
                     </div>
                   </CardContent>
                   <CardFooter className="p-5 pt-0 gap-2">
-                    <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
-                      <Link to={`/onboarding?template=${t.id}`}>
-                        <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
-                      </Link>
-                    </Button>
+                    {t.name?.toLowerCase().includes("booker") ? (
+                      <Button size="sm" className="flex-1" asChild>
+                        <Link to="/templates/booker">
+                          <Eye className="h-3.5 w-3.5 mr-1" /> View details
+                        </Link>
+                      </Button>
+                    ) : (
+                      <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
+                        <Link to={`/onboarding?template=${t.id}`}>
+                          <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
+                        </Link>
+                      </Button>
+                    )}
                     {t.demo_url ? (
                       <Button size="sm" variant="outline" asChild title="Preview demo">
                         <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
