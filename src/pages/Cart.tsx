@@ -95,7 +95,7 @@ const StoreCartSection = ({ slug }: { slug: string }) => {
             <p className="text-xl font-bold">PKR {cartTotal.toLocaleString()}</p>
           </div>
           <Button asChild>
-            <Link to={`/shop/${slug}?checkout=1`}>
+            <Link to={`/checkout/${slug}`}>
               Proceed to Checkout <ArrowRight className="h-4 w-4 ml-2" aria-hidden="true" />
             </Link>
           </Button>
