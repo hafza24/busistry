@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import ImageUploader from "./ImageUploader";
 
 const empty = { type: "page", name: "", slug: "", description: "", category: "", price_pkr: 0, preview_image_url: "", demo_url: "", is_enabled: true, is_popular: false, sort_order: 0 };
 
@@ -90,7 +91,15 @@ export default function AdminWebsiteProducts() {
               <div className="space-y-1"><Label>Slug</Label><Input value={editing.slug} onChange={(e) => setEditing({ ...editing, slug: e.target.value })} /></div>
               <div className="space-y-1"><Label>Category</Label><Input value={editing.category ?? ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })} /></div>
               <div className="space-y-1"><Label>Description</Label><Textarea value={editing.description ?? ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} /></div>
-              <div className="space-y-1"><Label>Preview Image URL</Label><Input value={editing.preview_image_url ?? ""} onChange={(e) => setEditing({ ...editing, preview_image_url: e.target.value })} /></div>
+              <div className="space-y-1">
+                <Label>Preview Image</Label>
+                <ImageUploader
+                  value={editing.preview_image_url ?? ""}
+                  onChange={(url) => setEditing({ ...editing, preview_image_url: url })}
+                  folder="website-products"
+                  aspect="video"
+                />
+              </div>
               <div className="space-y-1"><Label>Demo URL</Label><Input value={editing.demo_url ?? ""} onChange={(e) => setEditing({ ...editing, demo_url: e.target.value })} /></div>
               <div className="flex items-center gap-6">
                 <label className="flex items-center gap-2"><Switch checked={editing.is_enabled} onCheckedChange={(v) => setEditing({ ...editing, is_enabled: v })} /> Enabled</label>

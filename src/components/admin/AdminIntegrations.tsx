@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Plus, Pencil, Trash2, Plug } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import ImageUploader from "./ImageUploader";
 
 const empty = { name: "", slug: "", description: "", icon: "", category: "", price_pkr: 0, pricing_type: "one_time", credential_schema: "[]", is_enabled: true, is_popular: false, sort_order: 0 };
 
@@ -78,7 +79,16 @@ export default function AdminIntegrations() {
             <div className="space-y-3">
               <div className="space-y-1"><Label>Name</Label><Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} /></div>
               <div className="space-y-1"><Label>Slug</Label><Input value={editing.slug} onChange={(e) => setEditing({ ...editing, slug: e.target.value })} /></div>
-              <div className="space-y-1"><Label>Icon URL</Label><Input value={editing.icon ?? ""} onChange={(e) => setEditing({ ...editing, icon: e.target.value })} /></div>
+              <div className="space-y-1">
+                <Label>Icon</Label>
+                <ImageUploader
+                  value={editing.icon ?? ""}
+                  onChange={(url) => setEditing({ ...editing, icon: url })}
+                  folder="integrations"
+                  aspect="square"
+                  label="Icon"
+                />
+              </div>
               <div className="space-y-1"><Label>Description</Label><Textarea value={editing.description ?? ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} /></div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1"><Label>Price (PKR)</Label><Input type="number" value={editing.price_pkr} onChange={(e) => setEditing({ ...editing, price_pkr: +e.target.value })} /></div>
