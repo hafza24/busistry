@@ -267,15 +267,30 @@ const AdminTemplateManagement = () => {
               <Input value={form.demo_url} onChange={(e) => setForm((f) => ({ ...f, demo_url: e.target.value }))} placeholder="https://..." />
             </div>
 
-            <div>
-              <Label>Price (PKR) — one-time · 0 for free</Label>
-              <Input
-                type="number"
-                min={0}
-                value={form.price_pkr}
-                onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>Sale price (PKR) — 0 for free</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={form.price_pkr}
+                  onChange={(e) => setForm((f) => ({ ...f, price_pkr: Number(e.target.value) || 0 }))}
+                />
+              </div>
+              <div>
+                <Label>Original price (PKR) — optional</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  placeholder="Leave blank if not on sale"
+                  value={form.original_price_pkr ?? ""}
+                  onChange={(e) => setForm((f) => ({ ...f, original_price_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                />
+              </div>
             </div>
+
+
+
 
 
             <div>
