@@ -104,7 +104,7 @@ const StepTemplate = ({ data, update }: Props) => {
             );
           })}
           {filtered.length === 0 && (
-            <p className="col-span-full text-center text-sm text-muted-foreground py-8">No Sites match your filters.</p>
+            <p className="col-span-full text-center text-sm text-muted-foreground py-8">No Templates match your filters.</p>
           )}
         </div>
       )}
