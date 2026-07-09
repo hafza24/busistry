@@ -124,33 +124,38 @@ const StepAddons = ({ data }: Props) => {
       </TooltipProvider>
 
       {/* Live totals */}
-      <div className="rounded-xl border border-border bg-card p-4 space-y-2">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
-          <span className="font-medium text-foreground">{plan ? fmtPKR(plan.price_pkr) : "—"}</span>
-        </div>
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Add-ons (one-time)</span>
-          <span className="font-medium text-foreground">{fmtPKR(totals.oneTime)}</span>
-        </div>
-        {totals.monthly > 0 && (
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Add-ons (monthly)</span>
-            <span className="font-medium text-foreground">{fmtPKR(totals.monthly)} / mo</span>
-          </div>
-        )}
-        <div className="border-t border-border pt-2 mt-2 flex items-center justify-between">
-          <span className="text-sm font-semibold text-foreground">Total today</span>
-          <span className="text-lg font-bold text-primary">
-            {fmtPKR((plan?.price_pkr ?? 0) + totals.oneTime)}
+      {(() => {
+        const planRent = plan?.price_pkr ?? 0;
+        const newRent = planRent + totals.monthly;
+        return (
+          <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Website rent ({plan?.name ?? "—"})</span>
+              <span className="font-medium text-foreground">{plan ? `${fmtPKR(planRent)} / mo` : "—"}</span>
+            </div>
             {totals.monthly > 0 && (
-              <span className="text-xs font-normal text-muted-foreground ml-1.5">
-                + {fmtPKR(totals.monthly)}/mo
-              </span>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Add-ons (recurring)</span>
+                <span className="font-medium text-foreground">+ {fmtPKR(totals.monthly)} / mo</span>
+              </div>
             )}
-          </span>
-        </div>
-      </div>
+            <div className="flex items-center justify-between text-sm border-t border-border pt-2 mt-2">
+              <span className="text-sm font-semibold text-foreground">New monthly rent</span>
+              <span className="text-lg font-bold text-primary">{fmtPKR(newRent)} / mo</span>
+            </div>
+            {totals.oneTime > 0 && (
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Add-ons (one-time)</span>
+                <span className="font-medium text-foreground">{fmtPKR(totals.oneTime)}</span>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-foreground">Due today</span>
+              <span className="text-base font-bold text-foreground">{fmtPKR(newRent + totals.oneTime)}</span>
+            </div>
+          </div>
+        );
+      })()}
 
       {selections.length === 0 && !showBundlePrompt && (
         <p className="text-xs text-muted-foreground text-center">
