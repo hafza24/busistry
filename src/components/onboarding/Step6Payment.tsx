@@ -424,7 +424,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                   </span>
                   <span className="tabular-nums text-foreground">
                     PKR {(s.price_snapshot_pkr * (s.quantity ?? 1)).toLocaleString()}
-                    {s.pricing_type_snapshot === "monthly" && (
+                    {effectivePricingType(s) === "monthly" && (
                       <span className="text-muted-foreground text-xs"> / mo</span>
                     )}
                   </span>
