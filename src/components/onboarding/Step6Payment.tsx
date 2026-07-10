@@ -399,6 +399,15 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
               {planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free"}
             </span>
           </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">
+              Website rent ({plan?.name ?? "—"}
+              {addonTotals.monthly > 0 ? " + add-ons" : ""})
+            </span>
+            <span className="font-medium text-foreground tabular-nums">
+              {monthlyRent > 0 ? `PKR ${monthlyRent.toLocaleString()} / mo` : "Free"}
+            </span>
+          </div>
           {integrationsPrice > 0 && (
             <div className="flex justify-between">
               <span className="text-muted-foreground">Integrations ({data.selected_integration_ids?.length ?? 0})</span>
@@ -410,7 +419,6 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             <div className="border-t border-border/50 pt-2 mt-2 space-y-1.5">
               <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Add-ons
-              </div>
               {selections.map((s) => (
                 <div key={s.addon_id} className="flex justify-between text-sm">
                   <span className="text-foreground">
