@@ -26,6 +26,15 @@ export type AddonSelection = {
   addon?: Addon;
 };
 
+/** "Pages" add-ons always roll into monthly rent, regardless of their configured pricing_type. */
+export const isPagesAddon = (name?: string | null) =>
+  !!name && /\bpage(s)?\b/i.test(name);
+
+/** Effective pricing type for a selection — forces monthly for Pages add-ons. */
+export const effectivePricingType = (s: AddonSelection): "one_time" | "monthly" =>
+  isPagesAddon(s.addon?.name) ? "monthly" : s.pricing_type_snapshot;
+
+
 /** Public catalog query — visible to everyone (RLS gates is_enabled). */
 export const useAddons = (planType?: string | null) => {
   const query = useQuery({
@@ -80,7 +89,8 @@ export const useSubmissionAddons = (submissionId?: string | null) => {
           submission_id: submissionId,
           addon_id: addon.id,
           price_snapshot_pkr: addon.price_pkr,
-          pricing_type_snapshot: addon.pricing_type,
+          // Pages add-ons are always rolled into monthly rent
+          pricing_type_snapshot: isPagesAddon(addon.name) ? "monthly" : addon.pricing_type,
           quantity,
         },
         { onConflict: "submission_id,addon_id" }
@@ -127,7 +137,7 @@ export const calcAddonTotals = (selections: AddonSelection[]) => {
   let monthly = 0;
   for (const s of selections) {
     const total = s.price_snapshot_pkr * (s.quantity ?? 1);
-    if (s.pricing_type_snapshot === "monthly") monthly += total;
+    if (effectivePricingType(s) === "monthly") monthly += total;
     else oneTime += total;
   }
   return { oneTime, monthly };

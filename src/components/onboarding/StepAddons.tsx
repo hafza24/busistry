@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Sparkles, Info, Loader2, TrendingUp } from "lucide-react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { Addon, useAddons, useSubmissionAddons, calcAddonTotals } from "@/hooks/useAddons";
+import { Addon, useAddons, useSubmissionAddons, calcAddonTotals, isPagesAddon } from "@/hooks/useAddons";
 import {
   Tooltip,
   TooltipContent,
@@ -227,7 +227,11 @@ const AddonCard = ({
           <div className="text-sm">
             <span className="font-semibold text-foreground">{fmtPKR(addon.price_pkr)}</span>
             <span className="text-xs text-muted-foreground ml-1">
-              {addon.pricing_type === "monthly" ? "/ mo" : addon.per_unit_label ? `/ ${addon.per_unit_label}` : "one-time"}
+              {isPagesAddon(addon.name) || addon.pricing_type === "monthly"
+                ? "/ mo"
+                : addon.per_unit_label
+                ? `/ ${addon.per_unit_label}`
+                : "one-time"}
             </span>
           </div>
           <Switch checked={isOn} onCheckedChange={onToggle} />

@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { useSubmissionAddons, calcAddonTotals } from "@/hooks/useAddons";
+import { useSubmissionAddons, calcAddonTotals, effectivePricingType } from "@/hooks/useAddons";
 
 interface Props {
   data: OnboardingData;
@@ -280,7 +280,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                   value: (
                     <span className="tabular-nums">
                       PKR {(s.price_snapshot_pkr * (s.quantity ?? 1)).toLocaleString()}
-                      {s.pricing_type_snapshot === "monthly" && (
+                      {effectivePricingType(s) === "monthly" && (
                         <span className="text-muted-foreground"> / mo</span>
                       )}
                       {s.quantity > 1 && (
@@ -424,7 +424,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                   </span>
                   <span className="tabular-nums text-foreground">
                     PKR {(s.price_snapshot_pkr * (s.quantity ?? 1)).toLocaleString()}
-                    {s.pricing_type_snapshot === "monthly" && (
+                    {effectivePricingType(s) === "monthly" && (
                       <span className="text-muted-foreground text-xs"> / mo</span>
                     )}
                   </span>
