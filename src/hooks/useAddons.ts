@@ -26,6 +26,15 @@ export type AddonSelection = {
   addon?: Addon;
 };
 
+/** "Pages" add-ons always roll into monthly rent, regardless of their configured pricing_type. */
+export const isPagesAddon = (name?: string | null) =>
+  !!name && /\bpage(s)?\b/i.test(name);
+
+/** Effective pricing type for a selection — forces monthly for Pages add-ons. */
+export const effectivePricingType = (s: AddonSelection): "one_time" | "monthly" =>
+  isPagesAddon(s.addon?.name) ? "monthly" : s.pricing_type_snapshot;
+
+
 /** Public catalog query — visible to everyone (RLS gates is_enabled). */
 export const useAddons = (planType?: string | null) => {
   const query = useQuery({
