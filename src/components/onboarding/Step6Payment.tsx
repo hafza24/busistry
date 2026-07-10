@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { useSubmissionAddons, calcAddonTotals } from "@/hooks/useAddons";
+import { useSubmissionAddons, calcAddonTotals, effectivePricingType } from "@/hooks/useAddons";
 
 interface Props {
   data: OnboardingData;
