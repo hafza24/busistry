@@ -260,7 +260,13 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           onEdit={onEdit}
           rows={[
             { label: "Plan", value: fmt(plan?.name) },
-            { label: "Price", value: planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free" },
+            { label: "Plan rent", value: planPrice > 0 ? `PKR ${planPrice.toLocaleString()} / mo` : "Free" },
+            ...(addonTotals.monthly > 0
+              ? [
+                  { label: "Recurring add-ons", value: `+ PKR ${addonTotals.monthly.toLocaleString()} / mo` },
+                  { label: "New monthly rent", value: `PKR ${monthlyRent.toLocaleString()} / mo` },
+                ]
+              : []),
           ]}
         />
         <RecapSection
