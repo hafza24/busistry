@@ -227,7 +227,11 @@ const AddonCard = ({
           <div className="text-sm">
             <span className="font-semibold text-foreground">{fmtPKR(addon.price_pkr)}</span>
             <span className="text-xs text-muted-foreground ml-1">
-              {addon.pricing_type === "monthly" ? "/ mo" : addon.per_unit_label ? `/ ${addon.per_unit_label}` : "one-time"}
+              {isPagesAddon(addon.name) || addon.pricing_type === "monthly"
+                ? "/ mo"
+                : addon.per_unit_label
+                ? `/ ${addon.per_unit_label}`
+                : "one-time"}
             </span>
           </div>
           <Switch checked={isOn} onCheckedChange={onToggle} />
