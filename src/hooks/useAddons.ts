@@ -89,7 +89,8 @@ export const useSubmissionAddons = (submissionId?: string | null) => {
           submission_id: submissionId,
           addon_id: addon.id,
           price_snapshot_pkr: addon.price_pkr,
-          pricing_type_snapshot: addon.pricing_type,
+          // Pages add-ons are always rolled into monthly rent
+          pricing_type_snapshot: isPagesAddon(addon.name) ? "monthly" : addon.pricing_type,
           quantity,
         },
         { onConflict: "submission_id,addon_id" }
