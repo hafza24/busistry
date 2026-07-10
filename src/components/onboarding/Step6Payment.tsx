@@ -178,7 +178,8 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
   const templatePrice = template?.price_pkr ?? 0;
   const planPrice = plan?.price_pkr ?? 0;
   const integrationsPrice = data.integrations_total_pkr ?? 0;
-  const grandToday = templatePrice + planPrice + addonTotals.oneTime + integrationsPrice;
+  const monthlyRent = planPrice + addonTotals.monthly;
+  const grandToday = templatePrice + monthlyRent + addonTotals.oneTime + integrationsPrice;
 
   const isFree = grandToday === 0;
 
