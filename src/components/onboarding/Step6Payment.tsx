@@ -413,7 +413,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             <div className="border-t border-border/50 pt-2 mt-2 space-y-1.5">
               <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
                 Add-ons
-              {selections.map((s) => (
+              </div>
                 <div key={s.addon_id} className="flex justify-between text-sm">
                   <span className="text-foreground">
                     {s.addon?.name ?? "Add-on"}
