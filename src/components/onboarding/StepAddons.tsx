@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Sparkles, Info, Loader2, TrendingUp } from "lucide-react";
 import StepShell from "./StepShell";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { Addon, useAddons, useSubmissionAddons, calcAddonTotals } from "@/hooks/useAddons";
+import { Addon, useAddons, useSubmissionAddons, calcAddonTotals, isPagesAddon } from "@/hooks/useAddons";
 import {
   Tooltip,
   TooltipContent,
