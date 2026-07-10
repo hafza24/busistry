@@ -394,12 +394,6 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
-            <span className="font-medium text-foreground tabular-nums">
-              {planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free"}
-            </span>
-          </div>
-          <div className="flex justify-between">
             <span className="text-muted-foreground">
               Website rent ({plan?.name ?? "—"}
               {addonTotals.monthly > 0 ? " + add-ons" : ""})
