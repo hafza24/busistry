@@ -137,7 +137,7 @@ export const calcAddonTotals = (selections: AddonSelection[]) => {
   let monthly = 0;
   for (const s of selections) {
     const total = s.price_snapshot_pkr * (s.quantity ?? 1);
-    if (s.pricing_type_snapshot === "monthly") monthly += total;
+    if (effectivePricingType(s) === "monthly") monthly += total;
     else oneTime += total;
   }
   return { oneTime, monthly };
