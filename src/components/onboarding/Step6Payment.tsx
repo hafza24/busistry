@@ -178,7 +178,8 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
   const templatePrice = template?.price_pkr ?? 0;
   const planPrice = plan?.price_pkr ?? 0;
   const integrationsPrice = data.integrations_total_pkr ?? 0;
-  const grandToday = templatePrice + planPrice + addonTotals.oneTime + integrationsPrice;
+  const monthlyRent = planPrice + addonTotals.monthly;
+  const grandToday = templatePrice + monthlyRent + addonTotals.oneTime + integrationsPrice;
 
   const isFree = grandToday === 0;
 
@@ -259,7 +260,13 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
           onEdit={onEdit}
           rows={[
             { label: "Plan", value: fmt(plan?.name) },
-            { label: "Price", value: planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free" },
+            { label: "Plan rent", value: planPrice > 0 ? `PKR ${planPrice.toLocaleString()} / mo` : "Free" },
+            ...(addonTotals.monthly > 0
+              ? [
+                  { label: "Recurring add-ons", value: `+ PKR ${addonTotals.monthly.toLocaleString()} / mo` },
+                  { label: "New monthly rent", value: `PKR ${monthlyRent.toLocaleString()} / mo` },
+                ]
+              : []),
           ]}
         />
         <RecapSection
@@ -387,9 +394,12 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Plan ({plan?.name ?? "—"})</span>
+            <span className="text-muted-foreground">
+              Website rent ({plan?.name ?? "—"}
+              {addonTotals.monthly > 0 ? " + add-ons" : ""})
+            </span>
             <span className="font-medium text-foreground tabular-nums">
-              {planPrice > 0 ? `PKR ${planPrice.toLocaleString()}` : "Free"}
+              {monthlyRent > 0 ? `PKR ${monthlyRent.toLocaleString()} / mo` : "Free"}
             </span>
           </div>
           {integrationsPrice > 0 && (
@@ -430,10 +440,10 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
               PKR {grandToday.toLocaleString()}
             </span>
           </div>
-          {addonTotals.monthly > 0 && (
+          {monthlyRent > 0 && (
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Recurring monthly</span>
-              <span className="tabular-nums">PKR {addonTotals.monthly.toLocaleString()} / mo</span>
+              <span>Monthly rent going forward</span>
+              <span className="tabular-nums">PKR {monthlyRent.toLocaleString()} / mo</span>
             </div>
           )}
           {plan?.duration_days && (
