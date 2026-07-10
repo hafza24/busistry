@@ -440,10 +440,10 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
               PKR {grandToday.toLocaleString()}
             </span>
           </div>
-          {addonTotals.monthly > 0 && (
+          {monthlyRent > 0 && (
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Recurring monthly</span>
-              <span className="tabular-nums">PKR {addonTotals.monthly.toLocaleString()} / mo</span>
+              <span>Monthly rent going forward</span>
+              <span className="tabular-nums">PKR {monthlyRent.toLocaleString()} / mo</span>
             </div>
           )}
           {plan?.duration_days && (
