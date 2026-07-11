@@ -726,51 +726,8 @@ const Index = () => {
             </p>
           </div>
 
-          {(() => {
-            const team = [
-              { name: "Hafza Azam", role: "CEO", initials: "HA", gradient: "from-primary to-primary-glow" },
-              { name: "Rohma Shahid", role: "CMO", initials: "RS", gradient: "from-violet-500 to-fuchsia-500" },
-              { name: "Asim Azeemi", role: "CCO", initials: "AA", gradient: "from-emerald-500 to-teal-600" },
-            ];
-            // Literal class strings (Tailwind JIT-safe)
-            const wrappers = [
-              "z-10 -translate-x-6 translate-y-2 -rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[70%] lg:group-hover/deck:-translate-x-[105%]",
-              "z-30 translate-x-0 translate-y-0 rotate-0",
-              "z-20 translate-x-6 translate-y-2 rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[70%] lg:group-hover/deck:translate-x-[105%]",
-            ];
-            return (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group/deck relative mx-auto flex items-center justify-center h-[380px] max-w-5xl"
-              >
-                <p className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70 tracking-widest uppercase opacity-100 group-hover/deck:opacity-0 transition-opacity duration-300">
-                  Hover to meet the team
-                </p>
-                {team.map((m, i) => (
-                  <div
-                    key={m.name}
-                    className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${wrappers[i]}`}
-                    style={{ transitionDelay: `${i * 80}ms` }}
-                  >
-                    <div className="group relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 transition-all duration-500 overflow-hidden">
-                      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-                      <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 group-hover:scale-105 transition-transform duration-500`}>
-                        {m.initials}
-                      </div>
-                      <h3 className="relative text-xl font-bold text-foreground tracking-tight">
-                        {m.name}
-                      </h3>
-                      <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
-                        {m.role}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            );
-          })()}
+          <TeamDeck />
+
         </div>
       </section>
 
