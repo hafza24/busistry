@@ -790,4 +790,130 @@ const Index = () => {
   );
 };
 
+type TeamMember = {
+  name: string;
+  role: string;
+  initials: string;
+  gradient: string;
+  bio: string;
+  socials: { linkedin?: string; twitter?: string; email?: string };
+};
+
+const TEAM: TeamMember[] = [
+  {
+    name: "Hafza Azam",
+    role: "CEO",
+    initials: "HA",
+    gradient: "from-primary to-primary-glow",
+    bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
+    socials: { linkedin: "#", twitter: "#", email: "hafza@busistree.com" },
+  },
+  {
+    name: "Rohma Shahid",
+    role: "CMO",
+    initials: "RS",
+    gradient: "from-violet-500 to-fuchsia-500",
+    bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
+    socials: { linkedin: "#", twitter: "#", email: "rohma@busistree.com" },
+  },
+  {
+    name: "Asim Azeemi",
+    role: "CCO",
+    initials: "AA",
+    gradient: "from-emerald-500 to-teal-600",
+    bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
+    socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
+  },
+];
+
+const WRAPPERS = [
+  "z-10 -translate-x-6 translate-y-2 -rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[70%] lg:group-hover/deck:-translate-x-[105%]",
+  "z-30 translate-x-0 translate-y-0 rotate-0",
+  "z-20 translate-x-6 translate-y-2 rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[70%] lg:group-hover/deck:translate-x-[105%]",
+];
+
+const TeamDeck = () => {
+  const [open, setOpen] = useState<TeamMember | null>(null);
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="group/deck relative mx-auto flex items-center justify-center h-[380px] max-w-5xl"
+      >
+        <p className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70 tracking-widest uppercase opacity-100 group-hover/deck:opacity-0 transition-opacity duration-300">
+          Hover to meet the team
+        </p>
+        {TEAM.map((m, i) => (
+          <div
+            key={m.name}
+            className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${WRAPPERS[i]}`}
+            style={{ transitionDelay: `${i * 80}ms` }}
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(m)}
+              aria-label={`View bio for ${m.name}`}
+              className="group w-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
+            >
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+              <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 group-hover:scale-105 transition-transform duration-500`}>
+                {m.initials}
+              </div>
+              <h3 className="relative text-xl font-bold text-foreground tracking-tight text-center">
+                {m.name}
+              </h3>
+              <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
+                {m.role}
+              </div>
+              <div className="relative mt-4 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Click to read bio
+              </div>
+            </button>
+          </div>
+        ))}
+      </motion.div>
+
+      <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
+        <DialogContent className="sm:max-w-md">
+          {open && (
+            <>
+              <DialogHeader className="items-center text-center">
+                <div className={`mx-auto h-20 w-20 rounded-full bg-gradient-to-br ${open.gradient} flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-primary/20 mb-3`}>
+                  {open.initials}
+                </div>
+                <DialogTitle className="text-2xl">{open.name}</DialogTitle>
+                <DialogDescription className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
+                  {open.role}
+                </DialogDescription>
+              </DialogHeader>
+              <p className="text-sm text-muted-foreground leading-relaxed text-center">
+                {open.bio}
+              </p>
+              <div className="flex items-center justify-center gap-3 pt-2">
+                {open.socials.linkedin && (
+                  <a href={open.socials.linkedin} target="_blank" rel="noreferrer" aria-label={`${open.name} on LinkedIn`} className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors">
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                )}
+                {open.socials.twitter && (
+                  <a href={open.socials.twitter} target="_blank" rel="noreferrer" aria-label={`${open.name} on Twitter`} className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors">
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                )}
+                {open.socials.email && (
+                  <a href={`mailto:${open.socials.email}`} aria-label={`Email ${open.name}`} className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors">
+                    <Mail className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
+
 export default Index;
