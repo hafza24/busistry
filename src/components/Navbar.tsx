@@ -175,54 +175,77 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu — aligned under navbar */}
-      {mobileOpen && (
+      {mobileRender && (
         <div
           id="mobile-menu"
-          className="md:hidden mt-3 w-full rounded-3xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.15)] ring-1 ring-foreground/5 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200"
+          className={`md:hidden mt-3 w-full grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            mobileOpen
+              ? "grid-rows-[1fr] opacity-100 translate-y-0"
+              : "grid-rows-[0fr] opacity-0 -translate-y-2"
+          }`}
         >
-          <nav className="flex flex-col p-2">
-            {allLinks.map((link) => {
-              const active = location.pathname === link.to;
-              return (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center h-12 px-4 rounded-2xl text-sm font-semibold transition-colors ${
-                    active
-                      ? "text-primary bg-primary/10"
-                      : "text-foreground/80 hover:text-primary hover:bg-secondary"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+          <div className="min-h-0 overflow-hidden rounded-3xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.15)] ring-1 ring-foreground/5">
+            <nav className="flex flex-col p-2">
+              {allLinks.map((link, i) => {
+                const active = location.pathname === link.to;
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      transitionDelay: mobileOpen ? `${80 + i * 40}ms` : "0ms",
+                    }}
+                    className={`group/mlink relative flex items-center h-12 px-4 rounded-2xl text-sm font-semibold overflow-hidden transition-all duration-300 ease-out ${
+                      mobileOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"
+                    } ${
+                      active
+                        ? "text-primary bg-primary/10"
+                        : "text-foreground/80 hover:text-primary hover:bg-secondary hover:translate-x-1"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`absolute left-2 top-1/2 -translate-y-1/2 w-1 rounded-full bg-gradient-brand transition-all duration-300 ease-out ${
+                        active ? "h-6 opacity-100" : "h-0 opacity-0 group-hover/mlink:h-4 group-hover/mlink:opacity-70"
+                      }`}
+                    />
+                    <span className="relative z-10 ml-2">{link.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
 
-          <div className="border-t border-border/60 p-3 flex flex-col gap-2">
-            {user ? (
-              <>
-                <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
-                  <Link to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</Link>
-                </Button>
-                <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" onClick={() => { signOut(); setMobileOpen(false); }}>
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" asChild>
-                  <Link to="/auth" onClick={() => setMobileOpen(false)}>Sign In</Link>
-                </Button>
-                <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
-                  <Link to="/auth" onClick={() => setMobileOpen(false)}>Get Started</Link>
-                </Button>
-              </>
-            )}
+            <div
+              style={{ transitionDelay: mobileOpen ? `${80 + allLinks.length * 40}ms` : "0ms" }}
+              className={`border-t border-border/60 p-3 flex flex-col gap-2 transition-all duration-300 ease-out ${
+                mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              }`}
+            >
+              {user ? (
+                <>
+                  <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
+                    <Link to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</Link>
+                  </Button>
+                  <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" onClick={() => { signOut(); setMobileOpen(false); }}>
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" className="w-full h-12 rounded-2xl font-bold" asChild>
+                    <Link to="/auth" onClick={() => setMobileOpen(false)}>Sign In</Link>
+                  </Button>
+                  <Button className="w-full h-12 rounded-2xl bg-foreground text-background hover:bg-foreground/90 font-bold" asChild>
+                    <Link to="/auth" onClick={() => setMobileOpen(false)}>Get Started</Link>
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
+
     </header>
   );
 };
