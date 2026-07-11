@@ -96,10 +96,6 @@ const Contact = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-14 max-w-2xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/70 backdrop-blur-sm px-4 py-1.5 mb-5 shadow-soft">
-            <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-            <span className="text-xs font-medium text-muted-foreground">We're here to help</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold font-display mb-4 tracking-tight">
             Let's <span className="text-gradient-brand">talk</span>.
           </h1>
