@@ -20,6 +20,7 @@ import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminHelpCenter from "@/components/admin/AdminHelpCenter";
 import AdminSupportChat from "@/components/admin/AdminSupportChat";
 import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
+import AdminContactMessages from "@/components/admin/AdminContactMessages";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
@@ -39,6 +40,7 @@ const viewTitles: Record<string, string> = {
   support_chat: "Support Chat",
   audit: "Audit Logs",
   newsletter: "Newsletter Subscribers",
+  contact_messages: "Contact Messages",
 };
 
 const AdminDashboard = () => {
@@ -78,6 +80,7 @@ const AdminDashboard = () => {
       case "support_chat": return <AdminSupportChat />;
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
+      case "contact_messages": return <AdminContactMessages />;
       default: return <AdminWebsiteOrders />;
     }
   };
