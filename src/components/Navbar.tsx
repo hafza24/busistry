@@ -32,10 +32,10 @@ const Navbar = () => {
   }, []);
 
   const linkClass = (active: boolean) =>
-    `px-4 py-2 text-sm font-bold rounded-xl transition-all ${
+    `group/nav relative px-4 py-2 text-sm font-bold rounded-xl transition-all duration-300 ease-out overflow-hidden ${
       active
-        ? "text-primary bg-background/70"
-        : "text-muted-foreground hover:text-primary hover:bg-background/60"
+        ? "text-primary"
+        : "text-muted-foreground hover:text-primary hover:-translate-y-0.5"
     }`;
 
   return (
@@ -84,7 +84,21 @@ const Navbar = () => {
                     to={link.to}
                     className={`${visibility} ${linkClass(location.pathname === link.to)}`}
                   >
-                    {link.label}
+                    <span className="relative z-10">{link.label}</span>
+                    {/* hover backdrop */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 scale-90 transition-all duration-300 ease-out group-hover/nav:opacity-100 group-hover/nav:scale-100"
+                    />
+                    {/* active/hover underline */}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute left-1/2 -translate-x-1/2 bottom-1 h-0.5 rounded-full bg-gradient-brand transition-all duration-300 ease-out ${
+                        location.pathname === link.to
+                          ? "w-6 opacity-100"
+                          : "w-0 opacity-0 group-hover/nav:w-6 group-hover/nav:opacity-100"
+                      }`}
+                    />
                   </Link>
                 );
               })}
