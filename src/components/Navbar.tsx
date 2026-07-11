@@ -22,6 +22,7 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -30,6 +31,22 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Mount before opening, unmount after closing so we can animate both directions
+  useEffect(() => {
+    if (mobileOpen) {
+      setMobileRender(true);
+    } else if (mobileRender) {
+      const t = setTimeout(() => setMobileRender(false), 400);
+      return () => clearTimeout(t);
+    }
+  }, [mobileOpen, mobileRender]);
+
+  // Close on route change with animation
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
 
   const linkClass = (active: boolean) =>
     `group/nav relative px-4 py-2 text-sm font-bold rounded-xl transition-all duration-300 ease-out overflow-hidden ${
