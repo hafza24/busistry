@@ -49,7 +49,7 @@ const Contact = () => {
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = contactFormSchema.safeParse(values);
     if (!parsed.success) {
@@ -63,13 +63,21 @@ const Contact = () => {
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      toast({ title: "Message sent!", description: "We'll get back to you soon." });
-      setLoading(false);
-      setSent(true);
-      setValues({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setSent(false), 3500);
-    }, 800);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      subject: parsed.data.subject,
+      message: parsed.data.message,
+    });
+    setLoading(false);
+    if (error) {
+      toast({ title: "Couldn't send message", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Message sent!", description: "We'll get back to you soon." });
+    setSent(true);
+    setValues({ name: "", email: "", subject: "", message: "" });
+    setTimeout(() => setSent(false), 3500);
   };
 
   return (
