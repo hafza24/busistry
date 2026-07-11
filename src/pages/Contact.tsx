@@ -17,22 +17,22 @@ const channels = [
   {
     icon: Mail,
     label: "Email",
-    value: "support@busistree.com",
-    href: "mailto:support@busistree.com",
+    value: "info@busistree.com",
+    href: "mailto:info@busistree.com",
     hint: "Replies within 1 business day",
   },
   {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "03157224340",
-    href: "https://wa.me/923157224340",
+    value: "+92 337 0428337",
+    href: "https://wa.me/923370428337",
     hint: "Fastest response",
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "0315 722 4340",
-    href: "tel:+923157224340",
+    value: "+92 337 0428337",
+    href: "tel:+923370428337",
     hint: "Mon–Sat, 10am–7pm PKT",
   },
 ];
