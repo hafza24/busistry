@@ -705,7 +705,56 @@ const Index = () => {
       </section>
 
 
+      {/* Team */}
+      <section className="py-20 md:py-28 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+        <div className="container">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
+              <Sparkles className="h-3 w-3" /> Our Team
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              The people behind{" "}
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                Busistree
+              </span>
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-muted-foreground">
+              A small team obsessed with launching beautiful, high-performing stores for ambitious founders.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              { name: "Hafza Azam", role: "CEO", initials: "HA", gradient: "from-primary to-primary-glow" },
+              { name: "Rohma Shahid", role: "CMO", initials: "RS", gradient: "from-violet-500 to-fuchsia-500" },
+              { name: "Asim Azeemi", role: "CCO", initials: "AA", gradient: "from-emerald-500 to-teal-600" },
+            ].map((m, i) => (
+              <motion.div
+                key={m.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="group relative bg-card/70 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1.5 hover:border-primary/50 transition-all duration-500 overflow-hidden"
+              >
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+                <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 group-hover:scale-105 transition-transform duration-500`}>
+                  {m.initials}
+                </div>
+                <h3 className="relative text-xl font-bold text-foreground tracking-tight">
+                  {m.name}
+                </h3>
+                <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
+                  {m.role}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <ReviewsSection />
+
 
       {/* FAQ */}
       <section className="py-20 md:py-28 border-b border-border/60">
