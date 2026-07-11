@@ -32,10 +32,10 @@ const Navbar = () => {
   }, []);
 
   const linkClass = (active: boolean) =>
-    `px-4 py-2 text-sm font-bold rounded-xl transition-all ${
+    `group/nav relative px-4 py-2 text-sm font-bold rounded-xl transition-all duration-300 ease-out overflow-hidden ${
       active
-        ? "text-primary bg-background/70"
-        : "text-muted-foreground hover:text-primary hover:bg-background/60"
+        ? "text-primary"
+        : "text-muted-foreground hover:text-primary hover:-translate-y-0.5"
     }`;
 
   return (
