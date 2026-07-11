@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Send, MessageCircle, Clock, MapPin, Sparkles, CheckCircle2 } from "lucide-react";
 import { contactFormSchema, type ContactFormValues } from "@/lib/validation";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 type Errors = Partial<Record<keyof ContactFormValues, string>>;
 
