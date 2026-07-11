@@ -169,7 +169,18 @@ const Navbar = () => {
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <span className="relative h-5 w-5 block">
+              <Menu
+                className={`absolute inset-0 h-5 w-5 transition-all duration-300 ease-out ${
+                  mobileOpen ? "opacity-0 rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
+                }`}
+              />
+              <X
+                className={`absolute inset-0 h-5 w-5 transition-all duration-300 ease-out ${
+                  mobileOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"
+                }`}
+              />
+            </span>
           </button>
         </nav>
       </div>
