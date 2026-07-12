@@ -37,13 +37,30 @@ interface TemplateForm {
   original_price_pkr: number | null;
   price_without_admin_pkr: number | null;
   price_with_admin_pkr: number | null;
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  meta_keywords: string[];
+  og_image_url: string;
+  image_alt: string;
 }
 
 const emptyForm: TemplateForm = {
   name: "", niche: "", category: "", subcategory: "", description: "", long_description: "", demo_url: "", features: [], admin_features: [], is_active: true, preview_image_url: null,
   preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0, original_price_pkr: null,
   price_without_admin_pkr: null, price_with_admin_pkr: null,
+  slug: "", meta_title: "", meta_description: "", meta_keywords: [], og_image_url: "", image_alt: "",
 };
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
 
 
 const AdminTemplateManagement = () => {
