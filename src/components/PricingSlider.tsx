@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   Check,
   Sparkles,
   Zap,
@@ -145,27 +143,7 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
       </div>
 
 
-      {/* Prev / Next buttons */}
-      <Button
-        type="button"
-        variant="outline"
-        size="icon"
-        aria-label="Previous plan"
-        onClick={() => goTo(activeIndex - 1)}
-        className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full h-11 w-11 bg-background/90 backdrop-blur shadow-md border-border hover:bg-background focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        size="icon"
-        aria-label="Next plan"
-        onClick={() => goTo(activeIndex + 1)}
-        className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full h-11 w-11 bg-background/90 backdrop-blur shadow-md border-border hover:bg-background focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      >
-        <ChevronRight className="h-5 w-5" />
-      </Button>
+
 
       <div
         ref={scrollerRef}
