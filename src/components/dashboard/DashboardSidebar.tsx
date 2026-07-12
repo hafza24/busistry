@@ -78,19 +78,47 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <div className="text-sm text-muted-foreground mb-2 truncate">{user?.user_metadata?.full_name || user?.email}</div>
-        <div className="flex gap-2 flex-wrap">
+      <SidebarFooter className="p-4 border-t border-sidebar-border space-y-3">
+        <div className="flex items-center gap-2.5 rounded-xl border border-sidebar-border/60 bg-sidebar-accent/40 px-2.5 py-2">
+          <div className="h-8 w-8 shrink-0 rounded-full bg-gradient-brand flex items-center justify-center text-primary-foreground text-xs font-bold shadow-brand">
+            {(user?.user_metadata?.full_name || user?.email || "?").charAt(0).toUpperCase()}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-semibold text-sidebar-foreground truncate leading-tight">
+              {user?.user_metadata?.full_name || user?.email?.split("@")[0]}
+            </div>
+            {user?.user_metadata?.full_name && (
+              <div className="text-[11px] text-muted-foreground truncate leading-tight">{user.email}</div>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
           {isAdmin && (
-            <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate("/admin")}>
-              <ShieldCheck className="h-4 w-4 mr-1" /> Admin
+            <Button
+              variant="glass-accent"
+              size="sm"
+              className="col-span-2 rounded-full gap-1.5 shadow-soft"
+              onClick={() => navigate("/admin")}
+            >
+              <ShieldCheck className="h-4 w-4" /> Admin Console
             </Button>
           )}
-          <Button variant="ghost" size="sm" className="flex-1" onClick={() => navigate("/")}>
-            <Home className="h-4 w-4 mr-1" /> Home
+          <Button
+            variant="ghost"
+            size="sm"
+            className="rounded-full gap-1.5 border border-sidebar-border/60 hover:bg-sidebar-accent hover:text-sidebar-primary"
+            onClick={() => navigate("/")}
+          >
+            <Home className="h-4 w-4" /> Home
           </Button>
-          <Button variant="outline" size="sm" className="flex-1" onClick={signOut}>
-            <LogOut className="h-4 w-4 mr-1" /> Sign Out
+          <Button
+            variant="glass-danger"
+            size="sm"
+            className="rounded-full gap-1.5"
+            onClick={signOut}
+          >
+            <LogOut className="h-4 w-4" /> Sign Out
           </Button>
         </div>
       </SidebarFooter>
