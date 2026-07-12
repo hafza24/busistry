@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAllUpgradeOrders, useUpdateUpgradeOrderStatus, useAllUpgradeOptions, useUpsertUpgradeOption, useDeleteUpgradeOption, useUpdateUpgradeOrder, useDeleteUpgradeOrder } from "@/hooks/useMarketplace";
+import { useAllUpgradeOrders, useUpdateUpgradeOrderStatus, useAllUpgradeOptions, useUpsertUpgradeOption, useDeleteUpgradeOption, useUpdateUpgradeOrder, useDeleteUpgradeOrder, useApplyUpgradeOrder } from "@/hooks/useMarketplace";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
