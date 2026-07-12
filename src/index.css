@@ -320,13 +320,8 @@
     transition: transform 180ms cubic-bezier(.2,.8,.2,1), opacity 220ms;
   }
   .glass-cursor-arrow svg { display: block; }
-  .glass-cursor-arrow.is-input,
-  .glass-cursor-arrow.is-text {
-    opacity: 0;
-  }
-  .glass-cursor-arrow.is-pressed {
-    transform-origin: 4px 2.5px;
-  }
+
+
 
   /* Ring / adaptive shape */
   .glass-cursor-ring {
