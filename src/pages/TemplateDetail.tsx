@@ -86,6 +86,7 @@ const TemplateDetail = () => {
 
   return (
     <div className="py-10 md:py-14">
+      <TemplateCustomizationNotice />
       <SEO
         title={`${template.name} — Busistree Template`}
         description={template.description || `Launch ${template.name} in 24–48 hours, fully branded to your business.`}
