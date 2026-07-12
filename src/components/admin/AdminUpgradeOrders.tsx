@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAllUpgradeOrders, useUpdateUpgradeOrderStatus, useAllUpgradeOptions, useUpsertUpgradeOption, useDeleteUpgradeOption, useUpdateUpgradeOrder, useDeleteUpgradeOrder } from "@/hooks/useMarketplace";
+import { useAllUpgradeOrders, useUpdateUpgradeOrderStatus, useAllUpgradeOptions, useUpsertUpgradeOption, useDeleteUpgradeOption, useUpdateUpgradeOrder, useDeleteUpgradeOrder, useApplyUpgradeOrder } from "@/hooks/useMarketplace";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2, Check, X, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, Check, X, ExternalLink, Zap } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 
@@ -32,11 +32,24 @@ export default function AdminUpgradeOrders() {
   const updateStatus = useUpdateUpgradeOrderStatus();
   const updateOrder = useUpdateUpgradeOrder();
   const deleteOrder = useDeleteUpgradeOrder();
+  const applyOrder = useApplyUpgradeOrder();
   const { data: options = [] } = useAllUpgradeOptions();
   const upsertOpt = useUpsertUpgradeOption();
   const delOpt = useDeleteUpgradeOption();
   const [editingOpt, setEditingOpt] = useState<any | null>(null);
   const [editingOrder, setEditingOrder] = useState<any | null>(null);
+
+  const handleApprove = async (o: any) => {
+    try {
+      await applyOrder.mutateAsync(o.id);
+      const applied = o.upgrade_type === "product_limit" ? `+${o.details?.quantity ?? 0} products`
+        : o.upgrade_type === "category_limit" ? `+${o.details?.quantity ?? 0} categories`
+        : o.upgrade_type === "extend_duration" ? `+${o.details?.quantity ?? 0} days`
+        : o.upgrade_type === "plan_change" ? `plan → ${o.details?.target_plan_name ?? "new plan"}`
+        : "manual fulfillment required";
+      toast({ title: "Order approved & applied", description: applied });
+    } catch (e: any) { toast({ title: "Error", description: e.message, variant: "destructive" }); }
+  };
 
   const handleStatus = async (id: string, status: string) => {
     try {
@@ -100,9 +113,12 @@ export default function AdminUpgradeOrders() {
                   <div className="flex flex-col gap-2 items-end">
                     {o.status === "pending" && (
                       <div className="flex gap-2">
-                        <Button size="sm" onClick={() => handleStatus(o.id, "approved")}><Check className="h-3.5 w-3.5 mr-1" /> Approve</Button>
+                        <Button size="sm" onClick={() => handleApprove(o)}><Check className="h-3.5 w-3.5 mr-1" /> Approve & Apply</Button>
                         <Button size="sm" variant="outline" onClick={() => handleStatus(o.id, "rejected")}><X className="h-3.5 w-3.5 mr-1" /> Reject</Button>
                       </div>
+                    )}
+                    {o.status !== "pending" && o.status !== "completed" && o.status !== "rejected" && (
+                      <Button size="sm" variant="secondary" onClick={() => handleApprove(o)}><Zap className="h-3.5 w-3.5 mr-1" /> Run now</Button>
                     )}
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => setEditingOrder({ ...o })}><Pencil className="h-3.5 w-3.5 mr-1" /> Edit</Button>

@@ -1334,6 +1334,8 @@ export type Database = {
           category_count: number
           created_at: string
           expires_at: string | null
+          extra_categories: number
+          extra_products: number
           id: string
           name: string
           plan_id: string
@@ -1348,6 +1350,8 @@ export type Database = {
           category_count?: number
           created_at?: string
           expires_at?: string | null
+          extra_categories?: number
+          extra_products?: number
           id?: string
           name: string
           plan_id: string
@@ -1362,6 +1366,8 @@ export type Database = {
           category_count?: number
           created_at?: string
           expires_at?: string | null
+          extra_categories?: number
+          extra_products?: number
           id?: string
           name?: string
           plan_id?: string
@@ -1987,6 +1993,15 @@ export type Database = {
         Args: never
         Returns: {
           count: number
+        }[]
+      }
+      apply_upgrade_order: {
+        Args: { p_order_id: string }
+        Returns: {
+          order_id: string
+          status: string
+          store_id: string
+          upgrade_type: string
         }[]
       }
       can_review: {

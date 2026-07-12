@@ -296,6 +296,21 @@ export function useUpdateUpgradeOrderStatus() {
   });
 }
 
+export function useApplyUpgradeOrder() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.rpc("apply_upgrade_order", { p_order_id: id } as any);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["upgrade_orders_admin"] });
+      qc.invalidateQueries({ queryKey: ["admin_stores"] });
+      qc.invalidateQueries({ queryKey: ["stores"] });
+    },
+  });
+}
+
 export function useUpdateUpgradeOrder() {
   const qc = useQueryClient();
   return useMutation({
