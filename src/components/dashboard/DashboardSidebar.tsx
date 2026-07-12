@@ -79,8 +79,18 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4 border-t border-sidebar-border space-y-3">
-        <div className="flex items-center gap-2.5 rounded-xl border border-sidebar-border/60 bg-sidebar-accent/40 px-2.5 py-2">
-          <div className="h-8 w-8 shrink-0 rounded-full bg-gradient-brand flex items-center justify-center text-primary-foreground text-xs font-bold shadow-brand">
+        <button
+          type="button"
+          onClick={() => onViewChange("profile")}
+          aria-label="Open profile"
+          aria-current={activeView === "profile" ? "page" : undefined}
+          className={`group w-full flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar ${
+            activeView === "profile"
+              ? "border-primary/40 bg-primary/10 shadow-soft"
+              : "border-sidebar-border/60 bg-sidebar-accent/40 hover:border-primary/40 hover:bg-sidebar-accent"
+          }`}
+        >
+          <div className="h-8 w-8 shrink-0 rounded-full bg-gradient-brand flex items-center justify-center text-primary-foreground text-xs font-bold shadow-brand transition-transform group-hover:scale-105">
             {(user?.user_metadata?.full_name || user?.email || "?").charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
@@ -91,7 +101,8 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
               <div className="text-[11px] text-muted-foreground truncate leading-tight">{user.email}</div>
             )}
           </div>
-        </div>
+          <User className="h-4 w-4 text-muted-foreground shrink-0 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+        </button>
 
         <div className="grid grid-cols-2 gap-2">
           {isAdmin && (
