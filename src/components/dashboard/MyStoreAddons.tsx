@@ -238,27 +238,34 @@ export default function MyStoreAddons() {
                     <div className="grid gap-3">
                       {storeAddons.map((a: any) => {
                         const item = lookup(a);
+                        const tracker = mapStatus(a.status);
+                        const meta = statusMeta[tracker];
+                        const StatusIcon = meta.icon;
                         return (
                           <Card key={a.id} className="border-border/60">
-                            <CardContent className="p-4 flex items-center justify-between gap-4">
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <p className="font-semibold truncate">{item?.name ?? "Add-on"}</p>
-                                  <Badge variant="outline" className="capitalize text-xs">{a.item_type}</Badge>
-                                  <Badge variant="outline" className={statusColors[a.status] ?? ""}>
-                                    {a.status}
-                                  </Badge>
-                                </div>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                  Ordered {format(new Date(a.created_at), "MMM d, yyyy")}
-                                  {a.price_snapshot_pkr != null && (
-                                    <> · PKR {Number(a.price_snapshot_pkr).toLocaleString()}</>
+                            <CardContent className="p-4">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="min-w-0 flex-1">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <p className="font-semibold truncate">{item?.name ?? "Add-on"}</p>
+                                    <Badge variant="outline" className="capitalize text-xs">{a.item_type}</Badge>
+                                    <Badge variant="outline" className={cn("text-xs gap-1", meta.badge)}>
+                                      <StatusIcon className="h-3 w-3" />
+                                      {meta.label}
+                                    </Badge>
+                                  </div>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    Ordered {format(new Date(a.created_at), "MMM d, yyyy")}
+                                    {a.price_snapshot_pkr != null && (
+                                      <> · PKR {Number(a.price_snapshot_pkr).toLocaleString()}</>
+                                    )}
+                                  </p>
+                                  {a.admin_notes && (
+                                    <p className="text-xs mt-1 text-muted-foreground italic">"{a.admin_notes}"</p>
                                   )}
-                                </p>
-                                {a.admin_notes && (
-                                  <p className="text-xs mt-1 text-muted-foreground italic">"{a.admin_notes}"</p>
-                                )}
+                                </div>
                               </div>
+                              <StatusTracker status={tracker} />
                             </CardContent>
                           </Card>
                         );
