@@ -37,6 +37,7 @@ const Help = lazy(() => import("./pages/Help"));
 const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
 const GlassUI = lazy(() => import("./pages/GlassUI"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
