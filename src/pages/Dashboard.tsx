@@ -9,6 +9,7 @@ import MySubscriptions from "@/components/dashboard/MySubscriptions";
 import MyStoreAddons from "@/components/dashboard/MyStoreAddons";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import RenewalLoginToast from "@/components/notifications/RenewalLoginToast";
+import ReviewPromptBanner from "@/components/reviews/ReviewPromptBanner";
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
@@ -63,7 +64,7 @@ const Dashboard = () => {
             </h1>
             <NotificationBell audience="user" />
           </header>
-          <main className="flex-1 p-6">{renderView()}</main>
+          <main className="flex-1 p-6"><ReviewPromptBanner />{renderView()}</main>
         </SidebarInset>
       </div>
     </SidebarProvider>
