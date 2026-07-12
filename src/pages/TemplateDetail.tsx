@@ -286,6 +286,22 @@ const TemplateDetail = () => {
                     <span>No dashboard — content changes are handled by our team.</span>
                   </div>
                 </div>
+
+                <Button
+                  className="w-full mt-6"
+                  variant={variant === "without" ? "default" : "outline"}
+                  asChild
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setVariant("without");
+                    setPendingTemplate(template.id);
+                  }}
+                >
+                  <Link to={`/onboarding?template=${template.id}&admin=0`}>
+                    <Rocket className="h-4 w-4 mr-1" />
+                    Choose Website only{effectiveWithout > 0 ? ` · ${fmtPKR(effectiveWithout)}` : ""}
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -334,6 +350,22 @@ const TemplateDetail = () => {
                     </div>
                   ))}
                 </div>
+
+                <Button
+                  className="w-full mt-6"
+                  variant={variant === "with" ? "default" : "outline"}
+                  asChild
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setVariant("with");
+                    setPendingTemplate(template.id);
+                  }}
+                >
+                  <Link to={`/onboarding?template=${template.id}&admin=1`}>
+                    <Rocket className="h-4 w-4 mr-1" />
+                    Choose Website + Admin{effectiveWith > 0 ? ` · ${fmtPKR(effectiveWith)}` : ""}
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </div>
