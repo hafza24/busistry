@@ -186,7 +186,8 @@ const TemplateDetail = () => {
                 </Link>
               </Button>
               {template.demo_url && (
-                <Button size="lg" variant="outline" asChild>
+                <Button size="lg" variant="outline" asChild className="bg-accent text-accent-foreground">
+
                   <a href={template.demo_url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-1" /> Live demo
                   </a>
