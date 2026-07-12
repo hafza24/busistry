@@ -16,6 +16,7 @@ import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
 import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
 import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
 import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration";
+import AdminReviewsModeration from "@/components/admin/AdminReviewsModeration";
 import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminHelpCenter from "@/components/admin/AdminHelpCenter";
 import AdminSupportChat from "@/components/admin/AdminSupportChat";
@@ -36,6 +37,7 @@ const viewTitles: Record<string, string> = {
   store_addons: "Add-on Orders",
   upgrades: "Upgrade Orders",
   feedback: "Feedback Moderation",
+  reviews: "Reviews Moderation",
   help_center: "Help Center",
   support_chat: "Support Chat",
   audit: "Audit Logs",
@@ -76,6 +78,7 @@ const AdminDashboard = () => {
       case "store_addons": return <AdminStoreAddons />;
       case "upgrades": return <AdminUpgradeOrders />;
       case "feedback": return <AdminFeedbackModeration />;
+      case "reviews": return <AdminReviewsModeration />;
       case "help_center": return <AdminHelpCenter />;
       case "support_chat": return <AdminSupportChat />;
       case "audit": return <AdminAuditLogs />;
