@@ -239,6 +239,130 @@ const TemplateDetail = () => {
           </section>
         )}
 
+        {/* Pricing breakdown */}
+        <section className="mb-14">
+          <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground mb-2">
+            Pricing breakdown
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Two ways to launch this template — pick the one that fits how hands-on you want to be.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Without admin */}
+            <Card
+              className={cn(
+                "border-border/60 cursor-pointer transition-all",
+                variant === "without" && "border-primary ring-2 ring-primary/20"
+              )}
+              onClick={() => setVariant("without")}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Sparkles className="h-4 w-4 text-primary" /> Website only
+                </div>
+                <div className="text-3xl font-bold font-display text-foreground mt-3">
+                  {effectiveWithout > 0 ? fmtPKR(effectiveWithout) : "Free"}
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">One-time · fully branded to you</div>
+
+                <div className="mt-5 space-y-2 text-sm">
+                  {[
+                    "Fully designed public website",
+                    "Custom branding (logo, colors, fonts)",
+                    "Your content, images & copy",
+                    "Mobile-responsive on all devices",
+                    "Basic on-page SEO setup",
+                    "Domain & hosting guidance",
+                    "48-hour launch",
+                  ].map((f) => (
+                    <div key={f} className="flex items-start gap-2 text-foreground">
+                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                  <div className="flex items-start gap-2 text-muted-foreground pt-2 border-t border-border/50 mt-3">
+                    <span className="h-4 w-4 mt-0.5 shrink-0 text-center">—</span>
+                    <span>No dashboard — content changes are handled by our team.</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* With admin */}
+            <Card
+              className={cn(
+                "border-border/60 cursor-pointer transition-all relative",
+                variant === "with" && "border-primary ring-2 ring-primary/20"
+              )}
+              onClick={() => setVariant("with")}
+            >
+              {priceDiff > 0 && (
+                <Badge className="absolute -top-2 right-4">Most popular</Badge>
+              )}
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <ShieldCheck className="h-4 w-4 text-primary" /> Website + Admin panel
+                </div>
+                <div className="flex items-baseline gap-2 mt-3">
+                  <div className="text-3xl font-bold font-display text-foreground">
+                    {effectiveWith > 0 ? fmtPKR(effectiveWith) : "—"}
+                  </div>
+                  {priceDiff > 0 && (
+                    <span className="text-sm text-primary font-medium">
+                      +{fmtPKR(priceDiff)}
+                    </span>
+                  )}
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">Everything in Website only, plus:</div>
+
+                <div className="mt-5 space-y-2 text-sm">
+                  {(adminFeatures.length > 0
+                    ? adminFeatures
+                    : [
+                        "Secure admin login for you & your team",
+                        "Edit pages, text & images yourself",
+                        "Manage orders, bookings or submissions",
+                        "Role-based staff access",
+                        "Analytics & CSV exports",
+                        "Media & file library",
+                      ]
+                  ).map((f) => (
+                    <div key={f} className="flex items-start gap-2 text-foreground">
+                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Delta explainer */}
+          {priceDiff > 0 && (
+            <div className="mt-6 rounded-xl border border-border/60 bg-muted/30 p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="text-sm text-foreground">
+                  <span className="font-semibold">Price difference: {fmtPKR(priceDiff)}</span>
+                  <span className="text-muted-foreground">
+                    {" "}covers the admin dashboard build, secure auth, role management, and ongoing self-service editing.
+                  </span>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {effectiveWithout > 0
+                    ? `${fmtPKR(effectiveWithout)} + ${fmtPKR(priceDiff)} = ${fmtPKR(effectiveWith)}`
+                    : ""}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-muted-foreground mt-4">
+            All prices are one-time in PKR. Hosting, domain and payment gateway fees (if any) are billed separately by their providers.
+          </p>
+        </section>
+
+
         {/* Admin panel section */}
         <section className="mb-14">
           <Card className={cn(
