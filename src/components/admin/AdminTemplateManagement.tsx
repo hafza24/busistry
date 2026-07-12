@@ -169,6 +169,12 @@ const AdminTemplateManagement = () => {
       original_price_pkr: t.original_price_pkr != null ? Number(t.original_price_pkr) : null,
       price_without_admin_pkr: t.price_without_admin_pkr != null ? Number(t.price_without_admin_pkr) : null,
       price_with_admin_pkr: t.price_with_admin_pkr != null ? Number(t.price_with_admin_pkr) : null,
+      slug: t.slug || "",
+      meta_title: t.meta_title || "",
+      meta_description: t.meta_description || "",
+      meta_keywords: Array.isArray(t.meta_keywords) ? t.meta_keywords : [],
+      og_image_url: t.og_image_url || "",
+      image_alt: t.image_alt || "",
     });
     setOpen(true);
   };
