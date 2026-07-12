@@ -4,7 +4,7 @@ import SEO from "@/components/SEO";
 
 const GlassUI = () => (
   <div className="container py-16 md:py-24">
-    <SEO title="Glass UI — Busistree" description="Glassmorphism buttons and cards in the Busistree theme." />
+    <SEO title="Glass UI — Busistree" description="Glassmorphism buttons and cards in the Busistree theme." path="/glass-ui" />
 
     <header className="max-w-2xl mb-12">
       <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Component library</p>
