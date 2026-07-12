@@ -785,11 +785,15 @@ export type Database = {
           id: string
           notes: string | null
           order_number: string
+          shipped_at: string | null
           shipping_fee: number
           status: string
           store_id: string
           subtotal: number
           total: number
+          tracking_carrier: string | null
+          tracking_number: string | null
+          tracking_url: string | null
           updated_at: string
         }
         Insert: {
@@ -801,11 +805,15 @@ export type Database = {
           id?: string
           notes?: string | null
           order_number: string
+          shipped_at?: string | null
           shipping_fee?: number
           status?: string
           store_id: string
           subtotal?: number
           total?: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
+          tracking_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -817,11 +825,15 @@ export type Database = {
           id?: string
           notes?: string | null
           order_number?: string
+          shipped_at?: string | null
           shipping_fee?: number
           status?: string
           store_id?: string
           subtotal?: number
           total?: number
+          tracking_carrier?: string | null
+          tracking_number?: string | null
+          tracking_url?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -1920,11 +1932,15 @@ export type Database = {
           created_at: string
           customer_name: string
           order_number: string
+          shipped_at: string
           shipping_fee: number
           status: string
           store_name: string
           store_slug: string
           total: number
+          tracking_carrier: string
+          tracking_number: string
+          tracking_url: string
           updated_at: string
         }[]
       }
