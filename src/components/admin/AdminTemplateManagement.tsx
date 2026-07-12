@@ -416,6 +416,128 @@ const AdminTemplateManagement = () => {
               </div>
             </div>
 
+            {/* SEO & AI search */}
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-3">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Search className="h-4 w-4 text-primary" />
+                  <Label className="text-base font-semibold">SEO & search preview</Label>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    const name = form.name.trim();
+                    const cat = form.subcategory || form.category || form.niche;
+                    const autoTitle = form.meta_title ||
+                      (name ? `${name}${cat ? ` — ${cat} Website Template` : " — Website Template"} | Busistree` : "");
+                    const autoDesc = form.meta_description || form.description ||
+                      (name ? `Launch a professional ${cat || "business"} website with the ${name} template. Fully customized to your brand, delivered in 24–48 hours by Busistree.` : "");
+                    const autoSlug = form.slug || slugify(name);
+                    const autoAlt = form.image_alt || (name ? `${name} website template preview` : "");
+                    const seed = [name, cat, form.category, form.niche, "website template", "Busistree", "Pakistan"]
+                      .map((k) => k?.toString().trim())
+                      .filter(Boolean) as string[];
+                    const autoKw = form.meta_keywords.length > 0 ? form.meta_keywords : Array.from(new Set(seed));
+                    setForm((f) => ({
+                      ...f,
+                      meta_title: autoTitle,
+                      meta_description: autoDesc,
+                      slug: autoSlug,
+                      image_alt: autoAlt,
+                      meta_keywords: autoKw,
+                    }));
+                    toast.success("SEO fields auto-generated");
+                  }}
+                >
+                  <Wand2 className="h-4 w-4 mr-1" /> Auto-generate
+                </Button>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <Label>Meta title</Label>
+                  <span className={`text-[10px] ${form.meta_title.length > 60 ? "text-destructive" : "text-muted-foreground"}`}>
+                    {form.meta_title.length}/60
+                  </span>
+                </div>
+                <Input
+                  value={form.meta_title}
+                  maxLength={80}
+                  placeholder="Shown as the clickable Google result — keep under 60 chars"
+                  onChange={(e) => setForm((f) => ({ ...f, meta_title: e.target.value }))}
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <Label>Meta description</Label>
+                  <span className={`text-[10px] ${form.meta_description.length > 160 ? "text-destructive" : "text-muted-foreground"}`}>
+                    {form.meta_description.length}/160
+                  </span>
+                </div>
+                <Textarea
+                  value={form.meta_description}
+                  rows={2}
+                  maxLength={200}
+                  placeholder="Snippet shown under the title in Google — sell the click in ≤160 chars"
+                  onChange={(e) => setForm((f) => ({ ...f, meta_description: e.target.value }))}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label>URL slug</Label>
+                  <Input
+                    value={form.slug}
+                    placeholder="auto from name"
+                    onChange={(e) => setForm((f) => ({ ...f, slug: slugify(e.target.value) }))}
+                  />
+                  <p className="text-[10px] text-muted-foreground mt-1">
+                    /templates/{form.slug || "auto-slug"}
+                  </p>
+                </div>
+                <div>
+                  <Label>Image alt text</Label>
+                  <Input
+                    value={form.image_alt}
+                    placeholder="Describes the preview for AI & screen readers"
+                    onChange={(e) => setForm((f) => ({ ...f, image_alt: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label>Social/OG image URL (optional)</Label>
+                <Input
+                  value={form.og_image_url}
+                  placeholder="Absolute https:// URL — falls back to preview image"
+                  onChange={(e) => setForm((f) => ({ ...f, og_image_url: e.target.value }))}
+                />
+              </div>
+
+              <TagListEditor
+                label="Target keywords (used in meta keywords + AI search)"
+                placeholder="e.g. restaurant website"
+                value={form.meta_keywords}
+                onChange={(v) => setForm((f) => ({ ...f, meta_keywords: v }))}
+              />
+
+              {/* Live Google-style preview */}
+              <div className="rounded-md border border-border bg-background p-3">
+                <p className="text-[10px] uppercase tracking-wide text-muted-foreground mb-2">Google preview</p>
+                <div className="text-xs text-muted-foreground truncate">
+                  busistry.lovable.app › templates › {form.slug || slugify(form.name) || "slug"}
+                </div>
+                <div className="text-[#1a0dab] dark:text-blue-400 text-base leading-snug line-clamp-1 mt-0.5">
+                  {form.meta_title || form.name || "Meta title preview"}
+                </div>
+                <div className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                  {form.meta_description || form.description || "Meta description preview — this is what searchers see under your title."}
+                </div>
+              </div>
+            </div>
 
             {/* Onboarding presets */}
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 space-y-3">
