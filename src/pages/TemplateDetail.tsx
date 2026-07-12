@@ -11,6 +11,7 @@ import { setPendingTemplate } from "@/hooks/useOnboarding";
 import { useItemReviewStats } from "@/hooks/useReviews";
 import { RatingStars, ItemBadges } from "@/components/reviews/ItemBadges";
 import { cn } from "@/lib/utils";
+import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
 
 const fmtPKR = (n: number) => `PKR ${new Intl.NumberFormat("en-PK").format(Math.round(n))}`;
 
@@ -85,6 +86,7 @@ const TemplateDetail = () => {
 
   return (
     <div className="py-10 md:py-14">
+      <TemplateCustomizationNotice />
       <SEO
         title={`${template.name} — Busistree Template`}
         description={template.description || `Launch ${template.name} in 24–48 hours, fully branded to your business.`}
