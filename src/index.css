@@ -246,6 +246,10 @@
   .glass-fill-accent  { background: linear-gradient(160deg, hsl(var(--accent) / 0.85), hsl(var(--accent) / 0.6)); }
   .glass-fill-glow    { background: linear-gradient(160deg, hsl(var(--primary-glow) / 0.85), hsl(var(--primary-glow) / 0.6)); }
   .glass-fill-brand   { background: var(--gradient-brand); }
+  .glass-fill-success { background: linear-gradient(160deg, hsl(var(--success) / 0.9), hsl(179 48% 42% / 0.75)); }
+  .glass-fill-warning { background: linear-gradient(160deg, hsl(var(--warning) / 0.92), hsl(24 92% 55% / 0.78)); }
+  .glass-fill-info    { background: linear-gradient(160deg, hsl(var(--info) / 0.9), hsl(var(--primary-glow) / 0.7)); }
+  .glass-fill-danger  { background: linear-gradient(160deg, hsl(var(--destructive) / 0.9), hsl(340 75% 45% / 0.75)); }
 }
 
 @keyframes fade-in {
