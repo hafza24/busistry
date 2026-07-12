@@ -151,9 +151,9 @@ const Templates = () => {
                         </Link>
                       </Button>
                     ) : (
-                      <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
-                        <Link to={`/onboarding?template=${t.id}${planParam ? `&plan=${planParam}` : ""}`}>
-                          <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
+                      <Button size="sm" className="flex-1" asChild>
+                        <Link to={`/templates/${t.id}`}>
+                          <Eye className="h-3.5 w-3.5 mr-1" /> View details
                         </Link>
                       </Button>
                     )}
