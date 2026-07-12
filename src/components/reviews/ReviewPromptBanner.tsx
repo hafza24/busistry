@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MessageSquarePlus, Clock, X } from "lucide-react";
@@ -13,30 +13,52 @@ const TYPE_LABEL: Record<ReviewTargetType, string> = {
   website_product: "Add-on",
 };
 
+// Session flag so we only auto-open once per browser session
+const SESSION_KEY = "review_prompt_shown";
+
 export default function ReviewPromptBanner() {
   const { data: prompts = [], isLoading } = usePendingReviewPrompts();
   const setState = useSetPromptState();
+  const [open, setOpen] = useState(false);
   const [active, setActive] = useState<{ target_type: ReviewTargetType; target_id: string; label: string } | null>(null);
 
-  if (isLoading || prompts.length === 0) return null;
+  useEffect(() => {
+    if (isLoading) return;
+    if (prompts.length === 0) return;
+    if (sessionStorage.getItem(SESSION_KEY) === "1") return;
+    sessionStorage.setItem(SESSION_KEY, "1");
+    setOpen(true);
+  }, [isLoading, prompts.length]);
+
+  if (prompts.length === 0) return null;
+
+  const dismissAllLater = () => {
+    prompts.forEach((p) =>
+      setState.mutate({ target_type: p.target_type, target_id: p.target_id, state: "later" })
+    );
+    setOpen(false);
+  };
 
   return (
     <>
-      <Card className="mb-6 border-primary/40 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <CardContent className="p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <h3 className="font-semibold">How was your experience?</h3>
-            <Badge variant="secondary" className="ml-2 text-[10px]">{prompts.length} pending</Badge>
-          </div>
-          <p className="text-sm text-muted-foreground mb-4">
-            You purchased the items below. A quick rating helps other business owners choose.
-          </p>
-          <div className="space-y-2">
-            {prompts.slice(0, 4).map((p) => (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+              How was your experience?
+              <Badge variant="secondary" className="ml-1 text-[10px]">{prompts.length} pending</Badge>
+            </DialogTitle>
+            <DialogDescription>
+              You purchased the items below. A quick rating helps other business owners choose.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2 max-h-[50vh] overflow-y-auto pr-1">
+            {prompts.map((p) => (
               <div key={`${p.target_type}-${p.target_id}`} className="flex items-center justify-between gap-3 p-3 rounded-lg border border-border/60 bg-card/60">
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <Badge variant="outline" className="text-[10px]">{TYPE_LABEL[p.target_type]}</Badge>
                     <p className="text-sm font-medium truncate">{p.label}</p>
                   </div>
@@ -57,8 +79,13 @@ export default function ReviewPromptBanner() {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={dismissAllLater}>Remind me later</Button>
+            <Button variant="ghost" onClick={() => setOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {active && (
         <ReviewDialog
