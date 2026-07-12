@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Rocket, Loader2, Eye } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
+import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
+import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -28,6 +30,9 @@ const Templates = () => {
       return data;
     },
   });
+
+  const { data: stats = [] } = useItemReviewStats("template");
+  const statMap = new Map<string, ItemReviewStats>(stats.map((s) => [s.target_id, s]));
 
   const categories = ["All", ...Array.from(new Set(templates.map((t) => t.category).filter(Boolean) as string[]))];
   const inCategory = activeCategory === "All" ? templates : templates.filter((t) => t.category === activeCategory);
