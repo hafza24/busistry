@@ -5,7 +5,7 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Globe, Plus, User, LogOut, Home, ShieldCheck, MessageSquarePlus, Repeat, LifeBuoy, MessageCircle, Sparkles } from "lucide-react";
+import { Globe, Plus, User, LogOut, Home, ShieldCheck, MessageSquarePlus, Repeat, LifeBuoy, MessageCircle, Sparkles, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import logo from "@/assets/logo.png";
@@ -24,6 +24,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
     { id: "orders", label: "My Orders", icon: Globe },
     { id: "subscriptions", label: "Subscriptions", icon: Repeat },
     { id: "addons", label: "Add-ons", icon: Sparkles },
+    { id: "reviews", label: "Reviews", icon: Star },
   ];
 
   return (
