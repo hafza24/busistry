@@ -12,7 +12,7 @@ const GlassUI = () => (
         Glass buttons & cards
       </h1>
       <p className="text-muted-foreground mt-3">
-        Frosted, glossy surfaces tinted with the Busistree teal / blue / indigo palette.
+        Frosted, glossy surfaces tinted with the Busistree palette — including status tones.
       </p>
     </header>
 
@@ -20,33 +20,54 @@ const GlassUI = () => (
     <section className="mb-16">
       <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-6">Pill buttons</h2>
       <div className="glass-frame inline-flex flex-wrap gap-3 rounded-full !p-3">
-        <Button variant="glass" size="lg" className="rounded-full">Vector</Button>
-        <Button variant="glass-accent" size="lg" className="rounded-full">Buttons</Button>
-        <Button variant="glass-brand" size="lg" className="rounded-full">Web</Button>
+        <Button variant="glass" size="lg" className="rounded-full">Primary</Button>
+        <Button variant="glass-accent" size="lg" className="rounded-full">Accent</Button>
+        <Button variant="glass-brand" size="lg" className="rounded-full">Brand</Button>
       </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-4">
-        <Button variant="glass" className="rounded-full h-12 w-12 p-0" aria-label="Primary">A</Button>
-        <Button variant="glass-accent" className="rounded-full h-12 w-12 p-0" aria-label="Accent">B</Button>
-        <Button variant="glass-brand" className="rounded-full h-12 w-12 p-0" aria-label="Brand">C</Button>
+      <div className="mt-4 glass-frame inline-flex flex-wrap gap-3 rounded-full !p-3">
+        <Button variant="glass-success" size="lg" className="rounded-full">Success</Button>
+        <Button variant="glass-warning" size="lg" className="rounded-full">Warning</Button>
+        <Button variant="glass-info" size="lg" className="rounded-full">Info</Button>
+        <Button variant="glass-danger" size="lg" className="rounded-full">Danger</Button>
       </div>
     </section>
 
     {/* Square glass cards */}
     <section>
       <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-6">Glass cards</h2>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         <GlassCard tone="primary" className="aspect-square">
-          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Vector</div>
-          <div className="text-2xl font-display font-bold mt-1">Buttons web</div>
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Tone</div>
+          <div className="text-2xl font-display font-bold mt-1">Primary</div>
         </GlassCard>
         <GlassCard tone="accent" className="aspect-square">
-          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Vector</div>
-          <div className="text-2xl font-display font-bold mt-1">Buttons web</div>
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Tone</div>
+          <div className="text-2xl font-display font-bold mt-1">Accent</div>
         </GlassCard>
         <GlassCard tone="brand" className="aspect-square">
-          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Vector</div>
-          <div className="text-2xl font-display font-bold mt-1">Buttons web</div>
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Tone</div>
+          <div className="text-2xl font-display font-bold mt-1">Brand</div>
+        </GlassCard>
+        <GlassCard tone="glow" className="aspect-square">
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Tone</div>
+          <div className="text-2xl font-display font-bold mt-1">Glow</div>
+        </GlassCard>
+        <GlassCard tone="success" className="aspect-square">
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Status</div>
+          <div className="text-2xl font-display font-bold mt-1">Success</div>
+        </GlassCard>
+        <GlassCard tone="warning" className="aspect-square">
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Status</div>
+          <div className="text-2xl font-display font-bold mt-1">Warning</div>
+        </GlassCard>
+        <GlassCard tone="info" className="aspect-square">
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Status</div>
+          <div className="text-2xl font-display font-bold mt-1">Info</div>
+        </GlassCard>
+        <GlassCard tone="danger" className="aspect-square">
+          <div className="text-xs uppercase tracking-[0.25em] opacity-90">Status</div>
+          <div className="text-2xl font-display font-bold mt-1">Danger</div>
         </GlassCard>
       </div>
     </section>
