@@ -35,7 +35,13 @@ const StoreDashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const { data: isAdmin } = useIsAdmin();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState("overview");
+  const [searchParams] = useSearchParams();
+  const [activeView, setActiveView] = useState(searchParams.get("view") ?? "overview");
+
+  useEffect(() => {
+    const v = searchParams.get("view");
+    if (v) setActiveView(v);
+  }, [searchParams]);
 
   const { data: store, isLoading: storeLoading } = useQuery({
     queryKey: ["store", storeId],
