@@ -6,6 +6,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import MyOrders from "@/components/dashboard/MyOrders";
 import UserProfile from "@/components/dashboard/UserProfile";
 import MySubscriptions from "@/components/dashboard/MySubscriptions";
+import MyStoreAddons from "@/components/dashboard/MyStoreAddons";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import RenewalLoginToast from "@/components/notifications/RenewalLoginToast";
 
