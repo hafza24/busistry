@@ -135,22 +135,22 @@ const Navbar = () => {
 
             {user ? (
               <div className="flex items-center gap-2 ml-3">
-                <Button asChild size="sm" className="rounded-xl bg-foreground text-background hover:bg-foreground/90 font-bold gap-2">
+                <Button asChild variant="glass-brand" size="sm" className="rounded-full gap-2">
                   <Link to="/dashboard">
                     Dashboard
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="ghost" size="sm" className="rounded-xl font-bold" onClick={signOut}>
+                <Button variant="glass-accent" size="sm" className="rounded-full" onClick={signOut}>
                   Sign Out
                 </Button>
               </div>
             ) : (
               <div className="flex items-center gap-2 ml-3">
-                <Button asChild variant="ghost" size="sm" className="rounded-xl font-bold">
+                <Button asChild variant="glass-accent" size="sm" className="rounded-full gap-2">
                   <Link to="/auth"><LogIn className="h-4 w-4" />Sign In</Link>
                 </Button>
-                <Button asChild size="sm" className="rounded-xl bg-foreground text-background hover:bg-foreground/90 font-bold gap-2">
+                <Button asChild variant="glass-brand" size="sm" className="rounded-full gap-2">
                   <Link to="/auth">
                     Get Started
                     <Rocket className="h-4 w-4" />
