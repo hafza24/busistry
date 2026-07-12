@@ -232,13 +232,13 @@ const Index = () => {
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-7 text-base rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand group" asChild>
+                <Button variant="glass-brand" size="lg" className="h-12 px-7 text-base rounded-full group" asChild>
                   <Link to="/templates">
                     Browse Templates
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-12 px-7 text-base rounded-full" asChild>
+                <Button variant="glass-accent" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
                   <Link to="/how-it-works">Watch Demo</Link>
                 </Button>
               </div>
