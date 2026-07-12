@@ -375,19 +375,34 @@ export default function TrackOrder() {
                   {" · "}Placed {format(new Date(result.created_at), "MMM d, yyyy")}
                 </p>
               </div>
-              <Badge
-                variant="outline"
-                className={cn(
-                  "capitalize",
-                  cancelled
-                    ? "bg-destructive/10 text-destructive border-destructive/20"
-                    : result.status === "delivered"
-                    ? "bg-emerald-100 text-emerald-800 border-emerald-200"
-                    : "bg-blue-100 text-blue-800 border-blue-200"
-                )}
-              >
-                {result.status}
-              </Badge>
+              <div className="flex flex-col items-end gap-2 shrink-0">
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "capitalize",
+                    cancelled
+                      ? "bg-destructive/10 text-destructive border-destructive/20"
+                      : result.status === "delivered"
+                      ? "bg-emerald-100 text-emerald-800 border-emerald-200"
+                      : "bg-blue-100 text-blue-800 border-blue-200"
+                  )}
+                >
+                  {result.status}
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDownloadInvoice}
+                  disabled={downloading}
+                >
+                  {downloading ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <Download className="h-4 w-4 mr-2" />
+                  )}
+                  Invoice PDF
+                </Button>
+              </div>
             </CardHeader>
             <CardContent className="space-y-6">
               {cancelled ? (
