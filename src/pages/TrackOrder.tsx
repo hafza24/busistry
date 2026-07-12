@@ -40,6 +40,10 @@ type OrderResult = {
   shipping_fee: number;
   created_at: string;
   updated_at: string;
+  shipped_at: string | null;
+  tracking_number: string | null;
+  tracking_carrier: string | null;
+  tracking_url: string | null;
   store_name: string;
   store_slug: string | null;
 };
@@ -272,6 +276,35 @@ export default function TrackOrder() {
                   </ol>
                 </div>
               )}
+
+              {!cancelled && result.tracking_number && (
+                <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                    <Truck className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-muted-foreground">
+                      {result.tracking_carrier ? `${result.tracking_carrier} tracking number` : "Tracking number"}
+                    </p>
+                    <p className="font-mono font-semibold break-all">
+                      {result.tracking_number}
+                    </p>
+                    {result.shipped_at && (
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
+                        Shipped {format(new Date(result.shipped_at), "MMM d, yyyy")}
+                      </p>
+                    )}
+                  </div>
+                  {result.tracking_url && (
+                    <Button asChild variant="outline" size="sm">
+                      <a href={result.tracking_url} target="_blank" rel="noopener noreferrer">
+                        Track shipment
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              )}
+
 
               <div className="grid gap-4 sm:grid-cols-3 pt-2 border-t">
                 <div>

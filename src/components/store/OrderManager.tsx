@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Truck } from "lucide-react";
 import { format } from "date-fns";
 import { Eye } from "lucide-react";
 import { toast } from "sonner";
@@ -33,17 +35,41 @@ const OrderManager = ({ storeId }: Props) => {
   const [selected, setSelected] = useState<any>(null);
   const [newStatus, setNewStatus] = useState("");
   const [notes, setNotes] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingCarrier, setTrackingCarrier] = useState("");
+  const [trackingUrl, setTrackingUrl] = useState("");
 
   const openDetail = (order: any) => {
     setSelected(order);
     setNewStatus(order.status);
     setNotes(order.notes || "");
+    setTrackingNumber(order.tracking_number || "");
+    setTrackingCarrier(order.tracking_carrier || "");
+    setTrackingUrl(order.tracking_url || "");
   };
+
+  const needsTracking = newStatus === "shipped" || newStatus === "delivered";
 
   const handleStatusUpdate = async () => {
     if (!selected) return;
+    if (needsTracking && !trackingNumber.trim()) {
+      toast.error("Add a tracking number before marking the order as shipped");
+      return;
+    }
+    if (trackingUrl.trim() && !/^https?:\/\//i.test(trackingUrl.trim())) {
+      toast.error("Tracking URL must start with http:// or https://");
+      return;
+    }
     try {
-      await updateStatus.mutateAsync({ id: selected.id, store_id: storeId, status: newStatus, notes });
+      await updateStatus.mutateAsync({
+        id: selected.id,
+        store_id: storeId,
+        status: newStatus,
+        notes,
+        tracking_number: trackingNumber.trim() || null,
+        tracking_carrier: trackingCarrier.trim() || null,
+        tracking_url: trackingUrl.trim() || null,
+      });
       toast.success("Order updated");
       setSelected(null);
     } catch (e: any) { toast.error(e.message); }
@@ -150,6 +176,55 @@ const OrderManager = ({ storeId }: Props) => {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="rounded-lg border border-border/60 bg-muted/30 p-3 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Truck className="h-4 w-4 text-primary" aria-hidden="true" />
+                  <p className="text-sm font-medium">Shipping tracking</p>
+                  {needsTracking && (
+                    <span className="text-[10px] uppercase tracking-wide text-destructive font-semibold ml-auto">
+                      Required
+                    </span>
+                  )}
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs" htmlFor="tracking_number">Tracking number{needsTracking ? " *" : ""}</Label>
+                    <Input
+                      id="tracking_number"
+                      value={trackingNumber}
+                      onChange={(e) => setTrackingNumber(e.target.value)}
+                      placeholder="e.g. 8402385234"
+                      maxLength={64}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs" htmlFor="tracking_carrier">Courier</Label>
+                    <Input
+                      id="tracking_carrier"
+                      value={trackingCarrier}
+                      onChange={(e) => setTrackingCarrier(e.target.value)}
+                      placeholder="TCS, Leopards, M&P…"
+                      maxLength={64}
+                    />
+                  </div>
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <Label className="text-xs" htmlFor="tracking_url">Tracking link (optional)</Label>
+                    <Input
+                      id="tracking_url"
+                      type="url"
+                      value={trackingUrl}
+                      onChange={(e) => setTrackingUrl(e.target.value)}
+                      placeholder="https://…"
+                      maxLength={500}
+                    />
+                  </div>
+                </div>
+                <p className="text-[11px] text-muted-foreground">
+                  Shown to the customer on the public order tracking page.
+                </p>
+              </div>
+
               <div><Label>Notes</Label><Textarea value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
             </div>
           )}

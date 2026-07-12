@@ -134,8 +134,37 @@ export function useOrders(storeId: string | undefined) {
 export function useUpdateOrderStatus() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, store_id, status, notes }: { id: string; store_id: string; status: string; notes?: string }) => {
-      const { error } = await supabase.from("orders").update({ status, notes, updated_at: new Date().toISOString() }).eq("id", id);
+    mutationFn: async ({
+      id,
+      store_id,
+      status,
+      notes,
+      tracking_number,
+      tracking_carrier,
+      tracking_url,
+    }: {
+      id: string;
+      store_id: string;
+      status: string;
+      notes?: string;
+      tracking_number?: string | null;
+      tracking_carrier?: string | null;
+      tracking_url?: string | null;
+    }) => {
+      const patch: Record<string, any> = {
+        status,
+        notes,
+        updated_at: new Date().toISOString(),
+      };
+      // Only touch tracking fields when caller sends them (undefined = leave as-is)
+      if (tracking_number !== undefined) patch.tracking_number = tracking_number || null;
+      if (tracking_carrier !== undefined) patch.tracking_carrier = tracking_carrier || null;
+      if (tracking_url !== undefined) patch.tracking_url = tracking_url || null;
+      // Stamp shipped_at the first time we move into shipped/delivered
+      if (status === "shipped" || status === "delivered") {
+        patch.shipped_at = new Date().toISOString();
+      }
+      const { error } = await supabase.from("orders").update(patch as any).eq("id", id);
       if (error) throw error;
     },
     onSuccess: (_, v) => qc.invalidateQueries({ queryKey: ["orders", v.store_id] }),
