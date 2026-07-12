@@ -32,11 +32,24 @@ export default function AdminUpgradeOrders() {
   const updateStatus = useUpdateUpgradeOrderStatus();
   const updateOrder = useUpdateUpgradeOrder();
   const deleteOrder = useDeleteUpgradeOrder();
+  const applyOrder = useApplyUpgradeOrder();
   const { data: options = [] } = useAllUpgradeOptions();
   const upsertOpt = useUpsertUpgradeOption();
   const delOpt = useDeleteUpgradeOption();
   const [editingOpt, setEditingOpt] = useState<any | null>(null);
   const [editingOrder, setEditingOrder] = useState<any | null>(null);
+
+  const handleApprove = async (o: any) => {
+    try {
+      await applyOrder.mutateAsync(o.id);
+      const applied = o.upgrade_type === "product_limit" ? `+${o.details?.quantity ?? 0} products`
+        : o.upgrade_type === "category_limit" ? `+${o.details?.quantity ?? 0} categories`
+        : o.upgrade_type === "extend_duration" ? `+${o.details?.quantity ?? 0} days`
+        : o.upgrade_type === "plan_change" ? `plan → ${o.details?.target_plan_name ?? "new plan"}`
+        : "manual fulfillment required";
+      toast({ title: "Order approved & applied", description: applied });
+    } catch (e: any) { toast({ title: "Error", description: e.message, variant: "destructive" }); }
+  };
 
   const handleStatus = async (id: string, status: string) => {
     try {
