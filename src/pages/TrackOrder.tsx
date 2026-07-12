@@ -112,6 +112,173 @@ export default function TrackOrder() {
     }
   };
 
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownloadInvoice = async () => {
+    if (!result) return;
+    setDownloading(true);
+    try {
+      const { data, error } = await supabase.rpc("lookup_order_items", {
+        p_order_number: result.order_number,
+        p_email: email.trim(),
+      });
+      if (error) throw error;
+      const items = (data ?? []) as Array<{
+        product_name: string;
+        quantity: number;
+        price: number;
+        total: number;
+      }>;
+
+      const [{ default: jsPDF }, autoTableMod] = await Promise.all([
+        import("jspdf"),
+        import("jspdf-autotable"),
+      ]);
+      const autoTable = (autoTableMod as any).default ?? (autoTableMod as any);
+
+      const doc = new jsPDF({ unit: "pt", format: "a4" });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const marginX = 40;
+
+      // Header
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(20);
+      doc.text("INVOICE", marginX, 60);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(90);
+      doc.text(result.store_name, pageWidth - marginX, 50, { align: "right" });
+      if (result.store_slug) {
+        doc.text(`${result.store_slug}.busistree.com`, pageWidth - marginX, 64, {
+          align: "right",
+        });
+      }
+      doc.setTextColor(0);
+
+      // Meta box
+      const metaY = 100;
+      doc.setFontSize(9);
+      doc.setTextColor(120);
+      doc.text("ORDER NUMBER", marginX, metaY);
+      doc.text("ORDER DATE", marginX + 180, metaY);
+      doc.text("STATUS", marginX + 340, metaY);
+      doc.setTextColor(0);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text(result.order_number, marginX, metaY + 15);
+      doc.text(
+        format(new Date(result.created_at), "MMM d, yyyy"),
+        marginX + 180,
+        metaY + 15
+      );
+      doc.text(
+        result.status.charAt(0).toUpperCase() + result.status.slice(1),
+        marginX + 340,
+        metaY + 15
+      );
+
+      // Billed to
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(120);
+      doc.text("BILLED TO", marginX, metaY + 45);
+      doc.setTextColor(0);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text(result.customer_name, marginX, metaY + 60);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text(email.trim(), marginX, metaY + 74);
+
+      // Items table
+      const rows =
+        items.length > 0
+          ? items.map((it) => [
+              it.product_name,
+              String(it.quantity),
+              `PKR ${Number(it.price).toLocaleString()}`,
+              `PKR ${Number(it.total).toLocaleString()}`,
+            ])
+          : [["Order items unavailable", "", "", ""]];
+
+      autoTable(doc, {
+        startY: metaY + 100,
+        head: [["Item", "Qty", "Price", "Line total"]],
+        body: rows,
+        theme: "striped",
+        headStyles: { fillColor: [22, 101, 92], textColor: 255 },
+        columnStyles: {
+          1: { halign: "center", cellWidth: 50 },
+          2: { halign: "right", cellWidth: 90 },
+          3: { halign: "right", cellWidth: 100 },
+        },
+        margin: { left: marginX, right: marginX },
+        styles: { fontSize: 10, cellPadding: 6 },
+      });
+
+      // Totals
+      const finalY = (doc as any).lastAutoTable?.finalY ?? metaY + 200;
+      const subtotal =
+        items.reduce((s, i) => s + Number(i.total || 0), 0) ||
+        Number(result.total) - Number(result.shipping_fee || 0);
+      const totalsX = pageWidth - marginX - 200;
+      const labelX = totalsX;
+      const valueX = pageWidth - marginX;
+      let y = finalY + 24;
+      doc.setFontSize(10);
+      doc.text("Subtotal", labelX, y);
+      doc.text(`PKR ${Number(subtotal).toLocaleString()}`, valueX, y, {
+        align: "right",
+      });
+      y += 16;
+      doc.text("Shipping", labelX, y);
+      doc.text(
+        `PKR ${Number(result.shipping_fee || 0).toLocaleString()}`,
+        valueX,
+        y,
+        { align: "right" }
+      );
+      y += 20;
+      doc.setDrawColor(200);
+      doc.line(labelX, y - 8, valueX, y - 8);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text("Total", labelX, y);
+      doc.text(`PKR ${Number(result.total).toLocaleString()}`, valueX, y, {
+        align: "right",
+      });
+
+      // Tracking (if any)
+      if (result.tracking_number) {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(90);
+        doc.text(
+          `Shipping: ${result.tracking_carrier ?? "Courier"} · Tracking #${result.tracking_number}`,
+          marginX,
+          y + 40
+        );
+      }
+
+      // Footer
+      doc.setFontSize(9);
+      doc.setTextColor(140);
+      doc.text(
+        `Generated ${format(new Date(), "MMM d, yyyy HH:mm")} · Thank you for your order.`,
+        pageWidth / 2,
+        doc.internal.pageSize.getHeight() - 30,
+        { align: "center" }
+      );
+
+      doc.save(`invoice-${result.order_number}.pdf`);
+    } catch (err: any) {
+      toast.error(err?.message || "Could not generate invoice");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   const cancelled = result?.status === "cancelled";
   const active = result ? stepIndex(result.status) : 0;
 
