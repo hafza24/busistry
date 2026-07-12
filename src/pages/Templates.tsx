@@ -9,6 +9,7 @@ import { Rocket, Loader2, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
+import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -40,6 +41,7 @@ const Templates = () => {
 
   return (
     <div className="py-16">
+      <TemplateCustomizationNotice />
       <SEO
         title="Website & Store Templates — Busistree"
         description="Browse ecommerce, portfolio, blog, organization and event templates. Each one is fully customized with your brand and launched in 24–48 hours."

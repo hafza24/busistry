@@ -11,6 +11,7 @@ import { setPendingTemplate } from "@/hooks/useOnboarding";
 import { useItemReviewStats } from "@/hooks/useReviews";
 import { RatingStars, ItemBadges } from "@/components/reviews/ItemBadges";
 import { cn } from "@/lib/utils";
+import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
 
 const fmtPKR = (n: number) => `PKR ${new Intl.NumberFormat("en-PK").format(Math.round(n))}`;
 
