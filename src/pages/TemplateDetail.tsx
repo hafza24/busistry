@@ -84,14 +84,67 @@ const TemplateDetail = () => {
 
   const onboardHref = `/onboarding?template=${template.id}&admin=${variant === "with" ? "1" : "0"}`;
 
+  const seoTitle =
+    (template as any).meta_title?.trim() ||
+    `${template.name} — Busistree Template`;
+  const seoDescription =
+    (template as any).meta_description?.trim() ||
+    template.description ||
+    `Launch ${template.name} in 24–48 hours, fully branded to your business.`;
+  const seoKeywords: string[] =
+    Array.isArray((template as any).meta_keywords) && (template as any).meta_keywords.length > 0
+      ? (template as any).meta_keywords
+      : [
+          template.name,
+          template.category,
+          template.subcategory,
+          template.niche,
+          "website template",
+          "Busistree",
+        ].filter(Boolean);
+  const seoImage = (template as any).og_image_url || template.preview_image_url || null;
+  const seoImageAlt = (template as any).image_alt || `${template.name} website template preview`;
+
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: template.name,
+    description: seoDescription,
+    image: seoImage ? [seoImage] : undefined,
+    category: template.category || template.niche,
+    brand: { "@type": "Brand", name: "Busistree" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "PKR",
+      price: selectedPrice || basePrice || effectiveWithout,
+      availability: "https://schema.org/InStock",
+      url: `https://busistry.lovable.app/templates/${template.id}`,
+    },
+    ...(stat && stat.review_count > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: stat.avg_rating,
+            reviewCount: stat.review_count,
+          },
+        }
+      : {}),
+  };
+
   return (
     <div className="py-10 md:py-14">
       <TemplateCustomizationNotice />
       <SEO
-        title={`${template.name} — Busistree Template`}
-        description={template.description || `Launch ${template.name} in 24–48 hours, fully branded to your business.`}
+        title={seoTitle}
+        description={seoDescription}
         path={`/templates/${template.id}`}
+        image={seoImage}
+        imageAlt={seoImageAlt}
+        keywords={seoKeywords}
+        type="product"
+        jsonLd={productJsonLd}
       />
+
       <div className="container max-w-6xl">
         <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
           <Link to="/templates">
