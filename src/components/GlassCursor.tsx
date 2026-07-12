@@ -103,10 +103,14 @@ const GlassCursor = () => {
           {variant === "link" && "open"}
         </span>
         {variant === "button" && (
-          <span className="glass-cursor-ring-dots" aria-hidden="true">
-            <i /><i /><i />
+          <span className="glass-cursor-ring-sheen" aria-hidden="true" />
+        )}
+        {variant === "input" && (
+          <span className="glass-cursor-ring-beam" aria-hidden="true">
+            <i /><i />
           </span>
         )}
+
       </div>
       <div
         ref={arrowRef}
