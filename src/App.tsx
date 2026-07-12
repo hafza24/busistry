@@ -36,6 +36,7 @@ const DataProtection = lazy(() => import("./pages/legal/DataProtection"));
 const Help = lazy(() => import("./pages/Help"));
 const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
+const GlassUI = lazy(() => import("./pages/GlassUI"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -80,6 +81,7 @@ const App = () => (
                     <Route path="/help" element={<Help />} />
                     <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
+                    <Route path="/glass-ui" element={<GlassUI />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
