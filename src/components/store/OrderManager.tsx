@@ -33,17 +33,41 @@ const OrderManager = ({ storeId }: Props) => {
   const [selected, setSelected] = useState<any>(null);
   const [newStatus, setNewStatus] = useState("");
   const [notes, setNotes] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingCarrier, setTrackingCarrier] = useState("");
+  const [trackingUrl, setTrackingUrl] = useState("");
 
   const openDetail = (order: any) => {
     setSelected(order);
     setNewStatus(order.status);
     setNotes(order.notes || "");
+    setTrackingNumber(order.tracking_number || "");
+    setTrackingCarrier(order.tracking_carrier || "");
+    setTrackingUrl(order.tracking_url || "");
   };
+
+  const needsTracking = newStatus === "shipped" || newStatus === "delivered";
 
   const handleStatusUpdate = async () => {
     if (!selected) return;
+    if (needsTracking && !trackingNumber.trim()) {
+      toast.error("Add a tracking number before marking the order as shipped");
+      return;
+    }
+    if (trackingUrl.trim() && !/^https?:\/\//i.test(trackingUrl.trim())) {
+      toast.error("Tracking URL must start with http:// or https://");
+      return;
+    }
     try {
-      await updateStatus.mutateAsync({ id: selected.id, store_id: storeId, status: newStatus, notes });
+      await updateStatus.mutateAsync({
+        id: selected.id,
+        store_id: storeId,
+        status: newStatus,
+        notes,
+        tracking_number: trackingNumber.trim() || null,
+        tracking_carrier: trackingCarrier.trim() || null,
+        tracking_url: trackingUrl.trim() || null,
+      });
       toast.success("Order updated");
       setSelected(null);
     } catch (e: any) { toast.error(e.message); }
