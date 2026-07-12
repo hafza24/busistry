@@ -183,6 +183,7 @@ export default function UpgradePlan({ storeId }: Props) {
               <div key={o.id} className="flex items-center justify-between border-b border-border last:border-0 py-2">
                 <div>
                   <p className="font-medium text-sm">{TYPE_META[o.upgrade_type]?.label} — {o.details?.label || o.details?.target_plan_name}</p>
+                  {o.details?.notes && <p className="text-xs text-muted-foreground italic mt-0.5">"{o.details.notes}"</p>}
                   <p className="text-xs text-muted-foreground">{format(new Date(o.created_at), "MMM d, yyyy")} • PKR {o.amount.toLocaleString()}</p>
                 </div>
                 <Badge variant="outline" className={statusColors[o.status]}>{o.status}</Badge>
