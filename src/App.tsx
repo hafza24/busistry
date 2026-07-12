@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
 import PublicLayout from "@/components/PublicLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import GlassCursor from "@/components/GlassCursor";
 import { Loader2 } from "lucide-react";
 
 // Eager: landing-critical
