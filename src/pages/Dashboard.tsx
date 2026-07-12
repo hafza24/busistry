@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const v = searchParams.get("view");
-    if (v && ["orders", "profile", "subscriptions"].includes(v)) setActiveView(v);
+    if (v && ["orders", "profile", "subscriptions", "addons"].includes(v)) setActiveView(v);
   }, [searchParams]);
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading...</div>;
@@ -41,6 +41,7 @@ const Dashboard = () => {
     switch (activeView) {
       case "orders": return <MyOrders onNewOrder={startNewOrder} />;
       case "subscriptions": return <MySubscriptions />;
+      case "addons": return <MyStoreAddons />;
       case "profile": return <UserProfile />;
       default: return <MyOrders onNewOrder={startNewOrder} />;
     }
