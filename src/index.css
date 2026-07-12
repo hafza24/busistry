@@ -260,6 +260,25 @@
   .glass-fill-warning { background: linear-gradient(160deg, hsl(var(--warning) / 0.92), hsl(24 92% 55% / 0.78)); }
   .glass-fill-info    { background: linear-gradient(160deg, hsl(var(--info) / 0.9), hsl(var(--primary-glow) / 0.7)); }
   .glass-fill-danger  { background: linear-gradient(160deg, hsl(var(--destructive) / 0.9), hsl(340 75% 45% / 0.75)); }
+  .glass-fill-gray    { background: linear-gradient(160deg, hsl(0 0% 42% / 0.85), hsl(0 0% 20% / 0.75)); }
+
+  /* Gray-by-default button that reveals brand color on hover */
+  .glass-hover-brand {
+    position: relative;
+  }
+  .glass-hover-brand::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--gradient-brand);
+    opacity: 0;
+    transition: opacity 350ms cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glass-hover-brand:hover::before { opacity: 1; }
+  .glass-hover-brand > * { position: relative; z-index: 1; }
 }
 
 @keyframes fade-in {
