@@ -37,6 +37,7 @@ const Help = lazy(() => import("./pages/Help"));
 const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
 const GlassUI = lazy(() => import("./pages/GlassUI"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -82,6 +83,7 @@ const App = () => (
                     <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
                     <Route path="/glass-ui" element={<GlassUI />} />
+                    <Route path="/track" element={<TrackOrder />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />

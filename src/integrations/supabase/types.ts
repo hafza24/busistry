@@ -1914,6 +1914,20 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      lookup_order_status: {
+        Args: { p_email: string; p_order_number: string }
+        Returns: {
+          created_at: string
+          customer_name: string
+          order_number: string
+          shipping_fee: number
+          status: string
+          store_name: string
+          store_slug: string
+          total: number
+          updated_at: string
+        }[]
+      }
       set_website_order_credentials: {
         Args: {
           p_order_id: string
