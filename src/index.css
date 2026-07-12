@@ -50,6 +50,13 @@
     --sidebar-accent-foreground: 220 40% 15%;
     --sidebar-border: 200 20% 90%;
     --sidebar-ring: 179 48% 39%;
+
+    --success: 158 64% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 50% 12%;
+    --info: 210 90% 56%;
+    --info-foreground: 0 0% 100%;
   }
 
   .dark {
