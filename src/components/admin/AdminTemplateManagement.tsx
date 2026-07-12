@@ -278,6 +278,8 @@ const AdminTemplateManagement = () => {
             <div>
               <Label>Long description (detail page)</Label>
               <Textarea value={form.long_description} onChange={(e) => setForm((f) => ({ ...f, long_description: e.target.value }))} rows={4} placeholder="Full description shown on the template detail page." />
+            </div>
+
 
             <div>
               <Label>Demo URL</Label>
