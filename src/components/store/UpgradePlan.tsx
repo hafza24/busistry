@@ -6,7 +6,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Package, FolderTree, CalendarClock, Crown } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { TrendingUp, Package, FolderTree, CalendarClock, Crown, Wand2 } from "lucide-react";
 import CheckoutDialog from "@/components/marketplace/CheckoutDialog";
 import { format } from "date-fns";
 
@@ -17,6 +19,7 @@ const TYPE_META: Record<string, { label: string; icon: any; description: string 
   product_limit: { label: "More Products", icon: Package, description: "Increase your product limit" },
   category_limit: { label: "More Categories", icon: FolderTree, description: "Increase your category limit" },
   extend_duration: { label: "Extend Hosting", icon: CalendarClock, description: "Renew your store" },
+  content_tweak: { label: "Design / Content Tweaks", icon: Wand2, description: "Request design or content changes to your live site" },
 };
 
 const statusColors: Record<string, string> = {
