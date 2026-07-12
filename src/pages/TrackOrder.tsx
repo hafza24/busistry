@@ -40,6 +40,10 @@ type OrderResult = {
   shipping_fee: number;
   created_at: string;
   updated_at: string;
+  shipped_at: string | null;
+  tracking_number: string | null;
+  tracking_carrier: string | null;
+  tracking_url: string | null;
   store_name: string;
   store_slug: string | null;
 };
