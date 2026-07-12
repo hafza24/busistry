@@ -117,6 +117,63 @@ export default function UpgradePlan({ storeId }: Props) {
         );
       })}
 
+      {/* Design / content tweaks */}
+      {(() => {
+        const meta = TYPE_META.content_tweak;
+        const opts = grouped.content_tweak ?? [];
+        const Icon = meta.icon;
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg"><Icon className="h-5 w-5" /> {meta.label}</CardTitle>
+              <p className="text-sm text-muted-foreground">{meta.description}</p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {opts.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No tweak packages available yet. Please contact support.</p>
+              ) : (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {opts.map((o) => (
+                    <Card key={o.id} className="border-border/60">
+                      <CardContent className="p-4 space-y-3">
+                        <div>
+                          <p className="font-semibold">{o.label}</p>
+                          <p className="text-xl font-bold text-primary">PKR {o.price_pkr.toLocaleString()}</p>
+                        </div>
+                        <div className="space-y-1">
+                          <Label htmlFor={`tweak-${o.id}`} className="text-xs">Describe the changes you want</Label>
+                          <Textarea
+                            id={`tweak-${o.id}`}
+                            rows={3}
+                            placeholder="e.g. Change hero banner text, swap colors to navy, add an About section..."
+                            value={tweakNotes[o.id] ?? ""}
+                            onChange={(e) => setTweakNotes({ ...tweakNotes, [o.id]: e.target.value })}
+                          />
+                        </div>
+                        <Button
+                          size="sm"
+                          className="w-full"
+                          disabled={!(tweakNotes[o.id] ?? "").trim()}
+                          onClick={() => setCheckout({
+                            type: "content_tweak",
+                            details: { label: o.label, option_id: o.id, notes: tweakNotes[o.id]?.trim() },
+                            amount: o.price_pkr,
+                            label: o.label,
+                          })}
+                        >
+                          Request Update
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+      })()}
+
+
       {/* Order history */}
       {orders.length > 0 && (
         <Card>
