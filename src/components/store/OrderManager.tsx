@@ -176,6 +176,55 @@ const OrderManager = ({ storeId }: Props) => {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="rounded-lg border border-border/60 bg-muted/30 p-3 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Truck className="h-4 w-4 text-primary" aria-hidden="true" />
+                  <p className="text-sm font-medium">Shipping tracking</p>
+                  {needsTracking && (
+                    <span className="text-[10px] uppercase tracking-wide text-destructive font-semibold ml-auto">
+                      Required
+                    </span>
+                  )}
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs" htmlFor="tracking_number">Tracking number{needsTracking ? " *" : ""}</Label>
+                    <Input
+                      id="tracking_number"
+                      value={trackingNumber}
+                      onChange={(e) => setTrackingNumber(e.target.value)}
+                      placeholder="e.g. 8402385234"
+                      maxLength={64}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-xs" htmlFor="tracking_carrier">Courier</Label>
+                    <Input
+                      id="tracking_carrier"
+                      value={trackingCarrier}
+                      onChange={(e) => setTrackingCarrier(e.target.value)}
+                      placeholder="TCS, Leopards, M&P…"
+                      maxLength={64}
+                    />
+                  </div>
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <Label className="text-xs" htmlFor="tracking_url">Tracking link (optional)</Label>
+                    <Input
+                      id="tracking_url"
+                      type="url"
+                      value={trackingUrl}
+                      onChange={(e) => setTrackingUrl(e.target.value)}
+                      placeholder="https://…"
+                      maxLength={500}
+                    />
+                  </div>
+                </div>
+                <p className="text-[11px] text-muted-foreground">
+                  Shown to the customer on the public order tracking page.
+                </p>
+              </div>
+
               <div><Label>Notes</Label><Textarea value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
             </div>
           )}
