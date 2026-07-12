@@ -238,7 +238,7 @@ const Index = () => {
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="glass-accent" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
+                <Button variant="default" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
                   <Link to="/how-it-works">Watch Demo</Link>
                 </Button>
               </div>
