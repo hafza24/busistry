@@ -773,13 +773,13 @@ const Index = () => {
               The easiest, fastest way to launch a fully functional website — without doing anything yourself.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" className="h-12 px-8 text-base group" asChild>
+              <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
                 <Link to="/templates">
                   Browse Templates
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="h-12 px-8 text-base" asChild>
+              <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
                 <Link to="/pricing">Get Started</Link>
               </Button>
             </div>
