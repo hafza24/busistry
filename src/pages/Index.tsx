@@ -387,13 +387,13 @@ const Index = () => {
                     </div>
                     <div className="flex gap-2">
                       {t.demo_url ? (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-full border-border/70 hover:border-primary/50 hover:bg-primary/5" asChild>
+                        <Button variant="default" size="sm" className="flex-1 rounded-full" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
                             Preview <ExternalLink className="h-3 w-3 ml-1.5" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-full border-border/70 hover:border-primary/50 hover:bg-primary/5" asChild>
+                        <Button variant="default" size="sm" className="flex-1 rounded-full" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
