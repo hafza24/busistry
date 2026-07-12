@@ -296,42 +296,42 @@
       cursor: auto !important;
     }
   }
-  .glass-cursor-dot,
+  .glass-cursor-arrow,
   .glass-cursor-ring {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: 9999;
-    will-change: transform, width, height, opacity;
+    will-change: transform, width, height, opacity, border-radius;
     transform: translate3d(-100px, -100px, 0);
   }
-  .glass-cursor-dot {
-    width: 18px;
-    height: 18px;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at 32% 28%, hsl(0 0% 100% / 0.95) 0%, hsl(0 0% 100% / 0.35) 22%, transparent 45%),
-      conic-gradient(from 210deg,
-        hsl(166 47% 42%),
-        hsl(205 52% 46%),
-        hsl(260 28% 49%),
-        hsl(308 40% 49%),
-        hsl(166 47% 42%));
-    box-shadow:
-      inset 0 1px 0 hsl(0 0% 100% / 0.9),
-      inset 0 -2px 6px hsl(220 40% 10% / 0.35),
-      0 6px 18px -4px hsl(260 28% 49% / 0.55),
-      0 2px 8px -2px hsl(205 52% 46% / 0.55);
-    transition: width 220ms cubic-bezier(.2,.8,.2,1),
-                height 220ms cubic-bezier(.2,.8,.2,1),
-                opacity 220ms;
+
+  /* Arrow pointer — glossy SVG, tip anchored at (4,2.5) of a 22px svg */
+  .glass-cursor-arrow {
+    width: 22px;
+    height: 22px;
+    /* Offset so the arrow tip sits under the actual cursor coordinate. */
+    margin-left: -4px;
+    margin-top: -2px;
+    filter:
+      drop-shadow(0 3px 6px hsl(220 40% 10% / 0.35))
+      drop-shadow(0 1px 2px hsl(260 28% 40% / 0.4));
+    transition: transform 180ms cubic-bezier(.2,.8,.2,1), opacity 220ms;
   }
-  .glass-cursor-dot.is-hover { width: 12px; height: 12px; }
-  .glass-cursor-dot.is-pressed { width: 10px; height: 10px; }
+  .glass-cursor-arrow svg { display: block; }
+  .glass-cursor-arrow.is-input,
+  .glass-cursor-arrow.is-text {
+    opacity: 0;
+  }
+  .glass-cursor-arrow.is-pressed {
+    transform-origin: 4px 2.5px;
+  }
+
+  /* Ring / adaptive shape */
   .glass-cursor-ring {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 999px;
     border: 1px solid hsl(0 0% 100% / 0.55);
     background:
@@ -346,26 +346,106 @@
       inset 0 1px 0 hsl(0 0% 100% / 0.6),
       inset 0 -1px 0 hsl(0 0% 100% / 0.15),
       0 8px 24px -8px hsl(205 52% 46% / 0.4);
-    transition: width 260ms cubic-bezier(.2,.8,.2,1),
-                height 260ms cubic-bezier(.2,.8,.2,1),
-                border-color 260ms, background 260ms, opacity 260ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      width 260ms cubic-bezier(.2,.8,.2,1),
+      height 260ms cubic-bezier(.2,.8,.2,1),
+      border-radius 260ms cubic-bezier(.2,.8,.2,1),
+      border-color 260ms,
+      background 260ms,
+      box-shadow 260ms,
+      opacity 220ms;
   }
-  .glass-cursor-ring.is-hover {
-    width: 64px;
-    height: 64px;
-    border-color: hsl(0 0% 100% / 0.85);
+
+  .glass-cursor-ring-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: hsl(0 0% 100%);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 200ms ease, transform 200ms ease;
+    text-shadow: 0 1px 2px hsl(220 40% 10% / 0.45);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* --- LINK: compact pill with an underline hint --- */
+  .glass-cursor-ring.is-link {
+    width: 58px;
+    height: 26px;
+    border-radius: 999px;
+    border-color: hsl(205 52% 70% / 0.9);
     background:
       linear-gradient(135deg,
-        hsl(166 47% 42% / 0.35),
-        hsl(205 52% 46% / 0.3),
-        hsl(260 28% 49% / 0.35),
-        hsl(308 40% 49% / 0.35));
+        hsl(205 52% 46% / 0.35),
+        hsl(260 28% 49% / 0.3));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.7),
+      inset 0 -2px 6px hsl(220 40% 10% / 0.18),
+      0 10px 28px -8px hsl(205 52% 46% / 0.55);
+  }
+  .glass-cursor-ring.is-link .glass-cursor-ring-label {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+
+  /* --- BUTTON: bigger squircle with full brand wash --- */
+  .glass-cursor-ring.is-button {
+    width: 72px;
+    height: 44px;
+    border-radius: 14px;
+    border-color: hsl(0 0% 100% / 0.85);
+    background: var(--gradient-brand);
     box-shadow:
       inset 0 1px 0 hsl(0 0% 100% / 0.8),
-      inset 0 -1px 0 hsl(0 0% 100% / 0.2),
-      0 14px 36px -10px hsl(260 28% 49% / 0.55);
+      inset 0 -3px 10px hsl(220 40% 10% / 0.25),
+      0 16px 36px -10px hsl(260 28% 49% / 0.55);
   }
-  .glass-cursor-ring.is-pressed { width: 28px; height: 28px; }
+  .glass-cursor-ring.is-button .glass-cursor-ring-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* --- INPUT: I-beam styled tall bar --- */
+  .glass-cursor-ring.is-input {
+    width: 6px;
+    height: 30px;
+    border-radius: 3px;
+    border-color: hsl(0 0% 100% / 0.9);
+    background: linear-gradient(180deg,
+      hsl(0 0% 100% / 0.9),
+      hsl(205 52% 60% / 0.85),
+      hsl(0 0% 100% / 0.9));
+    box-shadow:
+      0 0 0 1px hsl(205 52% 46% / 0.35),
+      0 8px 20px -6px hsl(205 52% 46% / 0.5);
+  }
+
+  /* --- TEXT: slim vertical caret over reading content --- */
+  .glass-cursor-ring.is-text {
+    width: 4px;
+    height: 22px;
+    border-radius: 2px;
+    border-color: transparent;
+    background: linear-gradient(180deg,
+      hsl(260 28% 60% / 0.85),
+      hsl(308 40% 55% / 0.85));
+    box-shadow: 0 4px 14px -4px hsl(260 28% 49% / 0.5);
+  }
+
+  /* Press state */
+  .glass-cursor-ring.is-pressed {
+    transform-origin: center;
+    filter: brightness(1.05);
+  }
+  .glass-cursor-ring.is-default.is-pressed { width: 26px; height: 26px; }
+  .glass-cursor-ring.is-link.is-pressed    { width: 48px; height: 22px; }
+  .glass-cursor-ring.is-button.is-pressed  { width: 60px; height: 38px; }
 }
 
 @keyframes fade-in {
