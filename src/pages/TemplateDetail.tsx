@@ -175,9 +175,6 @@ const TemplateDetail = () => {
                 <div className="text-xl font-bold font-display text-foreground mt-3">
                   {effectiveWith > 0 ? fmtPKR(effectiveWith) : "—"}
                 </div>
-                {priceDiff > 0 && (
-                  <div className="text-xs text-primary mt-1">+{fmtPKR(priceDiff)} vs. website only</div>
-                )}
               </button>
             </div>
 
@@ -324,11 +321,6 @@ const TemplateDetail = () => {
                   <div className="text-3xl font-bold font-display text-foreground">
                     {effectiveWith > 0 ? fmtPKR(effectiveWith) : "—"}
                   </div>
-                  {priceDiff > 0 && (
-                    <span className="text-sm text-primary font-medium">
-                      +{fmtPKR(priceDiff)}
-                    </span>
-                  )}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">Everything in Website only, plus:</div>
 
