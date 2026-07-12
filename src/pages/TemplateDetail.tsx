@@ -159,7 +159,7 @@ const TemplateDetail = () => {
               {template.preview_image_url ? (
                 <img
                   src={template.preview_image_url}
-                  alt={template.name}
+                  alt={seoImageAlt}
                   className="w-full h-full object-cover object-top"
                   loading="eager"
                 />
