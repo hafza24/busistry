@@ -1492,6 +1492,7 @@ export type Database = {
       }
       templates: {
         Row: {
+          admin_features: Json
           available_plans: Json | null
           category: string | null
           created_at: string
@@ -1500,6 +1501,7 @@ export type Database = {
           features: Json | null
           id: string
           is_active: boolean
+          long_description: string | null
           name: string
           niche: string
           original_price_pkr: number | null
@@ -1508,6 +1510,8 @@ export type Database = {
           preset_pages: Json
           preview_image_url: string | null
           price_pkr: number
+          price_with_admin_pkr: number | null
+          price_without_admin_pkr: number | null
           slug: string | null
           sort_order: number
           status: string
@@ -1515,6 +1519,7 @@ export type Database = {
           tech_stack: string[]
         }
         Insert: {
+          admin_features?: Json
           available_plans?: Json | null
           category?: string | null
           created_at?: string
@@ -1523,6 +1528,7 @@ export type Database = {
           features?: Json | null
           id?: string
           is_active?: boolean
+          long_description?: string | null
           name: string
           niche: string
           original_price_pkr?: number | null
@@ -1531,6 +1537,8 @@ export type Database = {
           preset_pages?: Json
           preview_image_url?: string | null
           price_pkr?: number
+          price_with_admin_pkr?: number | null
+          price_without_admin_pkr?: number | null
           slug?: string | null
           sort_order?: number
           status?: string
@@ -1538,6 +1546,7 @@ export type Database = {
           tech_stack?: string[]
         }
         Update: {
+          admin_features?: Json
           available_plans?: Json | null
           category?: string | null
           created_at?: string
@@ -1546,6 +1555,7 @@ export type Database = {
           features?: Json | null
           id?: string
           is_active?: boolean
+          long_description?: string | null
           name?: string
           niche?: string
           original_price_pkr?: number | null
@@ -1554,6 +1564,8 @@ export type Database = {
           preset_pages?: Json
           preview_image_url?: string | null
           price_pkr?: number
+          price_with_admin_pkr?: number | null
+          price_without_admin_pkr?: number | null
           slug?: string | null
           sort_order?: number
           status?: string

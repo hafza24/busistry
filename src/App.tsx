@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 // Lazy: everything else
 const Templates = lazy(() => import("./pages/Templates"));
 const BookerTemplate = lazy(() => import("./pages/BookerTemplate"));
+const TemplateDetail = lazy(() => import("./pages/TemplateDetail"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -70,6 +71,7 @@ const App = () => (
                     <Route path="/" element={<Index />} />
                     <Route path="/templates" element={<Templates />} />
                     <Route path="/templates/booker" element={<BookerTemplate />} />
+                    <Route path="/templates/:id" element={<TemplateDetail />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />

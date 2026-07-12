@@ -6,16 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Loader2, Eye } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { setPendingTemplate } from "@/hooks/useOnboarding";
+import { Link } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
-  const [searchParams] = useSearchParams();
-  const planParam = searchParams.get("plan");
 
 
   const { data: templates = [], isLoading } = useQuery({
@@ -39,9 +36,7 @@ const Templates = () => {
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
   const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
 
-  const handleSelect = (id: string) => {
-    setPendingTemplate(id);
-  };
+
 
   return (
     <div className="py-16">
@@ -151,9 +146,9 @@ const Templates = () => {
                         </Link>
                       </Button>
                     ) : (
-                      <Button size="sm" className="flex-1" asChild onClick={() => handleSelect(t.id)}>
-                        <Link to={`/onboarding?template=${t.id}${planParam ? `&plan=${planParam}` : ""}`}>
-                          <Rocket className="h-3.5 w-3.5 mr-1" /> Select Template
+                      <Button size="sm" className="flex-1" asChild>
+                        <Link to={`/templates/${t.id}`}>
+                          <Eye className="h-3.5 w-3.5 mr-1" /> View details
                         </Link>
                       </Button>
                     )}

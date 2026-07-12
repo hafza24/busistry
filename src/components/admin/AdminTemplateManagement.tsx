@@ -24,8 +24,10 @@ interface TemplateForm {
   category: string;
   subcategory: string;
   description: string;
+  long_description: string;
   demo_url: string;
   features: string[];
+  admin_features: string[];
   is_active: boolean;
   preview_image_url: string | null;
   preset_pages: string[];
@@ -33,11 +35,14 @@ interface TemplateForm {
   preset_conditional_fields: ConditionalField[];
   price_pkr: number;
   original_price_pkr: number | null;
+  price_without_admin_pkr: number | null;
+  price_with_admin_pkr: number | null;
 }
 
 const emptyForm: TemplateForm = {
-  name: "", niche: "", category: "", subcategory: "", description: "", demo_url: "", features: [], is_active: true, preview_image_url: null,
+  name: "", niche: "", category: "", subcategory: "", description: "", long_description: "", demo_url: "", features: [], admin_features: [], is_active: true, preview_image_url: null,
   preset_pages: [], preset_modules: [], preset_conditional_fields: [], price_pkr: 0, original_price_pkr: null,
+  price_without_admin_pkr: null, price_with_admin_pkr: null,
 };
 
 
@@ -79,8 +84,10 @@ const AdminTemplateManagement = () => {
         category: t.category || null,
         subcategory: t.subcategory || null,
         description: t.description || null,
+        long_description: t.long_description || null,
         demo_url: t.demo_url || null,
         features: t.features,
+        admin_features: t.admin_features,
         is_active: t.is_active,
         preview_image_url,
         preset_pages: t.preset_pages,
@@ -88,6 +95,8 @@ const AdminTemplateManagement = () => {
         preset_conditional_fields: t.preset_conditional_fields,
         price_pkr: t.price_pkr || 0,
         original_price_pkr: t.original_price_pkr && t.original_price_pkr > 0 ? t.original_price_pkr : null,
+        price_without_admin_pkr: t.price_without_admin_pkr && t.price_without_admin_pkr > 0 ? t.price_without_admin_pkr : null,
+        price_with_admin_pkr: t.price_with_admin_pkr && t.price_with_admin_pkr > 0 ? t.price_with_admin_pkr : null,
       };
 
 
@@ -126,13 +135,17 @@ const AdminTemplateManagement = () => {
       id: t.id, name: t.name, niche: t.niche,
       category: t.category || "", subcategory: t.subcategory || "",
       description: t.description || "",
+      long_description: t.long_description || "",
       demo_url: t.demo_url || "", features: Array.isArray(t.features) ? t.features : [],
+      admin_features: Array.isArray(t.admin_features) ? t.admin_features : [],
       is_active: t.is_active, preview_image_url: t.preview_image_url,
       preset_pages: Array.isArray(t.preset_pages) ? t.preset_pages : [],
       preset_modules: Array.isArray(t.preset_modules) ? t.preset_modules : [],
       preset_conditional_fields: Array.isArray(t.preset_conditional_fields) ? t.preset_conditional_fields : [],
       price_pkr: t.price_pkr ?? 0,
       original_price_pkr: t.original_price_pkr != null ? Number(t.original_price_pkr) : null,
+      price_without_admin_pkr: t.price_without_admin_pkr != null ? Number(t.price_without_admin_pkr) : null,
+      price_with_admin_pkr: t.price_with_admin_pkr != null ? Number(t.price_with_admin_pkr) : null,
     });
     setOpen(true);
   };
@@ -263,6 +276,12 @@ const AdminTemplateManagement = () => {
             </div>
 
             <div>
+              <Label>Long description (detail page)</Label>
+              <Textarea value={form.long_description} onChange={(e) => setForm((f) => ({ ...f, long_description: e.target.value }))} rows={4} placeholder="Full description shown on the template detail page." />
+            </div>
+
+
+            <div>
               <Label>Demo URL</Label>
               <Input value={form.demo_url} onChange={(e) => setForm((f) => ({ ...f, demo_url: e.target.value }))} placeholder="https://..." />
             </div>
@@ -288,6 +307,47 @@ const AdminTemplateManagement = () => {
                 />
               </div>
             </div>
+
+            <div className="rounded-lg border border-border/60 p-4 space-y-3">
+              <div>
+                <Label className="text-base font-semibold">Admin panel variants</Label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Prices for the "Website only" vs. "Website + admin panel" options shown on the detail page.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label>Price without admin panel (PKR)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="Falls back to sale price"
+                    value={form.price_without_admin_pkr ?? ""}
+                    onChange={(e) => setForm((f) => ({ ...f, price_without_admin_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                  />
+                </div>
+                <div>
+                  <Label>Price with admin panel (PKR)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="Higher price with dashboard"
+                    value={form.price_with_admin_pkr ?? ""}
+                    onChange={(e) => setForm((f) => ({ ...f, price_with_admin_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label>Admin panel features (one per line)</Label>
+                <Textarea
+                  rows={4}
+                  placeholder={"Secure login\nManage content\nOrders & customers\nAnalytics"}
+                  value={form.admin_features.join("\n")}
+                  onChange={(e) => setForm((f) => ({ ...f, admin_features: e.target.value.split("\n").map((s) => s.trim()).filter(Boolean) }))}
+                />
+              </div>
+            </div>
+
 
 
 
