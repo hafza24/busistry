@@ -1,23 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-type CursorVariant = "default" | "link" | "button" | "input" | "text";
-
 /**
  * 3D glass-styled arrow cursor tinted with Busistree logo colors.
  * - Arrow: glassy SVG pointer that tracks the mouse tip.
- * - Trailing ring: follows with easing; morphs style per hovered element:
- *     link   -> compact pill with underline hint
- *     button -> larger squircle with brand gradient wash
- *     input  -> tall I-beam-styled bar
- *     text   -> slim vertical bar over selectable text
+ * - Trailing ring: follows the pointer with easing (no hover variants).
  * Disabled on touch devices and when prefers-reduced-motion is set.
  */
 const GlassCursor = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
-  const [variant, setVariant] = useState<CursorVariant>("default");
-  const [pressed, setPressed] = useState(false);
 
   useEffect(() => {
     const isTouch = window.matchMedia("(hover: none)").matches;
@@ -31,37 +23,13 @@ const GlassCursor = () => {
     let ringY = mouseY;
     let raf = 0;
 
-    const detectVariant = (target: HTMLElement | null): CursorVariant => {
-      if (!target) return "default";
-      if (target.closest('input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]')) {
-        return "input";
-      }
-      if (target.closest('select, [role="combobox"], [role="listbox"]')) {
-        return "button";
-      }
-      if (target.closest('button, [role="button"], [data-cursor="button"], label[for], summary')) {
-        return "button";
-      }
-      if (target.closest('a[href], [role="link"], [data-cursor="link"]')) {
-        return "link";
-      }
-      if (target.closest('p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, [data-cursor="text"]')) {
-        // Only treat as text when the element actually renders text content.
-        return "text";
-      }
-      return "default";
-    };
-
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       if (arrowRef.current) {
         arrowRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       }
-      setVariant(detectVariant(e.target as HTMLElement | null));
     };
-    const onDown = () => setPressed(true);
-    const onUp = () => setPressed(false);
 
     const tick = () => {
       ringX += (mouseX - ringX) * 0.2;
@@ -74,49 +42,21 @@ const GlassCursor = () => {
     raf = requestAnimationFrame(tick);
 
     window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mousedown", onDown);
-    window.addEventListener("mouseup", onUp);
-
     document.documentElement.classList.add("glass-cursor-active");
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mouseup", onUp);
       document.documentElement.classList.remove("glass-cursor-active");
     };
   }, []);
 
   if (!enabled) return null;
 
-  const stateClass = `is-${variant}${pressed ? " is-pressed" : ""}`;
-
   return (
     <>
-      <div
-        ref={ringRef}
-        aria-hidden="true"
-        className={`glass-cursor-ring ${stateClass}`}
-      >
-        <span className="glass-cursor-ring-label" aria-hidden="true">
-          {variant === "link" && "open"}
-        </span>
-        {variant === "button" && (
-          <span className="glass-cursor-ring-sheen" aria-hidden="true" />
-        )}
-        {variant === "input" && (
-          <span className="glass-cursor-ring-beam" aria-hidden="true">
-            <i /><i />
-          </span>
-        )}
-
-      </div>
-      <div
-        ref={arrowRef}
-        aria-hidden="true"
-        className={`glass-cursor-arrow ${stateClass}`}
-      >
+      <div ref={ringRef} aria-hidden="true" className="glass-cursor-ring" />
+      <div ref={arrowRef} aria-hidden="true" className="glass-cursor-arrow">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
           <defs>
             <linearGradient id="glassCursorFill" x1="0" y1="0" x2="1" y2="1">
