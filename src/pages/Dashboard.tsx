@@ -8,6 +8,7 @@ import UserProfile from "@/components/dashboard/UserProfile";
 import MySubscriptions from "@/components/dashboard/MySubscriptions";
 import MyStoreAddons from "@/components/dashboard/MyStoreAddons";
 import MyReviewPreferences from "@/components/dashboard/MyReviewPreferences";
+import MyWebsiteUpdates from "@/components/dashboard/MyWebsiteUpdates";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import RenewalLoginToast from "@/components/notifications/RenewalLoginToast";
 import ReviewPromptBanner from "@/components/reviews/ReviewPromptBanner";
@@ -24,7 +25,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const v = searchParams.get("view");
-    if (v && ["orders", "profile", "subscriptions", "addons", "reviews"].includes(v)) setActiveView(v);
+    if (v && ["orders", "profile", "subscriptions", "updates", "addons", "reviews"].includes(v)) setActiveView(v);
   }, [searchParams]);
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading...</div>;
@@ -43,6 +44,7 @@ const Dashboard = () => {
     switch (activeView) {
       case "orders": return <MyOrders onNewOrder={startNewOrder} />;
       case "subscriptions": return <MySubscriptions />;
+      case "updates": return <MyWebsiteUpdates />;
       case "addons": return <MyStoreAddons />;
       case "reviews": return <MyReviewPreferences />;
       case "profile": return <UserProfile />;
@@ -61,6 +63,7 @@ const Dashboard = () => {
             <h1 className="text-lg font-semibold font-display text-foreground flex-1">
               {activeView === "orders" && "My Orders"}
               {activeView === "subscriptions" && "Subscriptions"}
+              {activeView === "updates" && "Website Updates"}
               {activeView === "addons" && "Add-ons"}
               {activeView === "reviews" && "Review preferences"}
               {activeView === "profile" && "Profile"}

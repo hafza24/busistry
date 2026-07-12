@@ -6,7 +6,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Package, FolderTree, CalendarClock, Crown } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { TrendingUp, Package, FolderTree, CalendarClock, Crown, Wand2 } from "lucide-react";
 import CheckoutDialog from "@/components/marketplace/CheckoutDialog";
 import { format } from "date-fns";
 
@@ -17,6 +19,7 @@ const TYPE_META: Record<string, { label: string; icon: any; description: string 
   product_limit: { label: "More Products", icon: Package, description: "Increase your product limit" },
   category_limit: { label: "More Categories", icon: FolderTree, description: "Increase your category limit" },
   extend_duration: { label: "Extend Hosting", icon: CalendarClock, description: "Renew your store" },
+  content_tweak: { label: "Design / Content Tweaks", icon: Wand2, description: "Request design or content changes to your live site" },
 };
 
 const statusColors: Record<string, string> = {
@@ -40,6 +43,7 @@ export default function UpgradePlan({ storeId }: Props) {
   });
 
   const [checkout, setCheckout] = useState<{ type: string; details: any; amount: number; label: string } | null>(null);
+  const [tweakNotes, setTweakNotes] = useState<Record<string, string>>({});
 
   const grouped: Record<string, any[]> = {};
   for (const o of options) {
@@ -113,6 +117,63 @@ export default function UpgradePlan({ storeId }: Props) {
         );
       })}
 
+      {/* Design / content tweaks */}
+      {(() => {
+        const meta = TYPE_META.content_tweak;
+        const opts = grouped.content_tweak ?? [];
+        const Icon = meta.icon;
+        return (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg"><Icon className="h-5 w-5" /> {meta.label}</CardTitle>
+              <p className="text-sm text-muted-foreground">{meta.description}</p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {opts.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No tweak packages available yet. Please contact support.</p>
+              ) : (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {opts.map((o) => (
+                    <Card key={o.id} className="border-border/60">
+                      <CardContent className="p-4 space-y-3">
+                        <div>
+                          <p className="font-semibold">{o.label}</p>
+                          <p className="text-xl font-bold text-primary">PKR {o.price_pkr.toLocaleString()}</p>
+                        </div>
+                        <div className="space-y-1">
+                          <Label htmlFor={`tweak-${o.id}`} className="text-xs">Describe the changes you want</Label>
+                          <Textarea
+                            id={`tweak-${o.id}`}
+                            rows={3}
+                            placeholder="e.g. Change hero banner text, swap colors to navy, add an About section..."
+                            value={tweakNotes[o.id] ?? ""}
+                            onChange={(e) => setTweakNotes({ ...tweakNotes, [o.id]: e.target.value })}
+                          />
+                        </div>
+                        <Button
+                          size="sm"
+                          className="w-full"
+                          disabled={!(tweakNotes[o.id] ?? "").trim()}
+                          onClick={() => setCheckout({
+                            type: "content_tweak",
+                            details: { label: o.label, option_id: o.id, notes: tweakNotes[o.id]?.trim() },
+                            amount: o.price_pkr,
+                            label: o.label,
+                          })}
+                        >
+                          Request Update
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        );
+      })()}
+
+
       {/* Order history */}
       {orders.length > 0 && (
         <Card>
@@ -122,6 +183,7 @@ export default function UpgradePlan({ storeId }: Props) {
               <div key={o.id} className="flex items-center justify-between border-b border-border last:border-0 py-2">
                 <div>
                   <p className="font-medium text-sm">{TYPE_META[o.upgrade_type]?.label} — {o.details?.label || o.details?.target_plan_name}</p>
+                  {o.details?.notes && <p className="text-xs text-muted-foreground italic mt-0.5">"{o.details.notes}"</p>}
                   <p className="text-xs text-muted-foreground">{format(new Date(o.created_at), "MMM d, yyyy")} • PKR {o.amount.toLocaleString()}</p>
                 </div>
                 <Badge variant="outline" className={statusColors[o.status]}>{o.status}</Badge>
