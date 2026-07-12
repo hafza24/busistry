@@ -97,6 +97,13 @@
     --sidebar-accent-foreground: 200 20% 90%;
     --sidebar-border: 220 30% 18%;
     --sidebar-ring: 179 55% 50%;
+
+    --success: 158 64% 48%;
+    --success-foreground: 220 40% 10%;
+    --warning: 38 92% 58%;
+    --warning-foreground: 30 50% 12%;
+    --info: 210 90% 62%;
+    --info-foreground: 220 40% 10%;
   }
 }
 
