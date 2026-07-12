@@ -63,6 +63,7 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Sonner />
+        <GlassCursor />
         <BrowserRouter>
           <AuthProvider>
             <ErrorBoundary>
