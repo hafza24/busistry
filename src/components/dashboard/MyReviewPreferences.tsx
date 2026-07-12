@@ -34,6 +34,10 @@ interface Row {
   updated_at: string;
   label: string;
   review_id: string | null;
+  review_rating: number | null;
+  review_title: string | null;
+  review_comment: string | null;
+  review_created_at: string | null;
 }
 
 export default function MyReviewPreferences() {
@@ -71,7 +75,7 @@ export default function MyReviewPreferences() {
         planIds.length ? supabase.from("plans").select("id, name").in("id", planIds) : Promise.resolve({ data: [] as any[] } as any),
         orderIds.length ? supabase.from("website_orders").select("id, store_name").in("id", orderIds) : Promise.resolve({ data: [] as any[] } as any),
         productIds.length ? supabase.from("website_products").select("id, name").in("id", productIds) : Promise.resolve({ data: [] as any[] } as any),
-        supabase.from("reviews" as any).select("id, target_type, target_id").eq("user_id", user!.id),
+        supabase.from("reviews" as any).select("id, target_type, target_id, rating, title, comment, created_at").eq("user_id", user!.id),
       ]);
 
       (tpl.data ?? []).forEach((r: any) => labelMap.set(`template:${r.id}`, r.name));
@@ -79,19 +83,26 @@ export default function MyReviewPreferences() {
       (ord.data ?? []).forEach((r: any) => labelMap.set(`order:${r.id}`, r.store_name || "Website build"));
       (prd.data ?? []).forEach((r: any) => labelMap.set(`website_product:${r.id}`, r.name));
 
-      const reviewMap = new Map<string, string>();
-      ((myReviews.data ?? []) as any[]).forEach((r) => reviewMap.set(`${r.target_type}:${r.target_id}`, r.id));
+      const reviewMap = new Map<string, any>();
+      ((myReviews.data ?? []) as any[]).forEach((r) => reviewMap.set(`${r.target_type}:${r.target_id}`, r));
 
-      return list.map<Row>((r) => ({
-        id: r.id,
-        target_type: r.target_type,
-        target_id: r.target_id,
-        state: r.state,
-        last_prompted_at: r.last_prompted_at,
-        updated_at: r.updated_at,
-        label: labelMap.get(`${r.target_type}:${r.target_id}`) ?? "(unknown item)",
-        review_id: reviewMap.get(`${r.target_type}:${r.target_id}`) ?? null,
-      }));
+      return list.map<Row>((r) => {
+        const rev = reviewMap.get(`${r.target_type}:${r.target_id}`);
+        return {
+          id: r.id,
+          target_type: r.target_type,
+          target_id: r.target_id,
+          state: r.state,
+          last_prompted_at: r.last_prompted_at,
+          updated_at: r.updated_at,
+          label: labelMap.get(`${r.target_type}:${r.target_id}`) ?? "(unknown item)",
+          review_id: rev?.id ?? null,
+          review_rating: rev?.rating ?? null,
+          review_title: rev?.title ?? null,
+          review_comment: rev?.comment ?? null,
+          review_created_at: rev?.created_at ?? null,
+        };
+      });
     },
   });
 
@@ -151,43 +162,73 @@ export default function MyReviewPreferences() {
             </p>
           ) : (
             rows.map((row) => (
-              <div key={row.id} className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg border border-border/60 bg-card/60">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="outline" className="text-[10px]">{TYPE_LABEL[row.target_type] ?? row.target_type}</Badge>
-                    <p className="text-sm font-medium truncate">{row.label}</p>
-                    <Badge variant="outline" className={`text-[10px] capitalize ${STATE_STYLE[row.state] ?? ""}`}>{row.state}</Badge>
+              <div key={row.id} className="p-3 rounded-lg border border-border/60 bg-card/60 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge variant="outline" className="text-[10px]">{TYPE_LABEL[row.target_type] ?? row.target_type}</Badge>
+                      <p className="text-sm font-medium truncate">{row.label}</p>
+                      <Badge variant="outline" className={`text-[10px] capitalize ${STATE_STYLE[row.state] ?? ""}`}>{row.state}</Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1">
+                      Updated {new Date(row.updated_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-muted-foreground mt-1">
-                    Updated {new Date(row.updated_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {row.state === "reviewed" ? (
-                    <Button size="sm" variant="outline" onClick={() => deleteReview(row)}>
-                      <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove review
-                    </Button>
-                  ) : (
-                    <>
-                      <Button size="sm" onClick={() => setActive({ target_type: row.target_type, target_id: row.target_id, label: row.label })}>
-                        <MessageSquarePlus className="h-3.5 w-3.5 mr-1" /> Review
-                      </Button>
-                      {row.state !== "later" && (
-                        <Button size="sm" variant="ghost" onClick={() => change(row, "later")}>
-                          <Clock className="h-3.5 w-3.5 mr-1" /> Later
+                  <div className="flex flex-wrap gap-1.5">
+                    {row.state === "reviewed" ? (
+                      <>
+                        <Button size="sm" variant="outline" onClick={() => setActive({ target_type: row.target_type, target_id: row.target_id, label: row.label })}>
+                          <MessageSquarePlus className="h-3.5 w-3.5 mr-1" /> Edit
                         </Button>
-                      )}
-                      {row.state !== "never" && (
-                        <Button size="sm" variant="ghost" onClick={() => change(row, "never")}>
-                          <X className="h-3.5 w-3.5 mr-1" /> Never
+                        <Button size="sm" variant="outline" onClick={() => deleteReview(row)}>
+                          <Trash2 className="h-3.5 w-3.5 mr-1" /> Remove
                         </Button>
-                      )}
-                      <Button size="sm" variant="ghost" onClick={() => change(row, "pending")} title="Show in prompt again">
-                        <RotateCcw className="h-3.5 w-3.5 mr-1" /> Reset
-                      </Button>
-                    </>
-                  )}
+                      </>
+                    ) : (
+                      <>
+                        <Button size="sm" onClick={() => setActive({ target_type: row.target_type, target_id: row.target_id, label: row.label })}>
+                          <MessageSquarePlus className="h-3.5 w-3.5 mr-1" /> Review
+                        </Button>
+                        {row.state !== "later" && (
+                          <Button size="sm" variant="ghost" onClick={() => change(row, "later")}>
+                            <Clock className="h-3.5 w-3.5 mr-1" /> Later
+                          </Button>
+                        )}
+                        {row.state !== "never" && (
+                          <Button size="sm" variant="ghost" onClick={() => change(row, "never")}>
+                            <X className="h-3.5 w-3.5 mr-1" /> Never
+                          </Button>
+                        )}
+                        <Button size="sm" variant="ghost" onClick={() => change(row, "pending")} title="Show in prompt again">
+                          <RotateCcw className="h-3.5 w-3.5 mr-1" /> Reset
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
+
+                {row.state === "reviewed" && row.review_rating !== null && (
+                  <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="flex gap-0.5" aria-label={`Rated ${row.review_rating} of 5`}>
+                        {[1,2,3,4,5].map((n) => (
+                          <Star key={n} className={`h-4 w-4 ${n <= (row.review_rating ?? 0) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30"}`} />
+                        ))}
+                      </div>
+                      <span className="text-xs font-semibold">{row.review_rating}/5</span>
+                      {row.review_created_at && (
+                        <span className="text-[11px] text-muted-foreground">
+                          · {new Date(row.review_created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                        </span>
+                      )}
+                    </div>
+                    {row.review_title && <p className="text-sm font-medium">{row.review_title}</p>}
+                    {row.review_comment && <p className="text-sm text-muted-foreground whitespace-pre-wrap mt-1">{row.review_comment}</p>}
+                    {!row.review_title && !row.review_comment && (
+                      <p className="text-xs text-muted-foreground italic">Rating only — no written feedback.</p>
+                    )}
+                  </div>
+                )}
               </div>
             ))
           )}
