@@ -113,9 +113,12 @@ export default function AdminUpgradeOrders() {
                   <div className="flex flex-col gap-2 items-end">
                     {o.status === "pending" && (
                       <div className="flex gap-2">
-                        <Button size="sm" onClick={() => handleStatus(o.id, "approved")}><Check className="h-3.5 w-3.5 mr-1" /> Approve</Button>
+                        <Button size="sm" onClick={() => handleApprove(o)}><Check className="h-3.5 w-3.5 mr-1" /> Approve & Apply</Button>
                         <Button size="sm" variant="outline" onClick={() => handleStatus(o.id, "rejected")}><X className="h-3.5 w-3.5 mr-1" /> Reject</Button>
                       </div>
+                    )}
+                    {o.status !== "pending" && o.status !== "completed" && o.status !== "rejected" && (
+                      <Button size="sm" variant="secondary" onClick={() => handleApprove(o)}><Zap className="h-3.5 w-3.5 mr-1" /> Run now</Button>
                     )}
                     <div className="flex gap-2">
                       <Button size="sm" variant="outline" onClick={() => setEditingOrder({ ...o })}><Pencil className="h-3.5 w-3.5 mr-1" /> Edit</Button>
