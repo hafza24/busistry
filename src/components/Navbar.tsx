@@ -56,7 +56,27 @@ const Navbar = () => {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 pt-4 pb-3 px-3 md:px-6">
+    <header
+      className={`sticky top-0 z-50 px-3 md:px-6 transition-all duration-300 ease-out ${
+        scrolled ? "pt-2 pb-2" : "pt-4 pb-3"
+      }`}
+    >
+      {/* Sticky backdrop — appears only after scroll */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
+          scrolled ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background:
+            "linear-gradient(180deg, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.65) 100%)",
+          backdropFilter: "blur(14px) saturate(140%)",
+          WebkitBackdropFilter: "blur(14px) saturate(140%)",
+          boxShadow: scrolled ? "0 10px 30px -12px hsl(var(--foreground) / 0.18)" : "none",
+          borderBottom: "1px solid hsl(var(--border) / 0.6)",
+        }}
+      />
+
       <div className="relative w-full flex items-center justify-center group">
 
         {/* Central Logo Hub overlay */}
@@ -69,7 +89,7 @@ const Navbar = () => {
             src={logo}
             alt="Busistree"
             className={`w-auto object-contain transition-all duration-300 drop-shadow-[0_10px_25px_hsl(var(--primary)/0.25)] ${
-              scrolled ? "h-20" : "h-28"
+              scrolled ? "h-16" : "h-28"
             }`}
           />
         </Link>
@@ -77,7 +97,7 @@ const Navbar = () => {
         {/* Main glass nav bar */}
         <nav
           className={`relative flex items-center w-full px-4 md:px-8 bg-transparent transition-all duration-300 ${
-            scrolled ? "h-16" : "h-20"
+            scrolled ? "h-14" : "h-20"
           }`}
         >
           {/* Mobile logo (left) */}
