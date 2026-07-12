@@ -55,8 +55,8 @@ const GlassCursor = () => {
 
   return (
     <>
-      <div ref={ringRef} aria-hidden="true" className="glass-cursor-ring" />
       <div ref={arrowRef} aria-hidden="true" className="glass-cursor-arrow">
+
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
           <defs>
             <linearGradient id="glassCursorFill" x1="0" y1="0" x2="1" y2="1">
