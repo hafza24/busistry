@@ -114,6 +114,12 @@ const AdminTemplateManagement = () => {
         original_price_pkr: t.original_price_pkr && t.original_price_pkr > 0 ? t.original_price_pkr : null,
         price_without_admin_pkr: t.price_without_admin_pkr && t.price_without_admin_pkr > 0 ? t.price_without_admin_pkr : null,
         price_with_admin_pkr: t.price_with_admin_pkr && t.price_with_admin_pkr > 0 ? t.price_with_admin_pkr : null,
+        slug: t.slug?.trim() ? slugify(t.slug) : (t.name ? slugify(t.name) : null),
+        meta_title: t.meta_title?.trim() || null,
+        meta_description: t.meta_description?.trim() || null,
+        meta_keywords: t.meta_keywords,
+        og_image_url: t.og_image_url?.trim() || null,
+        image_alt: t.image_alt?.trim() || null,
       };
 
 
