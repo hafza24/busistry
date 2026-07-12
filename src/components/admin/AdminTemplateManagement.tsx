@@ -276,6 +276,10 @@ const AdminTemplateManagement = () => {
             </div>
 
             <div>
+              <Label>Long description (detail page)</Label>
+              <Textarea value={form.long_description} onChange={(e) => setForm((f) => ({ ...f, long_description: e.target.value }))} rows={4} placeholder="Full description shown on the template detail page." />
+
+            <div>
               <Label>Demo URL</Label>
               <Input value={form.demo_url} onChange={(e) => setForm((f) => ({ ...f, demo_url: e.target.value }))} placeholder="https://..." />
             </div>
@@ -301,6 +305,47 @@ const AdminTemplateManagement = () => {
                 />
               </div>
             </div>
+
+            <div className="rounded-lg border border-border/60 p-4 space-y-3">
+              <div>
+                <Label className="text-base font-semibold">Admin panel variants</Label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Prices for the "Website only" vs. "Website + admin panel" options shown on the detail page.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label>Price without admin panel (PKR)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="Falls back to sale price"
+                    value={form.price_without_admin_pkr ?? ""}
+                    onChange={(e) => setForm((f) => ({ ...f, price_without_admin_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                  />
+                </div>
+                <div>
+                  <Label>Price with admin panel (PKR)</Label>
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="Higher price with dashboard"
+                    value={form.price_with_admin_pkr ?? ""}
+                    onChange={(e) => setForm((f) => ({ ...f, price_with_admin_pkr: e.target.value === "" ? null : Number(e.target.value) }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label>Admin panel features (one per line)</Label>
+                <Textarea
+                  rows={4}
+                  placeholder={"Secure login\nManage content\nOrders & customers\nAnalytics"}
+                  value={form.admin_features.join("\n")}
+                  onChange={(e) => setForm((f) => ({ ...f, admin_features: e.target.value.split("\n").map((s) => s.trim()).filter(Boolean) }))}
+                />
+              </div>
+            </div>
+
 
 
 
