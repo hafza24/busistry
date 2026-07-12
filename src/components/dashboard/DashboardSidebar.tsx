@@ -23,6 +23,7 @@ const DashboardSidebar = ({ activeView, onViewChange }: DashboardSidebarProps) =
   const menuItems = [
     { id: "orders", label: "My Orders", icon: Globe },
     { id: "subscriptions", label: "Subscriptions", icon: Repeat },
+    { id: "addons", label: "Add-ons", icon: Sparkles },
   ];
 
   return (
