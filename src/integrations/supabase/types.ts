@@ -1044,6 +1044,78 @@ export type Database = {
         }
         Relationships: []
       }
+      review_prompt_state: {
+        Row: {
+          created_at: string
+          id: string
+          last_prompted_at: string | null
+          state: string
+          target_id: string
+          target_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_prompted_at?: string | null
+          state?: string
+          target_id: string
+          target_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_prompted_at?: string | null
+          state?: string
+          target_id?: string
+          target_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          is_approved: boolean
+          rating: number
+          target_id: string
+          target_type: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          rating: number
+          target_id: string
+          target_type: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          rating?: number
+          target_id?: string
+          target_type?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       store_addons: {
         Row: {
           admin_notes: string | null
@@ -1754,6 +1826,21 @@ export type Database = {
       }
     }
     Views: {
+      item_review_stats: {
+        Row: {
+          avg_rating: number | null
+          is_featured: boolean | null
+          is_liked: boolean | null
+          is_popular: boolean | null
+          is_top: boolean | null
+          positive_count: number | null
+          review_count: number | null
+          sales_count: number | null
+          target_id: string | null
+          target_type: string | null
+        }
+        Relationships: []
+      }
       public_feedback_reviews: {
         Row: {
           created_at: string | null
@@ -1875,6 +1962,10 @@ export type Database = {
           count: number
         }[]
       }
+      can_review: {
+        Args: { _target_id: string; _target_type: string; _user_id: string }
+        Returns: boolean
+      }
       create_order_with_items: {
         Args: {
           p_customer_address: string
@@ -1908,6 +1999,15 @@ export type Database = {
         Returns: {
           avg_rating: number
           total_reviews: number
+        }[]
+      }
+      get_pending_review_prompts: {
+        Args: never
+        Returns: {
+          label: string
+          order_id: string
+          target_id: string
+          target_type: string
         }[]
       }
       get_website_order_credentials: {
