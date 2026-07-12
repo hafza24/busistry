@@ -7,6 +7,7 @@ import MyOrders from "@/components/dashboard/MyOrders";
 import UserProfile from "@/components/dashboard/UserProfile";
 import MySubscriptions from "@/components/dashboard/MySubscriptions";
 import MyStoreAddons from "@/components/dashboard/MyStoreAddons";
+import MyReviewPreferences from "@/components/dashboard/MyReviewPreferences";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import RenewalLoginToast from "@/components/notifications/RenewalLoginToast";
 import ReviewPromptBanner from "@/components/reviews/ReviewPromptBanner";
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const v = searchParams.get("view");
-    if (v && ["orders", "profile", "subscriptions", "addons"].includes(v)) setActiveView(v);
+    if (v && ["orders", "profile", "subscriptions", "addons", "reviews"].includes(v)) setActiveView(v);
   }, [searchParams]);
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading...</div>;
@@ -43,6 +44,7 @@ const Dashboard = () => {
       case "orders": return <MyOrders onNewOrder={startNewOrder} />;
       case "subscriptions": return <MySubscriptions />;
       case "addons": return <MyStoreAddons />;
+      case "reviews": return <MyReviewPreferences />;
       case "profile": return <UserProfile />;
       default: return <MyOrders onNewOrder={startNewOrder} />;
     }
@@ -60,6 +62,7 @@ const Dashboard = () => {
               {activeView === "orders" && "My Orders"}
               {activeView === "subscriptions" && "Subscriptions"}
               {activeView === "addons" && "Add-ons"}
+              {activeView === "reviews" && "Review preferences"}
               {activeView === "profile" && "Profile"}
             </h1>
             <NotificationBell audience="user" />
