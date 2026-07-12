@@ -1926,6 +1926,15 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: never; Returns: boolean }
+      lookup_order_items: {
+        Args: { p_email: string; p_order_number: string }
+        Returns: {
+          price: number
+          product_name: string
+          quantity: number
+          total: number
+        }[]
+      }
       lookup_order_status: {
         Args: { p_email: string; p_order_number: string }
         Returns: {
