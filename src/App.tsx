@@ -83,6 +83,8 @@ const App = () => (
                     <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
                     <Route path="/glass-ui" element={<GlassUI />} />
+                    <Route path="/glass-ui" element={<GlassUI />} />
+                    <Route path="/track" element={<TrackOrder />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
