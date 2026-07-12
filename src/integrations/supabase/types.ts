@@ -1500,10 +1500,15 @@ export type Database = {
           description: string | null
           features: Json | null
           id: string
+          image_alt: string | null
           is_active: boolean
           long_description: string | null
+          meta_description: string | null
+          meta_keywords: string[]
+          meta_title: string | null
           name: string
           niche: string
+          og_image_url: string | null
           original_price_pkr: number | null
           preset_conditional_fields: Json
           preset_modules: Json
@@ -1527,10 +1532,15 @@ export type Database = {
           description?: string | null
           features?: Json | null
           id?: string
+          image_alt?: string | null
           is_active?: boolean
           long_description?: string | null
+          meta_description?: string | null
+          meta_keywords?: string[]
+          meta_title?: string | null
           name: string
           niche: string
+          og_image_url?: string | null
           original_price_pkr?: number | null
           preset_conditional_fields?: Json
           preset_modules?: Json
@@ -1554,10 +1564,15 @@ export type Database = {
           description?: string | null
           features?: Json | null
           id?: string
+          image_alt?: string | null
           is_active?: boolean
           long_description?: string | null
+          meta_description?: string | null
+          meta_keywords?: string[]
+          meta_title?: string | null
           name?: string
           niche?: string
+          og_image_url?: string | null
           original_price_pkr?: number | null
           preset_conditional_fields?: Json
           preset_modules?: Json
