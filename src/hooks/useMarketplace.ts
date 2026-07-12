@@ -295,3 +295,42 @@ export function useUpdateUpgradeOrderStatus() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["upgrade_orders_admin"] }),
   });
 }
+
+export function useUpdateUpgradeOrder() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, ...values }: { id: string; status?: string; admin_notes?: string; amount?: number; transaction_id?: string; payment_method?: string; upgrade_type?: string; details?: any }) => {
+      const { error } = await supabase.from("upgrade_orders").update({ ...values, updated_at: new Date().toISOString() }).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["upgrade_orders_admin"] }),
+  });
+}
+
+export function useDeleteUpgradeOrder() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("upgrade_orders").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["upgrade_orders_admin"] }),
+  });
+}
+
+// All upgrade orders for the current user across their stores
+export function useMyUpgradeOrders(userId?: string) {
+  return useQuery({
+    queryKey: ["my_upgrade_orders", userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("upgrade_orders")
+        .select("*, stores(name, id)")
+        .eq("user_id", userId!)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+}
