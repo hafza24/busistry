@@ -6,16 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Loader2, Eye } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { setPendingTemplate } from "@/hooks/useOnboarding";
+import { Link } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 
 const Templates = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
-  const [searchParams] = useSearchParams();
-  const planParam = searchParams.get("plan");
 
 
   const { data: templates = [], isLoading } = useQuery({
