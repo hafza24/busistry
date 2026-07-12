@@ -164,7 +164,7 @@ export function useUpdateOrderStatus() {
       if (status === "shipped" || status === "delivered") {
         patch.shipped_at = new Date().toISOString();
       }
-      const { error } = await supabase.from("orders").update(patch).eq("id", id);
+      const { error } = await supabase.from("orders").update(patch as any).eq("id", id);
       if (error) throw error;
     },
     onSuccess: (_, v) => qc.invalidateQueries({ queryKey: ["orders", v.store_id] }),
