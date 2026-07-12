@@ -36,6 +36,7 @@ const DataProtection = lazy(() => import("./pages/legal/DataProtection"));
 const Help = lazy(() => import("./pages/Help"));
 const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
+const GlassUI = lazy(() => import("./pages/GlassUI"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
