@@ -81,6 +81,7 @@ const App = () => (
                     <Route path="/help" element={<Help />} />
                     <Route path="/help/chat" element={<HelpChat />} />
                     <Route path="/help/:slug" element={<HelpArticle />} />
+                    <Route path="/glass-ui" element={<GlassUI />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
