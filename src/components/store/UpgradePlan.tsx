@@ -44,6 +44,9 @@ export default function UpgradePlan({ storeId }: Props) {
 
   const [checkout, setCheckout] = useState<{ type: string; details: any; amount: number; label: string } | null>(null);
   const [tweakNotes, setTweakNotes] = useState<Record<string, string>>({});
+
+  const grouped: Record<string, any[]> = {};
+  for (const o of options) {
     grouped[o.upgrade_type] ??= [];
     grouped[o.upgrade_type].push(o);
   }
