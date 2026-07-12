@@ -7,19 +7,114 @@ import { useWebsiteProducts, useIntegrations } from "@/hooks/useMarketplace";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Globe, ArrowRight } from "lucide-react";
+import { Sparkles, Globe, ArrowRight, Clock, Wrench, CheckCircle2, XCircle } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
+import { cn } from "@/lib/utils";
 
-const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  approved: "bg-blue-100 text-blue-800 border-blue-200",
-  active: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  rejected: "bg-destructive/10 text-destructive border-destructive/20",
+type TrackerStatus = "pending" | "activating" | "activated" | "failed";
+
+const statusMeta: Record<TrackerStatus, { label: string; badge: string; icon: any }> = {
+  pending: {
+    label: "Pending verification",
+    badge: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    icon: Clock,
+  },
+  activating: {
+    label: "Installing",
+    badge: "bg-blue-100 text-blue-800 border-blue-200",
+    icon: Wrench,
+  },
+  activated: {
+    label: "Activated",
+    badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    icon: CheckCircle2,
+  },
+  failed: {
+    label: "Failed",
+    badge: "bg-destructive/10 text-destructive border-destructive/20",
+    icon: XCircle,
+  },
 };
+
+function mapStatus(raw: string | null | undefined): TrackerStatus {
+  switch (raw) {
+    case "active":
+    case "installed":
+    case "activated":
+    case "completed":
+      return "activated";
+    case "approved":
+    case "in_progress":
+    case "installing":
+      return "activating";
+    case "rejected":
+    case "failed":
+    case "cancelled":
+    case "canceled":
+      return "failed";
+    default:
+      return "pending";
+  }
+}
+
+const trackerSteps: { key: Exclude<TrackerStatus, "failed">; label: string; icon: any }[] = [
+  { key: "pending", label: "Pending verification", icon: Clock },
+  { key: "activating", label: "Installing", icon: Wrench },
+  { key: "activated", label: "Activated", icon: CheckCircle2 },
+];
+
+function StatusTracker({ status }: { status: TrackerStatus }) {
+  if (status === "failed") {
+    return (
+      <div className="mt-3 flex items-center gap-2 rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-xs text-destructive">
+        <XCircle className="h-4 w-4 shrink-0" />
+        <span className="font-medium">Order failed.</span>
+        <span className="text-destructive/80">Check the note below or contact support.</span>
+      </div>
+    );
+  }
+  const activeIdx = trackerSteps.findIndex((s) => s.key === status);
+  return (
+    <div className="mt-3 flex items-center gap-1.5" role="list" aria-label="Add-on order status">
+      {trackerSteps.map((step, i) => {
+        const reached = i <= activeIdx;
+        const current = i === activeIdx;
+        const Icon = step.icon;
+        return (
+          <div key={step.key} className="flex items-center gap-1.5 flex-1 min-w-0" role="listitem">
+            <div
+              className={cn(
+                "flex items-center gap-1.5 rounded-full border px-2 py-1 text-[11px] font-medium transition-colors min-w-0",
+                reached
+                  ? current
+                    ? "bg-primary/10 border-primary/30 text-primary"
+                    : "bg-emerald-50 border-emerald-200 text-emerald-700"
+                  : "bg-muted/40 border-border text-muted-foreground"
+              )}
+              aria-current={current ? "step" : undefined}
+            >
+              <Icon className={cn("h-3 w-3 shrink-0", current && "animate-pulse")} />
+              <span className="truncate">{step.label}</span>
+            </div>
+            {i < trackerSteps.length - 1 && (
+              <div
+                className={cn(
+                  "h-px flex-1 min-w-[8px]",
+                  i < activeIdx ? "bg-emerald-300" : "bg-border"
+                )}
+                aria-hidden="true"
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function useAllUserAddons(storeIds: string[]) {
   const { user } = useAuth();
