@@ -262,13 +262,14 @@
   .glass-fill-danger  { background: linear-gradient(160deg, hsl(var(--destructive) / 0.9), hsl(340 75% 45% / 0.75)); }
   .glass-fill-gray    { background: linear-gradient(160deg, hsl(0 0% 42% / 0.85), hsl(0 0% 20% / 0.75)); }
 
-  /* Gray-by-default button that reveals the full brand gradient on hover.
-     Uses the element's own background so it composites correctly with the
-     glass-surface ::before top-highlight and ::after gloss, and never covers
-     unwrapped text children. */
+  /* Reveals the full brand gradient (green→blue→purple→pink) on hover/focus.
+     Works with any base fill (gray, primary, etc.) — only the hover state is
+     overridden here, so the element's own background-image class supplies the
+     resting look. Applied to the element itself so it composites correctly
+     with glass-surface's ::before top-highlight and ::after gloss, and never
+     covers unwrapped text children. */
   .glass-hover-brand {
     position: relative;
-    background-image: linear-gradient(160deg, hsl(0 0% 42% / 0.85), hsl(0 0% 20% / 0.75));
     transition:
       background-image 0ms,
       background-color 400ms ease,
@@ -283,6 +284,7 @@
       inset 0 -6px 18px hsl(220 40% 10% / 0.18),
       0 16px 32px -12px hsl(var(--primary) / 0.45);
   }
+
 }
 
 @keyframes fade-in {
