@@ -10,13 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "glass-surface glass-fill-brand px-4 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "glass-surface glass-fill-gray glass-hover-brand px-4 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_0%_0%/0.4)]",
         destructive:
           "glass-surface glass-fill-danger px-4 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_60%_20%/0.4)]",
         outline:
-          "glass-surface glass-fill-accent px-4 font-semibold tracking-wide text-accent-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "glass-surface glass-fill-gray glass-hover-brand px-4 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_0%_0%/0.4)]",
         secondary:
-          "glass-surface glass-fill-accent px-4 font-semibold tracking-wide text-accent-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "glass-surface glass-fill-gray glass-hover-brand px-4 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_0%_0%/0.4)]",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         glass:
