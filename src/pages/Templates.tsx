@@ -36,9 +36,7 @@ const Templates = () => {
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
   const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
 
-  const handleSelect = (id: string) => {
-    setPendingTemplate(id);
-  };
+
 
   return (
     <div className="py-16">
