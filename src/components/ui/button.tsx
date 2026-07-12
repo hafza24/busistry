@@ -21,6 +21,14 @@ const buttonVariants = cva(
           "glass-surface glass-fill-accent px-6 font-semibold tracking-wide text-accent-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
         "glass-brand":
           "glass-surface glass-fill-brand px-6 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+        "glass-success":
+          "glass-surface glass-fill-success px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(158_60%_15%/0.4)]",
+        "glass-warning":
+          "glass-surface glass-fill-warning px-6 font-semibold tracking-wide text-[hsl(var(--warning-foreground))] [text-shadow:0_1px_0_hsl(0_0%_100%/0.35)]",
+        "glass-info":
+          "glass-surface glass-fill-info px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(210_60%_20%/0.4)]",
+        "glass-danger":
+          "glass-surface glass-fill-danger px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_60%_20%/0.4)]",
       },
       size: {
         default: "h-10 px-4 py-2",
