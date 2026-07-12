@@ -8,6 +8,7 @@ import UserProfile from "@/components/dashboard/UserProfile";
 import MySubscriptions from "@/components/dashboard/MySubscriptions";
 import MyStoreAddons from "@/components/dashboard/MyStoreAddons";
 import MyReviewPreferences from "@/components/dashboard/MyReviewPreferences";
+import MyWebsiteUpdates from "@/components/dashboard/MyWebsiteUpdates";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import RenewalLoginToast from "@/components/notifications/RenewalLoginToast";
 import ReviewPromptBanner from "@/components/reviews/ReviewPromptBanner";
