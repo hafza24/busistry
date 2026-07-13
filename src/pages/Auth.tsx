@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import logo from "@/assets/busistree-logo.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -170,7 +171,9 @@ const Auth = () => {
       />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold font-display text-foreground">🌳 Busistree</h1>
+          <div className="flex flex-col items-center">
+            <img src={logo} alt="Busistree" width={72} height={72} className="h-18 w-auto" />
+          </div>
           <p className="text-muted-foreground mt-2">
             {isLogin ? "Welcome back!" : "Create your account"}
           </p>
