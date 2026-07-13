@@ -394,7 +394,7 @@ const Auth = () => {
                     variant="outline"
                     onClick={() => switchMode(false)}
                     type="button"
-                    className="rounded-full px-10 h-11 bg-transparent border-2 border-white text-white hover:bg-white/20 hover:text-white transition-colors"
+                    className="rounded-full px-10 h-11 bg-transparent border-0 text-white hover:bg-white/20 hover:text-white transition-colors"
                   >
                     Sign Up
                   </Button>
