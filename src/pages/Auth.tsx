@@ -36,6 +36,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [cooldownLeft, setCooldownLeft] = useState(0);
   const [attemptsLeft, setAttemptsLeft] = useState(MAX_ATTEMPTS);
