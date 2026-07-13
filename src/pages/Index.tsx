@@ -157,6 +157,64 @@ const RotatingWords = () => {
   );
 };
 
+const LiveStats = () => {
+  const { data } = useQuery({
+    queryKey: ["home-live-stats"],
+    queryFn: async () => {
+      const [delivered, ratingRes, ordersRes, reviewsRes] = await Promise.all([
+        supabase
+          .from("website_orders")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["completed", "delivered"]),
+        supabase.rpc("get_feedback_rating_stats"),
+        supabase.from("website_orders").select("id", { count: "exact", head: true }),
+        supabase.from("reviews").select("id", { count: "exact", head: true }),
+      ]);
+      const rating = (ratingRes.data as any)?.[0] ?? { avg_rating: 0, total_reviews: 0 };
+      return {
+        delivered: delivered.count ?? 0,
+        totalOrders: ordersRes.count ?? 0,
+        avgRating: Number(rating.avg_rating ?? 0),
+        totalReviews: (Number(rating.total_reviews ?? 0) || 0) + (reviewsRes.count ?? 0),
+      };
+    },
+    staleTime: 60_000,
+  });
+
+  const stats = [
+    { v: data ? `${data.delivered}${data.delivered >= 10 ? "+" : ""}` : "—", l: "Sites delivered" },
+    { v: data ? `${data.totalOrders}${data.totalOrders >= 10 ? "+" : ""}` : "—", l: "Orders placed" },
+    { v: data && data.avgRating > 0 ? `${data.avgRating.toFixed(1)}/5` : "New", l: "Client rating" },
+    { v: data ? `${data.totalReviews}` : "—", l: "Reviews shared" },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+      {stats.map((s, i) => (
+        <motion.div
+          key={s.l}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+          className="group relative"
+        >
+          <div className="relative h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-5 md:p-6 text-center overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
+            <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+            <div className="relative text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+              {s.v}
+            </div>
+            <div className="relative text-[11px] md:text-xs text-muted-foreground mt-2 font-medium tracking-[0.15em] uppercase">
+              {s.l}
+            </div>
+            <div className="relative mx-auto mt-3 h-0.5 w-8 rounded-full bg-gradient-to-r from-primary to-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
 const Index = () => {
   const { data: templates } = useQuery({
     queryKey: ["home_templates"],
