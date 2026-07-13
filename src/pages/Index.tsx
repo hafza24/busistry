@@ -630,44 +630,8 @@ const Index = () => {
         </div>
 
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
-            {[
-              { v: "120+", l: "Sites delivered", icon: Rocket },
-              { v: "48h", l: "Avg. launch time", icon: Zap },
-              { v: "4.9/5", l: "Client rating", icon: Star },
-              { v: "100%", l: "On-time delivery", icon: Check },
-            ].map((s, i) => (
-              <motion.div
-                key={s.l}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-                className="group relative"
-              >
-                <div className="relative h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-4 md:p-5 text-center overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
-                  {/* Gradient sheen on hover */}
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-
-                  <div className="relative flex justify-center mb-2">
-                    <div className="h-8 w-8 rounded-lg bg-primary/10 border border-primary/15 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                      <s.icon className="h-4 w-4 text-primary" strokeWidth={2.25} />
-                    </div>
-                  </div>
-
-                  <div className="relative text-2xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-                    {s.v}
-                  </div>
-                  <div className="relative text-xs text-muted-foreground mt-1 font-medium">
-                    {s.l}
-                  </div>
-
-                  {/* Animated underline accent */}
-                  <div className="relative mx-auto mt-2 h-0.5 w-8 rounded-full bg-gradient-to-r from-primary to-accent origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <LiveStats />
+        </div>
         </div>
       </section>
 
