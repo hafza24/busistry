@@ -1,5 +1,5 @@
 import SEO from "@/components/SEO";
-import logo from "@/assets/busistree-logo.png";
+import logo from "@/assets/logo.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
