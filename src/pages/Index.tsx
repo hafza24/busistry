@@ -215,6 +215,80 @@ const LiveStats = () => {
   );
 };
 
+const useHeroStats = () => {
+  return useQuery({
+    queryKey: ["home-live-stats"],
+    queryFn: async () => {
+      const [delivered, ratingRes, ordersRes, reviewsRes] = await Promise.all([
+        supabase
+          .from("website_orders")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["completed", "delivered"]),
+        supabase.rpc("get_feedback_rating_stats"),
+        supabase.from("website_orders").select("id", { count: "exact", head: true }),
+        supabase.from("reviews").select("id", { count: "exact", head: true }),
+      ]);
+      const rating = (ratingRes.data as any)?.[0] ?? { avg_rating: 0, total_reviews: 0 };
+      return {
+        delivered: delivered.count ?? 0,
+        totalOrders: ordersRes.count ?? 0,
+        avgRating: Number(rating.avg_rating ?? 0),
+        totalReviews: (Number(rating.total_reviews ?? 0) || 0) + (reviewsRes.count ?? 0),
+      };
+    },
+    staleTime: 60_000,
+  });
+};
+
+const HeroStatsRow = () => {
+  const { data } = useHeroStats();
+  const items = [
+    { v: data ? `${data.delivered}${data.delivered >= 10 ? "+" : ""}` : "—", l: "Sites delivered" },
+    { v: data ? `${data.totalOrders}${data.totalOrders >= 10 ? "+" : ""}` : "—", l: "Orders placed" },
+    { v: data && data.avgRating > 0 ? `${data.avgRating.toFixed(1)}/5` : "New", l: "Client rating" },
+  ];
+  return (
+    <div className="mt-10 flex flex-wrap gap-8">
+      {items.map((s) => (
+        <div key={s.l}>
+          <div className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{s.v}</div>
+          <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const HeroFloatingRating = () => {
+  const { data } = useHeroStats();
+  const label = data && data.avgRating > 0 ? `${data.avgRating.toFixed(1)} / 5 rating` : "New — be the first";
+  return (
+    <div className="absolute top-1/3 -left-4 md:-left-8 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border shadow-soft text-xs font-medium">
+      <Star className="h-3 w-3 text-amber-500 fill-amber-500" /> {label}
+    </div>
+  );
+};
+
+const HeroFloatingReviewsCard = () => {
+  const { data } = useHeroStats();
+  const has = !!(data && data.avgRating > 0);
+  return (
+    <div className="absolute -bottom-4 right-2 md:right-6 bg-card border border-border rounded-2xl shadow-brand p-3 flex items-center gap-3">
+      <div className="flex">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+        ))}
+      </div>
+      <div className="text-xs">
+        <div className="font-bold text-foreground">{has ? `${data!.avgRating.toFixed(1)} / 5` : "New"}</div>
+        <div className="text-muted-foreground">
+          {data ? `from ${data.totalReviews}${data.totalReviews >= 10 ? "+" : ""} review${data.totalReviews === 1 ? "" : "s"}` : "loading…"}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Index = () => {
   const { data: templates } = useQuery({
     queryKey: ["home_templates"],
