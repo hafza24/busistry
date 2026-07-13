@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, User, ArrowRight, ShieldAlert } from "lucide-react";
+import { Mail, Lock, User, ArrowRight, ShieldAlert, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { signInSchema, signUpSchema } from "@/lib/validation";
 import { logAudit } from "@/lib/audit";
