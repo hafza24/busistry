@@ -3,7 +3,7 @@ import TrustBadges from "@/components/TrustBadges";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Linkedin, Twitter, Mail } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -117,6 +117,39 @@ const faqs = [
   { q: "Do I need any technical experience?", a: "Not at all. You pick a template, answer a short form, and we handle everything from design to launch." },
   { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
 ];
+
+const ROTATING_PHRASES = [
+  "Websites",
+  "Online stores",
+  "Portfolios",
+  "Booking systems",
+  "Landing pages",
+  "…and more.",
+];
+
+const RotatingWords = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % ROTATING_PHRASES.length), 1800);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="relative inline-block align-baseline min-w-[9ch]">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={ROTATING_PHRASES[i]}
+          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="inline-block font-semibold bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent"
+        >
+          {ROTATING_PHRASES[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+};
 
 const Index = () => {
   const { data: templates } = useQuery({
@@ -226,7 +259,7 @@ const Index = () => {
               </h1>
 
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                <span className="font-semibold text-foreground">Websites, online stores, portfolios, booking systems and more.</span>{" "}
+                <RotatingWords />{" "}
                 Whether you're a business, freelancer or personal brand — we design, build and launch
                 every part of your internet presence, end to end.
               </p>
