@@ -162,7 +162,7 @@ const Auth = () => {
   const locked = cooldownLeft > 0;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary/30 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-secondary/30 px-4 py-6 sm:py-10">
       <SEO
         title={isLogin ? "Sign In — Busistree" : "Create your account — Busistree"}
         description="Sign in to manage your Busistree websites, stores, and orders."
@@ -170,11 +170,11 @@ const Auth = () => {
         noindex
       />
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
+        <div className="text-center mb-4 sm:mb-6">
           <div className="flex flex-col items-center">
-            <img src={logo} alt="Busistree" width={72} height={72} className="h-18 w-auto" />
+            <img src={logo} alt="Busistree" className="h-12 sm:h-16 md:h-20 w-auto object-contain" />
           </div>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-sm sm:text-base text-muted-foreground mt-1.5">
             {isLogin ? "Welcome back!" : "Create your account"}
           </p>
         </div>
