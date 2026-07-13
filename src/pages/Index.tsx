@@ -251,9 +251,8 @@ const Index = () => {
               className="lg:col-span-7 relative"
             >
 
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-wider uppercase text-primary mb-7">
-                <Zap className="h-3 w-3" />
-                Launch in 48 hours — Guaranteed
+              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/80 shadow-soft mb-7">
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Launch in 48 hours — Guaranteed</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
