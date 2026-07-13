@@ -259,7 +259,7 @@ const Index = () => {
               </h1>
 
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                <span className="font-semibold text-foreground">Websites, online stores, portfolios, booking systems and more.</span>{" "}
+                <RotatingWords />{" "}
                 Whether you're a business, freelancer or personal brand — we design, build and launch
                 every part of your internet presence, end to end.
               </p>
