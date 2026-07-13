@@ -712,7 +712,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              One-time payment in PKR — fully-owned site, no monthly lock-in.
+              Rent monthly or buy for life — transparent PKR pricing, cancel anytime.
             </p>
           </div>
 
