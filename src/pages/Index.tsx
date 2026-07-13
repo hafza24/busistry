@@ -543,8 +543,8 @@ const Index = () => {
               transition={{ duration: 0.5 }}
               className="lg:col-span-5"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border border-primary/20 text-xs font-semibold tracking-widest uppercase text-primary mb-5">
-                <Check className="h-3 w-3" /> What you get
+              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">What you get</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.08]">
                 A complete,{" "}
