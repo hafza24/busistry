@@ -118,6 +118,39 @@ const faqs = [
   { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
 ];
 
+const ROTATING_PHRASES = [
+  "Websites",
+  "Online stores",
+  "Portfolios",
+  "Booking systems",
+  "Landing pages",
+  "…and more.",
+];
+
+const RotatingWords = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % ROTATING_PHRASES.length), 1800);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="relative inline-block align-baseline min-w-[9ch]">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={ROTATING_PHRASES[i]}
+          initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="inline-block font-semibold bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent"
+        >
+          {ROTATING_PHRASES[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+};
+
 const Index = () => {
   const { data: templates } = useQuery({
     queryKey: ["home_templates"],
