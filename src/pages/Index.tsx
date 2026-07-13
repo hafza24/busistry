@@ -632,7 +632,6 @@ const Index = () => {
         <div className="container">
           <LiveStats />
         </div>
-        </div>
       </section>
 
 
