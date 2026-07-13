@@ -124,6 +124,12 @@ const ROTATING_PHRASES = [
   "Portfolios",
   "Booking systems",
   "Landing pages",
+  "Invites",
+  "Internal systems",
+  "Company sites",
+  "CV portfolios",
+  "Blogs",
+  "Product sites",
   "…and more.",
 ];
 
