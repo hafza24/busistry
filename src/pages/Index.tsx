@@ -218,17 +218,17 @@ const Index = () => {
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
-                Launch your online store in{" "}
+                Your complete online presence, live in{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
                   48 hours
-                </span>{" "}
-                — no skills needed.
+                </span>
+                .
               </h1>
 
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                <span className="font-semibold text-foreground">We build your ecommerce store.</span>{" "}
-                Choose a professionally designed template, submit your details, and our expert team
-                builds your complete, ready-to-launch store — no design or coding skills required.
+                <span className="font-semibold text-foreground">Websites, online stores, portfolios, booking systems and more.</span>{" "}
+                Whether you're a business, freelancer or personal brand — we design, build and launch
+                every part of your internet presence, end to end.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
