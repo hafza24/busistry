@@ -285,6 +285,29 @@ const Auth = () => {
     setErrors({});
   };
 
+  // Touch swipe handling (mobile only)
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    touchStartX.current = t.clientX;
+    touchStartY.current = t.clientY;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null || touchStartY.current == null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX.current;
+    const dy = t.clientY - touchStartY.current;
+    touchStartX.current = null;
+    touchStartY.current = null;
+    // Ignore mostly-vertical gestures (allow scrolling)
+    if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0 && isLogin) switchMode(false); // swipe left -> sign up
+    else if (dx > 0 && !isLogin) switchMode(true); // swipe right -> sign in
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/40 px-4 py-6 sm:py-10">
       <SEO
@@ -294,7 +317,11 @@ const Auth = () => {
         noindex
       />
 
-      <div className="relative w-full max-w-5xl bg-card rounded-3xl shadow-2xl overflow-hidden border border-border/50">
+      <div
+        className="relative w-full max-w-5xl bg-card rounded-3xl shadow-2xl overflow-hidden border border-border/50 touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* Grid: on md+ two columns; mobile single */}
         <div className="grid md:grid-cols-2 min-h-[600px]">
           {/* SIGN IN FORM (left on desktop) */}
