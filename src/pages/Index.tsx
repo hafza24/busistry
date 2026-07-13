@@ -348,18 +348,7 @@ const Index = () => {
               </div>
 
               {/* Stats row */}
-              <div className="mt-10 flex flex-wrap gap-8">
-                {[
-                  { v: "4,800+", l: "Stores launched" },
-                  { v: "48hrs", l: "Average delivery" },
-                  { v: "98%", l: "Client satisfaction" },
-                ].map((s) => (
-                  <div key={s.l}>
-                    <div className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{s.v}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
-                  </div>
-                ))}
-              </div>
+              <HeroStatsRow />
             </motion.div>
 
             {/* Right: mockup with floating cards */}
@@ -384,21 +373,8 @@ const Index = () => {
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Stores going live now
               </div>
 
-              <div className="absolute top-1/3 -left-4 md:-left-8 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border shadow-soft text-xs font-medium">
-                <Star className="h-3 w-3 text-amber-500 fill-amber-500" /> 4.9 / 5 rating
-              </div>
-
-              <div className="absolute -bottom-4 right-2 md:right-6 bg-card border border-border rounded-2xl shadow-brand p-3 flex items-center gap-3">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                  ))}
-                </div>
-                <div className="text-xs">
-                  <div className="font-bold text-foreground">4.9 / 5</div>
-                  <div className="text-muted-foreground">from 1,200+ reviews</div>
-                </div>
-              </div>
+              <HeroFloatingRating />
+              <HeroFloatingReviewsCard />
 
               <div className="absolute bottom-8 -left-3 md:-left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200/60 shadow-soft text-xs font-medium">
                 <ShoppingBag className="h-3 w-3" /> Store ready
