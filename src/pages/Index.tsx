@@ -590,13 +590,8 @@ const Index = () => {
         }} />
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/30 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-6 shadow-[0_0_0_1px_hsl(var(--primary)/0.05),0_8px_24px_-8px_hsl(var(--primary)/0.35)] backdrop-blur-sm">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-70 animate-ping" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-              </span>
-              <CreditCard className="h-3 w-3" aria-hidden="true" />
-              <span>Pricing</span>
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-6">
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Pricing</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
               Simple plans.{" "}
