@@ -638,7 +638,7 @@ const Index = () => {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { v: "120+", l: "Stores delivered", icon: Rocket },
+              { v: "120+", l: "Sites delivered", icon: Rocket },
               { v: "48h", l: "Avg. launch time", icon: Zap },
               { v: "4.9/5", l: "Client rating", icon: Star },
               { v: "100%", l: "On-time delivery", icon: Check },
