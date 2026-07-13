@@ -637,58 +637,6 @@ const Index = () => {
       </section>
 
 
-      {/* What You Get */}
-      <section className="py-20 md:py-28 border-b border-border/60 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 opacity-[0.18]" style={{
-          backgroundImage: "radial-gradient(circle at 15% 20%, hsl(var(--primary)/0.2), transparent 40%), radial-gradient(circle at 85% 80%, hsl(var(--accent)/0.15), transparent 45%)",
-        }} />
-        <div className="container">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="lg:col-span-5"
-            >
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">What you get</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.08]">
-                A complete,{" "}
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  ready-to-run
-                </span>{" "}
-                business website.
-              </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
-                Every plan includes everything you need to operate. No surprise add-ons, no hidden fees.
-              </p>
-            </motion.div>
-            <div className="lg:col-span-7">
-              <div className="grid sm:grid-cols-2 gap-3">
-                {includes.map((f, i) => (
-                  <motion.div
-                    key={f.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05, duration: 0.4 }}
-                    className="group relative flex items-center gap-3 bg-card/90 backdrop-blur border border-border/70 rounded-xl p-4 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-accent/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative h-10 w-10 rounded-lg bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-300">
-                      <f.icon className="h-4 w-4 text-primary" strokeWidth={2.25} />
-                    </div>
-                    <span className="relative text-sm font-semibold text-foreground">{f.title}</span>
-                    <Check className="relative ml-auto h-4 w-4 text-primary/0 group-hover:text-primary/80 transition-colors duration-300" strokeWidth={3} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* Pricing */}
