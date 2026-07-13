@@ -386,7 +386,7 @@ const Auth = () => {
 
               {isLogin ? (
                 <>
-                  <h1 className="font-display text-3xl sm:text-4xl font-bold">Hello, Friend!</h1>
+                  <h1 className="font-display text-3xl sm:text-4xl font-bold">Your All-in-One Business Inventor And Supporter</h1>
                   <p className="text-sm sm:text-base opacity-90 max-w-xs">
                     Enter your personal details and start your journey with us.
                   </p>
