@@ -372,13 +372,14 @@ const Auth = () => {
 
           {/* GREEN OVERLAY PANEL — slides between columns */}
           <div
-            className={`order-1 md:order-none md:absolute md:inset-y-0 md:w-1/2 z-10 bg-primary text-primary-foreground transition-transform duration-700 ease-in-out overflow-hidden ${
+            className={`order-1 md:order-none md:absolute md:inset-y-0 md:w-1/2 z-10 bg-gradient-to-br from-primary/80 via-primary/60 to-primary/40 backdrop-blur-xl border border-white/20 text-primary-foreground shadow-2xl transition-transform duration-700 ease-in-out overflow-hidden ${
               isLogin ? "md:translate-x-full md:rounded-l-[40%]" : "md:translate-x-0 md:rounded-r-[40%]"
             }`}
           >
-            {/* Decorative circles */}
-            <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-white/10" aria-hidden="true" />
-            <div className="absolute -bottom-24 -right-10 w-72 h-72 rounded-full bg-white/5" aria-hidden="true" />
+            {/* Glassy highlights */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none" aria-hidden="true" />
+            <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-white/20 blur-2xl" aria-hidden="true" />
+            <div className="absolute -bottom-24 -right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
 
             <div className="relative h-full flex flex-col items-center justify-center text-center p-6 sm:p-10 gap-5">
               <img src={logo} alt="Busistree" className="w-20 h-20 object-contain" />
