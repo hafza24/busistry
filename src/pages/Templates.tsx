@@ -5,13 +5,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Rocket, Loader2, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Rocket, Loader2, Eye, Info, CheckCircle2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
 
 const Templates = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
 
@@ -103,8 +104,17 @@ const Templates = () => {
             {filtered.map((t) => {
               const features = Array.isArray(t.features) ? (t.features as string[]) : [];
               const stat = statMap.get(t.id);
+              const detailsPath = t.name?.toLowerCase().includes("booker") ? "/templates/booker" : `/templates/${t.id}`;
+              const stop = (e: React.MouseEvent) => e.stopPropagation();
               return (
-                <Card key={t.id} className="group border-border/50 hover:shadow-lg hover:border-primary/30 transition-all flex flex-col overflow-hidden">
+                <Card
+                  key={t.id}
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => navigate(detailsPath)}
+                  onKeyDown={(e) => { if (e.key === "Enter") navigate(detailsPath); }}
+                  className="group border-border/50 hover:shadow-lg hover:border-primary/30 transition-all flex flex-col overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
+                >
                   <div className="relative">
                     {t.preview_image_url ? (
                       <img src={t.preview_image_url} alt={t.name} className="h-44 w-full object-cover" loading="lazy" />
@@ -140,31 +150,28 @@ const Templates = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="p-5 pt-0 gap-2">
-                    {t.name?.toLowerCase().includes("booker") ? (
-                      <Button size="sm" className="flex-1" asChild>
-                        <Link to="/templates/booker">
-                          <Eye className="h-3.5 w-3.5 mr-1" /> View details
-                        </Link>
-                      </Button>
-                    ) : (
-                      <Button size="sm" className="flex-1" asChild>
-                        <Link to={`/templates/${t.id}`}>
-                          <Eye className="h-3.5 w-3.5 mr-1" /> View details
-                        </Link>
-                      </Button>
-                    )}
+                  <CardFooter className="p-5 pt-0 grid grid-cols-3 gap-2">
                     {t.demo_url ? (
-                      <Button size="sm" variant="outline" asChild title="Preview demo">
+                      <Button size="sm" variant="outline" asChild title="Preview demo" onClick={stop}>
                         <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                          <Eye className="h-3.5 w-3.5" />
+                          <Eye className="h-3.5 w-3.5 mr-1" /> Preview
                         </a>
                       </Button>
                     ) : (
-                      <Button size="sm" variant="outline" disabled title="No demo available">
-                        <Eye className="h-3.5 w-3.5" />
+                      <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
+                        <Eye className="h-3.5 w-3.5 mr-1" /> Preview
                       </Button>
                     )}
+                    <Button size="sm" variant="secondary" asChild onClick={stop}>
+                      <Link to={detailsPath}>
+                        <Info className="h-3.5 w-3.5 mr-1" /> Details
+                      </Link>
+                    </Button>
+                    <Button size="sm" asChild onClick={stop}>
+                      <Link to={`/onboarding?template=${t.id}`}>
+                        <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Select
+                      </Link>
+                    </Button>
                   </CardFooter>
                 </Card>
               );
