@@ -1,25 +1,48 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink,
+  NavigationMenuList, NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = [
+type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
+
+const leftLinks: NavLink[] = [
   { to: "/", label: "Home", showAt: "md" },
-  { to: "/templates", label: "Templates", showAt: "md" },
-  { to: "/marketplace", label: "Addons", showAt: "lg" },
-  { to: "/templates-on-sale", label: "Sale", showAt: "lg" },
-  { to: "/pricing", label: "Pricing", showAt: "lg" },
-  { to: "/how-it-works", label: "How it works", showAt: "xl" },
-  { to: "/about", label: "About", showAt: "xl" },
-  { to: "/team", label: "Team", showAt: "xl" },
+  { to: "/how-it-works", label: "How it works", showAt: "lg" },
   { to: "/contact", label: "Contact", showAt: "xl" },
 ];
 
-const rightLinks: { to: string; label: string }[] = [];
+const marketplaceItems = [
+  { to: "/templates", label: "Templates", desc: "Ready-made websites, launched in 24–48h.", icon: LayoutTemplate },
+  { to: "/marketplace", label: "Addons", desc: "Extend your store with paid add-ons.", icon: Sparkles },
+  { to: "/templates-on-sale", label: "Sale", desc: "Discounted templates, limited time.", icon: Tag },
+  { to: "/pricing", label: "Pricing", desc: "Plans and one-time template pricing.", icon: CreditCard },
+];
 
-const allLinks = [...leftLinks, ...rightLinks];
+const aboutItems = [
+  { to: "/about", label: "About us", desc: "Our story, mission, and values.", icon: Info },
+  { to: "/team", label: "Team", desc: "Meet the people behind Busistree.", icon: Users },
+];
+
+const mobileLinks: NavLink[] = [
+  { to: "/", label: "Home" },
+  { to: "/templates", label: "Templates" },
+  { to: "/marketplace", label: "Addons" },
+  { to: "/templates-on-sale", label: "Sale" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/how-it-works", label: "How it works" },
+  { to: "/about", label: "About us" },
+  { to: "/team", label: "Team" },
+  { to: "/contact", label: "Contact" },
+];
+
+const rightLinks: NavLink[] = [];
+const allLinks = mobileLinks;
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
