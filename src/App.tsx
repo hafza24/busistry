@@ -40,6 +40,7 @@ const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
 const GlassUI = lazy(() => import("./pages/GlassUI"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const ProfileView = lazy(() => import("./pages/ProfileView"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
