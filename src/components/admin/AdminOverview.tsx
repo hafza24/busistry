@@ -35,17 +35,25 @@ const AdminOverview = () => {
   const { data: stats } = useQuery({
     queryKey: ["admin_overview_stats"],
     queryFn: async () => {
-      const [orders, users, subs, requests] = await Promise.all([
+      const [orders, users, subs, requests, tickets, feedback, templates, websiteOrders] = await Promise.all([
         supabase.from("stores").select("id, created_at, status, plans(price_pkr)"),
         supabase.from("profiles").select("id, created_at"),
         supabase.from("subscriptions").select("id, status"),
         supabase.from("store_requests").select("id, status, created_at"),
+        supabase.from("support_tickets").select("id, status, created_at"),
+        supabase.from("feedback_submissions").select("id, rating, approved"),
+        supabase.from("templates").select("id, is_active"),
+        supabase.from("website_orders").select("id, created_at, amount, status"),
       ]);
       return {
         stores: orders.data ?? [],
         users: users.data ?? [],
         subs: subs.data ?? [],
         requests: requests.data ?? [],
+        tickets: tickets.data ?? [],
+        feedback: feedback.data ?? [],
+        templates: templates.data ?? [],
+        websiteOrders: websiteOrders.data ?? [],
       };
     },
   });
@@ -67,11 +75,14 @@ const AdminOverview = () => {
     const users = stats?.users ?? [];
     const subs = stats?.subs ?? [];
     const requests = stats?.requests ?? [];
+    const websiteOrders = stats?.websiteOrders ?? [];
     const activeSubs = subs.filter((s: any) => s.status === "active").length;
     const pending = requests.filter((r: any) => r.status === "pending").length;
-    const revenue = stores.reduce((sum: number, s: any) => sum + (s.plans?.price_pkr ?? 0), 0);
+    const revenue =
+      stores.reduce((sum: number, s: any) => sum + (s.plans?.price_pkr ?? 0), 0) +
+      websiteOrders.reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
     return {
-      orders: stores.length,
+      orders: stores.length + websiteOrders.length,
       users: users.length,
       activeSubs,
       pending,
@@ -82,6 +93,7 @@ const AdminOverview = () => {
 
   const revenueSeries = useMemo(() => {
     const stores = stats?.stores ?? [];
+    const websiteOrders = stats?.websiteOrders ?? [];
     const months: Record<string, number> = {};
     for (let i = 5; i >= 0; i--) {
       const d = new Date();
@@ -90,28 +102,86 @@ const AdminOverview = () => {
       months[key] = 0;
     }
     stores.forEach((s: any) => {
-      const d = new Date(s.created_at);
-      const key = d.toLocaleString("en", { month: "short" });
+      const key = new Date(s.created_at).toLocaleString("en", { month: "short" });
       if (key in months) months[key] += s.plans?.price_pkr ?? 0;
+    });
+    websiteOrders.forEach((o: any) => {
+      const key = new Date(o.created_at).toLocaleString("en", { month: "short" });
+      if (key in months) months[key] += Number(o.amount) || 0;
     });
     return Object.entries(months).map(([month, value]) => ({ month, value }));
   }, [stats]);
 
   const perfSeries = useMemo(() => {
-    return revenueSeries.map((r) => ({
-      month: r.month,
-      current: Math.max(20, Math.round((r.value / 1000) % 90) + 30),
-      prev: Math.max(15, Math.round((r.value / 1500) % 80) + 20),
-    }));
-  }, [revenueSeries]);
+    const stores = stats?.stores ?? [];
+    const websiteOrders = stats?.websiteOrders ?? [];
+    const now = new Date();
+    const buckets: { month: string; current: number; prev: number; monthIdx: number; yearIdx: number }[] = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      buckets.push({
+        month: d.toLocaleString("en", { month: "short" }),
+        current: 0,
+        prev: 0,
+        monthIdx: d.getMonth(),
+        yearIdx: d.getFullYear(),
+      });
+    }
+    const bump = (arr: any[], key: "current" | "prev", yearOffset: number) => {
+      arr.forEach((row: any) => {
+        const d = new Date(row.created_at);
+        const b = buckets.find(
+          (x) => x.monthIdx === d.getMonth() && x.yearIdx - yearOffset === d.getFullYear()
+        );
+        if (b) b[key] += 1;
+      });
+    };
+    bump(stores, "current", 0);
+    bump(websiteOrders, "current", 0);
+    bump(stores, "prev", 1);
+    bump(websiteOrders, "prev", 1);
+    return buckets.map(({ month, current, prev }) => ({ month, current, prev }));
+  }, [stats]);
 
-  const radarData = [
-    { axis: "Templates", value: 82 },
-    { axis: "Support", value: 74 },
-    { axis: "Revenue", value: totals.revenue ? 88 : 40 },
-    { axis: "Engagement", value: 71 },
-    { axis: "Quality", value: 79 },
-  ];
+  const radarData = useMemo(() => {
+    const templates = stats?.templates ?? [];
+    const tickets = stats?.tickets ?? [];
+    const feedback = stats?.feedback ?? [];
+    const subs = stats?.subs ?? [];
+    const users = stats?.users ?? [];
+    const stores = stats?.stores ?? [];
+
+    const activeTpl = templates.filter((t: any) => t.is_active).length;
+    const templatesScore = templates.length
+      ? Math.round((activeTpl / templates.length) * 100)
+      : 0;
+
+    const resolved = tickets.filter((t: any) => ["resolved", "closed"].includes(t.status)).length;
+    const supportScore = tickets.length ? Math.round((resolved / tickets.length) * 100) : 0;
+
+    const activeSubs = subs.filter((s: any) => s.status === "active").length;
+    const revenueScore = subs.length ? Math.round((activeSubs / subs.length) * 100) : 0;
+
+    const engagementScore = users.length
+      ? Math.min(100, Math.round((stores.length / users.length) * 100))
+      : 0;
+
+    const approved = feedback.filter((f: any) => f.approved && f.rating);
+    const avgRating = approved.length
+      ? approved.reduce((s: number, f: any) => s + (Number(f.rating) || 0), 0) / approved.length
+      : 0;
+    const qualityScore = Math.round((avgRating / 5) * 100);
+
+    return [
+      { axis: "Templates", value: templatesScore },
+      { axis: "Support", value: supportScore },
+      { axis: "Revenue", value: revenueScore },
+      { axis: "Engagement", value: engagementScore },
+      { axis: "Quality", value: qualityScore },
+    ];
+  }, [stats]);
+
+
 
   const monthLabel = cursor.toLocaleString("en", { month: "long", year: "numeric" });
   const firstDay = new Date(cursor.getFullYear(), cursor.getMonth(), 1).getDay();
@@ -182,8 +252,9 @@ const AdminOverview = () => {
           </div>
           <div className="space-y-2 text-xs">
             <InsightRow label="Store activation" value={totals.completion} />
-            <InsightRow label="User engagement" value={72} />
-            <InsightRow label="Response rate" value={88} />
+            <InsightRow label="User engagement" value={radarData[3]?.value ?? 0} />
+            <InsightRow label="Response rate" value={radarData[1]?.value ?? 0} />
+
           </div>
         </Card>
       </div>
