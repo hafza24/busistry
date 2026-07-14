@@ -191,10 +191,10 @@ const Templates = () => {
                   <CardFooter className="p-5 pt-0 flex flex-col gap-2">
                     <Button
                       size="lg"
-                      className="w-full"
+                      className="w-full bg-primary/90 hover:bg-primary shadow-md"
                       onClick={(e) => { stop(e); setSelectTarget({ id: t.id, name: t.name }); }}
                     >
-                      <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
+                      Select this template
                     </Button>
                     <div className="grid grid-cols-2 gap-2">
                       {t.demo_url ? (
