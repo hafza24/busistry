@@ -12,6 +12,7 @@ import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
 
 const Templates = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
 
