@@ -11,6 +11,9 @@ const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = 
   { to: "/marketplace", label: "Addons", showAt: "lg" },
   { to: "/templates-on-sale", label: "Sale", showAt: "lg" },
   { to: "/pricing", label: "Pricing", showAt: "lg" },
+  { to: "/how-it-works", label: "How it works", showAt: "xl" },
+  { to: "/about", label: "About", showAt: "xl" },
+  { to: "/team", label: "Team", showAt: "xl" },
   { to: "/contact", label: "Contact", showAt: "xl" },
 ];
 
