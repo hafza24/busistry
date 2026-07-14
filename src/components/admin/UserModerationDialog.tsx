@@ -62,20 +62,19 @@ const UserModerationDialog = ({ open, onOpenChange, userId, userName, currentSta
       return { notifyRes, notifyErr };
     },
     onSuccess: (res) => {
-      const emailErr = (res as any)?.notifyRes?.emailError;
-      if (emailErr === "resend_not_configured") {
-        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent (email disabled).`);
-      } else if (emailErr === "no_email_on_file") {
-        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent (no email on file).`);
-      } else if (emailErr) {
-        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent; email failed.`);
-      } else {
-        toast.success(`User ${status === "active" ? "reinstated" : status}. Notification and email sent.`);
-      }
+      const r = (res as any)?.notifyRes ?? {};
+      const emailStatus: string = r.emailStatus ?? "unknown";
+      const label = status === "active" ? "reinstated" : status;
+      if (emailStatus === "sent") toast.success(`User ${label}. Notification and email delivered.`);
+      else if (emailStatus === "skipped") toast.success(`User ${label}. In-app notice sent (email skipped).`);
+      else if (emailStatus === "failed") toast.warning(`User ${label}. Email failed — check delivery log.`);
+      else toast.success(`User ${label}.`);
 
       qc.invalidateQueries({ queryKey: ["admin_profiles"] });
+      qc.invalidateQueries({ queryKey: ["moderation_logs"] });
       onOpenChange(false);
     },
+
     onError: (e: any) => toast.error(e?.message ?? "Failed to update user status"),
   });
 
