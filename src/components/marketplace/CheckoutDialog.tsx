@@ -10,6 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useStores } from "@/hooks/useStores";
 import { useToast } from "@/hooks/use-toast";
+import { useProfileGate } from "@/hooks/useProfileGate";
+
 
 interface Props {
   open: boolean;
