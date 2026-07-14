@@ -129,6 +129,8 @@ export default function CheckoutDialog({ open, onOpenChange, title, amount, stor
           </Button>
         </DialogFooter>
       </DialogContent>
+      {profileGateDialog}
+
     </Dialog>
   );
 }
