@@ -159,7 +159,7 @@ const TemplateDetail = () => {
   };
 
   return (
-    <div className="py-10 md:py-14">
+    <div className="pb-10 md:pb-14">
       <TemplateCustomizationNotice />
       <SEO
         title={seoTitle}
@@ -172,39 +172,45 @@ const TemplateDetail = () => {
         jsonLd={productJsonLd}
       />
 
-      <div className="container max-w-6xl">
-        <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
-          <Link to="/templates">
-            <ArrowLeft className="h-4 w-4 mr-1" /> All templates
-          </Link>
-        </Button>
+      {/* Premium hero backdrop */}
+      <div className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_50%_0%,hsl(var(--primary)/0.18),transparent_70%)]" />
+        <div className="container max-w-6xl relative py-10 md:py-14">
+          <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
+            <Link to="/templates">
+              <ArrowLeft className="h-4 w-4 mr-1" /> All templates
+            </Link>
+          </Button>
 
-        {/* Header */}
-        <div className="grid lg:grid-cols-2 gap-10 items-start mb-14">
-          <div>
-            <div className="aspect-[16/10] rounded-xl overflow-hidden border border-border/60 bg-muted shadow-sm">
-              {template.preview_image_url ? (
-                <img
-                  src={template.preview_image_url}
-                  alt={seoImageAlt}
-                  className="w-full h-full object-cover object-top"
-                  loading="eager"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-6xl opacity-60">🖼️</div>
-              )}
+          <div className="grid lg:grid-cols-2 gap-10 items-start">
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/40 to-accent/40 opacity-40 blur-lg group-hover:opacity-60 transition-opacity" aria-hidden="true" />
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border/60 bg-muted shadow-xl">
+                {template.preview_image_url ? (
+                  <img
+                    src={template.preview_image_url}
+                    alt={seoImageAlt}
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-6xl opacity-60">🖼️</div>
+                )}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-xs font-semibold text-primary shadow-md border border-primary/20">
+                  <Crown className="h-3.5 w-3.5" /> Premium template
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {template.category && <Badge>{template.category}</Badge>}
-              {template.subcategory && <Badge variant="secondary">{template.subcategory}</Badge>}
-              {stat && <ItemBadges stat={stat} />}
-            </div>
-            <h1 className="text-3xl md:text-5xl font-bold font-display text-foreground leading-tight">
-              {template.name}
-            </h1>
+            <div>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {template.category && <Badge>{template.category}</Badge>}
+                {template.subcategory && <Badge variant="secondary">{template.subcategory}</Badge>}
+                {stat && <ItemBadges stat={stat} />}
+              </div>
+              <h1 className="text-3xl md:text-5xl font-bold font-display text-foreground leading-tight tracking-tight">
+                {template.name}
+              </h1>
             {stat && stat.review_count > 0 && (
               <div className="flex items-center gap-2 mt-3">
                 <RatingStars value={stat.avg_rating} />
