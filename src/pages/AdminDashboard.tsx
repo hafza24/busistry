@@ -8,6 +8,7 @@ import AdminWebsiteOrders from "@/components/admin/AdminWebsiteOrders";
 import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
+import AdminOverview from "@/components/admin/AdminOverview";
 
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 import AdminAddonsHub from "@/components/admin/AdminAddonsHub";
@@ -25,6 +26,7 @@ import AdminContactMessages from "@/components/admin/AdminContactMessages";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
+  overview: "Overview",
   orders: "Website Orders",
   subscriptions: "Recurring Subscriptions",
   requests: "Store Requests (Legacy)",
@@ -49,7 +51,7 @@ const AdminDashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const { data: isAdmin, isLoading: roleLoading } = useIsAdmin();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState("orders");
+  const [activeView, setActiveView] = useState("overview");
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth", { replace: true });
@@ -66,6 +68,7 @@ const AdminDashboard = () => {
 
   const renderView = () => {
     switch (activeView) {
+      case "overview": return <AdminOverview />;
       case "orders": return <AdminWebsiteOrders />;
       case "subscriptions": return <AdminSubscriptions />;
       case "requests": return <AdminRequestManagement />;
