@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, Building2, MapPin, Share2, ArrowLeft, Pencil, Mail, Phone, Calendar } from "lucide-react";
+import { User, Building2, MapPin, Share2, ArrowLeft, Pencil, Phone, Calendar, Globe, Wallet, Lock } from "lucide-react";
 import { format } from "date-fns";
 
 const Row = ({ label, value }: { label: string; value?: string | null }) => (
@@ -50,6 +50,44 @@ const ProfileView = () => {
       return (data ?? []).map((r) => r.role as string);
     },
   });
+
+  const canViewPrivate = isOwn || !!isAdmin;
+
+  const { data: stores } = useQuery({
+    queryKey: ["profile-view-stores", targetId],
+    enabled: !!targetId && canViewPrivate,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("stores")
+        .select("id, name, subdomain_slug, status, expires_at, created_at")
+        .eq("user_id", targetId!)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const { data: subs } = useQuery({
+    queryKey: ["profile-view-subs", targetId],
+    enabled: !!targetId && canViewPrivate,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("subscriptions")
+        .select("id, label, amount_pkr, cycle_days, status, store_id, current_period_end")
+        .eq("user_id", targetId!)
+        .eq("status", "active");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const monthlyTotal = (subs ?? []).reduce((sum, s: any) => {
+    const cycle = Number(s.cycle_days) || 30;
+    const amt = Number(s.amount_pkr) || 0;
+    return sum + (amt * 30) / cycle;
+  }, 0);
+  const fmtPkr = (n: number) =>
+    new Intl.NumberFormat("en-PK", { style: "currency", currency: "PKR", maximumFractionDigits: 0 }).format(n);
 
   if (authLoading || isLoading) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading profile…</div>;
@@ -138,6 +176,77 @@ const ProfileView = () => {
             <Row label="Website" value={p.website_url} />
           </CardContent>
         </Card>
+
+        {canViewPrivate ? (
+          <>
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display flex items-center gap-2 text-base">
+                  <Globe className="h-4 w-4 text-primary" /> Websites
+                  <Badge variant="secondary" className="ml-auto">{stores?.length ?? 0}</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {(stores ?? []).length === 0 && (
+                  <p className="text-sm text-muted-foreground">No websites yet.</p>
+                )}
+                {(stores ?? []).map((s: any) => (
+                  <div key={s.id} className="flex items-center justify-between gap-3 border border-border/60 rounded-md p-3">
+                    <div className="min-w-0">
+                      <div className="font-medium text-sm truncate">{s.name}</div>
+                      <div className="text-xs text-muted-foreground truncate">/{s.subdomain_slug}</div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Badge variant={s.status === "active" ? "default" : "secondary"} className="capitalize">{s.status ?? "—"}</Badge>
+                      {s.expires_at && (
+                        <span className="text-xs text-muted-foreground hidden sm:inline">
+                          Expires {format(new Date(s.expires_at), "dd MMM yyyy")}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-display flex items-center gap-2 text-base">
+                  <Wallet className="h-4 w-4 text-primary" /> Monthly Rent
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold font-display text-primary">{fmtPkr(monthlyTotal)}</span>
+                  <span className="text-xs text-muted-foreground">/ month across active subscriptions</span>
+                </div>
+                {(subs ?? []).length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No active subscriptions.</p>
+                ) : (
+                  <div className="space-y-1.5">
+                    {(subs ?? []).map((s: any) => {
+                      const cycle = Number(s.cycle_days) || 30;
+                      const perMonth = (Number(s.amount_pkr) || 0) * 30 / cycle;
+                      return (
+                        <div key={s.id} className="flex items-center justify-between text-sm">
+                          <span className="text-foreground truncate">{s.label || "Subscription"}</span>
+                          <span className="text-muted-foreground">{fmtPkr(perMonth)}/mo</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </>
+        ) : (
+          <Card>
+            <CardContent className="p-6 flex items-center gap-3 text-sm text-muted-foreground">
+              <Lock className="h-4 w-4 text-primary" />
+              Websites, subscriptions and other private details are only visible to the account owner and admins.
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <CardHeader>
