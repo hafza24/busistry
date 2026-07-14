@@ -38,6 +38,33 @@ const TemplateDetail = () => {
   const { data: stats = [] } = useItemReviewStats("template");
   const stat = stats.find((s) => s.target_id === id);
 
+  const { data: recommended = [] } = useQuery({
+    queryKey: ["template-recommended", id, template?.category],
+    queryFn: async () => {
+      let query = supabase
+        .from("templates")
+        .select("id, name, description, preview_image_url, category, subcategory, price_pkr, price_without_admin_pkr, demo_url")
+        .eq("is_active", true)
+        .neq("id", id!)
+        .limit(4);
+      if (template?.category) query = query.eq("category", template.category);
+      const { data, error } = await query;
+      if (error) throw error;
+      if (!data || data.length === 0) {
+        // fallback: any other templates
+        const { data: fallback } = await supabase
+          .from("templates")
+          .select("id, name, description, preview_image_url, category, subcategory, price_pkr, price_without_admin_pkr, demo_url")
+          .eq("is_active", true)
+          .neq("id", id!)
+          .limit(4);
+        return fallback ?? [];
+      }
+      return data;
+    },
+    enabled: !!id && !!template,
+  });
+
   const priceWith = Number(template?.price_with_admin_pkr ?? 0) || 0;
   const priceWithout = Number(template?.price_without_admin_pkr ?? 0) || 0;
   const basePrice = Number(template?.price_pkr ?? 0) || 0;
