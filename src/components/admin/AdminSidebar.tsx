@@ -69,11 +69,11 @@ const AdminSidebar = ({ activeView, onViewChange }: AdminSidebarProps) => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-4 space-y-2">
-        <div className="text-xs text-muted-foreground truncate">{user?.email}</div>
-        <div className="flex gap-2">
-          <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")} aria-label="Go to user dashboard"><Home className="h-4 w-4" aria-hidden="true" /></Button>
-          <Button variant="ghost" size="sm" onClick={signOut} aria-label="Sign out"><LogOut className="h-4 w-4" aria-hidden="true" /></Button>
+      <SidebarFooter className="p-4 space-y-2 group-data-[collapsible=icon]:p-2">
+        <div className="text-xs text-muted-foreground truncate group-data-[collapsible=icon]:hidden">{user?.email}</div>
+        <div className="flex gap-2 group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:gap-1">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")} aria-label="Go to user dashboard" className="group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:p-0"><Home className="h-4 w-4" aria-hidden="true" /></Button>
+          <Button variant="ghost" size="sm" onClick={signOut} aria-label="Sign out" className="group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:p-0"><LogOut className="h-4 w-4" aria-hidden="true" /></Button>
         </div>
       </SidebarFooter>
     </Sidebar>
