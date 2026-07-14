@@ -1463,6 +1463,9 @@ export type Database = {
           label: string
           last_reminder_at: string | null
           last_reminder_day: number | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_reason: string | null
           source_id: string
           source_type: string
           status: string
@@ -1481,6 +1484,9 @@ export type Database = {
           label: string
           last_reminder_at?: string | null
           last_reminder_day?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_reason?: string | null
           source_id: string
           source_type: string
           status?: string
@@ -1499,6 +1505,9 @@ export type Database = {
           label?: string
           last_reminder_at?: string | null
           last_reminder_day?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_reason?: string | null
           source_id?: string
           source_type?: string
           status?: string
