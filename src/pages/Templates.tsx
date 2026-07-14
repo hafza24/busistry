@@ -229,6 +229,36 @@ const Templates = () => {
           </div>
         )}
       </div>
+
+      <AlertDialog open={!!selectTarget} onOpenChange={(o) => !o && setSelectTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Use "{selectTarget?.name}" as your template?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2 text-sm">
+                <p>You're about to start onboarding with this template. Here's what happens next:</p>
+                <ol className="list-decimal pl-5 space-y-1 text-muted-foreground">
+                  <li>We'll open the setup wizard pre-filled with this template.</li>
+                  <li>You add your brand, content, and contact details.</li>
+                  <li>Our team customizes and launches your site in 24–48 hours.</li>
+                </ol>
+                <p className="text-muted-foreground">You can change your template later before checkout.</p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (selectTarget) navigate(`/onboarding?template=${selectTarget.id}`);
+                setSelectTarget(null);
+              }}
+            >
+              Continue to onboarding
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
