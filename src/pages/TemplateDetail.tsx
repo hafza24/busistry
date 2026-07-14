@@ -299,7 +299,9 @@ const TemplateDetail = () => {
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="container max-w-6xl py-10 md:py-14">
         {/* Long description */}
         {template.long_description && (
           <section className="mb-12 max-w-3xl">
