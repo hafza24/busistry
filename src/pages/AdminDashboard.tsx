@@ -19,10 +19,8 @@ import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
 import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration";
 import AdminReviewsModeration from "@/components/admin/AdminReviewsModeration";
 import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
-import AdminHelpCenter from "@/components/admin/AdminHelpCenter";
-import AdminSupportChat from "@/components/admin/AdminSupportChat";
+import AdminSupportHub from "@/components/admin/AdminSupportHub";
 import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
-import AdminContactMessages from "@/components/admin/AdminContactMessages";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
@@ -40,11 +38,10 @@ const viewTitles: Record<string, string> = {
   upgrades: "Upgrade Orders",
   feedback: "Feedback Moderation",
   reviews: "Reviews Moderation",
-  help_center: "Help Center",
-  support_chat: "Support Chat",
+  support: "Support",
   audit: "Audit Logs",
   newsletter: "Newsletter Subscribers",
-  contact_messages: "Contact Messages",
+
 };
 
 const AdminDashboard = () => {
@@ -82,8 +79,7 @@ const AdminDashboard = () => {
       case "upgrades": return <AdminUpgradeOrders />;
       case "feedback": return <AdminFeedbackModeration />;
       case "reviews": return <AdminReviewsModeration />;
-      case "help_center": return <AdminHelpCenter />;
-      case "support_chat": return <AdminSupportChat />;
+      case "support": return <AdminSupportHub />;
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
       case "contact_messages": return <AdminContactMessages />;
