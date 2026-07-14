@@ -40,6 +40,7 @@ const HelpArticle = lazy(() => import("./pages/HelpArticle"));
 const HelpChat = lazy(() => import("./pages/HelpChat"));
 const GlassUI = lazy(() => import("./pages/GlassUI"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const ProfileView = lazy(() => import("./pages/ProfileView"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -98,6 +99,8 @@ const App = () => (
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout/:slug" element={<Checkout />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/profile" element={<ProfileView />} />
+                  <Route path="/profile/:userId" element={<ProfileView />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

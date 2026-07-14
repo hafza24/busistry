@@ -1,9 +1,11 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import { useAllProfiles } from "@/hooks/useAdmin";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, Eye } from "lucide-react";
 import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { ErrorState } from "@/components/ui/error-state";
 
@@ -33,6 +35,7 @@ const AdminUserManagement = () => {
                 <TableHead>User</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>Joined</TableHead>
+                <TableHead className="w-24 text-right">Profile</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -53,10 +56,17 @@ const AdminUserManagement = () => {
                   <TableCell className="text-xs text-muted-foreground">
                     {format(new Date(profile.created_at), "dd MMM yyyy")}
                   </TableCell>
+                  <TableCell className="text-right">
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to={`/profile/${profile.id}`} aria-label={`View profile of ${profile.full_name || "user"}`}>
+                        <Eye className="h-4 w-4 mr-1" /> View
+                      </Link>
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
               {(!profiles || profiles.length === 0) && (
-                <TableRow><TableCell colSpan={3} className="text-center text-muted-foreground py-8">No users</TableCell></TableRow>
+                <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-8">No users</TableCell></TableRow>
               )}
             </TableBody>
           </Table>
