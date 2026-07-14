@@ -982,11 +982,15 @@ export type Database = {
           id: string
           instagram_url: string | null
           linkedin_url: string | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_reason: string | null
           newsletter_subscribed: boolean
           newsletter_subscribed_at: string | null
           phone: string | null
           postal_code: string | null
           province: string | null
+          status: Database["public"]["Enums"]["profile_status"]
           twitter_url: string | null
           updated_at: string
           website_url: string | null
@@ -1007,11 +1011,15 @@ export type Database = {
           id: string
           instagram_url?: string | null
           linkedin_url?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_reason?: string | null
           newsletter_subscribed?: boolean
           newsletter_subscribed_at?: string | null
           phone?: string | null
           postal_code?: string | null
           province?: string | null
+          status?: Database["public"]["Enums"]["profile_status"]
           twitter_url?: string | null
           updated_at?: string
           website_url?: string | null
@@ -1032,11 +1040,15 @@ export type Database = {
           id?: string
           instagram_url?: string | null
           linkedin_url?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_reason?: string | null
           newsletter_subscribed?: boolean
           newsletter_subscribed_at?: string | null
           phone?: string | null
           postal_code?: string | null
           province?: string | null
+          status?: Database["public"]["Enums"]["profile_status"]
           twitter_url?: string | null
           updated_at?: string
           website_url?: string | null
@@ -2141,6 +2153,7 @@ export type Database = {
         | "bottom-left"
         | "bottom-right"
       popup_trigger_type: "time" | "scroll" | "exit" | "click" | "hover"
+      profile_status: "active" | "suspended" | "blacklisted"
       store_status:
         | "pending"
         | "under_review"
@@ -2315,6 +2328,7 @@ export const Constants = {
         "bottom-right",
       ],
       popup_trigger_type: ["time", "scroll", "exit", "click", "hover"],
+      profile_status: ["active", "suspended", "blacklisted"],
       store_status: [
         "pending",
         "under_review",
