@@ -183,36 +183,38 @@ const Templates = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="p-5 pt-0 grid grid-cols-3 gap-2">
-                    {t.demo_url ? (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        title="Preview demo in a new tab"
-                        disabled={previewingId === t.id}
-                        onClick={(e) => { stop(e); openPreview(t.id, t.demo_url!); }}
-                      >
-                        {previewingId === t.id ? (
-                          <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Loading</>
-                        ) : (
-                          <><Eye className="h-3.5 w-3.5 mr-1" /> Preview</>
-                        )}
-                      </Button>
-                    ) : (
-                      <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
-                        <Eye className="h-3.5 w-3.5 mr-1" /> Preview
-                      </Button>
-                    )}
-                    <Button size="sm" variant="secondary" asChild onClick={stop}>
-                      <Link to={detailsPath}>
-                        <Info className="h-3.5 w-3.5 mr-1" /> Details
-                      </Link>
-                    </Button>
-                    <Button size="sm" asChild onClick={stop}>
+                  <CardFooter className="p-5 pt-0 flex flex-col gap-2">
+                    <Button size="lg" className="w-full" asChild onClick={stop}>
                       <Link to={`/onboarding?template=${t.id}`}>
-                        <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Select
+                        <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
                       </Link>
                     </Button>
+                    <div className="grid grid-cols-2 gap-2">
+                      {t.demo_url ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          title="Preview demo in a new tab"
+                          disabled={previewingId === t.id}
+                          onClick={(e) => { stop(e); openPreview(t.id, t.demo_url!); }}
+                        >
+                          {previewingId === t.id ? (
+                            <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Loading</>
+                          ) : (
+                            <><Eye className="h-3.5 w-3.5 mr-1" /> Preview</>
+                          )}
+                        </Button>
+                      ) : (
+                        <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
+                          <Eye className="h-3.5 w-3.5 mr-1" /> Preview
+                        </Button>
+                      )}
+                      <Button size="sm" variant="ghost" asChild onClick={stop}>
+                        <Link to={detailsPath}>
+                          <Info className="h-3.5 w-3.5 mr-1" /> Details
+                        </Link>
+                      </Button>
+                    </div>
                   </CardFooter>
                 </Card>
               );
