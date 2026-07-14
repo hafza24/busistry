@@ -11,6 +11,8 @@ import { Users, Eye, ShieldOff, Ban, ShieldCheck } from "lucide-react";
 import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { ErrorState } from "@/components/ui/error-state";
 import UserModerationDialog from "./UserModerationDialog";
+import ModerationLogsDialog from "./ModerationLogsDialog";
+
 
 type Status = "active" | "suspended" | "blacklisted";
 
