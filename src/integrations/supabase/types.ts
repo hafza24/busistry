@@ -464,6 +464,51 @@ export type Database = {
         }
         Relationships: []
       }
+      moderation_notification_logs: {
+        Row: {
+          created_at: string
+          email_error: string | null
+          email_status: string
+          email_to: string | null
+          id: string
+          in_app_error: string | null
+          in_app_status: string
+          moderation_status: Database["public"]["Enums"]["profile_status"]
+          moderator_id: string | null
+          reason: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_error?: string | null
+          email_status?: string
+          email_to?: string | null
+          id?: string
+          in_app_error?: string | null
+          in_app_status?: string
+          moderation_status: Database["public"]["Enums"]["profile_status"]
+          moderator_id?: string | null
+          reason?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_error?: string | null
+          email_status?: string
+          email_to?: string | null
+          id?: string
+          in_app_error?: string | null
+          in_app_status?: string
+          moderation_status?: Database["public"]["Enums"]["profile_status"]
+          moderator_id?: string | null
+          reason?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string

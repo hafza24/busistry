@@ -11,6 +11,8 @@ import { Users, Eye, ShieldOff, Ban, ShieldCheck } from "lucide-react";
 import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { ErrorState } from "@/components/ui/error-state";
 import UserModerationDialog from "./UserModerationDialog";
+import ModerationLogsDialog from "./ModerationLogsDialog";
+
 
 type Status = "active" | "suspended" | "blacklisted";
 
@@ -23,6 +25,8 @@ const statusBadge = (s: Status) => {
 const AdminUserManagement = () => {
   const { data: profiles, isLoading, isError, refetch } = useAllProfiles();
   const [target, setTarget] = useState<{ id: string; name: string; status: Status; reason?: string | null } | null>(null);
+  const [logsOpen, setLogsOpen] = useState(false);
+
 
   if (isLoading) return <TableSkeleton columns={3} rows={6} />;
   if (isError) return <ErrorState message="We couldn't load users." onRetry={() => refetch()} />;
@@ -31,6 +35,12 @@ const AdminUserManagement = () => {
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" onClick={() => setLogsOpen(true)}>
+          View delivery log
+        </Button>
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-2">
         <Card>
           <CardContent className="p-4 flex items-center gap-3">
@@ -125,7 +135,10 @@ const AdminUserManagement = () => {
           currentReason={target.reason}
         />
       )}
+
+      <ModerationLogsDialog open={logsOpen} onOpenChange={setLogsOpen} />
     </div>
+
   );
 };
 
