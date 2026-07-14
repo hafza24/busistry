@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, Building2, MapPin, Share2, ArrowLeft, Pencil, Mail, Phone, Calendar } from "lucide-react";
+import { User, Building2, MapPin, Share2, ArrowLeft, Pencil, Phone, Calendar, Globe, Wallet, Lock } from "lucide-react";
 import { format } from "date-fns";
 
 const Row = ({ label, value }: { label: string; value?: string | null }) => (
