@@ -49,7 +49,12 @@ const AdminSidebar = ({ activeView, onViewChange }: AdminSidebarProps) => {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton isActive={activeView === item.id} onClick={() => onViewChange(item.id)} tooltip={item.label}>
+                  <SidebarMenuButton
+                    isActive={activeView === item.id}
+                    onClick={() => onViewChange(item.id)}
+                    tooltip={item.label}
+                    className="data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-semibold [&[data-active=true]>svg]:text-primary"
+                  >
                     <item.icon className="h-4 w-4" aria-hidden="true" />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
