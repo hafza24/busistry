@@ -11,12 +11,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const Templates = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
   const [previewingId, setPreviewingId] = useState<string | null>(null);
+  const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
 
   const openPreview = (id: string, url: string) => {
     setPreviewingId(id);
@@ -184,10 +189,12 @@ const Templates = () => {
                     </div>
                   </CardContent>
                   <CardFooter className="p-5 pt-0 flex flex-col gap-2">
-                    <Button size="lg" className="w-full" asChild onClick={stop}>
-                      <Link to={`/onboarding?template=${t.id}`}>
-                        <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
-                      </Link>
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      onClick={(e) => { stop(e); setSelectTarget({ id: t.id, name: t.name }); }}
+                    >
+                      <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
                     </Button>
                     <div className="grid grid-cols-2 gap-2">
                       {t.demo_url ? (
@@ -222,6 +229,36 @@ const Templates = () => {
           </div>
         )}
       </div>
+
+      <AlertDialog open={!!selectTarget} onOpenChange={(o) => !o && setSelectTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Use "{selectTarget?.name}" as your template?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2 text-sm">
+                <p>You're about to start onboarding with this template. Here's what happens next:</p>
+                <ol className="list-decimal pl-5 space-y-1 text-muted-foreground">
+                  <li>We'll open the setup wizard pre-filled with this template.</li>
+                  <li>You add your brand, content, and contact details.</li>
+                  <li>Our team customizes and launches your site in 24–48 hours.</li>
+                </ol>
+                <p className="text-muted-foreground">You can change your template later before checkout.</p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (selectTarget) navigate(`/onboarding?template=${selectTarget.id}`);
+                setSelectTarget(null);
+              }}
+            >
+              Continue to onboarding
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
