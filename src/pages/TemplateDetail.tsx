@@ -560,6 +560,71 @@ const TemplateDetail = () => {
           </section>
         )}
 
+        {/* Recommended templates */}
+        {recommended.length > 0 && (
+          <section className="mb-14">
+            <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground">
+                  You might also like
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                  Hand-picked{template.category ? ` ${template.category.toLowerCase()}` : ""} templates similar to this one.
+                </p>
+              </div>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/templates">Browse all templates →</Link>
+              </Button>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {recommended.map((r: any) => {
+                const rPrice = Number(r.price_without_admin_pkr ?? r.price_pkr ?? 0) || 0;
+                return (
+                  <Link
+                    key={r.id}
+                    to={`/templates/${r.id}`}
+                    className="group rounded-xl border border-border/60 bg-card overflow-hidden hover:shadow-lg hover:border-primary/40 transition-all flex flex-col"
+                  >
+                    <div className="aspect-[16/10] overflow-hidden bg-muted">
+                      {r.preview_image_url ? (
+                        <img
+                          src={r.preview_image_url}
+                          alt={r.name}
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-4xl opacity-60">🖼️</div>
+                      )}
+                    </div>
+                    <div className="p-4 flex-1 flex flex-col">
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {r.category && <Badge className="text-[10px]">{r.category}</Badge>}
+                        {r.subcategory && <Badge variant="secondary" className="text-[10px]">{r.subcategory}</Badge>}
+                      </div>
+                      <h3 className="font-semibold font-display text-foreground group-hover:text-primary transition-colors">
+                        {r.name}
+                      </h3>
+                      {r.description && (
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{r.description}</p>
+                      )}
+                      <div className="mt-auto pt-3 flex items-center justify-between">
+                        <span className="text-sm font-bold text-foreground">
+                          {rPrice > 0 ? fmtPKR(rPrice) : "Free"}
+                        </span>
+                        <span className="text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1">
+                          View <Eye className="h-3 w-3" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
         {/* CTA */}
         <section className="text-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-10 md:p-14">
           <h2 className="text-2xl md:text-4xl font-bold font-display text-foreground">
