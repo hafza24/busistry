@@ -16,6 +16,15 @@ const Templates = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [previewingId, setPreviewingId] = useState<string | null>(null);
+
+  const openPreview = (id: string, url: string) => {
+    setPreviewingId(id);
+    // Open in new tab immediately (must be in the click handler to avoid popup blockers)
+    window.open(url, "_blank", "noopener,noreferrer");
+    // Show skeleton state briefly to signal the demo is loading
+    setTimeout(() => setPreviewingId((cur) => (cur === id ? null : cur)), 1200);
+  };
 
 
   const { data: templates = [], isLoading } = useQuery({
