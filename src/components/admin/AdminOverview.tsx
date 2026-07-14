@@ -219,7 +219,7 @@ const AdminOverview = () => {
                 {now.toLocaleDateString("en", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 min-w-[240px]">
+            <div className="grid grid-cols-4 gap-3 flex-1 min-w-[420px]">
               <StatMini label="Total Orders" value={totals.orders} />
               <StatMini label="Active Users" value={totals.users} />
               <StatMini label="Subscriptions" value={totals.activeSubs} />
