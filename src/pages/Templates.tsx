@@ -73,16 +73,21 @@ const Templates = () => {
 
         {/* Category filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-4">
-          {categories.map((n) => (
-            <Button
-              key={n}
-              variant={activeCategory === n ? "default" : "outline"}
-              size="sm"
-              onClick={() => { setActiveCategory(n); setActiveSub(null); }}
-            >
-              {n}
-            </Button>
-          ))}
+          {categories.map((n) => {
+            const active = activeCategory === n;
+            return (
+              <Button
+                key={n}
+                variant={active ? "default" : "outline"}
+                size="sm"
+                aria-pressed={active}
+                onClick={() => { setActiveCategory(n); setActiveSub(null); }}
+                className={active ? "ring-2 ring-primary/40 ring-offset-2 ring-offset-background shadow-md scale-[1.03]" : "hover:border-primary/40"}
+              >
+                {n}
+              </Button>
+            );
+          })}
         </div>
 
         {/* Subcategory filter */}
@@ -91,20 +96,27 @@ const Templates = () => {
             <Button
               variant={activeSub === null ? "secondary" : "ghost"}
               size="sm"
+              aria-pressed={activeSub === null}
               onClick={() => setActiveSub(null)}
+              className={activeSub === null ? "ring-1 ring-primary/40 font-semibold" : ""}
             >
               All {activeCategory !== "All" ? activeCategory : ""}
             </Button>
-            {subcategories.map((s) => (
-              <Button
-                key={s}
-                variant={activeSub === s ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setActiveSub(s)}
-              >
-                {s}
-              </Button>
-            ))}
+            {subcategories.map((s) => {
+              const active = activeSub === s;
+              return (
+                <Button
+                  key={s}
+                  variant={active ? "secondary" : "ghost"}
+                  size="sm"
+                  aria-pressed={active}
+                  onClick={() => setActiveSub(s)}
+                  className={active ? "ring-1 ring-primary/40 font-semibold" : ""}
+                >
+                  {s}
+                </Button>
+              );
+            })}
           </div>
         )}
 
