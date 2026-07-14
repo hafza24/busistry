@@ -104,8 +104,31 @@ const Templates = () => {
         )}
 
         {isLoading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Card key={i} className="border-border/50 flex flex-col overflow-hidden">
+                <Skeleton className="h-44 w-full rounded-none" />
+                <CardContent className="p-5 flex-1 space-y-3">
+                  <div className="flex gap-1">
+                    <Skeleton className="h-4 w-14" />
+                    <Skeleton className="h-4 w-16" />
+                  </div>
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-5/6" />
+                  <div className="flex gap-1 pt-2">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-14" />
+                  </div>
+                </CardContent>
+                <CardFooter className="p-5 pt-0 grid grid-cols-3 gap-2">
+                  <Skeleton className="h-8 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         ) : filtered.length === 0 ? (
           <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
