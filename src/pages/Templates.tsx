@@ -185,10 +185,18 @@ const Templates = () => {
                   </CardContent>
                   <CardFooter className="p-5 pt-0 grid grid-cols-3 gap-2">
                     {t.demo_url ? (
-                      <Button size="sm" variant="outline" asChild title="Preview demo" onClick={stop}>
-                        <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                          <Eye className="h-3.5 w-3.5 mr-1" /> Preview
-                        </a>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        title="Preview demo in a new tab"
+                        disabled={previewingId === t.id}
+                        onClick={(e) => { stop(e); openPreview(t.id, t.demo_url!); }}
+                      >
+                        {previewingId === t.id ? (
+                          <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Loading</>
+                        ) : (
+                          <><Eye className="h-3.5 w-3.5 mr-1" /> Preview</>
+                        )}
                       </Button>
                     ) : (
                       <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
