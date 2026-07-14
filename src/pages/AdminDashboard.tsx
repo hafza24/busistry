@@ -82,7 +82,7 @@ const AdminDashboard = () => {
       case "support": return <AdminSupportHub />;
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
-      case "contact_messages": return <AdminContactMessages />;
+      
       default: return <AdminWebsiteOrders />;
     }
   };
