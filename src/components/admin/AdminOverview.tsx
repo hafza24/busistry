@@ -252,8 +252,9 @@ const AdminOverview = () => {
           </div>
           <div className="space-y-2 text-xs">
             <InsightRow label="Store activation" value={totals.completion} />
-            <InsightRow label="User engagement" value={72} />
-            <InsightRow label="Response rate" value={88} />
+            <InsightRow label="User engagement" value={radarData[3]?.value ?? 0} />
+            <InsightRow label="Response rate" value={radarData[1]?.value ?? 0} />
+
           </div>
         </Card>
       </div>
