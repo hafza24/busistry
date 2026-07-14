@@ -11,12 +11,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const Templates = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeSub, setActiveSub] = useState<string | null>(null);
   const [previewingId, setPreviewingId] = useState<string | null>(null);
+  const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
 
   const openPreview = (id: string, url: string) => {
     setPreviewingId(id);
