@@ -186,9 +186,11 @@ Deno.serve(async (req) => {
 
 
 
-    return new Response(JSON.stringify({ ok: true, emailSent, emailError }), {
-      status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ ok: true, logId, inAppStatus, emailStatus, emailError }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
+
   } catch (e: any) {
     console.error("moderation-notify error:", e);
     return new Response(JSON.stringify({ error: e?.message ?? "Server error" }), {
