@@ -37,9 +37,14 @@ const AdminSidebar = ({ activeView, onViewChange }: AdminSidebarProps) => {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="p-4">
-        <Button variant="ghost" className="w-full justify-start gap-2 font-display font-bold text-primary" onClick={() => navigate("/")}>
-          <ShieldCheck className="h-5 w-5" /> Admin Panel
+      <SidebarHeader className="p-4 group-data-[collapsible=icon]:p-2">
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-2 font-display font-bold text-primary group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+          onClick={() => navigate("/")}
+        >
+          <ShieldCheck className="h-5 w-5 shrink-0" />
+          <span className="group-data-[collapsible=icon]:hidden">Admin Panel</span>
         </Button>
       </SidebarHeader>
       <SidebarContent>
