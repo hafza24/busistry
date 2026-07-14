@@ -35,6 +35,7 @@ const AdminUserManagement = () => {
                 <TableHead>User</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>Joined</TableHead>
+                <TableHead className="w-24 text-right">Profile</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -55,10 +56,17 @@ const AdminUserManagement = () => {
                   <TableCell className="text-xs text-muted-foreground">
                     {format(new Date(profile.created_at), "dd MMM yyyy")}
                   </TableCell>
+                  <TableCell className="text-right">
+                    <Button asChild variant="ghost" size="sm">
+                      <Link to={`/profile/${profile.id}`} aria-label={`View profile of ${profile.full_name || "user"}`}>
+                        <Eye className="h-4 w-4 mr-1" /> View
+                      </Link>
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
               {(!profiles || profiles.length === 0) && (
-                <TableRow><TableCell colSpan={3} className="text-center text-muted-foreground py-8">No users</TableCell></TableRow>
+                <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground py-8">No users</TableCell></TableRow>
               )}
             </TableBody>
           </Table>
