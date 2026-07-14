@@ -99,6 +99,8 @@ const App = () => (
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout/:slug" element={<Checkout />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/profile" element={<ProfileView />} />
+                  <Route path="/profile/:userId" element={<ProfileView />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

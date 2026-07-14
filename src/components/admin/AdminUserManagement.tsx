@@ -1,9 +1,11 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import { useAllProfiles } from "@/hooks/useAdmin";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, Eye } from "lucide-react";
 import { TableSkeleton } from "@/components/ui/loading-skeletons";
 import { ErrorState } from "@/components/ui/error-state";
 
