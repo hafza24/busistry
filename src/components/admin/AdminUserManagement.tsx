@@ -25,6 +25,8 @@ const statusBadge = (s: Status) => {
 const AdminUserManagement = () => {
   const { data: profiles, isLoading, isError, refetch } = useAllProfiles();
   const [target, setTarget] = useState<{ id: string; name: string; status: Status; reason?: string | null } | null>(null);
+  const [logsOpen, setLogsOpen] = useState(false);
+
 
   if (isLoading) return <TableSkeleton columns={3} rows={6} />;
   if (isError) return <ErrorState message="We couldn't load users." onRetry={() => refetch()} />;
