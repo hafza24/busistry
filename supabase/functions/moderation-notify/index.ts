@@ -88,14 +88,37 @@ Deno.serve(async (req) => {
       ? (reason ? `Reason: ${reason}` : "Contact support if you believe this is a mistake.")
       : "You can sign in and use Busistree again.";
 
-    await admin.from("notifications").insert({
+    // Create the delivery log row (queued state)
+    const { data: logRow } = await admin
+      .from("moderation_notification_logs")
+      .insert({
+        user_id: body.userId,
+        moderator_id: userData.user.id,
+        moderation_status: body.status,
+        reason,
+        in_app_status: "queued",
+        email_status: "queued",
+      })
+      .select("id")
+      .single();
+    const logId = (logRow as any)?.id as string | undefined;
+
+    // In-app notification
+    let inAppStatus: "sent" | "failed" = "sent";
+    let inAppError: string | null = null;
+    const { error: notifErr } = await admin.from("notifications").insert({
       user_id: body.userId,
       audience: "user",
       type: "moderation",
       title,
       body: notifBody,
-      metadata: { status: body.status, reason },
+      metadata: { status: body.status, reason, log_id: logId },
     });
+    if (notifErr) {
+      inAppStatus = "failed";
+      inAppError = notifErr.message;
+      console.error("moderation-notify in-app failed:", notifErr);
+    }
 
     // Fetch target user's email + name
     const { data: target } = await admin.auth.admin.getUserById(body.userId);
@@ -103,40 +126,65 @@ Deno.serve(async (req) => {
     const { data: profile } = await admin.from("profiles").select("full_name").eq("id", body.userId).maybeSingle();
     const fullName = (profile as any)?.full_name ?? "";
 
-    let emailSent = false;
+    let emailStatus: "sent" | "failed" | "skipped" = "queued" as any;
     let emailError: string | null = null;
 
-    if (email && RESEND_API_KEY && LOVABLE_API_KEY) {
+    if (!email) {
+      emailStatus = "skipped";
+      emailError = "no_email_on_file";
+    } else if (!RESEND_API_KEY || !LOVABLE_API_KEY) {
+      emailStatus = "skipped";
+      emailError = "resend_not_configured";
+    } else {
       const html = renderEmail(fullName, body.status, reason);
       const subject = isRestricted
         ? `Your Busistree account has been ${action}`
         : "Your Busistree account has been reinstated";
 
-      const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${LOVABLE_API_KEY}`,
-          "X-Connection-Api-Key": RESEND_API_KEY,
-        },
-        body: JSON.stringify({
-          from: "Busistree <onboarding@resend.dev>",
-          to: [email],
-          subject,
-          html,
-        }),
-      });
-      if (res.ok) {
-        emailSent = true;
-      } else {
-        emailError = `Resend ${res.status}: ${await res.text()}`;
-        console.error("moderation-notify email failed:", emailError);
+      try {
+        const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${LOVABLE_API_KEY}`,
+            "X-Connection-Api-Key": RESEND_API_KEY,
+          },
+          body: JSON.stringify({
+            from: "Busistree <onboarding@resend.dev>",
+            to: [email],
+            subject,
+            html,
+          }),
+        });
+        if (res.ok) {
+          emailStatus = "sent";
+        } else {
+          emailStatus = "failed";
+          emailError = `Resend ${res.status}: ${(await res.text()).slice(0, 500)}`;
+          console.error("moderation-notify email failed:", emailError);
+        }
+      } catch (e: any) {
+        emailStatus = "failed";
+        emailError = e?.message ?? "network_error";
+        console.error("moderation-notify email exception:", emailError);
       }
-    } else if (!email) {
-      emailError = "no_email_on_file";
-    } else if (!RESEND_API_KEY) {
-      emailError = "resend_not_configured";
     }
+
+    // Finalize log row
+    if (logId) {
+      await admin
+        .from("moderation_notification_logs")
+        .update({
+          email_to: email,
+          in_app_status: inAppStatus,
+          in_app_error: inAppError,
+          email_status: emailStatus,
+          email_error: emailError,
+        })
+        .eq("id", logId);
+    }
+
+
 
     return new Response(JSON.stringify({ ok: true, emailSent, emailError }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
