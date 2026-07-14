@@ -189,10 +189,12 @@ const Templates = () => {
                     </div>
                   </CardContent>
                   <CardFooter className="p-5 pt-0 flex flex-col gap-2">
-                    <Button size="lg" className="w-full" asChild onClick={stop}>
-                      <Link to={`/onboarding?template=${t.id}`}>
-                        <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
-                      </Link>
+                    <Button
+                      size="lg"
+                      className="w-full"
+                      onClick={(e) => { stop(e); setSelectTarget({ id: t.id, name: t.name }); }}
+                    >
+                      <CheckCircle2 className="h-4 w-4 mr-2" /> Select this template
                     </Button>
                     <div className="grid grid-cols-2 gap-2">
                       {t.demo_url ? (
