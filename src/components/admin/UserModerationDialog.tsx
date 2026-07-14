@@ -54,9 +54,25 @@ const UserModerationDialog = ({ open, onOpenChange, userId, userName, currentSta
         entityId: userId,
         metadata: { moderation_status: status, reason },
       });
+
+      // Notify the user (in-app + email). Best-effort — don't fail the whole op.
+      const { data: notifyRes, error: notifyErr } = await supabase.functions.invoke("moderation-notify", {
+        body: { userId, status, reason: reason.trim() || null },
+      });
+      return { notifyRes, notifyErr };
     },
-    onSuccess: () => {
-      toast.success(`User ${status === "active" ? "reinstated" : status}`);
+    onSuccess: (res) => {
+      const emailErr = (res as any)?.notifyRes?.emailError;
+      if (emailErr === "resend_not_configured") {
+        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent (email disabled).`);
+      } else if (emailErr === "no_email_on_file") {
+        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent (no email on file).`);
+      } else if (emailErr) {
+        toast.success(`User ${status === "active" ? "reinstated" : status}. In-app notice sent; email failed.`);
+      } else {
+        toast.success(`User ${status === "active" ? "reinstated" : status}. Notification and email sent.`);
+      }
+
       qc.invalidateQueries({ queryKey: ["admin_profiles"] });
       onOpenChange(false);
     },
