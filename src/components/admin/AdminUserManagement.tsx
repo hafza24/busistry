@@ -35,6 +35,12 @@ const AdminUserManagement = () => {
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" onClick={() => setLogsOpen(true)}>
+          View delivery log
+        </Button>
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-2">
         <Card>
           <CardContent className="p-4 flex items-center gap-3">
