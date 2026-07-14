@@ -27,9 +27,7 @@ const menuItems = [
   { id: "feedback", label: "Feedback", icon: MessageSquare },
   { id: "reviews", label: "Reviews", icon: Star },
   { id: "newsletter", label: "Newsletter", icon: Mail },
-  { id: "help_center", label: "Help Center", icon: LifeBuoy },
-  { id: "support_chat", label: "Support Chat", icon: MessageCircle },
-  { id: "contact_messages", label: "Contact Messages", icon: Mail },
+  { id: "support", label: "Support", icon: LifeBuoy },
   { id: "audit", label: "Audit Logs", icon: ScrollText },
 ];
 
