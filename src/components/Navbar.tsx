@@ -1,25 +1,48 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink,
+  NavigationMenuList, NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
 
-const leftLinks: { to: string; label: string; showAt?: "md" | "lg" | "xl" }[] = [
+type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
+
+const leftLinks: NavLink[] = [
   { to: "/", label: "Home", showAt: "md" },
-  { to: "/templates", label: "Templates", showAt: "md" },
-  { to: "/marketplace", label: "Addons", showAt: "lg" },
-  { to: "/templates-on-sale", label: "Sale", showAt: "lg" },
-  { to: "/pricing", label: "Pricing", showAt: "lg" },
-  { to: "/how-it-works", label: "How it works", showAt: "xl" },
-  { to: "/about", label: "About", showAt: "xl" },
-  { to: "/team", label: "Team", showAt: "xl" },
+  { to: "/how-it-works", label: "How it works", showAt: "lg" },
   { to: "/contact", label: "Contact", showAt: "xl" },
 ];
 
-const rightLinks: { to: string; label: string }[] = [];
+const marketplaceItems = [
+  { to: "/templates", label: "Templates", desc: "Ready-made websites, launched in 24–48h.", icon: LayoutTemplate },
+  { to: "/marketplace", label: "Addons", desc: "Extend your store with paid add-ons.", icon: Sparkles },
+  { to: "/templates-on-sale", label: "Sale", desc: "Discounted templates, limited time.", icon: Tag },
+  { to: "/pricing", label: "Pricing", desc: "Plans and one-time template pricing.", icon: CreditCard },
+];
 
-const allLinks = [...leftLinks, ...rightLinks];
+const aboutItems = [
+  { to: "/about", label: "About us", desc: "Our story, mission, and values.", icon: Info },
+  { to: "/team", label: "Team", desc: "Meet the people behind Busistree.", icon: Users },
+];
+
+const mobileLinks: NavLink[] = [
+  { to: "/", label: "Home" },
+  { to: "/templates", label: "Templates" },
+  { to: "/marketplace", label: "Addons" },
+  { to: "/templates-on-sale", label: "Sale" },
+  { to: "/pricing", label: "Pricing" },
+  { to: "/how-it-works", label: "How it works" },
+  { to: "/about", label: "About us" },
+  { to: "/team", label: "Team" },
+  { to: "/contact", label: "Contact" },
+];
+
+const rightLinks: NavLink[] = [];
+const allLinks = mobileLinks;
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
@@ -108,40 +131,106 @@ const Navbar = () => {
             <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
           </Link>
 
-          {/* Left links — grouped pill */}
+          {/* Left links + mega menus */}
           <div className="hidden md:flex items-center flex-1 min-w-0">
             <div className="inline-flex items-center gap-1 px-1.5 py-1 max-w-full overflow-hidden">
-              {leftLinks.map((link) => {
-                const visibility =
-                  link.showAt === "xl"
-                    ? "hidden xl:inline-flex"
-                    : link.showAt === "lg"
-                    ? "hidden lg:inline-flex"
-                    : "inline-flex";
-                return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className={`${visibility} ${linkClass(location.pathname === link.to)}`}
-                  >
-                    <span className="relative z-10">{link.label}</span>
-                    {/* hover backdrop */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 scale-90 transition-all duration-300 ease-out group-hover/nav:opacity-100 group-hover/nav:scale-100"
-                    />
-                    {/* active/hover underline */}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute left-1/2 -translate-x-1/2 bottom-1 h-0.5 rounded-full bg-gradient-brand transition-all duration-300 ease-out ${
-                        location.pathname === link.to
-                          ? "w-6 opacity-100"
-                          : "w-0 opacity-0 group-hover/nav:w-6 group-hover/nav:opacity-100"
+              {/* Home */}
+              <Link
+                to="/"
+                className={linkClass(location.pathname === "/")}
+              >
+                <span className="relative z-10">Home</span>
+              </Link>
+
+              {/* Marketplace mega menu */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger
+                      className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
+                        marketplaceItems.some((i) => location.pathname === i.to)
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-primary"
                       }`}
-                    />
-                  </Link>
-                );
-              })}
+                    >
+                      Marketplace
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="p-4 w-[520px] grid grid-cols-2 gap-2">
+                        {marketplaceItems.map((it) => (
+                          <NavigationMenuLink asChild key={it.to}>
+                            <Link
+                              to={it.to}
+                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
+                            >
+                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                <it.icon className="h-4 w-4" />
+                              </div>
+                              <div className="min-w-0">
+                                <div className="text-sm font-semibold text-foreground">{it.label}</div>
+                                <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        ))}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+
+              {/* How it works */}
+              <Link
+                to="/how-it-works"
+                className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
+              >
+                <span className="relative z-10">How it works</span>
+              </Link>
+
+              {/* About mega menu */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger
+                      className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
+                        aboutItems.some((i) => location.pathname === i.to)
+                          ? "text-primary"
+                          : "text-muted-foreground hover:text-primary"
+                      }`}
+                    >
+                      About
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="p-4 w-[360px] grid gap-2">
+                        {aboutItems.map((it) => (
+                          <NavigationMenuLink asChild key={it.to}>
+                            <Link
+                              to={it.to}
+                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
+                            >
+                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                <it.icon className="h-4 w-4" />
+                              </div>
+                              <div className="min-w-0">
+                                <div className="text-sm font-semibold text-foreground">{it.label}</div>
+                                <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
+                              </div>
+                            </Link>
+                          </NavigationMenuLink>
+                        ))}
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+
+              {/* Contact */}
+              <Link
+                to="/contact"
+                className={`hidden xl:inline-flex ${linkClass(location.pathname === "/contact")}`}
+              >
+                <span className="relative z-10">Contact</span>
+              </Link>
             </div>
           </div>
 
