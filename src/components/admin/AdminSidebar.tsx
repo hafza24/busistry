@@ -13,6 +13,7 @@ interface AdminSidebarProps {
 }
 
 const menuItems = [
+  { id: "overview", label: "Overview", icon: Home },
   { id: "orders", label: "Website Orders", icon: Globe },
   { id: "subscriptions", label: "Subscriptions", icon: Repeat },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
