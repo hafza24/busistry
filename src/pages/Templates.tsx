@@ -104,7 +104,6 @@ const Templates = () => {
             {filtered.map((t) => {
               const features = Array.isArray(t.features) ? (t.features as string[]) : [];
               const stat = statMap.get(t.id);
-              return (
               const detailsPath = t.name?.toLowerCase().includes("booker") ? "/templates/booker" : `/templates/${t.id}`;
               const stop = (e: React.MouseEvent) => e.stopPropagation();
               return (
