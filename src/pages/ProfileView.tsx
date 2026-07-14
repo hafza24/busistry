@@ -51,6 +51,44 @@ const ProfileView = () => {
     },
   });
 
+  const canViewPrivate = isOwn || !!isAdmin;
+
+  const { data: stores } = useQuery({
+    queryKey: ["profile-view-stores", targetId],
+    enabled: !!targetId && canViewPrivate,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("stores")
+        .select("id, name, subdomain_slug, status, expires_at, created_at")
+        .eq("user_id", targetId!)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const { data: subs } = useQuery({
+    queryKey: ["profile-view-subs", targetId],
+    enabled: !!targetId && canViewPrivate,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("subscriptions")
+        .select("id, label, amount_pkr, cycle_days, status, store_id, current_period_end")
+        .eq("user_id", targetId!)
+        .eq("status", "active");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  const monthlyTotal = (subs ?? []).reduce((sum, s: any) => {
+    const cycle = Number(s.cycle_days) || 30;
+    const amt = Number(s.amount_pkr) || 0;
+    return sum + (amt * 30) / cycle;
+  }, 0);
+  const fmtPkr = (n: number) =>
+    new Intl.NumberFormat("en-PK", { style: "currency", currency: "PKR", maximumFractionDigits: 0 }).format(n);
+
   if (authLoading || isLoading) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading profile…</div>;
   }
