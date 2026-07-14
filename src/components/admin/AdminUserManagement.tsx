@@ -135,7 +135,10 @@ const AdminUserManagement = () => {
           currentReason={target.reason}
         />
       )}
+
+      <ModerationLogsDialog open={logsOpen} onOpenChange={setLogsOpen} />
     </div>
+
   );
 };
 
