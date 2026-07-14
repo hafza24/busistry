@@ -43,11 +43,14 @@ export default function CheckoutDialog({ open, onOpenChange, title, amount, stor
   const [submitting, setSubmitting] = useState(false);
 
   const activeStores = (stores ?? []).filter((s: any) => s.status === "activated" || s.status === "approved");
+  const { requireComplete, dialog: profileGateDialog } = useProfileGate();
 
   const handleSubmit = async () => {
+    if (!requireComplete()) return;
     const sId = storeId || selectedStore;
     if (!sId) { toast({ title: "Select a store", variant: "destructive" }); return; }
     if (!txn) { toast({ title: "Transaction ID required", variant: "destructive" }); return; }
+
     setSubmitting(true);
     try {
       let screenshot_url: string | null = null;
