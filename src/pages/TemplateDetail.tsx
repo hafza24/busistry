@@ -6,7 +6,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Rocket, ExternalLink, ArrowLeft, Check, ShieldCheck, Sparkles } from "lucide-react";
+import { Loader2, Rocket, ExternalLink, ArrowLeft, Check, ShieldCheck, Sparkles, Crown, Eye } from "lucide-react";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 import { useItemReviewStats } from "@/hooks/useReviews";
 import { RatingStars, ItemBadges } from "@/components/reviews/ItemBadges";
