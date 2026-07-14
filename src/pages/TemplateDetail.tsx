@@ -6,7 +6,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Rocket, ExternalLink, ArrowLeft, Check, ShieldCheck, Sparkles } from "lucide-react";
+import { Loader2, Rocket, ExternalLink, ArrowLeft, Check, ShieldCheck, Sparkles, Crown, Eye } from "lucide-react";
 import { setPendingTemplate } from "@/hooks/useOnboarding";
 import { useItemReviewStats } from "@/hooks/useReviews";
 import { RatingStars, ItemBadges } from "@/components/reviews/ItemBadges";
@@ -37,6 +37,33 @@ const TemplateDetail = () => {
 
   const { data: stats = [] } = useItemReviewStats("template");
   const stat = stats.find((s) => s.target_id === id);
+
+  const { data: recommended = [] } = useQuery({
+    queryKey: ["template-recommended", id, template?.category],
+    queryFn: async () => {
+      let query = supabase
+        .from("templates")
+        .select("id, name, description, preview_image_url, category, subcategory, price_pkr, price_without_admin_pkr, demo_url")
+        .eq("is_active", true)
+        .neq("id", id!)
+        .limit(4);
+      if (template?.category) query = query.eq("category", template.category);
+      const { data, error } = await query;
+      if (error) throw error;
+      if (!data || data.length === 0) {
+        // fallback: any other templates
+        const { data: fallback } = await supabase
+          .from("templates")
+          .select("id, name, description, preview_image_url, category, subcategory, price_pkr, price_without_admin_pkr, demo_url")
+          .eq("is_active", true)
+          .neq("id", id!)
+          .limit(4);
+        return fallback ?? [];
+      }
+      return data;
+    },
+    enabled: !!id && !!template,
+  });
 
   const priceWith = Number(template?.price_with_admin_pkr ?? 0) || 0;
   const priceWithout = Number(template?.price_without_admin_pkr ?? 0) || 0;
@@ -132,7 +159,7 @@ const TemplateDetail = () => {
   };
 
   return (
-    <div className="py-10 md:py-14">
+    <div className="pb-10 md:pb-14">
       <TemplateCustomizationNotice />
       <SEO
         title={seoTitle}
@@ -145,39 +172,45 @@ const TemplateDetail = () => {
         jsonLd={productJsonLd}
       />
 
-      <div className="container max-w-6xl">
-        <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
-          <Link to="/templates">
-            <ArrowLeft className="h-4 w-4 mr-1" /> All templates
-          </Link>
-        </Button>
+      {/* Premium hero backdrop */}
+      <div className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_50%_0%,hsl(var(--primary)/0.18),transparent_70%)]" />
+        <div className="container max-w-6xl relative py-10 md:py-14">
+          <Button variant="ghost" size="sm" asChild className="mb-6 -ml-2">
+            <Link to="/templates">
+              <ArrowLeft className="h-4 w-4 mr-1" /> All templates
+            </Link>
+          </Button>
 
-        {/* Header */}
-        <div className="grid lg:grid-cols-2 gap-10 items-start mb-14">
-          <div>
-            <div className="aspect-[16/10] rounded-xl overflow-hidden border border-border/60 bg-muted shadow-sm">
-              {template.preview_image_url ? (
-                <img
-                  src={template.preview_image_url}
-                  alt={seoImageAlt}
-                  className="w-full h-full object-cover object-top"
-                  loading="eager"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-6xl opacity-60">🖼️</div>
-              )}
+          <div className="grid lg:grid-cols-2 gap-10 items-start">
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/40 to-accent/40 opacity-40 blur-lg group-hover:opacity-60 transition-opacity" aria-hidden="true" />
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border/60 bg-muted shadow-xl">
+                {template.preview_image_url ? (
+                  <img
+                    src={template.preview_image_url}
+                    alt={seoImageAlt}
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-6xl opacity-60">🖼️</div>
+                )}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-xs font-semibold text-primary shadow-md border border-primary/20">
+                  <Crown className="h-3.5 w-3.5" /> Premium template
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {template.category && <Badge>{template.category}</Badge>}
-              {template.subcategory && <Badge variant="secondary">{template.subcategory}</Badge>}
-              {stat && <ItemBadges stat={stat} />}
-            </div>
-            <h1 className="text-3xl md:text-5xl font-bold font-display text-foreground leading-tight">
-              {template.name}
-            </h1>
+            <div>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {template.category && <Badge>{template.category}</Badge>}
+                {template.subcategory && <Badge variant="secondary">{template.subcategory}</Badge>}
+                {stat && <ItemBadges stat={stat} />}
+              </div>
+              <h1 className="text-3xl md:text-5xl font-bold font-display text-foreground leading-tight tracking-tight">
+                {template.name}
+              </h1>
             {stat && stat.review_count > 0 && (
               <div className="flex items-center gap-2 mt-3">
                 <RatingStars value={stat.avg_rating} />
@@ -266,7 +299,9 @@ const TemplateDetail = () => {
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="container max-w-6xl py-10 md:py-14">
         {/* Long description */}
         {template.long_description && (
           <section className="mb-12 max-w-3xl">
@@ -522,6 +557,71 @@ const TemplateDetail = () => {
                 </CardContent>
               </Card>
             )}
+          </section>
+        )}
+
+        {/* Recommended templates */}
+        {recommended.length > 0 && (
+          <section className="mb-14">
+            <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground">
+                  You might also like
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                  Hand-picked{template.category ? ` ${template.category.toLowerCase()}` : ""} templates similar to this one.
+                </p>
+              </div>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/templates">Browse all templates →</Link>
+              </Button>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {recommended.map((r: any) => {
+                const rPrice = Number(r.price_without_admin_pkr ?? r.price_pkr ?? 0) || 0;
+                return (
+                  <Link
+                    key={r.id}
+                    to={`/templates/${r.id}`}
+                    className="group rounded-xl border border-border/60 bg-card overflow-hidden hover:shadow-lg hover:border-primary/40 transition-all flex flex-col"
+                  >
+                    <div className="aspect-[16/10] overflow-hidden bg-muted">
+                      {r.preview_image_url ? (
+                        <img
+                          src={r.preview_image_url}
+                          alt={r.name}
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-4xl opacity-60">🖼️</div>
+                      )}
+                    </div>
+                    <div className="p-4 flex-1 flex flex-col">
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {r.category && <Badge className="text-[10px]">{r.category}</Badge>}
+                        {r.subcategory && <Badge variant="secondary" className="text-[10px]">{r.subcategory}</Badge>}
+                      </div>
+                      <h3 className="font-semibold font-display text-foreground group-hover:text-primary transition-colors">
+                        {r.name}
+                      </h3>
+                      {r.description && (
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{r.description}</p>
+                      )}
+                      <div className="mt-auto pt-3 flex items-center justify-between">
+                        <span className="text-sm font-bold text-foreground">
+                          {rPrice > 0 ? fmtPKR(rPrice) : "Free"}
+                        </span>
+                        <span className="text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1">
+                          View <Eye className="h-3 w-3" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </section>
         )}
 
