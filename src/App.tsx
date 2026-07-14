@@ -18,6 +18,8 @@ const BookerTemplate = lazy(() => import("./pages/BookerTemplate"));
 const TemplateDetail = lazy(() => import("./pages/TemplateDetail"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const About = lazy(() => import("./pages/About"));
+const Team = lazy(() => import("./pages/Team"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
 const TemplatesOnSale = lazy(() => import("./pages/TemplatesOnSale"));
@@ -79,6 +81,8 @@ const App = () => (
                     <Route path="/marketplace" element={<Marketplace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/team" element={<Team />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/legal/privacy" element={<Privacy />} />
                     <Route path="/legal/terms" element={<Terms />} />
