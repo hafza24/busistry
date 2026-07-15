@@ -88,7 +88,7 @@ export default function Marketplace() {
       {/* Hero — Dynamic Bento */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Feature Banner */}
-        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-8 sm:p-12 min-h-[450px] sm:min-h-[600px] shadow-2xl">
+        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[600px] shadow-2xl">
           <img
             src={marketplaceHero}
             alt=""
@@ -96,6 +96,9 @@ export default function Marketplace() {
             className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-overlay"
             width={1280}
             height={1024}
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/40" />
           <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -128,11 +131,11 @@ export default function Marketplace() {
         </div>
 
         {/* Category Grid Side */}
-        <div className="lg:col-span-5 grid grid-cols-2 grid-rows-[auto_1fr] gap-6">
+        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
           {/* Plans — wide */}
           <Link
             to="/pricing"
-            className="col-span-2 group relative overflow-hidden rounded-3xl bg-card border border-border flex items-center p-8 transition-all hover:shadow-xl hover:border-primary/40"
+            className="sm:col-span-2 group relative overflow-hidden rounded-3xl bg-card border border-border flex items-center p-6 sm:p-8 min-h-[140px] transition-all hover:shadow-xl hover:border-primary/40"
           >
             <div className="relative z-10 w-2/3">
               <h3 className="font-display text-2xl font-bold text-foreground">Plans</h3>
@@ -160,9 +163,11 @@ export default function Marketplace() {
               alt=""
               aria-hidden="true"
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500"
               width={800}
               height={800}
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 24vw, 100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
             <div className="absolute top-6 left-6 z-20">
@@ -186,9 +191,11 @@ export default function Marketplace() {
               alt=""
               aria-hidden="true"
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-500"
               width={800}
               height={800}
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 24vw, 100vw"
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-glow)/0.5),transparent_70%)]" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
