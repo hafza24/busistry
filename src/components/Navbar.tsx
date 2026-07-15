@@ -14,7 +14,6 @@ const leftLinks: NavLink[] = [
 ];
 
 const marketplaceItems = [
-  { to: "/marketplace", label: "Marketplace", desc: "Plans, templates & add-ons in one place.", icon: Sparkles },
   { to: "/templates", label: "Templates", desc: "Ready-made websites, launched in 24–48h.", icon: LayoutTemplate },
   { to: "/addons", label: "Addons", desc: "Extend your store with paid add-ons.", icon: Sparkles },
   { to: "/templates-on-sale", label: "Sale", desc: "Discounted templates, limited time.", icon: Tag },
