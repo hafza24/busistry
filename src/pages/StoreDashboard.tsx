@@ -16,6 +16,7 @@ import MyAddons from "@/components/store/MyAddons";
 import UpgradePlan from "@/components/store/UpgradePlan";
 import TeamMembers from "@/components/store/TeamMembers";
 import WhiteLabelSettings from "@/components/store/WhiteLabelSettings";
+import OrderTracking from "@/components/store/OrderTracking";
 
 const viewTitles: Record<string, string> = {
   overview: "Overview",
@@ -24,6 +25,7 @@ const viewTitles: Record<string, string> = {
   orders: "Orders",
   marketplace: "Marketplace",
   addons: "My Add-ons",
+  "order-tracking": "Order Tracking",
   upgrade: "Upgrade Plan",
   team: "Team",
   whitelabel: "White-Label",
@@ -78,6 +80,7 @@ const StoreDashboard = () => {
       case "orders": return <OrderManager storeId={store.id} />;
       case "marketplace": return <MarketplaceBrowser storeId={store.id} />;
       case "addons": return <MyAddons storeId={store.id} />;
+      case "order-tracking": return <OrderTracking storeId={store.id} />;
       case "upgrade": return <UpgradePlan storeId={store.id} />;
       case "team": return <TeamMembers storeId={store.id} />;
       case "whitelabel": return <WhiteLabelSettings storeId={store.id} />;

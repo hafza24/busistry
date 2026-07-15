@@ -4,7 +4,7 @@ import {
   SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton,
   SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Package, FolderTree, ShoppingCart, Settings, ArrowLeft, LayoutDashboard, Sparkles, Plug, TrendingUp, Users, Palette } from "lucide-react";
+import { Package, FolderTree, ShoppingCart, Settings, ArrowLeft, LayoutDashboard, Sparkles, Plug, TrendingUp, Users, Palette, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -20,6 +20,7 @@ const menuItems = [
   { id: "orders", label: "Orders", icon: ShoppingCart },
   { id: "marketplace", label: "Addons", icon: Sparkles },
   { id: "addons", label: "My Add-ons", icon: Plug },
+  { id: "order-tracking", label: "Order Tracking", icon: ClipboardList },
   { id: "upgrade", label: "Upgrade Plan", icon: TrendingUp },
   { id: "team", label: "Team", icon: Users },
   { id: "whitelabel", label: "White-Label", icon: Palette },
