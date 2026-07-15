@@ -320,31 +320,38 @@ export default function Marketplace() {
         {addonsLoading ? (
           <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-4 px-4">
             {addons.slice(0, 6).map((a) => (
-              <Card key={a.id} className="border-border/60 hover:border-primary/40 transition-colors">
-                <CardContent className="p-5 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                      <Sparkles className="h-5 w-5" />
+              <Link
+                key={a.id}
+                to="/addons"
+                className="snap-start shrink-0 w-[280px] group"
+                aria-label={`View ${a.name} addon`}
+              >
+                <Card className="border-border/60 group-hover:border-primary/40 group-hover:shadow-md transition-all h-full">
+                  <CardContent className="p-5 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                        <Sparkles className="h-5 w-5" />
+                      </div>
+                      <div className="flex gap-1">
+                        {a.is_popular && <Badge variant="secondary" className="text-[10px]">Popular</Badge>}
+                        {a.is_recommended && <Badge className="text-[10px]">Recommended</Badge>}
+                      </div>
                     </div>
-                    <div className="flex gap-1">
-                      {a.is_popular && <Badge variant="secondary" className="text-[10px]">Popular</Badge>}
-                      {a.is_recommended && <Badge className="text-[10px]">Recommended</Badge>}
-                    </div>
-                  </div>
-                  <p className="font-semibold">{a.name}</p>
-                  {a.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-2">{a.description}</p>
-                  )}
-                  <p className="text-sm font-bold text-primary pt-1">
-                    PKR {a.price_pkr.toLocaleString()}
-                    <span className="text-xs text-muted-foreground font-normal ml-1">
-                      {a.pricing_type === "monthly" ? "/ month" : "one-time"}
-                    </span>
-                  </p>
-                </CardContent>
-              </Card>
+                    <p className="font-semibold group-hover:text-primary transition-colors">{a.name}</p>
+                    {a.description && (
+                      <p className="text-xs text-muted-foreground line-clamp-2">{a.description}</p>
+                    )}
+                    <p className="text-sm font-bold text-primary pt-1">
+                      PKR {a.price_pkr.toLocaleString()}
+                      <span className="text-xs text-muted-foreground font-normal ml-1">
+                        {a.pricing_type === "monthly" ? "/ month" : "one-time"}
+                      </span>
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         )}
