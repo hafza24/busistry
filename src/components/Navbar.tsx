@@ -50,6 +50,41 @@ const Navbar = () => {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  // ── DEBUG OVERLAY ─────────────────────────────────────────────
+  const marketplaceBtnRef = useRef<HTMLButtonElement | null>(null);
+  const aboutBtnRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  type Rect = { x: number; y: number; w: number; h: number };
+  const [debugRects, setDebugRects] = useState<{
+    marketplace: Rect | null;
+    about: Rect | null;
+    panel: Rect | null;
+  }>({ marketplace: null, about: null, panel: null });
+
+  useEffect(() => {
+    const measure = () => {
+      const toRect = (el: Element | null): Rect | null => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.x, y: r.y, w: r.width, h: r.height };
+      };
+      setDebugRects({
+        marketplace: toRect(marketplaceBtnRef.current),
+        about: toRect(aboutBtnRef.current),
+        panel: toRect(panelRef.current),
+      });
+    };
+    measure();
+    const id = window.setInterval(measure, 250);
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => {
+      window.clearInterval(id);
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, true);
+    };
+  }, [openMenu]);
+
   const cancelClose = () => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
