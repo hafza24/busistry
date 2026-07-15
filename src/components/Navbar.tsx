@@ -174,32 +174,86 @@ const Navbar = () => {
           <div className="hidden md:flex items-center flex-1 min-w-0">
             <div className="inline-flex items-center gap-1 px-1.5 py-1 max-w-full overflow-hidden">
               {/* Home */}
-              <Link
-                to="/"
-                className={linkClass(location.pathname === "/")}
+              {/* Mega menus (custom hover/click dropdown) */}
+              <div
+                ref={menuRef}
+                className="relative flex items-center gap-1"
+                onMouseLeave={scheduleClose}
               >
-                <span className="relative z-10">Home</span>
-              </Link>
+                {/* Marketplace */}
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={openMenu === "marketplace"}
+                  onMouseEnter={() => openWith("marketplace")}
+                  onFocus={() => openWith("marketplace")}
+                  onClick={() =>
+                    setOpenMenu((cur) => (cur === "marketplace" ? null : "marketplace"))
+                  }
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-primary/10 ${
+                    openMenu === "marketplace" || marketplaceItems.some((i) => location.pathname === i.to)
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  Marketplace
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                      openMenu === "marketplace" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-              {/* Mega menus (combined into one root so viewport positions correctly) */}
-              <NavigationMenu value={menuValue} onValueChange={handleMenuValueChange}>
-                <NavigationMenuList>
-                  <NavigationMenuItem value="marketplace">
-                    <NavigationMenuTrigger
-                      className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
-                        marketplaceItems.some((i) => location.pathname === i.to)
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
-                    >
-                      Marketplace
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <div className="p-4 w-[520px] grid grid-cols-2 gap-2 bg-popover">
-                        {marketplaceItems.map((it) => (
-                          <NavigationMenuLink asChild key={it.to}>
+                {/* How it works */}
+                <Link
+                  to="/how-it-works"
+                  onMouseEnter={scheduleClose}
+                  className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
+                >
+                  <span className="relative z-10">How it works</span>
+                </Link>
+
+                {/* About */}
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={openMenu === "about"}
+                  onMouseEnter={() => openWith("about")}
+                  onFocus={() => openWith("about")}
+                  onClick={() =>
+                    setOpenMenu((cur) => (cur === "about" ? null : "about"))
+                  }
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-primary/10 ${
+                    openMenu === "about" || aboutItems.some((i) => location.pathname === i.to)
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  About
+                  <ChevronDown
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                      openMenu === "about" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {/* Dropdown panel */}
+                {openMenu && (
+                  <div
+                    onMouseEnter={cancelClose}
+                    onMouseLeave={scheduleClose}
+                    className={`absolute top-full ${
+                      openMenu === "marketplace" ? "left-0" : "left-auto right-0"
+                    } mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200`}
+                  >
+                    <div className="rounded-2xl border border-border/60 bg-popover shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.25)] ring-1 ring-foreground/5 overflow-hidden">
+                      {openMenu === "marketplace" ? (
+                        <div className="p-4 w-[520px] grid grid-cols-2 gap-2">
+                          {marketplaceItems.map((it) => (
                             <Link
+                              key={it.to}
                               to={it.to}
+                              onClick={() => setOpenMenu(null)}
                               className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
                             >
                               <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -210,40 +264,15 @@ const Navbar = () => {
                                 <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
                               </div>
                             </Link>
-                          </NavigationMenuLink>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-
-                  {/* How it works — kept inside the same list so spacing stays consistent */}
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to="/how-it-works"
-                        className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
-                      >
-                        <span className="relative z-10">How it works</span>
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-
-                  <NavigationMenuItem value="about">
-                    <NavigationMenuTrigger
-                      className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
-                        aboutItems.some((i) => location.pathname === i.to)
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
-                    >
-                      About
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <div className="p-4 w-[360px] grid gap-2 bg-popover">
-                        {aboutItems.map((it) => (
-                          <NavigationMenuLink asChild key={it.to}>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="p-4 w-[360px] grid gap-2">
+                          {aboutItems.map((it) => (
                             <Link
+                              key={it.to}
                               to={it.to}
+                              onClick={() => setOpenMenu(null)}
                               className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
                             >
                               <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -254,13 +283,13 @@ const Navbar = () => {
                                 <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
                               </div>
                             </Link>
-                          </NavigationMenuLink>
-                        ))}
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
 
 
               {/* Contact */}
