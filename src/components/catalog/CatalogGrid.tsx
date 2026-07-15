@@ -33,7 +33,17 @@ function tokenize(s: string): string[] {
     .filter((w) => w.length > 2 && !STOPWORDS.has(w));
 }
 
-export default function CatalogGrid({ previewLimit }: { previewLimit?: number } = {}) {
+type CatalogGridHeader = {
+  icon?: any;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
+
+export default function CatalogGrid({
+  previewLimit,
+  header,
+}: { previewLimit?: number; header?: CatalogGridHeader } = {}) {
   const { data: items = [], isLoading } = useCatalogItems();
   const [expanded, setExpanded] = useState(false);
   const [filter, setFilter] = useState<"all" | CatalogItemType>("all");
