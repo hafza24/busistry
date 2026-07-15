@@ -7,11 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
-import heroImg1 from "@/assets/reviews-hero-1.jpg";
-import heroImg2 from "@/assets/reviews-hero-2.jpg";
+import heroPortrait from "@/assets/reviews-hero-portrait.jpg";
 import interviewImg1 from "@/assets/reviews-interview-1.jpg";
 import interviewImg2 from "@/assets/reviews-interview-2.jpg";
 import interviewImg3 from "@/assets/reviews-interview-3.jpg";
+import { MessageSquare, PenLine, ThumbsUp } from "lucide-react";
 
 const Stars = ({ value, size = "h-3.5 w-3.5" }: { value: number; size?: string }) => (
   <div className="flex gap-0.5" aria-label={`Rated ${value} out of 5`}>
@@ -159,51 +159,102 @@ const Reviews = () => {
       </Helmet>
 
       <main className="min-h-screen bg-background">
-        {/* Hero — periwinkle band with photo collage */}
-        <section className="relative overflow-hidden bg-[#c9d0ff]">
-          <div className="container max-w-6xl py-16 md:py-24">
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#1a1a3a]/70 mb-5">
-                  — Customer stories
-                </p>
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-[#1a1a3a]">
-                  We build the best user experience with{" "}
-                  <span className="italic font-serif">{total.toLocaleString()}+</span> users
-                </h1>
-                <div className="mt-8 flex items-center gap-5">
-                  <div className="flex items-center gap-2">
-                    <Stars value={avg} size="h-5 w-5" />
-                    <span className="font-bold text-[#1a1a3a]">{avg.toFixed(1)}/5</span>
-                  </div>
-                  <span className="text-sm text-[#1a1a3a]/70">
-                    from {total} verified review{total !== 1 ? "s" : ""}
-                  </span>
-                </div>
-              </div>
+        {/* Hero — Figma-style card with portrait */}
+        <section className="relative bg-[#8b7cf6] py-10 md:py-16">
+          <div className="container max-w-6xl">
+            <div className="relative rounded-[28px] bg-white shadow-2xl overflow-hidden px-6 md:px-12 py-10 md:py-14">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Left copy */}
+                <div>
+                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-[#1a1a3a]">
+                    Loved by{" "}
+                    <span className="bg-gradient-to-r from-[#8b5cf6] to-[#c084fc] bg-clip-text text-transparent">
+                      {total.toLocaleString()}+
+                    </span>{" "}
+                    Happy, Delighted, and Loyal Customers
+                  </h1>
+                  <p className="mt-5 text-base md:text-lg text-[#1a1a3a]/70 max-w-md">
+                    Real stories from real businesses. See why Pakistani entrepreneurs
+                    trust Busistree to launch and grow their websites.
+                  </p>
 
-              {/* Photo collage */}
-              <div className="relative h-[380px] md:h-[440px]">
-                <div className="absolute right-0 top-4 w-[55%] h-[65%] rounded-md overflow-hidden shadow-xl">
+                  <div className="mt-7 flex flex-wrap items-center gap-4">
+                    <a
+                      href="#write-review"
+                      className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] hover:opacity-95 transition"
+                    >
+                      Write a Review
+                    </a>
+                    <a
+                      href="#reviews-grid"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1a1a3a] hover:text-[#8b5cf6] transition"
+                    >
+                      Read Stories <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
+                    <div>
+                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                        {total.toLocaleString()}+
+                      </div>
+                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Reviews</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                        {avg.toFixed(1)}
+                        <span className="text-[#8b5cf6]">/5</span>
+                      </div>
+                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Avg Rating</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                        99%
+                      </div>
+                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Happy Clients</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: portrait inside circle with arc + floating badges */}
+                <div className="relative h-[380px] md:h-[460px] flex items-center justify-center">
+                  {/* Purple arc ring */}
+                  <div
+                    className="absolute inset-0 m-auto h-[340px] w-[340px] md:h-[420px] md:w-[420px] rounded-full"
+                    style={{
+                      background:
+                        "conic-gradient(from 210deg, #8b5cf6 0deg, #ec4899 120deg, transparent 140deg, transparent 360deg)",
+                      WebkitMask:
+                        "radial-gradient(circle, transparent 60%, #000 61%, #000 66%, transparent 67%)",
+                      mask: "radial-gradient(circle, transparent 60%, #000 61%, #000 66%, transparent 67%)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  {/* Soft circle background */}
+                  <div className="absolute inset-0 m-auto h-[320px] w-[320px] md:h-[400px] md:w-[400px] rounded-full bg-gradient-to-br from-[#f3f0ff] to-[#fce7f3]" />
+                  {/* Portrait */}
                   <img
-                    src={heroImg1}
-                    alt="Happy customer"
-                    className="w-full h-full object-cover"
+                    src={heroPortrait}
+                    alt="Happy Busistree customer giving thumbs up"
+                    className="relative z-10 h-[340px] md:h-[430px] w-auto object-contain drop-shadow-xl"
                     width={1024}
                     height={1024}
                   />
+
+                  {/* Floating badge — top right */}
+                  <div className="absolute top-6 right-2 md:right-6 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
+                    <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-[#8b5cf6]" />
+                  </div>
+                  {/* Floating badge — left */}
+                  <div className="absolute top-1/3 left-0 md:left-4 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
+                    <PenLine className="h-5 w-5 md:h-6 md:w-6 text-[#ec4899]" />
+                  </div>
+                  {/* Floating badge — bottom right */}
+                  <div className="absolute bottom-8 right-4 md:right-10 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
+                    <ThumbsUp className="h-5 w-5 md:h-6 md:w-6 text-[#8b5cf6]" />
+                  </div>
                 </div>
-                <div className="absolute right-[52%] bottom-0 w-[40%] h-[45%] rounded-md overflow-hidden shadow-xl bg-[#8a6bff]">
-                  <img
-                    src={heroImg2}
-                    alt="Happy customer"
-                    className="w-full h-full object-cover mix-blend-luminosity opacity-90"
-                    width={1024}
-                    height={1024}
-                    loading="lazy"
-                  />
-                </div>
-                <div className="absolute right-[10%] bottom-2 w-[28%] h-[28%] rounded-md bg-[#3d3d8a] shadow-xl" />
               </div>
             </div>
           </div>
