@@ -308,14 +308,16 @@ export default function Marketplace() {
 
       {/* Unified catalog */}
       <section id="catalog" className="scroll-mt-24">
-        <div className="mb-6 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2">
-            <Sparkles className="h-4 w-4" /> Catalog
-          </div>
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">Everything you can add to your site</h2>
-          <p className="text-muted-foreground">Add-ons, integrations, pages, popups, plan upgrades and content updates — all in one place.</p>
-        </div>
-        <CatalogGrid previewLimit={4} />
+        <CatalogGrid
+          previewLimit={4}
+          header={{
+            icon: Sparkles,
+            eyebrow: "Catalog",
+            title: "Everything you can add to your site",
+            description:
+              "Add-ons, integrations, pages, popups, plan upgrades and content updates — all in one place.",
+          }}
+        />
       </section>
 
       {/* Sister Business Services (external) */}
