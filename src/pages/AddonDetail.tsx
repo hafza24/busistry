@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -9,14 +10,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   ArrowLeft,
   ArrowRight,
   Check,
+  CheckCircle2,
   ExternalLink,
   FileText,
   Globe,
   LayoutGrid,
   Loader2,
+  LogIn,
   MessageCircle,
   MessageSquare,
   Plug,
@@ -87,10 +98,14 @@ export default function AddonDetail() {
   const [websitePicker, setWebsitePicker] = useState(false);
   const [checkout, setCheckout] = useState<{ storeId: string } | null>(null);
   const [config, setConfig] = useState<Record<string, any>>({});
+  const [success, setSuccess] = useState<{ storeId: string; storeName: string } | null>(null);
 
   const onBuy = () => {
     if (!user) {
-      navigate("/auth");
+      toast.info("Please sign in first", {
+        description: "Create an account to add addons to your website.",
+      });
+      navigate(`/auth?redirect=${encodeURIComponent(`/addons/${kind}/${slug}`)}`);
       return;
     }
     setConfig({});
@@ -130,18 +145,43 @@ export default function AddonDetail() {
     screenshot_url,
   }: any) => {
     if (!checkout || !user || !item) return;
-    await createAddon.mutateAsync({
-      store_id: storeId,
-      user_id: user.id,
-      item_type: isIntegration ? "integration" : "product",
-      item_id: item.id,
-      price_snapshot_pkr: item.price_pkr,
-      pricing_type_snapshot: item.pricing_type ?? "one_time",
-      config,
-      payment_method,
-      transaction_id,
-      screenshot_url: screenshot_url ?? undefined,
-    });
+    // Prevent duplicate active orders of the same item for the same store.
+    const { data: existing } = await supabase
+      .from("store_addons")
+      .select("id, status")
+      .eq("store_id", storeId)
+      .eq("item_id", item.id)
+      .in("status", ["pending", "approved", "active"])
+      .maybeSingle();
+    if (existing) {
+      throw new Error(
+        "This add-on is already ordered for the selected website. Check My Addons for its status."
+      );
+    }
+
+    try {
+      await createAddon.mutateAsync({
+        store_id: storeId,
+        user_id: user.id,
+        item_type: isIntegration ? "integration" : "product",
+        item_id: item.id,
+        price_snapshot_pkr: item.price_pkr,
+        pricing_type_snapshot: item.pricing_type ?? "one_time",
+        config,
+        payment_method,
+        transaction_id,
+        screenshot_url: screenshot_url ?? undefined,
+      });
+      const storeName = activeStores.find((s: any) => s.id === storeId)?.name ?? "your website";
+      setCheckout(null);
+      setSuccess({ storeId, storeName });
+    } catch (err: any) {
+      // Surface via toast — CheckoutDialog also toasts, but ensure a top-level notice.
+      toast.error("Could not place your order", {
+        description: err?.message ?? "Please try again in a moment.",
+      });
+      throw err;
+    }
   };
 
   if (isLoading) {
@@ -244,15 +284,21 @@ export default function AddonDetail() {
               <p className="text-xs text-muted-foreground uppercase tracking-wide">{priceSuffix}</p>
             </div>
             <div className="grid gap-2">
-              <Button size="lg" onClick={onBuy}>
-                Add to my website <ArrowRight className="h-4 w-4 ml-2" />
+              <Button size="lg" onClick={onBuy} disabled={createAddon.isPending}>
+                {createAddon.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : !user ? (
+                  <LogIn className="h-4 w-4 mr-2" />
+                ) : null}
+                {user ? "Add to my website" : "Sign in to add to my website"}
+                {user && <ArrowRight className="h-4 w-4 ml-2" />}
               </Button>
               <Button size="lg" variant="secondary" onClick={requestOnWhatsApp}>
                 <MessageCircle className="h-4 w-4 mr-2" /> Request on WhatsApp
               </Button>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Our team installs your add-on within 24–48 hours.
+              Our team installs your add-on within 24–48 hours after payment is verified.
             </p>
           </div>
 
@@ -384,6 +430,51 @@ export default function AddonDetail() {
           onSubmit={handleCheckoutSubmit}
         />
       )}
+
+      {/* Success dialog */}
+      <Dialog open={!!success} onOpenChange={(v) => !v && setSuccess(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="mx-auto mb-3 h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <CheckCircle2 className="h-8 w-8 text-primary" />
+            </div>
+            <DialogTitle className="text-center text-2xl">Order placed!</DialogTitle>
+            <DialogDescription className="text-center">
+              <span className="font-medium text-foreground">{item.name}</span> has been queued for{" "}
+              <span className="font-medium text-foreground">{success?.storeName}</span>. Our team
+              will install it within 24–48 hours after verifying your payment.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="rounded-md border bg-muted/30 p-3 text-sm space-y-1">
+            <p className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" /> You'll get an email when it's live.
+            </p>
+            <p className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" /> Track status any time in My Addons.
+            </p>
+          </div>
+          <DialogFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSuccess(null);
+                navigate("/addons");
+              }}
+            >
+              Keep browsing
+            </Button>
+            <Button
+              onClick={() => {
+                const sid = success?.storeId;
+                setSuccess(null);
+                if (sid) navigate(`/store/${sid}`);
+              }}
+            >
+              View my addons <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
