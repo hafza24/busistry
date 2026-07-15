@@ -50,6 +50,12 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuValue, setMenuValue] = useState("");
+
+  // Close mega menu on route change
+  useEffect(() => {
+    setMenuValue("");
+  }, [location.pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -143,7 +149,7 @@ const Navbar = () => {
               </Link>
 
               {/* Mega menus (combined into one root so viewport positions correctly) */}
-              <NavigationMenu>
+              <NavigationMenu value={menuValue} onValueChange={setMenuValue}>
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger
