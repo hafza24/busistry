@@ -167,25 +167,29 @@ export default function MarketplaceGrid({ storeId }: Props) {
               const Icon = typeIcon[p.type] ?? FileText;
               return (
                 <Card key={p.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
-                  <div className="aspect-video bg-muted relative overflow-hidden">
-                    {p.preview_image_url ? (
-                      <OptimizedImage
-                        src={p.preview_image_url}
-                        alt={p.name}
-                        width={480}
-                        height={270}
-                        className="group-hover:scale-105 transition-transform"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" aria-hidden="true" /></div>
-                    )}
-                    {p.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
-                  </div>
+                  <Link to={`/addons/product/${p.slug}`} className="block">
+                    <div className="aspect-video bg-muted relative overflow-hidden">
+                      {p.preview_image_url ? (
+                        <OptimizedImage
+                          src={p.preview_image_url}
+                          alt={p.name}
+                          width={480}
+                          height={270}
+                          className="group-hover:scale-105 transition-transform"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" aria-hidden="true" /></div>
+                      )}
+                      {p.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
+                    </div>
+                  </Link>
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <Badge variant="outline" className="mb-1 capitalize text-xs"><Icon className="h-3 w-3 mr-1" />{p.type}</Badge>
-                        <h4 className="font-semibold text-foreground">{p.name}</h4>
+                        <Link to={`/addons/product/${p.slug}`} className="hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-foreground">{p.name}</h4>
+                        </Link>
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-primary">PKR {p.price_pkr.toLocaleString()}</p>
