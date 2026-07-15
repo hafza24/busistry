@@ -357,6 +357,43 @@ export default function AddonDetail() {
         </div>
       </div>
 
+      {/* Long description */}
+      {item.long_description && (
+        <div className="prose prose-neutral dark:prose-invert max-w-none">
+          <h2 className="font-display text-2xl font-bold mb-3">About this {kindLabel.toLowerCase()}</h2>
+          <div className="whitespace-pre-wrap text-foreground/90 leading-relaxed">{item.long_description}</div>
+        </div>
+      )}
+
+      {/* Gallery */}
+      {gallery.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="font-display text-2xl font-bold">Gallery</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {gallery.map((src, i) => (
+              <div key={i} className="aspect-video rounded-xl overflow-hidden border bg-muted">
+                <img src={src} alt={`${item.name} preview ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* FAQ */}
+      {faq.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="font-display text-2xl font-bold">Frequently asked questions</h2>
+          <div className="grid gap-3">
+            {faq.map((f, i) => (
+              <div key={i} className="rounded-xl border bg-card p-5">
+                <p className="font-semibold mb-1">{f.q}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Related */}
       {related.length > 0 && (
         <div className="space-y-4">
