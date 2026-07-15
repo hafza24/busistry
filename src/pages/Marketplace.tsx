@@ -345,7 +345,7 @@ export default function Marketplace() {
               tagline: "Ads & Marketing",
               description: "Launch campaigns, promotions, and performance ads — end-to-end marketing strategy for growth-stage brands.",
               icon: Megaphone,
-              href: "https://bizzmarket.busistree.com",
+              href: "https://market.busistree.com",
               gradient: "from-primary-glow/20 to-accent/10",
             },
           ].map((svc) => (
