@@ -89,6 +89,15 @@ export default function Marketplace() {
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Feature Banner */}
         <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-8 sm:p-12 min-h-[450px] sm:min-h-[600px] shadow-2xl">
+          <img
+            src={marketplaceHero}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-overlay"
+            width={1280}
+            height={1024}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/40" />
           <div className="absolute inset-0 opacity-20 pointer-events-none">
             <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <path d="M0 100 C 20 0 50 0 100 100" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary-foreground" />
