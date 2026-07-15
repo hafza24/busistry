@@ -193,11 +193,5 @@ const ReviewsSection = () => {
   );
 };
 
-        </div>
-      </div>
-    </section>
-  );
-};
-
 
 export default ReviewsSection;
