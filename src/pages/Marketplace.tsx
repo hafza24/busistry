@@ -87,7 +87,7 @@ export default function Marketplace() {
       {/* Hero — Dynamic Bento */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Feature Banner */}
-        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[600px] shadow-2xl">
+        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full shadow-2xl">
           <img
             src={marketplaceHero}
             alt=""
