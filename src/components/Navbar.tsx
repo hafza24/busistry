@@ -46,18 +46,48 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuValue, setMenuValue] = useState("");
+  const [openMenu, setOpenMenu] = useState<"marketplace" | "about" | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 150);
+  };
+  const openWith = (key: "marketplace" | "about") => {
+    cancelClose();
+    setOpenMenu(key);
+  };
 
   // Close mega menu on route change
   useEffect(() => {
-    console.log("[Navbar] route change → closing menu. path:", location.pathname);
-    setMenuValue("");
+    setOpenMenu(null);
   }, [location.pathname]);
 
-  const handleMenuValueChange = (v: string) => {
-    console.log("[Navbar] onValueChange →", v || "(closed)");
-    setMenuValue(v);
-  };
+  // Close on Escape + outside click
+  useEffect(() => {
+    if (!openMenu) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenMenu(null);
+    };
+    const onClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [openMenu]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
