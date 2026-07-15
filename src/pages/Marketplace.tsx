@@ -312,6 +312,76 @@ export default function Marketplace() {
         )}
       </section>
 
+      {/* Sister Business Services (external) */}
+      <section>
+        <SectionHeader
+          icon={ExternalLink}
+          eyebrow="Sister services"
+          title="More from the Busistree family"
+          description="Specialized platforms that complement your store — hosted separately, built to work together."
+          to="/contact"
+          ctaLabel="Talk to us"
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              name: "Bizplan",
+              tagline: "Business Planning",
+              description: "Craft investor-ready business plans, financial projections, and go-to-market roadmaps with expert guidance.",
+              icon: ClipboardList,
+              href: "https://bizplan.busistree.com",
+              gradient: "from-primary/15 to-primary-glow/10",
+            },
+            {
+              name: "Bizstyling",
+              tagline: "Product & Brand Design",
+              description: "Shape your product identity — packaging, brand look, and visual systems that make your business stand out.",
+              icon: Palette,
+              href: "https://bizstyling.busistree.com",
+              gradient: "from-accent/20 to-primary/10",
+            },
+            {
+              name: "Bizzmarket",
+              tagline: "Ads & Marketing",
+              description: "Launch campaigns, promotions, and performance ads — end-to-end marketing strategy for growth-stage brands.",
+              icon: Megaphone,
+              href: "https://bizzmarket.busistree.com",
+              gradient: "from-primary-glow/20 to-accent/10",
+            },
+          ].map((svc) => (
+            <a
+              key={svc.name}
+              href={svc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card hover:border-primary/40 hover:shadow-xl transition-all"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${svc.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
+              <div className="relative p-6 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="h-12 w-12 rounded-2xl bg-background/80 backdrop-blur-sm border border-border/60 text-primary flex items-center justify-center shadow-sm">
+                    <svc.icon className="h-6 w-6" />
+                  </div>
+                  <Badge variant="secondary" className="text-[10px] gap-1">
+                    <ExternalLink className="h-3 w-3" /> External
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{svc.tagline}</p>
+                  <h3 className="font-display text-2xl font-bold">{svc.name}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">{svc.description}</p>
+                <div className="flex items-center gap-2 text-sm font-semibold text-primary pt-2">
+                  Visit site
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+
       {/* CTA */}
       <section className="rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-8 md:p-12 text-center">
         <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">Ready to launch?</h2>
