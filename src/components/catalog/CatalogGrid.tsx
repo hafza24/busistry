@@ -108,13 +108,38 @@ export default function CatalogGrid({
     });
   }, [items, filter, term]);
 
+  const HeaderIcon = header?.icon;
+  const showViewAllTop =
+    !!previewLimit && !expanded && !term && filter === "all" && filtered.length > previewLimit;
+
   return (
     <div className="space-y-6">
-
-
-
-
-
+      {header && (header.title || header.eyebrow) && (
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div className="max-w-2xl">
+            {(header.eyebrow || HeaderIcon) && (
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+                {HeaderIcon && <HeaderIcon className="h-4 w-4" />} {header.eyebrow}
+              </div>
+            )}
+            {header.title && (
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">{header.title}</h2>
+            )}
+            {header.description && (
+              <p className="text-muted-foreground">{header.description}</p>
+            )}
+          </div>
+          {showViewAllTop && (
+            <Button
+              onClick={() => setExpanded(true)}
+              variant="outline"
+              className="rounded-full gap-2 shrink-0"
+            >
+              View all {filtered.length} items <ArrowRight className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      )}
 
       {isLoading ? (
         <div className="py-12 flex justify-center">
