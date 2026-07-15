@@ -430,6 +430,51 @@ export default function AddonDetail() {
           onSubmit={handleCheckoutSubmit}
         />
       )}
+
+      {/* Success dialog */}
+      <Dialog open={!!success} onOpenChange={(v) => !v && setSuccess(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="mx-auto mb-3 h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <CheckCircle2 className="h-8 w-8 text-primary" />
+            </div>
+            <DialogTitle className="text-center text-2xl">Order placed!</DialogTitle>
+            <DialogDescription className="text-center">
+              <span className="font-medium text-foreground">{item.name}</span> has been queued for{" "}
+              <span className="font-medium text-foreground">{success?.storeName}</span>. Our team
+              will install it within 24–48 hours after verifying your payment.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="rounded-md border bg-muted/30 p-3 text-sm space-y-1">
+            <p className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" /> You'll get an email when it's live.
+            </p>
+            <p className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-primary" /> Track status any time in My Addons.
+            </p>
+          </div>
+          <DialogFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSuccess(null);
+                navigate("/addons");
+              }}
+            >
+              Keep browsing
+            </Button>
+            <Button
+              onClick={() => {
+                const sid = success?.storeId;
+                setSuccess(null);
+                if (sid) navigate(`/store/${sid}`);
+              }}
+            >
+              View my addons <ArrowRight className="h-4 w-4 ml-2" />
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
