@@ -193,20 +193,8 @@ export default function CatalogGrid({ previewLimit }: { previewLimit?: number } 
         </div>
       )}
 
-      {/* Type filters */}
-      <div className="flex flex-wrap gap-2">
-        {FILTERS.map((f) => (
-          <Button
-            key={f.id}
-            size="sm"
-            variant={filter === f.id ? "default" : "outline"}
-            className="rounded-full h-8"
-            onClick={() => setFilter(f.id)}
-          >
-            {f.label}
-          </Button>
-        ))}
-      </div>
+
+
 
 
       {isLoading ? (
