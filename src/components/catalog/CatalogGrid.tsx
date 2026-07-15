@@ -150,29 +150,14 @@ export default function CatalogGrid({
           Nothing matches those filters yet.
         </p>
       ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {(previewLimit && !expanded && !term && filter === "all"
-              ? filtered.slice(0, previewLimit)
-              : filtered
-            ).map((item) => (
-              <CatalogCard key={item.id} item={item} />
-            ))}
-          </div>
-          {previewLimit && !expanded && !term && filter === "all" && filtered.length > previewLimit && (
-            <div className="flex justify-center pt-2">
-              <Button
-                onClick={() => setExpanded(true)}
-                size="lg"
-                variant="outline"
-                className="rounded-full gap-2"
-              >
-                View all {filtered.length} items
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {(previewLimit && !expanded && !term && filter === "all"
+            ? filtered.slice(0, previewLimit)
+            : filtered
+          ).map((item) => (
+            <CatalogCard key={item.id} item={item} />
+          ))}
+        </div>
       )}
 
       {!isLoading && filter === "all" && (expanded || !previewLimit) && (
