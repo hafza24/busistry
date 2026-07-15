@@ -221,6 +221,7 @@ const Navbar = () => {
               >
                 {/* Marketplace */}
                 <button
+                  ref={marketplaceBtnRef}
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openMenu === "marketplace"}
