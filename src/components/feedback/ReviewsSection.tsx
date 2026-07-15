@@ -17,21 +17,30 @@ const Stars = ({ value, size = "h-4 w-4" }: { value: number; size?: string }) =>
 
 const ReviewsSection = () => {
   const { data: stats } = useQuery({
-    queryKey: ["feedback-stats"],
+    queryKey: ["feedback-rating-distribution"],
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_feedback_rating_stats");
+      const { data, error } = await supabase.rpc("get_feedback_rating_distribution");
       if (error) throw error;
-      return data?.[0] ?? { avg_rating: 0, total_reviews: 0 };
+      return data?.[0] ?? {
+        total_reviews: 0,
+        avg_rating: 0,
+        rating_5: 0,
+        rating_4: 0,
+        rating_3: 0,
+        rating_2: 0,
+        rating_1: 0,
+      };
     },
   });
 
   const { data: reviews, isLoading } = useQuery({
-    queryKey: ["public-reviews"],
+    queryKey: ["public-reviews-top"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("public_feedback_reviews" as any)
         .select("id, subject, message, rating, featured, created_at")
         .order("featured", { ascending: false })
+        .order("rating", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(6);
       if (error) throw error;
@@ -42,12 +51,13 @@ const ReviewsSection = () => {
   const avg = Number(stats?.avg_rating ?? 0);
   const total = Number(stats?.total_reviews ?? 0);
 
-  // Rating distribution from loaded reviews
+  // Accurate rating distribution from RPC (all approved reviews)
   const distribution = [5, 4, 3, 2, 1].map((star) => {
-    const count = reviews?.filter((r) => Math.round(Number(r.rating)) === star).length ?? 0;
-    const pct = reviews && reviews.length > 0 ? (count / reviews.length) * 100 : 0;
+    const count = Number((stats as any)?.[`rating_${star}`] ?? 0);
+    const pct = total > 0 ? (count / total) * 100 : 0;
     return { star, count, pct };
   });
+
 
   const topReviews = (reviews ?? []).slice(0, 4);
 
