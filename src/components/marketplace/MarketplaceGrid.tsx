@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertTriangle, Plus, ArrowRight } from "lucide-react";
@@ -166,25 +167,29 @@ export default function MarketplaceGrid({ storeId }: Props) {
               const Icon = typeIcon[p.type] ?? FileText;
               return (
                 <Card key={p.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
-                  <div className="aspect-video bg-muted relative overflow-hidden">
-                    {p.preview_image_url ? (
-                      <OptimizedImage
-                        src={p.preview_image_url}
-                        alt={p.name}
-                        width={480}
-                        height={270}
-                        className="group-hover:scale-105 transition-transform"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" aria-hidden="true" /></div>
-                    )}
-                    {p.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
-                  </div>
+                  <Link to={`/addons/product/${p.slug}`} className="block">
+                    <div className="aspect-video bg-muted relative overflow-hidden">
+                      {p.preview_image_url ? (
+                        <OptimizedImage
+                          src={p.preview_image_url}
+                          alt={p.name}
+                          width={480}
+                          height={270}
+                          className="group-hover:scale-105 transition-transform"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center"><Icon className="h-10 w-10 text-muted-foreground" aria-hidden="true" /></div>
+                      )}
+                      {p.is_popular && <Badge className="absolute top-2 left-2">Popular</Badge>}
+                    </div>
+                  </Link>
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <Badge variant="outline" className="mb-1 capitalize text-xs"><Icon className="h-3 w-3 mr-1" />{p.type}</Badge>
-                        <h4 className="font-semibold text-foreground">{p.name}</h4>
+                        <Link to={`/addons/product/${p.slug}`} className="hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-foreground">{p.name}</h4>
+                        </Link>
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-primary">PKR {p.price_pkr.toLocaleString()}</p>
@@ -193,7 +198,9 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     </div>
                     {p.description && <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>}
                     <div className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" onClick={() => setPreview(p)}>Preview</Button>
+                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" asChild>
+                        <Link to={`/addons/product/${p.slug}`}>Details</Link>
+                      </Button>
                       <Button size="sm" className="flex-1 min-w-[90px]" onClick={() => onBuy("product", p)}>Add</Button>
                       <Button
                         variant="secondary"
@@ -225,7 +232,9 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     <div className="flex items-center gap-3">
                       {i.icon ? <img src={i.icon} alt="" className="w-10 h-10 rounded" /> : <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center"><Plug className="h-5 w-5 text-primary" /></div>}
                       <div>
-                        <h4 className="font-semibold text-foreground">{i.name}</h4>
+                        <Link to={`/addons/integration/${i.slug}`} className="hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-foreground">{i.name}</h4>
+                        </Link>
                         {i.is_popular && <Badge variant="secondary" className="text-xs">Popular</Badge>}
                       </div>
                     </div>
@@ -236,6 +245,9 @@ export default function MarketplaceGrid({ storeId }: Props) {
                   </div>
                   {i.description && <p className="text-sm text-muted-foreground line-clamp-3">{i.description}</p>}
                   <div className="flex flex-col gap-2">
+                    <Button variant="outline" size="sm" className="w-full" asChild>
+                      <Link to={`/addons/integration/${i.slug}`}>Details</Link>
+                    </Button>
                     <Button size="sm" className="w-full" onClick={() => onBuy("integration", i)}>Install</Button>
                     <Button
                       variant="secondary"
