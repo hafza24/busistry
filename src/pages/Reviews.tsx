@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Star, ArrowRight, Loader2 } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import heroImg1 from "@/assets/reviews-hero-1.jpg";
