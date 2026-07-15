@@ -11,10 +11,8 @@ import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement"
 import AdminOverview from "@/components/admin/AdminOverview";
 
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
-import AdminAddonsHub from "@/components/admin/AdminAddonsHub";
-import AdminWebsiteProducts from "@/components/admin/AdminWebsiteProducts";
-import AdminStoreAddons from "@/components/admin/AdminStoreAddons";
-import AdminUpgradeOrders from "@/components/admin/AdminUpgradeOrders";
+import AdminCatalog from "@/components/admin/AdminCatalog";
+import AdminCatalogOrders from "@/components/admin/AdminCatalogOrders";
 import AdminAuditLogs from "@/components/admin/AdminAuditLogs";
 import AdminFeedbackModeration from "@/components/admin/AdminFeedbackModeration";
 import AdminReviewsModeration from "@/components/admin/AdminReviewsModeration";
@@ -30,12 +28,10 @@ const viewTitles: Record<string, string> = {
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
-  
+
   plans: "Plan Management",
-  addons: "Add-ons & Integrations",
-  website_products: "Website Products",
-  store_addons: "Add-on Orders",
-  upgrades: "Upgrade Orders",
+  catalog: "Catalog",
+  catalog_orders: "Catalog Orders",
   feedback: "Feedback Moderation",
   reviews: "Reviews Moderation",
   support: "Support",
@@ -71,12 +67,10 @@ const AdminDashboard = () => {
       case "requests": return <AdminRequestManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
-      
+
       case "plans": return <AdminPlanManagement />;
-      case "addons": return <AdminAddonsHub />;
-      case "website_products": return <AdminWebsiteProducts />;
-      case "store_addons": return <AdminStoreAddons />;
-      case "upgrades": return <AdminUpgradeOrders />;
+      case "catalog": return <AdminCatalog />;
+      case "catalog_orders": return <AdminCatalogOrders />;
       case "feedback": return <AdminFeedbackModeration />;
       case "reviews": return <AdminReviewsModeration />;
       case "support": return <AdminSupportHub />;

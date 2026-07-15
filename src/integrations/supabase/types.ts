@@ -107,6 +107,177 @@ export type Database = {
         }
         Relationships: []
       }
+      catalog_items: {
+        Row: {
+          applicable_plans: string[]
+          applicable_types: string[]
+          category: string | null
+          cover_image: string | null
+          created_at: string
+          demo_url: string | null
+          faq: Json
+          features: Json
+          gallery: Json
+          icon: string | null
+          id: string
+          is_enabled: boolean
+          is_popular: boolean
+          is_recommended: boolean
+          long_description: string | null
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
+          name: string
+          og_image: string | null
+          per_unit_label: string | null
+          price_pkr: number
+          pricing_type: Database["public"]["Enums"]["catalog_pricing_type"]
+          related_item_ids: string[]
+          short_description: string | null
+          slug: string
+          sort_order: number
+          type: Database["public"]["Enums"]["catalog_item_type"]
+          updated_at: string
+        }
+        Insert: {
+          applicable_plans?: string[]
+          applicable_types?: string[]
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string
+          demo_url?: string | null
+          faq?: Json
+          features?: Json
+          gallery?: Json
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          is_recommended?: boolean
+          long_description?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          name: string
+          og_image?: string | null
+          per_unit_label?: string | null
+          price_pkr?: number
+          pricing_type?: Database["public"]["Enums"]["catalog_pricing_type"]
+          related_item_ids?: string[]
+          short_description?: string | null
+          slug: string
+          sort_order?: number
+          type: Database["public"]["Enums"]["catalog_item_type"]
+          updated_at?: string
+        }
+        Update: {
+          applicable_plans?: string[]
+          applicable_types?: string[]
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string
+          demo_url?: string | null
+          faq?: Json
+          features?: Json
+          gallery?: Json
+          icon?: string | null
+          id?: string
+          is_enabled?: boolean
+          is_popular?: boolean
+          is_recommended?: boolean
+          long_description?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          name?: string
+          og_image?: string | null
+          per_unit_label?: string | null
+          price_pkr?: number
+          pricing_type?: Database["public"]["Enums"]["catalog_pricing_type"]
+          related_item_ids?: string[]
+          short_description?: string | null
+          slug?: string
+          sort_order?: number
+          type?: Database["public"]["Enums"]["catalog_item_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      catalog_orders: {
+        Row: {
+          admin_notes: string | null
+          config: Json
+          created_at: string
+          id: string
+          item_id: string | null
+          item_type_snapshot: Database["public"]["Enums"]["catalog_item_type"]
+          name_snapshot: string
+          payment_method: string | null
+          price_snapshot_pkr: number
+          pricing_type_snapshot: Database["public"]["Enums"]["catalog_pricing_type"]
+          quantity: number
+          screenshot_url: string | null
+          status: Database["public"]["Enums"]["catalog_order_status"]
+          store_id: string | null
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          item_type_snapshot: Database["public"]["Enums"]["catalog_item_type"]
+          name_snapshot: string
+          payment_method?: string | null
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: Database["public"]["Enums"]["catalog_pricing_type"]
+          quantity?: number
+          screenshot_url?: string | null
+          status?: Database["public"]["Enums"]["catalog_order_status"]
+          store_id?: string | null
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          config?: Json
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          item_type_snapshot?: Database["public"]["Enums"]["catalog_item_type"]
+          name_snapshot?: string
+          payment_method?: string | null
+          price_snapshot_pkr?: number
+          pricing_type_snapshot?: Database["public"]["Enums"]["catalog_pricing_type"]
+          quantity?: number
+          screenshot_url?: string | null
+          status?: Database["public"]["Enums"]["catalog_order_status"]
+          store_id?: string | null
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "catalog_orders_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "catalog_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "catalog_orders_store_id_fkey"
+            columns: ["store_id"]
+            isOneToOne: false
+            referencedRelation: "stores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       categories: {
         Row: {
           created_at: string
@@ -2085,6 +2256,14 @@ export type Database = {
           count: number
         }[]
       }
+      apply_catalog_order: {
+        Args: { p_order_id: string }
+        Returns: {
+          item_type: Database["public"]["Enums"]["catalog_item_type"]
+          order_id: string
+          status: Database["public"]["Enums"]["catalog_order_status"]
+        }[]
+      }
       apply_upgrade_order: {
         Args: { p_order_id: string }
         Returns: {
@@ -2197,6 +2376,25 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user" | "owner" | "manager" | "staff"
+      catalog_item_type:
+        | "addon"
+        | "integration"
+        | "page"
+        | "section"
+        | "popup"
+        | "plan_upgrade"
+        | "product_limit"
+        | "category_limit"
+        | "extend_duration"
+        | "content_tweak"
+      catalog_order_status:
+        | "pending"
+        | "approved"
+        | "in_progress"
+        | "active"
+        | "completed"
+        | "rejected"
+      catalog_pricing_type: "one_time" | "monthly" | "per_unit"
       newsletter_status: "subscribed" | "unsubscribed"
       payment_method:
         | "easypaisa"
@@ -2368,6 +2566,27 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user", "owner", "manager", "staff"],
+      catalog_item_type: [
+        "addon",
+        "integration",
+        "page",
+        "section",
+        "popup",
+        "plan_upgrade",
+        "product_limit",
+        "category_limit",
+        "extend_duration",
+        "content_tweak",
+      ],
+      catalog_order_status: [
+        "pending",
+        "approved",
+        "in_progress",
+        "active",
+        "completed",
+        "rejected",
+      ],
+      catalog_pricing_type: ["one_time", "monthly", "per_unit"],
       newsletter_status: ["subscribed", "unsubscribed"],
       payment_method: [
         "easypaisa",

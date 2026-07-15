@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -22,8 +22,7 @@ const About = lazy(() => import("./pages/About"));
 const Team = lazy(() => import("./pages/Team"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
-const Addons = lazy(() => import("./pages/Addons"));
-const AddonDetail = lazy(() => import("./pages/AddonDetail"));
+const CatalogItem = lazy(() => import("./pages/CatalogItem"));
 const TemplatesOnSale = lazy(() => import("./pages/TemplatesOnSale"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -81,8 +80,9 @@ const App = () => (
                     <Route path="/templates/:id" element={<TemplateDetail />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
-                    <Route path="/addons" element={<Addons />} />
-                    <Route path="/addons/:kind/:slug" element={<AddonDetail />} />
+                    <Route path="/marketplace/:slug" element={<CatalogItem />} />
+                    <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
+                    <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/about" element={<About />} />
