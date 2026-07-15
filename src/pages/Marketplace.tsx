@@ -5,7 +5,7 @@ import SEO from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, CreditCard, LayoutTemplate, Sparkles, Check, Loader2 } from "lucide-react";
+import { ArrowRight, CreditCard, LayoutTemplate, Sparkles, Check, Loader2, ExternalLink, ClipboardList, Palette, Megaphone } from "lucide-react";
 import { useAddons } from "@/hooks/useAddons";
 
 const useTopPlans = () =>
