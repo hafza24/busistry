@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CreditCard, LayoutTemplate, Sparkles, Check, Loader2, ExternalLink, ClipboardList, Palette, Megaphone } from "lucide-react";
 import { useAddons } from "@/hooks/useAddons";
+import marketplaceHero from "@/assets/marketplace-hero.jpg";
+import marketplaceTemplates from "@/assets/marketplace-templates.jpg";
+import marketplaceAddons from "@/assets/marketplace-addons.jpg";
 
 const useTopPlans = () =>
   useQuery({
