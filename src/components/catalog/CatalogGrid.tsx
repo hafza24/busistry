@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState, useEffect } from "react";
-import { Loader2, Search, X, Sparkles } from "lucide-react";
+import { Loader2, Search, X, Sparkles, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCatalogItems, CATALOG_TYPE_META, type CatalogItem, type CatalogItemType } from "@/hooks/useCatalog";
@@ -33,8 +33,9 @@ function tokenize(s: string): string[] {
     .filter((w) => w.length > 2 && !STOPWORDS.has(w));
 }
 
-export default function CatalogGrid() {
+export default function CatalogGrid({ previewLimit }: { previewLimit?: number } = {}) {
   const { data: items = [], isLoading } = useCatalogItems();
+  const [expanded, setExpanded] = useState(false);
   const [filter, setFilter] = useState<"all" | CatalogItemType>("all");
   const [q, setQ] = useState("");
   const [focused, setFocused] = useState(false);
@@ -217,14 +218,32 @@ export default function CatalogGrid() {
           Nothing matches those filters yet.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filtered.map((item) => (
-            <CatalogCard key={item.id} item={item} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {(previewLimit && !expanded && !term && filter === "all"
+              ? filtered.slice(0, previewLimit)
+              : filtered
+            ).map((item) => (
+              <CatalogCard key={item.id} item={item} />
+            ))}
+          </div>
+          {previewLimit && !expanded && !term && filter === "all" && filtered.length > previewLimit && (
+            <div className="flex justify-center pt-2">
+              <Button
+                onClick={() => setExpanded(true)}
+                size="lg"
+                variant="outline"
+                className="rounded-full gap-2"
+              >
+                View all {filtered.length} items
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+        </>
       )}
 
-      {!isLoading && filter === "all" && (
+      {!isLoading && filter === "all" && (expanded || !previewLimit) && (
         <p className="text-xs text-muted-foreground text-center">
           {items.length} item{items.length === 1 ? "" : "s"} in the catalog.
         </p>
