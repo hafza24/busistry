@@ -820,7 +820,7 @@ const Index = () => {
 
               <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
                 <span className="bg-gradient-to-r from-violet-200 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent">
-                  Biztyle
+                  BizStyle
                 </span>
                 <span className="block text-white/90 mt-2 text-3xl md:text-5xl">
                   Printing ideas into powerful brands.
@@ -850,7 +850,7 @@ const Index = () => {
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold shadow-lg shadow-violet-500/40 hover:shadow-fuchsia-500/50 transition-shadow"
                 >
-                  Visit Biztyle
+                  Visit BizStyle
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
                 <Link
@@ -900,7 +900,7 @@ const Index = () => {
                         Est. Busistree
                       </div>
                       <div className="font-display text-5xl md:text-6xl font-black text-white leading-none">
-                        Biz<span className="italic font-light">tyle</span>
+                        Biz<span className="italic font-light">Style</span>
                       </div>
                       <div className="mt-4 text-white/80 text-sm">
                         Premium printing & creative studio
