@@ -333,12 +333,13 @@ export default function Marketplace() {
               gradient: "from-primary/15 to-primary-glow/10",
             },
             {
-              name: "Bizstyling",
-              tagline: "Product & Brand Design",
-              description: "Shape your product identity — packaging, brand look, and visual systems that make your business stand out.",
-              icon: Palette,
+              name: "Biztyle",
+              tagline: "Premium Printing & Creative Studio",
+              description: "Printing ideas into powerful brands — packaging, branding, graphic design, and marketing visuals from concept to delivery.",
+              icon: Sparkles,
               href: "https://style.busistree.com",
-              gradient: "from-accent/20 to-primary/10",
+              gradient: "from-violet-500/20 to-fuchsia-500/10",
+              theme: "biztyle",
             },
             {
               name: "Bizmarket",
@@ -348,36 +349,88 @@ export default function Marketplace() {
               href: "https://market.busistree.com",
               gradient: "from-primary-glow/20 to-accent/10",
             },
-          ].map((svc) => (
+          ].map((svc: any) => {
+            const isBiztyle = svc.theme === "biztyle";
+            return (
             <a
               key={svc.name}
               href={svc.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card hover:border-primary/40 hover:shadow-xl transition-all"
+              className={`group relative overflow-hidden rounded-3xl border transition-all hover:shadow-xl ${
+                isBiztyle
+                  ? "border-violet-500/30 bg-[#0b0616] hover:border-violet-400/60 hover:shadow-violet-500/20"
+                  : "border-border/60 bg-card hover:border-primary/40"
+              }`}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${svc.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
+              {isBiztyle ? (
+                <>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.35),transparent_60%),radial-gradient(circle_at_bottom_left,rgba(217,70,239,0.25),transparent_55%)]" />
+                  <div
+                    className="absolute inset-0 opacity-[0.15] mix-blend-screen"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(rgba(255,255,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.4) 1px,transparent 1px)",
+                      backgroundSize: "28px 28px",
+                    }}
+                  />
+                </>
+              ) : (
+                <div className={`absolute inset-0 bg-gradient-to-br ${svc.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
+              )}
               <div className="relative p-6 space-y-4">
                 <div className="flex items-start justify-between">
-                  <div className="h-12 w-12 rounded-2xl bg-background/80 backdrop-blur-sm border border-border/60 text-primary flex items-center justify-center shadow-sm">
+                  <div
+                    className={`h-12 w-12 rounded-2xl flex items-center justify-center shadow-lg ${
+                      isBiztyle
+                        ? "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white border border-white/10 shadow-violet-500/40"
+                        : "bg-background/80 backdrop-blur-sm border border-border/60 text-primary"
+                    }`}
+                  >
                     <svc.icon className="h-6 w-6" />
                   </div>
-                  <Badge variant="secondary" className="text-[10px] gap-1">
+                  <Badge
+                    variant="secondary"
+                    className={`text-[10px] gap-1 ${
+                      isBiztyle ? "bg-white/10 text-violet-100 border border-white/10 hover:bg-white/15" : ""
+                    }`}
+                  >
                     <ExternalLink className="h-3 w-3" /> External
                   </Badge>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{svc.tagline}</p>
-                  <h3 className="font-display text-2xl font-bold">{svc.name}</h3>
+                  <p
+                    className={`text-xs font-semibold uppercase tracking-wider mb-1 ${
+                      isBiztyle ? "text-violet-300" : "text-primary"
+                    }`}
+                  >
+                    {svc.tagline}
+                  </p>
+                  <h3
+                    className={`font-display text-2xl font-bold ${
+                      isBiztyle
+                        ? "bg-gradient-to-r from-violet-200 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent"
+                        : ""
+                    }`}
+                  >
+                    {svc.name}
+                  </h3>
                 </div>
-                <p className="text-sm text-muted-foreground">{svc.description}</p>
-                <div className="flex items-center gap-2 text-sm font-semibold text-primary pt-2">
+                <p className={`text-sm ${isBiztyle ? "text-violet-100/70" : "text-muted-foreground"}`}>
+                  {svc.description}
+                </p>
+                <div
+                  className={`flex items-center gap-2 text-sm font-semibold pt-2 ${
+                    isBiztyle ? "text-violet-300" : "text-primary"
+                  }`}
+                >
                   Visit site
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </a>
-          ))}
+            );
+          })}
         </div>
       </section>
 
