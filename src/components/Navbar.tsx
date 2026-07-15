@@ -115,6 +115,14 @@ const Navbar = () => {
         }}
       />
 
+      {/* Dev indicator: current NavigationMenu value */}
+      <div
+        aria-hidden="true"
+        className="fixed bottom-3 right-3 z-[100] px-3 py-1.5 rounded-full text-xs font-mono font-bold bg-foreground text-background shadow-lg pointer-events-none"
+      >
+        menu: {menuValue || "(closed)"}
+      </div>
+
       <div className="relative w-full flex items-center justify-center group">
 
         {/* Central Logo Hub overlay */}
