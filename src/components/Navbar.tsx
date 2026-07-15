@@ -142,7 +142,7 @@ const Navbar = () => {
                 <span className="relative z-10">Home</span>
               </Link>
 
-              {/* Marketplace mega menu */}
+              {/* Mega menus (combined into one root so viewport positions correctly) */}
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
@@ -156,7 +156,7 @@ const Navbar = () => {
                       Marketplace
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="p-4 w-[520px] grid grid-cols-2 gap-2">
+                      <div className="p-4 w-[520px] grid grid-cols-2 gap-2 bg-popover">
                         {marketplaceItems.map((it) => (
                           <NavigationMenuLink asChild key={it.to}>
                             <Link
@@ -176,20 +176,19 @@ const Navbar = () => {
                       </div>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
 
-              {/* How it works */}
-              <Link
-                to="/how-it-works"
-                className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
-              >
-                <span className="relative z-10">How it works</span>
-              </Link>
+                  {/* How it works — kept inside the same list so spacing stays consistent */}
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to="/how-it-works"
+                        className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
+                      >
+                        <span className="relative z-10">How it works</span>
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
 
-              {/* About mega menu */}
-              <NavigationMenu>
-                <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger
                       className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
@@ -201,7 +200,7 @@ const Navbar = () => {
                       About
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="p-4 w-[360px] grid gap-2">
+                      <div className="p-4 w-[360px] grid gap-2 bg-popover">
                         {aboutItems.map((it) => (
                           <NavigationMenuLink asChild key={it.to}>
                             <Link
@@ -223,6 +222,7 @@ const Navbar = () => {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
+
 
               {/* Contact */}
               <Link
