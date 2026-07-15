@@ -163,9 +163,11 @@ export default function Marketplace() {
               alt=""
               aria-hidden="true"
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500"
               width={800}
               height={800}
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 24vw, 100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
             <div className="absolute top-6 left-6 z-20">
