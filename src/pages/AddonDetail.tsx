@@ -284,15 +284,21 @@ export default function AddonDetail() {
               <p className="text-xs text-muted-foreground uppercase tracking-wide">{priceSuffix}</p>
             </div>
             <div className="grid gap-2">
-              <Button size="lg" onClick={onBuy}>
-                Add to my website <ArrowRight className="h-4 w-4 ml-2" />
+              <Button size="lg" onClick={onBuy} disabled={createAddon.isPending}>
+                {createAddon.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : !user ? (
+                  <LogIn className="h-4 w-4 mr-2" />
+                ) : null}
+                {user ? "Add to my website" : "Sign in to add to my website"}
+                {user && <ArrowRight className="h-4 w-4 ml-2" />}
               </Button>
               <Button size="lg" variant="secondary" onClick={requestOnWhatsApp}>
                 <MessageCircle className="h-4 w-4 mr-2" /> Request on WhatsApp
               </Button>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Our team installs your add-on within 24–48 hours.
+              Our team installs your add-on within 24–48 hours after payment is verified.
             </p>
           </div>
 
