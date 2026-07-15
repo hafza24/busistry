@@ -88,7 +88,7 @@ export default function Marketplace() {
       {/* Hero — Dynamic Bento */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Feature Banner */}
-        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-8 sm:p-12 min-h-[450px] sm:min-h-[600px] shadow-2xl">
+        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[600px] shadow-2xl">
           <img
             src={marketplaceHero}
             alt=""
@@ -96,6 +96,9 @@ export default function Marketplace() {
             className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-overlay"
             width={1280}
             height={1024}
+            sizes="(min-width: 1024px) 58vw, 100vw"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/40" />
           <div className="absolute inset-0 opacity-20 pointer-events-none">
