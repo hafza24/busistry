@@ -329,7 +329,7 @@ export default function Marketplace() {
               tagline: "Business Planning",
               description: "Craft investor-ready business plans, financial projections, and go-to-market roadmaps with expert guidance.",
               icon: ClipboardList,
-              href: "https://bizplan.busistree.com",
+              href: "https://plan.busistree.com",
               gradient: "from-primary/15 to-primary-glow/10",
             },
             {
