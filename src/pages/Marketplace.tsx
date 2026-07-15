@@ -341,7 +341,7 @@ export default function Marketplace() {
               gradient: "from-accent/20 to-primary/10",
             },
             {
-              name: "Bizzmarket",
+              name: "Bizmarket",
               tagline: "Ads & Marketing",
               description: "Launch campaigns, promotions, and performance ads — end-to-end marketing strategy for growth-stage brands.",
               icon: Megaphone,
