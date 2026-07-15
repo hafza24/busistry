@@ -232,7 +232,9 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     <div className="flex items-center gap-3">
                       {i.icon ? <img src={i.icon} alt="" className="w-10 h-10 rounded" /> : <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center"><Plug className="h-5 w-5 text-primary" /></div>}
                       <div>
-                        <h4 className="font-semibold text-foreground">{i.name}</h4>
+                        <Link to={`/addons/integration/${i.slug}`} className="hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-foreground">{i.name}</h4>
+                        </Link>
                         {i.is_popular && <Badge variant="secondary" className="text-xs">Popular</Badge>}
                       </div>
                     </div>
