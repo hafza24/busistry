@@ -93,7 +93,7 @@ const Reviews = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("public_feedback_reviews" as any)
-        .select("id, subject, message, rating, featured, created_at, reviewer_name")
+        .select("id, subject, message, rating, featured, created_at")
         .order("featured", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(200);
@@ -238,7 +238,7 @@ const Reviews = () => {
             ) : filtered.length > 0 ? (
               <div className="columns-1 md:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
                 {filtered.map((r, i) => {
-                  const name = r.reviewer_name || "Customer";
+                  const name = "Happy Customer";
                   const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
                   return (
                     <article
