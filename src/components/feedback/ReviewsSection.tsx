@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FeedbackDialog from "./FeedbackDialog";
 import { cn } from "@/lib/utils";
@@ -126,7 +127,7 @@ const ReviewsSection = () => {
 
             <div className="mt-7">
               <FeedbackDialog trigger={
-                <Button size="lg" className="rounded-full h-12 px-7 bg-gradient-to-r from-primary to-primary-glow shadow-brand">
+                <Button size="lg" variant="outline" className="rounded-full h-12 px-7">
                   Leave a review
                 </Button>
               } />
@@ -134,7 +135,7 @@ const ReviewsSection = () => {
           </div>
 
           {/* RIGHT — Floating review cards */}
-          <div className="relative min-h-[520px]">
+          <div className="relative min-h-[520px] flex flex-col">
             {isLoading ? (
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
@@ -142,7 +143,7 @@ const ReviewsSection = () => {
                 ))}
               </div>
             ) : topReviews.length > 0 ? (
-              <div className="relative">
+              <div className="relative flex-1">
                 {topReviews.map((r, i) => (
                   <Card
                     key={r.id}
@@ -169,9 +170,29 @@ const ReviewsSection = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground">Be the first to leave a review.</p>
+              <p className="text-center text-muted-foreground flex-1">Be the first to leave a review.</p>
             )}
+
+            {/* CTA — See more reviews */}
+            <div className="mt-8 md:mt-auto md:pt-8 flex md:justify-end">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full h-12 px-7 bg-gradient-to-r from-primary to-primary-glow shadow-brand group"
+              >
+                <Link to="/reviews">
+                  See all reviews
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </Button>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
         </div>
       </div>
     </section>
