@@ -194,7 +194,7 @@ export function useMyCatalogOrders(userId?: string) {
         .eq("user_id", userId!)
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as (CatalogOrder & { stores: any })[];
+      return (data ?? []) as unknown as (CatalogOrder & { stores: any })[];
     },
   });
 }
@@ -223,7 +223,7 @@ export function useAllCatalogOrders() {
         .select("*, stores(name, id, subdomain_slug)")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as (CatalogOrder & { stores: any })[];
+      return (data ?? []) as unknown as (CatalogOrder & { stores: any })[];
     },
   });
 }
