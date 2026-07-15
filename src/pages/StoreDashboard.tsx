@@ -80,6 +80,7 @@ const StoreDashboard = () => {
       case "orders": return <OrderManager storeId={store.id} />;
       case "marketplace": return <MarketplaceBrowser storeId={store.id} />;
       case "addons": return <MyAddons storeId={store.id} />;
+      case "order-tracking": return <OrderTracking storeId={store.id} />;
       case "upgrade": return <UpgradePlan storeId={store.id} />;
       case "team": return <TeamMembers storeId={store.id} />;
       case "whitelabel": return <WhiteLabelSettings storeId={store.id} />;
