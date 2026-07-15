@@ -4,7 +4,7 @@ import {
   SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton,
   SidebarHeader, SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Package, FolderTree, ShoppingCart, Settings, ArrowLeft, LayoutDashboard, Sparkles, Plug, TrendingUp, Users, Palette } from "lucide-react";
+import { Package, FolderTree, ShoppingCart, Settings, ArrowLeft, LayoutDashboard, Sparkles, Plug, TrendingUp, Users, Palette, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
