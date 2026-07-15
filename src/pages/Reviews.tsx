@@ -373,7 +373,7 @@ const Reviews = () => {
         </section>
 
         {/* CTA band */}
-        <section className="relative overflow-hidden bg-[#1e1e4a] text-white">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#3d1e6a] via-[#4a2a8a] to-[#6b3fbf] text-white">
           <div
             aria-hidden="true"
             className="absolute -top-24 -left-24 h-72 w-72 rounded-full border-2 border-white/10"
@@ -381,6 +381,10 @@ const Reviews = () => {
           <div
             aria-hidden="true"
             className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full border-2 border-white/10"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute top-1/2 left-1/3 h-96 w-96 -translate-y-1/2 rounded-full bg-[#a06bff]/20 blur-3xl"
           />
           <div className="container max-w-4xl relative py-20 md:py-24 text-center">
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
@@ -392,7 +396,7 @@ const Reviews = () => {
             <Button
               asChild
               size="lg"
-              className="rounded-full h-12 px-8 bg-white text-[#1e1e4a] hover:bg-white/90"
+              className="rounded-full h-12 px-8 bg-white text-[#4a2a8a] hover:bg-white/90"
             >
               <a href="/contact">
                 Contact us <ArrowRight className="ml-2 h-4 w-4" />
