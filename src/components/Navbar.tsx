@@ -54,8 +54,14 @@ const Navbar = () => {
 
   // Close mega menu on route change
   useEffect(() => {
+    console.log("[Navbar] route change → closing menu. path:", location.pathname);
     setMenuValue("");
   }, [location.pathname]);
+
+  const handleMenuValueChange = (v: string) => {
+    console.log("[Navbar] onValueChange →", v || "(closed)");
+    setMenuValue(v);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -109,6 +115,14 @@ const Navbar = () => {
         }}
       />
 
+      {/* Dev indicator: current NavigationMenu value */}
+      <div
+        aria-hidden="true"
+        className="fixed bottom-3 right-3 z-[100] px-3 py-1.5 rounded-full text-xs font-mono font-bold bg-foreground text-background shadow-lg pointer-events-none"
+      >
+        menu: {menuValue || "(closed)"}
+      </div>
+
       <div className="relative w-full flex items-center justify-center group">
 
         {/* Central Logo Hub overlay */}
@@ -149,7 +163,7 @@ const Navbar = () => {
               </Link>
 
               {/* Mega menus (combined into one root so viewport positions correctly) */}
-              <NavigationMenu value={menuValue} onValueChange={setMenuValue}>
+              <NavigationMenu value={menuValue} onValueChange={handleMenuValueChange}>
                 <NavigationMenuList>
                   <NavigationMenuItem value="marketplace">
                     <NavigationMenuTrigger
