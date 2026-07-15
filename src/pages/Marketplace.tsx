@@ -83,15 +83,12 @@ export default function Marketplace() {
       />
 
       {/* Hero */}
-      <section className="text-center max-w-3xl mx-auto">
-        <Badge variant="secondary" className="mb-4">One place for everything</Badge>
-        <h1 className="font-display text-4xl md:text-6xl font-bold mb-4">
-          The Busistree Marketplace
-        </h1>
+      <div className="text-center max-w-2xl mx-auto">
+        <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Marketplace</h1>
         <p className="text-lg text-muted-foreground">
-          Browse plans, pick a template, and extend your store with add-ons — all in one place.
+          Browse plans, pick a template, and extend your store with add-ons — everything you need to launch and grow, all in one place.
         </p>
-      </section>
+      </div>
 
       {/* Plans */}
       <section>
