@@ -64,31 +64,58 @@ const Templates = () => {
         path="/templates"
       />
       <div className="container">
-        <div className="text-center mb-12 max-w-2xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">Choose your template</h1>
-          <p className="text-lg text-muted-foreground">
-            Pick a starting point. We'll customize it with your brand and launch it in 24–48 hours.
-          </p>
-        </div>
+        {/* Hero — inspired by editorial storefront layout */}
+        <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-secondary/60 via-background to-primary/5 mb-6">
+          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-primary/20 blur-3xl" aria-hidden />
+          <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent/20 blur-3xl" aria-hidden />
+          <div className="relative grid md:grid-cols-2 gap-8 items-center px-6 md:px-12 py-14 md:py-20">
+            <div className="text-center md:text-left">
+              <Badge variant="secondary" className="mb-4">Template Marketplace</Badge>
+              <h1 className="text-4xl md:text-6xl font-bold font-display text-foreground leading-tight">
+                Exclusive and Premium <span className="text-primary">Quality Templates</span>
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground mt-5 max-w-lg mx-auto md:mx-0">
+                Pick a starting point. We'll customize it with your brand and launch it in 24–48 hours.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
+                <Button size="lg" asChild><a href="#templates-grid">Browse Templates</a></Button>
+                <Button size="lg" variant="outline" asChild><Link to="/how-it-works">How it works</Link></Button>
+              </div>
+            </div>
+            <div className="relative hidden md:flex justify-center items-center">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.15),transparent_65%)]" aria-hidden />
+              <div className="relative grid grid-cols-2 gap-4 rotate-[-4deg]">
+                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/20 shadow-xl border border-border/60" />
+                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-accent/30 to-primary/10 shadow-xl border border-border/60 translate-y-6" />
+                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-primary-glow/30 to-primary/20 shadow-xl border border-border/60 -translate-y-2" />
+                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-secondary to-primary/20 shadow-xl border border-border/60 translate-y-4" />
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-4">
-          {categories.map((n) => {
-            const active = activeCategory === n;
-            return (
-              <Button
-                key={n}
-                variant={active ? "default" : "outline"}
-                size="sm"
-                aria-pressed={active}
-                onClick={() => { setActiveCategory(n); setActiveSub(null); }}
-                className={active ? "ring-2 ring-primary/40 ring-offset-2 ring-offset-background shadow-md scale-[1.03]" : "hover:border-primary/40"}
-              >
-                {n}
-              </Button>
-            );
-          })}
-        </div>
+        {/* Category nav bar — horizontal editorial style */}
+        <nav className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm">
+          <div className="flex items-center gap-1 overflow-x-auto px-2 py-2 scrollbar-none">
+            {categories.map((n) => {
+              const active = activeCategory === n;
+              return (
+                <button
+                  key={n}
+                  aria-pressed={active}
+                  onClick={() => { setActiveCategory(n); setActiveSub(null); }}
+                  className={`whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                    active
+                      ? "bg-primary text-primary-foreground shadow"
+                      : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                  }`}
+                >
+                  {n}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
 
         {/* Subcategory filter */}
         {subcategories.length > 0 && (
@@ -119,6 +146,13 @@ const Templates = () => {
             })}
           </div>
         )}
+
+        {/* Category section heading */}
+        <div className="text-center mb-8" id="templates-grid">
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Category</h2>
+          <div className="mx-auto mt-2 h-px w-24 bg-border" />
+        </div>
+
 
         {isLoading ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
