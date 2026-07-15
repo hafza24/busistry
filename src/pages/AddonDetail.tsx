@@ -98,10 +98,14 @@ export default function AddonDetail() {
   const [websitePicker, setWebsitePicker] = useState(false);
   const [checkout, setCheckout] = useState<{ storeId: string } | null>(null);
   const [config, setConfig] = useState<Record<string, any>>({});
+  const [success, setSuccess] = useState<{ storeId: string; storeName: string } | null>(null);
 
   const onBuy = () => {
     if (!user) {
-      navigate("/auth");
+      toast.info("Please sign in first", {
+        description: "Create an account to add addons to your website.",
+      });
+      navigate(`/auth?redirect=${encodeURIComponent(`/addons/${kind}/${slug}`)}`);
       return;
     }
     setConfig({});
@@ -141,18 +145,43 @@ export default function AddonDetail() {
     screenshot_url,
   }: any) => {
     if (!checkout || !user || !item) return;
-    await createAddon.mutateAsync({
-      store_id: storeId,
-      user_id: user.id,
-      item_type: isIntegration ? "integration" : "product",
-      item_id: item.id,
-      price_snapshot_pkr: item.price_pkr,
-      pricing_type_snapshot: item.pricing_type ?? "one_time",
-      config,
-      payment_method,
-      transaction_id,
-      screenshot_url: screenshot_url ?? undefined,
-    });
+    // Prevent duplicate active orders of the same item for the same store.
+    const { data: existing } = await supabase
+      .from("store_addons")
+      .select("id, status")
+      .eq("store_id", storeId)
+      .eq("item_id", item.id)
+      .in("status", ["pending", "approved", "active"])
+      .maybeSingle();
+    if (existing) {
+      throw new Error(
+        "This add-on is already ordered for the selected website. Check My Addons for its status."
+      );
+    }
+
+    try {
+      await createAddon.mutateAsync({
+        store_id: storeId,
+        user_id: user.id,
+        item_type: isIntegration ? "integration" : "product",
+        item_id: item.id,
+        price_snapshot_pkr: item.price_pkr,
+        pricing_type_snapshot: item.pricing_type ?? "one_time",
+        config,
+        payment_method,
+        transaction_id,
+        screenshot_url: screenshot_url ?? undefined,
+      });
+      const storeName = activeStores.find((s: any) => s.id === storeId)?.name ?? "your website";
+      setCheckout(null);
+      setSuccess({ storeId, storeName });
+    } catch (err: any) {
+      // Surface via toast — CheckoutDialog also toasts, but ensure a top-level notice.
+      toast.error("Could not place your order", {
+        description: err?.message ?? "Please try again in a moment.",
+      });
+      throw err;
+    }
   };
 
   if (isLoading) {
