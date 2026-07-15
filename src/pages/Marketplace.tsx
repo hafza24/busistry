@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CreditCard, LayoutTemplate, Sparkles, Check, Loader2, ExternalLink, ClipboardList, Palette, Megaphone } from "lucide-react";
-import { useAddons } from "@/hooks/useAddons";
+import CatalogGrid from "@/components/catalog/CatalogGrid";
 import marketplaceHero from "@/assets/marketplace-hero.jpg";
 import marketplaceTemplates from "@/assets/marketplace-templates.jpg";
 import marketplaceAddons from "@/assets/marketplace-addons.jpg";
@@ -75,7 +75,6 @@ const SectionHeader = ({
 export default function Marketplace() {
   const { data: plans = [], isLoading: plansLoading } = useTopPlans();
   const { data: templates = [], isLoading: templatesLoading } = useTopTemplates();
-  const { data: addons = [], isLoading: addonsLoading } = useAddons();
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl space-y-20">
@@ -181,9 +180,9 @@ export default function Marketplace() {
             </div>
           </Link>
 
-          {/* Addons */}
+          {/* Catalog */}
           <Link
-            to="/addons"
+            to="/marketplace#catalog"
             className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square"
           >
             <img
@@ -205,8 +204,8 @@ export default function Marketplace() {
               </div>
             </div>
             <div className="relative z-20">
-              <h3 className="font-display text-primary-foreground font-bold text-xl">Addons</h3>
-              <p className="text-primary-foreground/70 text-xs mt-1 uppercase tracking-tight">Pages · Popups · Integrations</p>
+              <h3 className="font-display text-primary-foreground font-bold text-xl">Catalog</h3>
+              <p className="text-primary-foreground/70 text-xs mt-1 uppercase tracking-tight">Add-ons · Integrations · Updates</p>
             </div>
           </Link>
         </div>
