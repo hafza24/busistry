@@ -281,6 +281,7 @@ const Navbar = () => {
                 {/* Dropdown panel */}
                 {openMenu && (
                   <div
+                    ref={panelRef}
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
                     className={`absolute top-full ${
