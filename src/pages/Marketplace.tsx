@@ -82,13 +82,98 @@ export default function Marketplace() {
         path="/marketplace"
       />
 
-      {/* Hero */}
-      <div className="text-center max-w-2xl mx-auto">
-        <h1 className="font-display text-4xl md:text-5xl font-bold mb-3">Marketplace</h1>
-        <p className="text-lg text-muted-foreground">
-          Browse plans, pick a template, and extend your store with add-ons — everything you need to launch and grow, all in one place.
-        </p>
-      </div>
+      {/* Hero — Dynamic Bento */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Feature Banner */}
+        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-8 sm:p-12 min-h-[450px] sm:min-h-[600px] shadow-2xl">
+          <div className="absolute inset-0 opacity-20 pointer-events-none">
+            <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M0 100 C 20 0 50 0 100 100" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary-foreground" />
+              <path d="M0 80 C 30 20 60 20 100 80" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary-foreground" />
+            </svg>
+          </div>
+          <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-primary-foreground/10 blur-3xl" />
+
+          <div className="relative z-10 space-y-4">
+            <span className="inline-block px-3 py-1 bg-primary-foreground/15 border border-primary-foreground/25 text-primary-foreground/90 text-xs font-semibold uppercase tracking-widest rounded-full backdrop-blur-sm">
+              Featured Marketplace
+            </span>
+            <h1 className="font-display text-4xl sm:text-6xl text-primary-foreground font-bold leading-tight">
+              Scale your business<br />with Busistree.
+            </h1>
+            <p className="text-primary-foreground/80 text-lg max-w-md">
+              Discover premium templates, powerful add-ons, and scaling plans tailored for modern digital businesses.
+            </p>
+            <div className="pt-4 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="rounded-xl bg-background text-primary hover:bg-background/90 font-bold shadow-lg">
+                <Link to="/onboarding">Shop All Collections</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-xl bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+                <Link to="/how-it-works">How it works</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Category Grid Side */}
+        <div className="lg:col-span-5 grid grid-cols-2 grid-rows-[auto_1fr] gap-6">
+          {/* Plans — wide */}
+          <Link
+            to="/pricing"
+            className="col-span-2 group relative overflow-hidden rounded-3xl bg-card border border-border flex items-center p-8 transition-all hover:shadow-xl hover:border-primary/40"
+          >
+            <div className="relative z-10 w-2/3">
+              <h3 className="font-display text-2xl font-bold text-foreground">Plans</h3>
+              <p className="text-muted-foreground text-sm mb-4">Ready-to-deploy hosting & limits for every stage.</p>
+              <div className="flex items-center gap-2">
+                <span className="text-primary font-bold">Explore pricing</span>
+                <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <ArrowRight className="w-3 h-3" />
+                </div>
+              </div>
+            </div>
+            <div className="absolute right-[-10%] bottom-[-10%] w-48 h-48 bg-primary/10 rounded-full blur-3xl group-hover:scale-125 transition-transform" />
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-10 group-hover:opacity-20 transition-opacity text-primary">
+              <CreditCard className="w-24 h-24" strokeWidth={1.5} />
+            </div>
+          </Link>
+
+          {/* Templates */}
+          <Link
+            to="/templates"
+            className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+            <div className="absolute top-6 left-6 z-20">
+              <div className="w-10 h-10 bg-background/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-background/20">
+                <LayoutTemplate className="w-5 h-5 text-background" />
+              </div>
+            </div>
+            <div className="relative z-20">
+              <h3 className="font-display text-background font-bold text-xl">Templates</h3>
+              <p className="text-background/60 text-xs mt-1 uppercase tracking-tight">Launch-ready designs</p>
+            </div>
+          </Link>
+
+          {/* Addons */}
+          <Link
+            to="/addons"
+            className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-glow)/0.5),transparent_70%)]" />
+            <div className="absolute top-6 left-6 z-20">
+              <div className="w-10 h-10 bg-black/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-black/10">
+                <Sparkles className="w-5 h-5 text-primary-foreground" />
+              </div>
+            </div>
+            <div className="relative z-20">
+              <h3 className="font-display text-primary-foreground font-bold text-xl">Addons</h3>
+              <p className="text-primary-foreground/70 text-xs mt-1 uppercase tracking-tight">Pages · Popups · Integrations</p>
+            </div>
+          </Link>
+        </div>
+      </section>
+
 
       {/* Plans */}
       <section>
