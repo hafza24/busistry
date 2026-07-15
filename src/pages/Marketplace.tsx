@@ -337,7 +337,7 @@ export default function Marketplace() {
               tagline: "Product & Brand Design",
               description: "Shape your product identity — packaging, brand look, and visual systems that make your business stand out.",
               icon: Palette,
-              href: "https://bizstyling.busistree.com",
+              href: "https://style.busistree.com",
               gradient: "from-accent/20 to-primary/10",
             },
             {
