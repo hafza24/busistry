@@ -151,7 +151,7 @@ const Navbar = () => {
               {/* Mega menus (combined into one root so viewport positions correctly) */}
               <NavigationMenu value={menuValue} onValueChange={setMenuValue}>
                 <NavigationMenuList>
-                  <NavigationMenuItem>
+                  <NavigationMenuItem value="marketplace">
                     <NavigationMenuTrigger
                       className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
                         marketplaceItems.some((i) => location.pathname === i.to)
@@ -195,7 +195,7 @@ const Navbar = () => {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
-                  <NavigationMenuItem>
+                  <NavigationMenuItem value="about">
                     <NavigationMenuTrigger
                       className={`bg-transparent hover:bg-primary/10 data-[state=open]:bg-primary/10 h-9 px-4 text-sm font-bold rounded-xl ${
                         aboutItems.some((i) => location.pathname === i.to)
