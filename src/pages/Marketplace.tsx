@@ -191,9 +191,11 @@ export default function Marketplace() {
               alt=""
               aria-hidden="true"
               loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-500"
               width={800}
               height={800}
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 24vw, 100vw"
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-glow)/0.5),transparent_70%)]" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
