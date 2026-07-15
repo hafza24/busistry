@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Star, ArrowRight } from "lucide-react";
+import { Star, ArrowRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import heroImg1 from "@/assets/reviews-hero-1.jpg";
@@ -88,25 +88,37 @@ const Reviews = () => {
     },
   });
 
-  const { data: reviews, isLoading } = useQuery({
-    queryKey: ["public-reviews-all"],
-    queryFn: async () => {
+  const PAGE_SIZE = 12;
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["public-reviews-infinite"],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      const from = (pageParam as number) * PAGE_SIZE;
+      const to = from + PAGE_SIZE - 1;
       const { data, error } = await supabase
         .from("public_feedback_reviews" as any)
         .select("id, subject, message, rating, featured, created_at")
         .order("featured", { ascending: false })
         .order("created_at", { ascending: false })
-        .limit(200);
+        .range(from, to);
       if (error) throw error;
-      return (data ?? []) as any[];
+      return { rows: (data ?? []) as any[], nextPage: (data ?? []).length === PAGE_SIZE ? (pageParam as number) + 1 : undefined };
     },
+    getNextPageParam: (last) => last.nextPage,
   });
 
+  const reviews = useMemo(() => (data?.pages ?? []).flatMap((p) => p.rows), [data]);
   const total = Number(stats?.total_reviews ?? 0);
   const avg = Number(stats?.avg_rating ?? 0);
 
   const filtered = useMemo(() => {
-    let list = reviews ?? [];
+    let list = reviews;
     if (query.trim()) {
       const q = query.toLowerCase();
       list = list.filter(
@@ -117,6 +129,23 @@ const Reviews = () => {
     }
     return list;
   }, [reviews, query]);
+
+  // Infinite scroll sentinel
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <>
@@ -281,6 +310,21 @@ const Reviews = () => {
               </div>
             ) : (
               <p className="text-center text-muted-foreground">Be the first to leave a review.</p>
+            )}
+
+            {/* Infinite scroll sentinel */}
+            {!query.trim() && hasNextPage && (
+              <div ref={sentinelRef} className="h-10" aria-hidden="true" />
+            )}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-8 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin" />
+              </div>
+            )}
+            {!hasNextPage && filtered.length > 0 && !isLoading && (
+              <p className="text-center text-xs text-muted-foreground mt-10 uppercase tracking-[0.2em]">
+                — You've reached the end —
+              </p>
             )}
 
             <div className="mt-12 flex justify-center">
