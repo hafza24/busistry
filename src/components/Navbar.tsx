@@ -1,12 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink,
-  NavigationMenuList, NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
