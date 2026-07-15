@@ -212,13 +212,33 @@ export default function AddonDetail() {
   const kindLabel = isIntegration ? "Integration" : typeLabel[item.type] ?? "Add-on";
   const priceSuffix = item.pricing_type === "monthly" ? "/month" : "one-time";
   const features: string[] = Array.isArray(item.features) ? item.features : [];
+  const gallery: string[] = Array.isArray(item.gallery_images) ? item.gallery_images : [];
+  const faq: { q: string; a: string }[] = Array.isArray(item.faq) ? item.faq : [];
+  const seoKeywords: string[] = Array.isArray(item.seo_keywords) ? item.seo_keywords : [];
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-6xl space-y-10">
       <SEO
-        title={`${item.name} — Busistree Addons`}
-        description={item.description || `Add ${item.name} to your Busistree store.`}
+        title={item.seo_title || `${item.name} — Busistree Addons`}
+        description={item.seo_description || item.description || `Add ${item.name} to your Busistree store.`}
         path={`/addons/${kind}/${item.slug}`}
+        image={item.og_image_url || item.preview_image_url || null}
+        imageAlt={item.name}
+        keywords={seoKeywords.length ? seoKeywords : null}
+        type="product"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: item.name,
+          description: item.seo_description || item.description || undefined,
+          image: item.og_image_url || item.preview_image_url || undefined,
+          offers: {
+            "@type": "Offer",
+            price: item.price_pkr,
+            priceCurrency: "PKR",
+            availability: "https://schema.org/InStock",
+          },
+        }}
       />
 
       <div>
@@ -336,6 +356,43 @@ export default function AddonDetail() {
           )}
         </div>
       </div>
+
+      {/* Long description */}
+      {item.long_description && (
+        <div className="prose prose-neutral dark:prose-invert max-w-none">
+          <h2 className="font-display text-2xl font-bold mb-3">About this {kindLabel.toLowerCase()}</h2>
+          <div className="whitespace-pre-wrap text-foreground/90 leading-relaxed">{item.long_description}</div>
+        </div>
+      )}
+
+      {/* Gallery */}
+      {gallery.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="font-display text-2xl font-bold">Gallery</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {gallery.map((src, i) => (
+              <div key={i} className="aspect-video rounded-xl overflow-hidden border bg-muted">
+                <img src={src} alt={`${item.name} preview ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* FAQ */}
+      {faq.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="font-display text-2xl font-bold">Frequently asked questions</h2>
+          <div className="grid gap-3">
+            {faq.map((f, i) => (
+              <div key={i} className="rounded-xl border bg-card p-5">
+                <p className="font-semibold mb-1">{f.q}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Related */}
       {related.length > 0 && (

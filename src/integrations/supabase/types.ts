@@ -1876,12 +1876,20 @@ export type Database = {
           created_at: string
           demo_url: string | null
           description: string | null
+          faq: Json
+          features: Json
+          gallery_images: Json
           id: string
           is_enabled: boolean
           is_popular: boolean
+          long_description: string | null
           name: string
+          og_image_url: string | null
           preview_image_url: string | null
           price_pkr: number
+          seo_description: string | null
+          seo_keywords: string[]
+          seo_title: string | null
           slug: string
           sort_order: number
           type: string
@@ -1893,12 +1901,20 @@ export type Database = {
           created_at?: string
           demo_url?: string | null
           description?: string | null
+          faq?: Json
+          features?: Json
+          gallery_images?: Json
           id?: string
           is_enabled?: boolean
           is_popular?: boolean
+          long_description?: string | null
           name: string
+          og_image_url?: string | null
           preview_image_url?: string | null
           price_pkr?: number
+          seo_description?: string | null
+          seo_keywords?: string[]
+          seo_title?: string | null
           slug: string
           sort_order?: number
           type: string
@@ -1910,12 +1926,20 @@ export type Database = {
           created_at?: string
           demo_url?: string | null
           description?: string | null
+          faq?: Json
+          features?: Json
+          gallery_images?: Json
           id?: string
           is_enabled?: boolean
           is_popular?: boolean
+          long_description?: string | null
           name?: string
+          og_image_url?: string | null
           preview_image_url?: string | null
           price_pkr?: number
+          seo_description?: string | null
+          seo_keywords?: string[]
+          seo_title?: string | null
           slug?: string
           sort_order?: number
           type?: string
