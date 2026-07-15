@@ -14,8 +14,9 @@ const leftLinks: NavLink[] = [
 ];
 
 const marketplaceItems = [
+  { to: "/marketplace", label: "Marketplace", desc: "Plans, templates & add-ons in one place.", icon: Sparkles },
   { to: "/templates", label: "Templates", desc: "Ready-made websites, launched in 24–48h.", icon: LayoutTemplate },
-  { to: "/marketplace", label: "Addons", desc: "Extend your store with paid add-ons.", icon: Sparkles },
+  { to: "/addons", label: "Addons", desc: "Extend your store with paid add-ons.", icon: Sparkles },
   { to: "/templates-on-sale", label: "Sale", desc: "Discounted templates, limited time.", icon: Tag },
   { to: "/pricing", label: "Pricing", desc: "Plans and one-time template pricing.", icon: CreditCard },
 ];
@@ -27,8 +28,9 @@ const aboutItems = [
 
 const mobileLinks: NavLink[] = [
   { to: "/", label: "Home" },
+  { to: "/marketplace", label: "Marketplace" },
   { to: "/templates", label: "Templates" },
-  { to: "/marketplace", label: "Addons" },
+  { to: "/addons", label: "Addons" },
   { to: "/templates-on-sale", label: "Sale" },
   { to: "/pricing", label: "Pricing" },
   { to: "/how-it-works", label: "How it works" },
