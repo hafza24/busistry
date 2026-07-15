@@ -120,10 +120,39 @@ const Templates = () => {
         {/* Subcategory filter */}
         {subcategories.length > 0 && (
           <div className="flex flex-wrap justify-center gap-2 mb-10">
-...
+            <Button
+              variant={activeSub === null ? "secondary" : "ghost"}
+              size="sm"
+              aria-pressed={activeSub === null}
+              onClick={() => setActiveSub(null)}
+              className={activeSub === null ? "ring-1 ring-primary/40 font-semibold" : ""}
+            >
+              All {activeCategory !== "All" ? activeCategory : ""}
+            </Button>
+            {subcategories.map((s) => {
+              const active = activeSub === s;
+              return (
+                <Button
+                  key={s}
+                  variant={active ? "secondary" : "ghost"}
+                  size="sm"
+                  aria-pressed={active}
+                  onClick={() => setActiveSub(s)}
+                  className={active ? "ring-1 ring-primary/40 font-semibold" : ""}
+                >
+                  {s}
+                </Button>
+              );
             })}
           </div>
         )}
+
+        {/* Category section heading */}
+        <div className="text-center mb-8" id="templates-grid">
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Category</h2>
+          <div className="mx-auto mt-2 h-px w-24 bg-border" />
+        </div>
+
 
         {isLoading ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
