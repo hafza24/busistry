@@ -212,13 +212,33 @@ export default function AddonDetail() {
   const kindLabel = isIntegration ? "Integration" : typeLabel[item.type] ?? "Add-on";
   const priceSuffix = item.pricing_type === "monthly" ? "/month" : "one-time";
   const features: string[] = Array.isArray(item.features) ? item.features : [];
+  const gallery: string[] = Array.isArray(item.gallery_images) ? item.gallery_images : [];
+  const faq: { q: string; a: string }[] = Array.isArray(item.faq) ? item.faq : [];
+  const seoKeywords: string[] = Array.isArray(item.seo_keywords) ? item.seo_keywords : [];
 
   return (
     <div className="container mx-auto px-4 py-10 max-w-6xl space-y-10">
       <SEO
-        title={`${item.name} — Busistree Addons`}
-        description={item.description || `Add ${item.name} to your Busistree store.`}
+        title={item.seo_title || `${item.name} — Busistree Addons`}
+        description={item.seo_description || item.description || `Add ${item.name} to your Busistree store.`}
         path={`/addons/${kind}/${item.slug}`}
+        image={item.og_image_url || item.preview_image_url || null}
+        imageAlt={item.name}
+        keywords={seoKeywords.length ? seoKeywords : null}
+        type="product"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: item.name,
+          description: item.seo_description || item.description || undefined,
+          image: item.og_image_url || item.preview_image_url || undefined,
+          offers: {
+            "@type": "Offer",
+            price: item.price_pkr,
+            priceCurrency: "PKR",
+            availability: "https://schema.org/InStock",
+          },
+        }}
       />
 
       <div>
