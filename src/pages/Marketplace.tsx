@@ -131,11 +131,11 @@ export default function Marketplace() {
         </div>
 
         {/* Category Grid Side */}
-        <div className="lg:col-span-5 grid grid-cols-2 grid-rows-[auto_1fr] gap-6">
+        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
           {/* Plans — wide */}
           <Link
             to="/pricing"
-            className="col-span-2 group relative overflow-hidden rounded-3xl bg-card border border-border flex items-center p-8 transition-all hover:shadow-xl hover:border-primary/40"
+            className="sm:col-span-2 group relative overflow-hidden rounded-3xl bg-card border border-border flex items-center p-6 sm:p-8 min-h-[140px] transition-all hover:shadow-xl hover:border-primary/40"
           >
             <div className="relative z-10 w-2/3">
               <h3 className="font-display text-2xl font-bold text-foreground">Plans</h3>
