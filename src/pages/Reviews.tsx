@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Star, ArrowRight, Loader2 } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import heroImg1 from "@/assets/reviews-hero-1.jpg";
@@ -307,6 +307,33 @@ const Reviews = () => {
                     </article>
                   );
                 })}
+                {isFetchingNextPage &&
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={`sk-${i}`}
+                      className="break-inside-avoid mb-6 rounded-lg border border-border bg-card p-6"
+                      aria-hidden="true"
+                    >
+                      <Skeleton className="h-3 w-24 mb-4" />
+                      <div className="flex gap-1 mb-4">
+                        {Array.from({ length: 5 }).map((_, j) => (
+                          <Skeleton key={j} className="h-3.5 w-3.5 rounded-sm" />
+                        ))}
+                      </div>
+                      <Skeleton className="h-4 w-3/4 mb-3" />
+                      <Skeleton className="h-3 w-full mb-2" />
+                      <Skeleton className="h-3 w-full mb-2" />
+                      <Skeleton className={cn("h-3 mb-2", i % 2 === 0 ? "w-5/6" : "w-2/3")} />
+                      {i % 3 !== 0 && <Skeleton className="h-3 w-1/2 mb-2" />}
+                      <div className="flex items-center gap-3 mt-5 pt-5 border-t border-border/60">
+                        <Skeleton className="h-10 w-10 rounded-full shrink-0" />
+                        <div className="flex-1 space-y-1.5">
+                          <Skeleton className="h-3 w-28" />
+                          <Skeleton className="h-2.5 w-20" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
             ) : (
               <p className="text-center text-muted-foreground">Be the first to leave a review.</p>
@@ -315,11 +342,6 @@ const Reviews = () => {
             {/* Infinite scroll sentinel */}
             {!query.trim() && hasNextPage && (
               <div ref={sentinelRef} className="h-10" aria-hidden="true" />
-            )}
-            {isFetchingNextPage && (
-              <div className="flex justify-center py-8 text-muted-foreground">
-                <Loader2 className="h-5 w-5 animate-spin" />
-              </div>
             )}
             {!hasNextPage && filtered.length > 0 && !isLoading && (
               <p className="text-center text-xs text-muted-foreground mt-10 uppercase tracking-[0.2em]">
