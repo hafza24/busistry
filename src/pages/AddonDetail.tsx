@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -9,14 +10,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   ArrowLeft,
   ArrowRight,
   Check,
+  CheckCircle2,
   ExternalLink,
   FileText,
   Globe,
   LayoutGrid,
   Loader2,
+  LogIn,
   MessageCircle,
   MessageSquare,
   Plug,
