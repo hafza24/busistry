@@ -155,7 +155,16 @@ export default function Marketplace() {
             to="/templates"
             className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+            <img
+              src={marketplaceTemplates}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500"
+              width={800}
+              height={800}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
             <div className="absolute top-6 left-6 z-20">
               <div className="w-10 h-10 bg-background/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-background/20">
                 <LayoutTemplate className="w-5 h-5 text-background" />
@@ -172,7 +181,17 @@ export default function Marketplace() {
             to="/addons"
             className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square"
           >
+            <img
+              src={marketplaceAddons}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-overlay group-hover:scale-105 transition-transform duration-500"
+              width={800}
+              height={800}
+            />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-glow)/0.5),transparent_70%)]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
             <div className="absolute top-6 left-6 z-20">
               <div className="w-10 h-10 bg-black/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-black/10">
                 <Sparkles className="w-5 h-5 text-primary-foreground" />
