@@ -255,6 +255,7 @@ const Navbar = () => {
 
                 {/* About */}
                 <button
+                  ref={aboutBtnRef}
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openMenu === "about"}
