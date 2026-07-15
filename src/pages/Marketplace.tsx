@@ -306,54 +306,16 @@ export default function Marketplace() {
         )}
       </section>
 
-      {/* Addons */}
-      <section>
-        <SectionHeader
-          icon={Sparkles}
-          eyebrow="Addons"
-          title="Extend your store with add-ons"
-          description="Pages, sections, popups, and integrations installed by our team."
-          to="/addons"
-          ctaLabel="Browse addons"
-        />
-        {addonsLoading ? (
-          <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {addons.slice(0, 12).map((a) => (
-              <Link
-                key={a.id}
-                to="/addons"
-                className="group"
-                aria-label={`View ${a.name} addon`}
-              >
-                <Card className="border-border/60 group-hover:border-primary/40 group-hover:shadow-md transition-all h-full">
-                  <CardContent className="p-5 space-y-2">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                        <Sparkles className="h-5 w-5" />
-                      </div>
-                      <div className="flex gap-1">
-                        {a.is_popular && <Badge variant="secondary" className="text-[10px]">Popular</Badge>}
-                        {a.is_recommended && <Badge className="text-[10px]">Recommended</Badge>}
-                      </div>
-                    </div>
-                    <p className="font-semibold group-hover:text-primary transition-colors">{a.name}</p>
-                    {a.description && (
-                      <p className="text-xs text-muted-foreground line-clamp-2">{a.description}</p>
-                    )}
-                    <p className="text-sm font-bold text-primary pt-1">
-                      PKR {a.price_pkr.toLocaleString()}
-                      <span className="text-xs text-muted-foreground font-normal ml-1">
-                        {a.pricing_type === "monthly" ? "/ month" : "one-time"}
-                      </span>
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+      {/* Unified catalog */}
+      <section id="catalog" className="scroll-mt-24">
+        <div className="mb-6 max-w-2xl">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+            <Sparkles className="h-4 w-4" /> Catalog
           </div>
-        )}
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">Everything you can add to your site</h2>
+          <p className="text-muted-foreground">Add-ons, integrations, pages, popups, plan upgrades and content updates — all in one place.</p>
+        </div>
+        <CatalogGrid />
       </section>
 
       {/* Sister Business Services (external) */}
