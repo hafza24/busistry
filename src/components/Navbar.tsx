@@ -50,6 +50,41 @@ const Navbar = () => {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
+  // ── DEBUG OVERLAY ─────────────────────────────────────────────
+  const marketplaceBtnRef = useRef<HTMLButtonElement | null>(null);
+  const aboutBtnRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  type Rect = { x: number; y: number; w: number; h: number };
+  const [debugRects, setDebugRects] = useState<{
+    marketplace: Rect | null;
+    about: Rect | null;
+    panel: Rect | null;
+  }>({ marketplace: null, about: null, panel: null });
+
+  useEffect(() => {
+    const measure = () => {
+      const toRect = (el: Element | null): Rect | null => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.x, y: r.y, w: r.width, h: r.height };
+      };
+      setDebugRects({
+        marketplace: toRect(marketplaceBtnRef.current),
+        about: toRect(aboutBtnRef.current),
+        panel: toRect(panelRef.current),
+      });
+    };
+    measure();
+    const id = window.setInterval(measure, 250);
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => {
+      window.clearInterval(id);
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure, true);
+    };
+  }, [openMenu]);
+
   const cancelClose = () => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
@@ -186,6 +221,7 @@ const Navbar = () => {
               >
                 {/* Marketplace */}
                 <button
+                  ref={marketplaceBtnRef}
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openMenu === "marketplace"}
@@ -219,6 +255,7 @@ const Navbar = () => {
 
                 {/* About */}
                 <button
+                  ref={aboutBtnRef}
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={openMenu === "about"}
@@ -244,6 +281,7 @@ const Navbar = () => {
                 {/* Dropdown panel */}
                 {openMenu && (
                   <div
+                    ref={panelRef}
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
                     className={`absolute top-full ${
@@ -441,6 +479,74 @@ const Navbar = () => {
         </div>
       )}
 
+      {/* ── DEBUG OVERLAY ─────────────────────────────────────── */}
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[9999]">
+        {/* Trigger outlines */}
+        {debugRects.marketplace && (
+          <div
+            className="absolute border-2 border-fuchsia-500"
+            style={{
+              left: debugRects.marketplace.x,
+              top: debugRects.marketplace.y,
+              width: debugRects.marketplace.w,
+              height: debugRects.marketplace.h,
+            }}
+          >
+            <span className="absolute -top-4 left-0 text-[10px] font-bold text-fuchsia-600 bg-white/90 px-1 rounded">
+              trigger:marketplace
+            </span>
+          </div>
+        )}
+        {debugRects.about && (
+          <div
+            className="absolute border-2 border-sky-500"
+            style={{
+              left: debugRects.about.x,
+              top: debugRects.about.y,
+              width: debugRects.about.w,
+              height: debugRects.about.h,
+            }}
+          >
+            <span className="absolute -top-4 left-0 text-[10px] font-bold text-sky-600 bg-white/90 px-1 rounded">
+              trigger:about
+            </span>
+          </div>
+        )}
+        {/* Panel outline */}
+        {debugRects.panel && (
+          <div
+            className="absolute border-2 border-emerald-500"
+            style={{
+              left: debugRects.panel.x,
+              top: debugRects.panel.y,
+              width: debugRects.panel.w,
+              height: debugRects.panel.h,
+              boxShadow: "0 0 0 9999px hsl(0 0% 0% / 0.02) inset",
+            }}
+          >
+            <span className="absolute -top-4 left-0 text-[10px] font-bold text-emerald-700 bg-white/90 px-1 rounded">
+              panel
+            </span>
+          </div>
+        )}
+        {/* Info panel */}
+        <div className="absolute bottom-3 right-3 max-w-[320px] rounded-lg bg-black/80 text-white text-[11px] font-mono p-2 leading-tight shadow-xl">
+          <div className="font-bold mb-1 text-emerald-300">nav debug</div>
+          <div>openMenu: <span className="text-yellow-300">{String(openMenu)}</span></div>
+          <div className="mt-1 text-fuchsia-300">marketplace trigger:</div>
+          <div>{debugRects.marketplace
+            ? `x=${debugRects.marketplace.x.toFixed(0)} y=${debugRects.marketplace.y.toFixed(0)} w=${debugRects.marketplace.w.toFixed(0)} h=${debugRects.marketplace.h.toFixed(0)}`
+            : "—"}</div>
+          <div className="mt-1 text-sky-300">about trigger:</div>
+          <div>{debugRects.about
+            ? `x=${debugRects.about.x.toFixed(0)} y=${debugRects.about.y.toFixed(0)} w=${debugRects.about.w.toFixed(0)} h=${debugRects.about.h.toFixed(0)}`
+            : "—"}</div>
+          <div className="mt-1 text-emerald-300">panel:</div>
+          <div>{debugRects.panel
+            ? `x=${debugRects.panel.x.toFixed(0)} y=${debugRects.panel.y.toFixed(0)} w=${debugRects.panel.w.toFixed(0)} h=${debugRects.panel.h.toFixed(0)}`
+            : "(not mounted)"}</div>
+        </div>
+      </div>
     </header>
   );
 };
