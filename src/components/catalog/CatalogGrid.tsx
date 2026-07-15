@@ -176,22 +176,6 @@ export default function CatalogGrid({ previewLimit }: { previewLimit?: number } 
         )}
       </div>
 
-      {/* Popular keyword chips */}
-      {popular.length > 0 && !term && (
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-muted-foreground mr-1">Popular:</span>
-          {popular.map((k) => (
-            <button
-              key={k}
-              type="button"
-              onClick={() => setQ(k)}
-              className="text-xs px-2.5 py-1 rounded-full border border-border/60 bg-card hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-colors"
-            >
-              {k}
-            </button>
-          ))}
-        </div>
-      )}
 
 
 
