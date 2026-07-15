@@ -186,17 +186,15 @@ const Navbar = () => {
                 onMouseLeave={scheduleClose}
               >
                 {/* Marketplace */}
-                <button
-                  type="button"
+                <Link
+                  to="/marketplace"
                   aria-haspopup="true"
                   aria-expanded={openMenu === "marketplace"}
                   onMouseEnter={() => openWith("marketplace")}
                   onFocus={() => openWith("marketplace")}
-                  onClick={() =>
-                    setOpenMenu((cur) => (cur === "marketplace" ? null : "marketplace"))
-                  }
+                  onClick={() => setOpenMenu(null)}
                   className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-primary/10 ${
-                    openMenu === "marketplace" || marketplaceItems.some((i) => location.pathname === i.to)
+                    openMenu === "marketplace" || marketplaceItems.some((i) => location.pathname === i.to) || location.pathname === "/marketplace"
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-primary"
                   }`}
@@ -207,7 +205,7 @@ const Navbar = () => {
                       openMenu === "marketplace" ? "rotate-180" : ""
                     }`}
                   />
-                </button>
+                </Link>
 
                 {/* How it works */}
                 <Link
