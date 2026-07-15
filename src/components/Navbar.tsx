@@ -172,7 +172,7 @@ const Navbar = () => {
 
           {/* Left links + mega menus */}
           <div className="hidden md:flex items-center flex-1 min-w-0">
-            <div className="inline-flex items-center gap-1 px-1.5 py-1 max-w-full overflow-hidden">
+            <div className="inline-flex items-center gap-1 px-1.5 py-1 max-w-full overflow-visible">
               {/* Home */}
               <Link to="/" className={linkClass(location.pathname === "/")}>
                 <span className="relative z-10">Home</span>
