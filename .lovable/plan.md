@@ -1,84 +1,119 @@
-## Goal
 
-Replace the current "Plan first" flow with a template-led flow where users pick a Site (template) first, then a plan, then add-ons and theme-relevant integrations, then fill onboarding, then pay a single combined one-time total.
+# Marketplace Restructure Plan
 
-## New Flow
+Goal: eliminate the four parallel systems (`addons`, `integrations`, `website_products`, `upgrade_orders` catalog) and replace them with **one unified catalog + one order table**, backed by a shared card, detail page, admin editor, and user history.
+
+---
+
+## 1. New database model
+
+Two new tables replace the catalog side of all four systems.
+
+### `catalog_items` — single source of truth for anything a user can buy/request
+
+Fields:
+- `id`, `slug` (unique), `name`, `short_description`, `long_description`
+- `type` enum: `addon`, `integration`, `page`, `section`, `popup`, `plan_upgrade`, `product_limit`, `category_limit`, `extend_duration`, `content_tweak`
+- `category` (freeform tag, e.g. "Marketing", "SEO", "Design")
+- `price_pkr`, `pricing_type` (`one_time` | `monthly` | `per_unit`), `per_unit_label`
+- `icon`, `cover_image`, `gallery` (jsonb array of urls)
+- `features` (jsonb array of strings), `faq` (jsonb array of `{q, a}`)
+- `applicable_plans` (text[]), `applicable_types` (text[] — which store types it fits)
+- `meta_title`, `meta_description`, `og_image`
+- `is_enabled`, `is_recommended`, `is_popular`, `sort_order`
+- `related_item_ids` (uuid[])
+- Standard timestamps
+
+Access: public `SELECT` where `is_enabled = true`; full CRUD for admins.
+
+### `catalog_orders` — single order log
+
+Replaces `store_addons` and `upgrade_orders` at the app layer.
+
+Fields:
+- `id`, `user_id`, `store_id` (nullable — required only for store-scoped types)
+- `item_id` → `catalog_items.id`, `item_type_snapshot`, `name_snapshot`
+- `price_snapshot_pkr`, `pricing_type_snapshot`, `quantity`
+- `config` (jsonb — free-form: notes, target plan id, days, etc.)
+- `status`: `pending` | `approved` | `in_progress` | `active` | `completed` | `rejected`
+- `transaction_id`, `payment_screenshot_url`, `admin_notes`
+- Standard timestamps
+
+Access: users see/insert their own; admins see all; edge functions via service role.
+
+### Migration of existing data
+
+- Copy `addons`, `integrations`, `website_products` rows into `catalog_items` with appropriate `type`.
+- Copy `store_addons` and `upgrade_orders` rows into `catalog_orders`.
+- Keep legacy tables in place (read-only) for one release so nothing breaks; new code writes only to the new tables.
+- Rewrite `get_pending_review_prompts` and `can_review` to read `catalog_orders`.
+- Rewrite `apply_upgrade_order` as `apply_catalog_order` operating on the new table.
+
+---
+
+## 2. Frontend consolidation
+
+### Routes (before → after)
 
 ```text
-1. Templates page        → pick a Site (free or paid one-time)
-2. Plan step             → pick subscription plan (Free plan still available)
-3. Addons step           → optional one-time add-ons (existing marketplace addons)
-4. Integrations step     → one-time integrations filtered by template category
-5. Onboarding steps      → business, branding, team, store, contact
-6. Payment step          → shows combined total, one-time price = template + plan + addons + integrations
+/addons                 →  removed (redirect to /marketplace)
+/marketplace            →  unified catalog grid, filter chips by type
+/addons/:slug           →  removed
+/marketplace/:slug      →  single detail page for every item type
 ```
 
-Everything (template price, plan price, addons, integrations) is treated as a one-time charge combined at checkout. Free plan + free template = no charge, submit directly.
+### Components (before → after)
 
-## Changes
+| Before | After |
+| --- | --- |
+| `MarketplaceGrid`, addons grid on `/marketplace`, `/addons` | `<CatalogGrid />` with type/category filter |
+| `AddonDetail.tsx`, product detail bits | `<CatalogItemDetail />` (rich content + SEO + related) |
+| `CheckoutDialog`, `WebsiteSelectionModal`, store `UpgradePlan` upgrade flow | `<CatalogCheckoutDialog />` — one flow: pick website (if store-scoped) → quantity/config → payment |
+| `MyAddons`, `MyStoreAddons`, `MyWebsiteUpdates`, `MyOrders` (partial) | `<MyRequests />` — unified history, filterable by type & status |
+| `AdminAddonManagement`, `AdminIntegrations`, `AdminWebsiteProducts`, `AdminAddonsHub` | `<AdminCatalog />` — one table + editor with all fields (rich content, SEO, gallery, related) |
+| `AdminStoreAddons`, `AdminUpgradeOrders` | `<AdminCatalogOrders />` — one queue with type filter, approve/reject/complete |
 
-### Data
-- `templates` already has `price_pkr` — use it as the one-time template cost (0 = free).
-- `plans` already has `price_pkr` — treated as one-time here (no recurring billing change).
-- `integrations` table already exists — add a `price_pkr` column (default 0) and use `category` to filter by template category.
-- `onboarding_submissions` — add `selected_integration_ids uuid[]` and `integrations_total_pkr int` to persist the picks. Addon selection persists in existing `onboarding_addons`.
-- No changes to `subscriptions` semantics for now (Free plan continues to be free).
+### Unified card
 
-### Routing & entry points
-- `/templates` becomes the primary entry point. Selecting a template routes to `/onboarding?template=<id>` (no plan yet).
-- `/pricing` remains reachable but no longer the required start. The "Start" CTA on a plan card routes to `/templates?plan=<id>` (so users can still start from a plan; template step just becomes step 1).
-- Landing page hero CTA points to `/templates`.
+`<CatalogCard item={...} />` — used on marketplace grid, related-items row, and store dashboard "recommended for you". Shows icon, name, short description, price badge, popular/recommended pills.
 
-### Onboarding restructure (`src/pages/Onboarding.tsx`)
-Rebuild `STEP_LABELS` to:
-```text
-["Site", "Plan", "Add-ons", "Integrations", "Business", "Branding", "Team", "Store", "Contact", "Payment"]
-```
-- Step 1 "Site": new `StepTemplate` component — grid of templates with price badge; sets `template_id`. Skips step if `template` present in URL and user confirms.
-- Step 2 "Plan": new `StepPlan` component — plan cards (reuses `PricingSlider` styling); sets `plan_id`.
-- Step 3 "Add-ons": existing `StepAddons` unchanged.
-- Step 4 "Integrations": new `StepIntegrations` — lists integrations where `category` matches the selected template's category (fallback: show all `is_active`); multi-select with prices; persists ids to `selected_integration_ids`.
-- Steps 5–9: existing Business/Branding/Team/Store/Contact (drop the current Step 2 "Project Details" which was template-picking — now redundant).
-- Step 10 "Payment": existing `Step9Payment`, updated to show line-item totals:
-  ```text
-  Template  PKR x
-  Plan      PKR y
-  Add-ons   PKR z
-  Integrations PKR w
-  ─────────
-  Total     PKR (x+y+z+w)   (one-time)
-  ```
-- Skip payment UI entirely when total = 0; submit directly with `payment_method = "none"`.
+### Unified detail page
 
-### Summary cards
-- `PlanSummaryCard` and `TemplateSummaryCard` stay at the top of onboarding. `TemplateSummaryCard` shows template price when > 0.
+Sections in order:
+1. Hero: cover, name, short description, price + CTA ("Add to my site" / "Request update")
+2. Long description (markdown)
+3. Features list
+4. Gallery
+5. FAQ (accordion)
+6. Related items row
+7. SEO tags rendered via `<SEO />`
 
-### Admin
-- `AdminIntegrations` gets a `price_pkr` field on the integration form.
-- No new admin screens.
+---
 
-### Files
+## 3. Sidebars & entry points
 
-New:
-- `src/components/onboarding/StepTemplate.tsx`
-- `src/components/onboarding/StepPlan.tsx`
-- `src/components/onboarding/StepIntegrations.tsx`
-- `src/hooks/useIntegrations.ts` (list active integrations, optional category filter)
+- Dashboard sidebar: remove "My Add-ons" + "Website Updates", add single "My Requests".
+- Store dashboard sidebar: keep "Addons" tab but point it at `<CatalogGrid storeId={...} />` filtered to store-scoped types.
+- Admin sidebar: replace three catalog entries with "Catalog" and "Catalog Orders".
 
-Edited:
-- `src/pages/Onboarding.tsx` — new step order, wiring, validation.
-- `src/components/onboarding/Step6Payment.tsx` (currently Step9) — combined totals, zero-total path.
-- `src/hooks/useOnboarding.ts` — persist `selected_integration_ids`, `integrations_total_pkr`.
-- `src/pages/Templates.tsx` — CTA → `/onboarding?template=<id>`.
-- `src/pages/Pricing.tsx` — CTA → `/templates?plan=<id>`.
-- `src/pages/Index.tsx` — hero CTA → `/templates`.
-- `src/components/admin/AdminIntegrations.tsx` — add price field.
+---
 
-Migration:
-- `ALTER TABLE integrations ADD COLUMN price_pkr integer NOT NULL DEFAULT 0;`
-- `ALTER TABLE onboarding_submissions ADD COLUMN selected_integration_ids uuid[] DEFAULT '{}', ADD COLUMN integrations_total_pkr integer DEFAULT 0;`
+## 4. Rollout order
 
-### Out of scope
-- Recurring billing / actual subscription cycles.
-- Refactoring the existing `UpgradePlan` marketplace flow.
-- Reworking the manual payment approval pipeline (unchanged, just receives a bigger combined amount).
+1. Migration: create `catalog_items` + `catalog_orders` + RLS + grants + backfill from legacy tables.
+2. Build shared components: `CatalogCard`, `CatalogItemDetail`, `CatalogCheckoutDialog`, hooks (`useCatalog`, `useMyCatalogOrders`, `useAdminCatalog`).
+3. Rewrite pages: `/marketplace`, `/marketplace/:slug`, `MyRequests`, `AdminCatalog`, `AdminCatalogOrders`.
+4. Swap sidebar entries and route registrations; add `/addons` → `/marketplace` redirect.
+5. Delete old components once nothing imports them; keep legacy DB tables read-only for one release, then drop in a follow-up.
+
+---
+
+## Technical notes
+
+- `catalog_items.type` drives which fields the checkout dialog collects (e.g. `plan_upgrade` needs `target_plan_id` in `config`; `extend_duration` needs `days`; `product_limit`/`category_limit` need `quantity`; others just need optional notes).
+- Store-scoped types (`plan_upgrade`, `product_limit`, `category_limit`, `extend_duration`, `content_tweak`, `page`, `section`, `popup`, `addon` when it modifies a site) require `store_id`; `integration`-only items that aren't tied to a store don't.
+- `apply_catalog_order` security-definer RPC handles the same automations `apply_upgrade_order` did (bump limits, extend expiry, change plan) plus marking add-on installs `active`.
+- Realtime: enable `catalog_orders` on `supabase_realtime` publication so admin queue and user history update live.
+- No frontend hardcoded colors — all styling via existing tokens.
+
+This is a large change. I'll ship it in the rollout order above so the app stays functional between steps.
