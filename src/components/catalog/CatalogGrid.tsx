@@ -33,7 +33,17 @@ function tokenize(s: string): string[] {
     .filter((w) => w.length > 2 && !STOPWORDS.has(w));
 }
 
-export default function CatalogGrid({ previewLimit }: { previewLimit?: number } = {}) {
+type CatalogGridHeader = {
+  icon?: any;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
+
+export default function CatalogGrid({
+  previewLimit,
+  header,
+}: { previewLimit?: number; header?: CatalogGridHeader } = {}) {
   const { data: items = [], isLoading } = useCatalogItems();
   const [expanded, setExpanded] = useState(false);
   const [filter, setFilter] = useState<"all" | CatalogItemType>("all");
@@ -98,13 +108,38 @@ export default function CatalogGrid({ previewLimit }: { previewLimit?: number } 
     });
   }, [items, filter, term]);
 
+  const HeaderIcon = header?.icon;
+  const showViewAllTop =
+    !!previewLimit && !expanded && !term && filter === "all" && filtered.length > previewLimit;
+
   return (
     <div className="space-y-6">
-
-
-
-
-
+      {header && (header.title || header.eyebrow) && (
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div className="max-w-2xl">
+            {(header.eyebrow || HeaderIcon) && (
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+                {HeaderIcon && <HeaderIcon className="h-4 w-4" />} {header.eyebrow}
+              </div>
+            )}
+            {header.title && (
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">{header.title}</h2>
+            )}
+            {header.description && (
+              <p className="text-muted-foreground">{header.description}</p>
+            )}
+          </div>
+          {showViewAllTop && (
+            <Button
+              onClick={() => setExpanded(true)}
+              variant="outline"
+              className="rounded-full gap-2 shrink-0"
+            >
+              View all {filtered.length} items <ArrowRight className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      )}
 
       {isLoading ? (
         <div className="py-12 flex justify-center">
@@ -115,29 +150,14 @@ export default function CatalogGrid({ previewLimit }: { previewLimit?: number } 
           Nothing matches those filters yet.
         </p>
       ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {(previewLimit && !expanded && !term && filter === "all"
-              ? filtered.slice(0, previewLimit)
-              : filtered
-            ).map((item) => (
-              <CatalogCard key={item.id} item={item} />
-            ))}
-          </div>
-          {previewLimit && !expanded && !term && filter === "all" && filtered.length > previewLimit && (
-            <div className="flex justify-center pt-2">
-              <Button
-                onClick={() => setExpanded(true)}
-                size="lg"
-                variant="outline"
-                className="rounded-full gap-2"
-              >
-                View all {filtered.length} items
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {(previewLimit && !expanded && !term && filter === "all"
+            ? filtered.slice(0, previewLimit)
+            : filtered
+          ).map((item) => (
+            <CatalogCard key={item.id} item={item} />
+          ))}
+        </div>
       )}
 
       {!isLoading && filter === "all" && (expanded || !previewLimit) && (
