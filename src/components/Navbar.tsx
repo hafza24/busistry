@@ -149,7 +149,7 @@ const Navbar = () => {
               </Link>
 
               {/* Mega menus (combined into one root so viewport positions correctly) */}
-              <NavigationMenu>
+              <NavigationMenu value={menuValue} onValueChange={setMenuValue}>
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger
