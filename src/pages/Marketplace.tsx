@@ -315,7 +315,7 @@ export default function Marketplace() {
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">Everything you can add to your site</h2>
           <p className="text-muted-foreground">Add-ons, integrations, pages, popups, plan upgrades and content updates — all in one place.</p>
         </div>
-        <CatalogGrid />
+        <CatalogGrid previewLimit={8} />
       </section>
 
       {/* Sister Business Services (external) */}
