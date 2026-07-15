@@ -785,6 +785,138 @@ const Index = () => {
 
       <ReviewsSection />
 
+      {/* Biztyle — Sister brand highlight */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
+        {/* Aurora glows */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
+        {/* Grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.12] mix-blend-screen pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.4) 1px,transparent 1px)",
+            backgroundSize: "36px 36px",
+          }}
+        />
+        {/* Floating orbs */}
+        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-violet-500/30 blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" />
+
+        <div className="container relative">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="lg:col-span-7"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
+                <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200">
+                  From the Busistree family
+                </span>
+              </div>
+
+              <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+                <span className="bg-gradient-to-r from-violet-200 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent">
+                  Biztyle
+                </span>
+                <span className="block text-white/90 mt-2 text-3xl md:text-5xl">
+                  Printing ideas into powerful brands.
+                </span>
+              </h2>
+
+              <p className="mt-6 text-lg text-violet-100/70 max-w-xl leading-relaxed">
+                Premium printing, packaging, branding and creative studio work — from concept to
+                delivery. Everything your brand touches, crafted with intent.
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
+                {["Packaging", "Branding", "Print", "Creative"].map((t) => (
+                  <div
+                    key={t}
+                    className="rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm px-3 py-2.5 text-center text-xs font-semibold text-violet-100 uppercase tracking-wider"
+                  >
+                    {t}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-10 flex flex-wrap gap-3">
+                <a
+                  href="https://style.busistree.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold shadow-lg shadow-violet-500/40 hover:shadow-fuchsia-500/50 transition-shadow"
+                >
+                  Visit Biztyle
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <Link
+                  to="/marketplace"
+                  className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-white/15 bg-white/5 text-violet-100 font-semibold hover:bg-white/10 transition-colors"
+                >
+                  Explore family
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Right — Stylized brand card stack */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="lg:col-span-5 relative"
+            >
+              <div className="relative aspect-[4/5] max-w-md mx-auto">
+                {/* Back card */}
+                <div className="absolute inset-x-4 top-8 bottom-0 rounded-3xl bg-gradient-to-br from-violet-500/40 to-fuchsia-500/30 border border-white/10 blur-[1px]" />
+                {/* Middle card */}
+                <div className="absolute inset-x-2 top-4 bottom-2 rounded-3xl bg-gradient-to-br from-fuchsia-600/50 to-violet-700/40 border border-white/15" />
+                {/* Front card */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden bg-gradient-to-br from-violet-600 via-fuchsia-600 to-violet-800 border border-white/20 shadow-2xl shadow-fuchsia-500/30">
+                  <div
+                    className="absolute inset-0 opacity-20"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)",
+                      backgroundSize: "24px 24px",
+                    }}
+                  />
+                  <div className="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
+                  <div className="relative h-full p-8 flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                      <div className="h-10 w-10 rounded-xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                        <Sparkles className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80">
+                        Studio
+                      </span>
+                    </div>
+                    <div>
+                      <div className="text-white/70 text-xs uppercase tracking-widest mb-2">
+                        Est. Busistree
+                      </div>
+                      <div className="font-display text-5xl md:text-6xl font-black text-white leading-none">
+                        Biz<span className="italic font-light">tyle</span>
+                      </div>
+                      <div className="mt-4 text-white/80 text-sm">
+                        Premium printing & creative studio
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+
+
 
       {/* FAQ */}
       <section className="py-20 md:py-28 border-b border-border/60">
