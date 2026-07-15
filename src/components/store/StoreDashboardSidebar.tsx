@@ -20,6 +20,7 @@ const menuItems = [
   { id: "orders", label: "Orders", icon: ShoppingCart },
   { id: "marketplace", label: "Addons", icon: Sparkles },
   { id: "addons", label: "My Add-ons", icon: Plug },
+  { id: "order-tracking", label: "Order Tracking", icon: ClipboardList },
   { id: "upgrade", label: "Upgrade Plan", icon: TrendingUp },
   { id: "team", label: "Team", icon: Users },
   { id: "whitelabel", label: "White-Label", icon: Palette },
