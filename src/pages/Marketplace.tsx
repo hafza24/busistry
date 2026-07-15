@@ -320,12 +320,12 @@ export default function Marketplace() {
         {addonsLoading ? (
           <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : (
-          <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-4 px-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {addons.slice(0, 6).map((a) => (
               <Link
                 key={a.id}
                 to="/addons"
-                className="snap-start shrink-0 w-[280px] group"
+                className="group"
                 aria-label={`View ${a.name} addon`}
               >
                 <Card className="border-border/60 group-hover:border-primary/40 group-hover:shadow-md transition-all h-full">
