@@ -7,11 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
-import heroImg1 from "@/assets/reviews-hero-1.jpg";
-import heroImg2 from "@/assets/reviews-hero-2.jpg";
+import heroPortrait from "@/assets/reviews-hero-portrait.jpg";
 import interviewImg1 from "@/assets/reviews-interview-1.jpg";
 import interviewImg2 from "@/assets/reviews-interview-2.jpg";
 import interviewImg3 from "@/assets/reviews-interview-3.jpg";
+import { MessageSquare, PenLine, ThumbsUp } from "lucide-react";
 
 const Stars = ({ value, size = "h-3.5 w-3.5" }: { value: number; size?: string }) => (
   <div className="flex gap-0.5" aria-label={`Rated ${value} out of 5`}>
