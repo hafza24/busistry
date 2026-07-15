@@ -198,7 +198,9 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     </div>
                     {p.description && <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>}
                     <div className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" onClick={() => setPreview(p)}>Preview</Button>
+                      <Button variant="outline" size="sm" className="flex-1 min-w-[90px]" asChild>
+                        <Link to={`/addons/product/${p.slug}`}>Details</Link>
+                      </Button>
                       <Button size="sm" className="flex-1 min-w-[90px]" onClick={() => onBuy("product", p)}>Add</Button>
                       <Button
                         variant="secondary"
