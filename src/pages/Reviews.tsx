@@ -312,6 +312,21 @@ const Reviews = () => {
               <p className="text-center text-muted-foreground">Be the first to leave a review.</p>
             )}
 
+            {/* Infinite scroll sentinel */}
+            {!query.trim() && hasNextPage && (
+              <div ref={sentinelRef} className="h-10" aria-hidden="true" />
+            )}
+            {isFetchingNextPage && (
+              <div className="flex justify-center py-8 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin" />
+              </div>
+            )}
+            {!hasNextPage && filtered.length > 0 && !isLoading && (
+              <p className="text-center text-xs text-muted-foreground mt-10 uppercase tracking-[0.2em]">
+                — You've reached the end —
+              </p>
+            )}
+
             <div className="mt-12 flex justify-center">
               <FeedbackDialog
                 trigger={
