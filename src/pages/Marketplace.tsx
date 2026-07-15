@@ -321,7 +321,7 @@ export default function Marketplace() {
           <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {addons.slice(0, 6).map((a) => (
+            {addons.slice(0, 12).map((a) => (
               <Link
                 key={a.id}
                 to="/addons"
