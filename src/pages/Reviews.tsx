@@ -268,25 +268,49 @@ const Reviews = () => {
               <p className="text-center text-muted-foreground">Case studies coming soon.</p>
             ) : (
               <div className="grid md:grid-cols-3 gap-6">
-                {caseStudies.map((it) => (
-                  <Link to={`/case-studies/${it.slug}`} key={it.id} className="group cursor-pointer block">
-                    <div className="aspect-[4/3] rounded-md overflow-hidden mb-5 bg-muted">
-                      {it.cover_image_url && (
-                        <img
-                          src={it.cover_image_url}
-                          alt={it.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                      {it.tag}
-                    </p>
-                    <h3 className="font-bold text-lg leading-snug text-foreground group-hover:text-primary transition-colors">
-                      {it.title}
-                    </h3>
-                  </Link>
+                {caseStudies.map((it, i) => (
+                  <motion.div
+                    key={it.id}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Link to={`/case-studies/${it.slug}`} className="group block relative">
+                      {/* Aurora glow */}
+                      <div className="pointer-events-none absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/40 via-primary-glow/25 to-accent/40 opacity-0 blur-xl group-hover:opacity-70 transition-opacity duration-500" />
+
+                      <motion.div
+                        whileHover={{ y: -6 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        className="relative"
+                      >
+                        <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-5 bg-muted ring-1 ring-border/60 group-hover:ring-primary/40 transition-all duration-500">
+                          {it.cover_image_url && (
+                            <img
+                              src={it.cover_image_url}
+                              alt={it.title}
+                              className="w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+                              loading="lazy"
+                            />
+                          )}
+                          {/* Shimmer sweep */}
+                          <div className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] opacity-0 group-hover:opacity-100 group-hover:translate-x-[300%] transition-all duration-1000 ease-out" />
+                          {/* Vignette */}
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        </div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                          {it.tag}
+                        </p>
+                        <h3 className="font-bold text-lg leading-snug text-foreground transition-colors duration-300 group-hover:text-primary">
+                          {it.title}
+                        </h3>
+                        <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                          Read story <ArrowRight className="h-3 w-3" />
+                        </span>
+                      </motion.div>
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             )}
