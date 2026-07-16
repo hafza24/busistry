@@ -3,9 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Target, Heart, Users, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare } from "lucide-react";
+import { Sparkles, Target, Heart, Users, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare, ShoppingBag, TrendingUp, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import heroFounder from "@/assets/about-hero-founder.jpg";
+import badgeStore from "@/assets/about-badge-store.png";
+import badgeAnalytics from "@/assets/about-badge-analytics.png";
 
 const values = [
   { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
