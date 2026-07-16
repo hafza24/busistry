@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
-import storyIllustration from "@/assets/about-story-illustration.png";
 
 const values = [
   { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
@@ -183,49 +182,26 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="container max-w-6xl py-16 md:py-24">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Illustration */}
-          <div className="relative order-2 lg:order-1 flex items-center justify-center">
-            <div className="absolute inset-10 rounded-full bg-gradient-to-br from-primary/15 via-primary-glow/10 to-accent/20 blur-3xl" />
-            <img
-              src={storyIllustration}
-              alt="Illustration of a Busistree founder brainstorming website ideas"
-              className="relative w-full max-w-md h-auto object-contain drop-shadow-xl"
-              loading="lazy"
-            />
-          </div>
-
-          {/* Copy */}
-          <div className="order-1 lg:order-2">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-primary mb-3">
-              — Our story
-            </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display text-foreground leading-[1.1] tracking-tight">
-              Why we started, and{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                where we're going.
-              </span>
-            </h2>
-            <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4 mt-6">
-              <p>
-                Busistree started with a simple frustration: talented business owners across Pakistan
-                were being priced out of a decent online presence. Agencies quoted lakhs for basic
-                websites, freelancers vanished mid-project, and DIY builders never really fit the
-                local reality.
-              </p>
-              <p>
-                We built Busistree as the middle path — a productized service where you pick a
-                template, we handle the customization and launch, and you get a professional
-                website in 24 to 48 hours at a price that makes sense in rupees.
-              </p>
-              <p>
-                Today we serve booking businesses, tutors, travel agencies, retail stores, and
-                service providers across Karachi, Lahore, Islamabad and beyond. And we're just
-                getting started.
-              </p>
-            </div>
-          </div>
+      <section className="container max-w-4xl py-16">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
+          <p className="text-muted-foreground mt-3">Why we started, and where we're going.</p>
+        </div>
+        <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
+          <p>
+            Busistree started with a simple frustration: talented business owners across Pakistan were
+            being priced out of a decent online presence. Agencies quoted lakhs for basic websites,
+            freelancers vanished mid-project, and DIY builders never really fit the local reality.
+          </p>
+          <p>
+            We built Busistree as the middle path — a productized service where you pick a template,
+            we handle the customization and launch, and you get a professional website in 24 to 48
+            hours at a price that makes sense in rupees.
+          </p>
+          <p>
+            Today we serve booking businesses, tutors, travel agencies, retail stores, and service
+            providers across Karachi, Lahore, Islamabad and beyond. And we're just getting started.
+          </p>
         </div>
       </section>
 
