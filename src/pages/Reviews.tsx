@@ -240,16 +240,28 @@ const Reviews = () => {
                   />
 
                   {/* Floating badge — top right */}
-                  <div className="absolute top-6 right-2 md:right-6 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
-                    <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <div
+                    className="group absolute top-6 right-2 md:right-6 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center animate-float-slow hover:scale-110 hover:shadow-xl hover:border-primary/40 transition-all duration-300 cursor-pointer"
+                    style={{ animationDelay: "0s" }}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping-slow" aria-hidden="true" />
+                    <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-primary relative transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110" />
                   </div>
                   {/* Floating badge — left */}
-                  <div className="absolute top-1/3 left-0 md:left-4 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
-                    <PenLine className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <div
+                    className="group absolute top-1/3 left-0 md:left-4 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center animate-float-slow hover:scale-110 hover:shadow-xl hover:border-primary/40 transition-all duration-300 cursor-pointer"
+                    style={{ animationDelay: "1.2s" }}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping-slow" style={{ animationDelay: "0.6s" }} aria-hidden="true" />
+                    <PenLine className="h-5 w-5 md:h-6 md:w-6 text-primary relative transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110" />
                   </div>
                   {/* Floating badge — bottom right */}
-                  <div className="absolute bottom-8 right-4 md:right-10 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
-                    <ThumbsUp className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+                  <div
+                    className="group absolute bottom-8 right-4 md:right-10 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center animate-float-slow hover:scale-110 hover:shadow-xl hover:border-primary/40 transition-all duration-300 cursor-pointer"
+                    style={{ animationDelay: "2.4s" }}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-primary/20 animate-ping-slow" style={{ animationDelay: "1.2s" }} aria-hidden="true" />
+                    <ThumbsUp className="h-5 w-5 md:h-6 md:w-6 text-primary relative transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
                   </div>
                 </div>
               </div>
