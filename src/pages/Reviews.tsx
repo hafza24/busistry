@@ -263,30 +263,35 @@ const Reviews = () => {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {INTERVIEWS.map((it, i) => (
-                <article key={i} className="group cursor-pointer">
-                  <div className="aspect-[4/3] rounded-md overflow-hidden mb-5">
-                    <img
-                      src={it.img}
-                      alt={it.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      width={1024}
-                      height={1024}
-                    />
-                  </div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                    {it.tag}
-                  </p>
-                  <h3 className="font-bold text-lg leading-snug text-foreground group-hover:text-primary transition-colors">
-                    {it.title}
-                  </h3>
-                </article>
-              ))}
-            </div>
+            {caseStudies.length === 0 ? (
+              <p className="text-center text-muted-foreground">Case studies coming soon.</p>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-6">
+                {caseStudies.map((it) => (
+                  <Link to={`/case-studies/${it.slug}`} key={it.id} className="group cursor-pointer block">
+                    <div className="aspect-[4/3] rounded-md overflow-hidden mb-5 bg-muted">
+                      {it.cover_image_url && (
+                        <img
+                          src={it.cover_image_url}
+                          alt={it.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                      {it.tag}
+                    </p>
+                    <h3 className="font-bold text-lg leading-snug text-foreground group-hover:text-primary transition-colors">
+                      {it.title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </section>
+
 
         {/* Your feedback about us — masonry */}
         <section className="py-20 md:py-28 border-t border-border/60">
