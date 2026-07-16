@@ -107,6 +107,69 @@ export type Database = {
         }
         Relationships: []
       }
+      case_studies: {
+        Row: {
+          content: string | null
+          cover_image_url: string | null
+          created_at: string
+          customer_name: string | null
+          customer_role: string | null
+          excerpt: string | null
+          id: string
+          is_featured: boolean
+          is_published: boolean
+          og_image_url: string | null
+          seo_description: string | null
+          seo_keywords: string[]
+          seo_title: string | null
+          slug: string
+          sort_order: number
+          tag: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          customer_name?: string | null
+          customer_role?: string | null
+          excerpt?: string | null
+          id?: string
+          is_featured?: boolean
+          is_published?: boolean
+          og_image_url?: string | null
+          seo_description?: string | null
+          seo_keywords?: string[]
+          seo_title?: string | null
+          slug: string
+          sort_order?: number
+          tag?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          customer_name?: string | null
+          customer_role?: string | null
+          excerpt?: string | null
+          id?: string
+          is_featured?: boolean
+          is_published?: boolean
+          og_image_url?: string | null
+          seo_description?: string | null
+          seo_keywords?: string[]
+          seo_title?: string | null
+          slug?: string
+          sort_order?: number
+          tag?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       catalog_items: {
         Row: {
           applicable_plans: string[]

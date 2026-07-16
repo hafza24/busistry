@@ -8,10 +8,9 @@ import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import heroPortrait from "@/assets/reviews-hero-portrait.png";
-import interviewImg1 from "@/assets/reviews-interview-1.jpg";
-import interviewImg2 from "@/assets/reviews-interview-2.jpg";
-import interviewImg3 from "@/assets/reviews-interview-3.jpg";
 import { MessageSquare, PenLine, ThumbsUp } from "lucide-react";
+import { usePublishedCaseStudies } from "@/hooks/useCaseStudies";
+import { Link } from "react-router-dom";
 
 const Stars = ({ value, size = "h-3.5 w-3.5" }: { value: number; size?: string }) => (
   <div className="flex gap-0.5" aria-label={`Rated ${value} out of 5`}>
@@ -48,25 +47,8 @@ const initialsOf = (name: string) =>
     .map((s) => s[0]?.toUpperCase())
     .join("") || "U";
 
-const INTERVIEWS = [
-  {
-    img: interviewImg1,
-    title: "Why Amna decided to rebrand & why it worked",
-    tag: "Case study",
-  },
-  {
-    img: interviewImg2,
-    title: "Emma-tech team came up with a new payment processing technology",
-    tag: "Interview",
-  },
-  {
-    img: interviewImg3,
-    title: "The story of a new version of the finest Barista experience",
-    tag: "Story",
-  },
-];
-
 const Reviews = () => {
+  const { data: caseStudies = [] } = usePublishedCaseStudies(6);
   const [query, setQuery] = useState("");
 
   const { data: stats } = useQuery({
@@ -281,30 +263,35 @@ const Reviews = () => {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {INTERVIEWS.map((it, i) => (
-                <article key={i} className="group cursor-pointer">
-                  <div className="aspect-[4/3] rounded-md overflow-hidden mb-5">
-                    <img
-                      src={it.img}
-                      alt={it.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      width={1024}
-                      height={1024}
-                    />
-                  </div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                    {it.tag}
-                  </p>
-                  <h3 className="font-bold text-lg leading-snug text-foreground group-hover:text-primary transition-colors">
-                    {it.title}
-                  </h3>
-                </article>
-              ))}
-            </div>
+            {caseStudies.length === 0 ? (
+              <p className="text-center text-muted-foreground">Case studies coming soon.</p>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-6">
+                {caseStudies.map((it) => (
+                  <Link to={`/case-studies/${it.slug}`} key={it.id} className="group cursor-pointer block">
+                    <div className="aspect-[4/3] rounded-md overflow-hidden mb-5 bg-muted">
+                      {it.cover_image_url && (
+                        <img
+                          src={it.cover_image_url}
+                          alt={it.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                      {it.tag}
+                    </p>
+                    <h3 className="font-bold text-lg leading-snug text-foreground group-hover:text-primary transition-colors">
+                      {it.title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </section>
+
 
         {/* Your feedback about us — masonry */}
         <section className="py-20 md:py-28 border-t border-border/60">

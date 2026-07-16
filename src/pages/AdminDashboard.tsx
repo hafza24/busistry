@@ -19,6 +19,7 @@ import AdminReviewsModeration from "@/components/admin/AdminReviewsModeration";
 import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminSupportHub from "@/components/admin/AdminSupportHub";
 import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
+import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
@@ -37,6 +38,7 @@ const viewTitles: Record<string, string> = {
   support: "Support",
   audit: "Audit Logs",
   newsletter: "Newsletter Subscribers",
+  case_studies: "Case Studies",
 
 };
 
@@ -76,6 +78,7 @@ const AdminDashboard = () => {
       case "support": return <AdminSupportHub />;
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
+      case "case_studies": return <AdminCaseStudies />;
       
       default: return <AdminWebsiteOrders />;
     }
