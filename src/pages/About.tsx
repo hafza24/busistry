@@ -22,6 +22,33 @@ const milestones = [
 ];
 
 const About = () => {
+  const { data: stats } = useQuery({
+    queryKey: ["about-feedback-stats"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("get_feedback_rating_distribution");
+      if (error) throw error;
+      return data?.[0] ?? { total_reviews: 0, avg_rating: 0 };
+    },
+  });
+
+  const { data: previewReviews = [] } = useQuery({
+    queryKey: ["about-preview-reviews"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("public_feedback_reviews" as any)
+        .select("id, subject, message, rating, created_at")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      return (data ?? []) as any[];
+    },
+  });
+
+  const total = Number(stats?.total_reviews ?? 0);
+  const avg = Number(stats?.avg_rating ?? 0);
+
+
   return (
     <div className="pb-16">
       <SEO
