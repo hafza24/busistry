@@ -162,7 +162,7 @@ const Reviews = () => {
         {/* Hero — Figma-style card with portrait */}
         <section className="relative py-10 md:py-16">
           <div className="container max-w-6xl">
-            <div className="relative rounded-[28px] bg-white shadow-2xl overflow-hidden px-6 md:px-12 py-10 md:py-14">
+            <div className="relative overflow-hidden px-2 md:px-4 py-6 md:py-10">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Left copy */}
                 <div>
