@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Target, Heart, Users, Rocket, ShieldCheck, Globe, ArrowRight } from "lucide-react";
+import { Sparkles, Target, Heart, Users, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
 const values = [
   { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
@@ -19,6 +22,33 @@ const milestones = [
 ];
 
 const About = () => {
+  const { data: stats } = useQuery({
+    queryKey: ["about-feedback-stats"],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc("get_feedback_rating_distribution");
+      if (error) throw error;
+      return data?.[0] ?? { total_reviews: 0, avg_rating: 0 };
+    },
+  });
+
+  const { data: previewReviews = [] } = useQuery({
+    queryKey: ["about-preview-reviews"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("public_feedback_reviews" as any)
+        .select("id, subject, message, rating, created_at")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (error) throw error;
+      return (data ?? []) as any[];
+    },
+  });
+
+  const total = Number(stats?.total_reviews ?? 0);
+  const avg = Number(stats?.avg_rating ?? 0);
+
+
   return (
     <div className="pb-16">
       <SEO
@@ -129,6 +159,76 @@ const About = () => {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* Reviews */}
+      <section className="container max-w-6xl py-16">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
+            <MessageSquare className="h-3.5 w-3.5" /> What customers say
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">
+            Loved by <span className="text-primary">{total.toLocaleString()}+</span> businesses
+          </h2>
+          {total > 0 && (
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <div className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <Star
+                    key={n}
+                    className={cn(
+                      "h-4 w-4",
+                      n <= Math.round(avg) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30",
+                    )}
+                  />
+                ))}
+              </div>
+              <span className="text-sm text-muted-foreground">
+                <strong className="text-foreground">{avg.toFixed(1)}</strong>/5 average rating
+              </span>
+            </div>
+          )}
+        </div>
+
+        {previewReviews.length > 0 && (
+          <div className="grid md:grid-cols-3 gap-5">
+            {previewReviews.map((r) => (
+              <Card key={r.id} className="border-border/60 hover:border-primary/40 hover:shadow-md transition-all">
+                <CardContent className="p-6">
+                  {r.rating && (
+                    <div className="flex gap-0.5 mb-3">
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <Star
+                          key={n}
+                          className={cn(
+                            "h-3.5 w-3.5",
+                            n <= r.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30",
+                          )}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {r.subject && (
+                    <h3 className="font-semibold font-display text-foreground line-clamp-2 mb-2">
+                      {r.subject}
+                    </h3>
+                  )}
+                  <p className="text-sm text-muted-foreground line-clamp-4 whitespace-pre-line">
+                    {r.message}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        <div className="text-center mt-8">
+          <Button size="lg" variant="outline" asChild>
+            <Link to="/reviews">
+              Read all reviews <ArrowRight className="h-4 w-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
       </section>
 
       {/* CTA */}
