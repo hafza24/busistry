@@ -36,6 +36,7 @@ const mobileLinks: NavLink[] = [
   { to: "/how-it-works", label: "How it works" },
   { to: "/about", label: "About us" },
   { to: "/team", label: "Team" },
+  { to: "/reviews", label: "Reviews" },
   { to: "/contact", label: "Contact" },
 ];
 
