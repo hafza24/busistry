@@ -10,6 +10,7 @@ import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
 import storyIllustration from "@/assets/about-story-illustration.png";
+import teamIllustration from "@/assets/about-team-illustration.png";
 
 const values = [
   { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
@@ -236,8 +237,47 @@ const About = () => {
         </div>
       </section>
 
+      {/* Team collaboration visual */}
+      <section className="container max-w-6xl py-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
+              <Users className="h-3.5 w-3.5" /> A team behind every launch
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">
+              Real people building your website — end to end.
+            </h2>
+            <p className="text-muted-foreground mt-4">
+              From design and copy to analytics and post-launch tweaks, our team collaborates on
+              every store so you don't have to juggle freelancers, agencies, and tools. One partner,
+              one price, one clear plan.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link to="/team"><Users className="h-4 w-4 mr-1" /> Meet the team</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/how-it-works">How it works <ArrowRight className="h-4 w-4 ml-1" /></Link>
+              </Button>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
+            <img
+              src={teamIllustration}
+              alt="Illustration of a diverse Busistree team collaborating on a website project"
+              className="w-full max-w-lg mx-auto h-auto object-contain drop-shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
+              loading="lazy"
+              width={1024}
+              height={1024}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
       <section className="container max-w-6xl py-16">
+
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">What we believe</h2>
           <p className="text-muted-foreground mt-3">The principles behind every website we ship.</p>
