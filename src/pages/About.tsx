@@ -186,16 +186,14 @@ const About = () => {
       <section className="container max-w-6xl py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Illustration */}
-          <div className="relative order-2 lg:order-1">
-            <div className="absolute inset-6 rounded-[2.5rem] bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/15 blur-2xl" />
-            <div className="relative rounded-[2rem] bg-gradient-to-br from-primary/5 to-accent/10 ring-1 ring-border/60 p-4 md:p-6">
-              <img
-                src={storyIllustration}
-                alt="Illustration of a Busistree founder brainstorming website ideas"
-                className="w-full h-auto object-contain"
-                loading="lazy"
-              />
-            </div>
+          <div className="relative order-2 lg:order-1 flex items-center justify-center">
+            <div className="absolute inset-10 rounded-full bg-gradient-to-br from-primary/15 via-primary-glow/10 to-accent/20 blur-3xl" />
+            <img
+              src={storyIllustration}
+              alt="Illustration of a Busistree founder brainstorming website ideas"
+              className="relative w-full max-w-md h-auto object-contain drop-shadow-xl"
+              loading="lazy"
+            />
           </div>
 
           {/* Copy */}
