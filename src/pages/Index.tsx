@@ -709,52 +709,93 @@ const Index = () => {
             </h2>
           </div>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto bg-card/90 backdrop-blur border border-border/70 rounded-2xl overflow-hidden shadow-xl shadow-primary/5 relative"
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-4xl mx-auto relative group/table"
           >
-            {/* highlighted Busistree column */}
-            <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.08] via-primary/[0.04] to-transparent border-x border-primary/15" />
+            {/* Outer aurora glow */}
+            <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
 
-            <div className="relative grid grid-cols-4 bg-secondary/60 text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground border-b border-border/70">
-              <div className="p-5">Feature</div>
-              <div className="p-5 text-center">
-                <span className="inline-flex items-center gap-1.5 text-primary">
-                  <Sparkles className="h-3 w-3" /> Busistree
-                </span>
-              </div>
-              <div className="p-5 text-center">Shopify DIY</div>
-              <div className="p-5 text-center">Hire dev</div>
-            </div>
-            {comparison.map((row, i) => (
+            {/* Card */}
+            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-[1.5rem] overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
+              {/* Gradient border sheen */}
+              <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+
+              {/* Highlighted Busistree column */}
+              <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.10] via-primary/[0.05] to-transparent border-x border-primary/20" />
+
+              {/* Animated shimmer sweep */}
               <motion.div
-                key={row.feature}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                aria-hidden
+                initial={{ x: "-120%" }}
+                whileInView={{ x: "220%" }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className={`relative grid grid-cols-4 items-center text-sm group hover:bg-primary/[0.03] transition-colors ${i !== comparison.length - 1 ? "border-b border-border/60" : ""}`}
-              >
-                <div className="p-5 font-semibold text-foreground">{row.feature}</div>
-                <div className="p-5 flex justify-center">
-                  {row.busistry ? (
-                    <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-md shadow-primary/25 group-hover:scale-110 transition-transform">
-                      <Check className="h-4 w-4 text-white" strokeWidth={3} />
-                    </div>
-                  ) : (
-                    <X className="h-5 w-5 text-muted-foreground/40" />
-                  )}
+                transition={{ duration: 2.2, ease: "easeInOut", delay: 0.4 }}
+                className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent blur-2xl mix-blend-overlay"
+              />
+
+              {/* Header */}
+              <div className="relative grid grid-cols-4 bg-gradient-to-b from-secondary/80 to-secondary/40 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground border-b border-border/70">
+                <div className="p-5">Feature</div>
+                <div className="p-5 text-center relative">
+                  <span className="inline-flex items-center gap-1.5 text-primary">
+                    <motion.span
+                      animate={{ rotate: [0, 15, -10, 0], scale: [1, 1.15, 1] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <Sparkles className="h-3 w-3" />
+                    </motion.span>
+                    Busistree
+                  </span>
+                  <span className="absolute -bottom-px left-1/2 -translate-x-1/2 h-[2px] w-10 bg-gradient-to-r from-transparent via-primary to-transparent" />
                 </div>
-                <div className="p-5 flex justify-center">
-                  {row.shopify ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
-                </div>
-                <div className="p-5 flex justify-center">
-                  {row.dev ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
-                </div>
-              </motion.div>
-            ))}
+                <div className="p-5 text-center">Shopify DIY</div>
+                <div className="p-5 text-center">Hire dev</div>
+              </div>
+
+              {/* Rows */}
+              {comparison.map((row, i) => (
+                <motion.div
+                  key={row.feature}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className={`relative grid grid-cols-4 items-center text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
+                >
+                  <div className="p-5 font-semibold text-foreground tracking-tight">
+                    <span className="relative inline-block">
+                      {row.feature}
+                      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
+                    </span>
+                  </div>
+
+                  <div className="p-5 flex justify-center">
+                    {row.busistry ? (
+                      <motion.div
+                        whileHover={{ scale: 1.18, rotate: 6 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
+                        className="relative h-8 w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30"
+                      >
+                        <span className="absolute inset-0 rounded-full bg-primary/40 blur-md opacity-0 group-hover/row:opacity-100 transition-opacity duration-500" />
+                        <Check className="relative h-4 w-4 text-white" strokeWidth={3} />
+                      </motion.div>
+                    ) : (
+                      <X className="h-5 w-5 text-muted-foreground/40" />
+                    )}
+                  </div>
+
+                  <div className="p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.shopify ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
+                  </div>
+                  <div className="p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.dev ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
