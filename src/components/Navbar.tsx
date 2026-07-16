@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
 
@@ -23,6 +23,7 @@ const marketplaceItems = [
 const aboutItems = [
   { to: "/about", label: "About us", desc: "Our story, mission, and values.", icon: Info },
   { to: "/team", label: "Team", desc: "Meet the people behind Busistree.", icon: Users },
+  { to: "/reviews", label: "Reviews", desc: "Customer stories, ratings, and case studies.", icon: Star },
 ];
 
 const mobileLinks: NavLink[] = [
@@ -35,6 +36,7 @@ const mobileLinks: NavLink[] = [
   { to: "/how-it-works", label: "How it works" },
   { to: "/about", label: "About us" },
   { to: "/team", label: "Team" },
+  { to: "/reviews", label: "Reviews" },
   { to: "/contact", label: "Contact" },
 ];
 
