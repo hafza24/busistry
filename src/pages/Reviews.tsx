@@ -11,6 +11,7 @@ import heroPortrait from "@/assets/reviews-hero-portrait.png";
 import { MessageSquare, PenLine, ThumbsUp } from "lucide-react";
 import { usePublishedCaseStudies } from "@/hooks/useCaseStudies";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Stars = ({ value, size = "h-3.5 w-3.5" }: { value: number; size?: string }) => (
   <div className="flex gap-0.5" aria-label={`Rated ${value} out of 5`}>
