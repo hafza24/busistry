@@ -45,6 +45,7 @@ const GlassUI = lazy(() => import("./pages/GlassUI"));
 const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 const ProfileView = lazy(() => import("./pages/ProfileView"));
 const Reviews = lazy(() => import("./pages/Reviews"));
+const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -99,6 +100,7 @@ const App = () => (
                     <Route path="/glass-ui" element={<GlassUI />} />
                     <Route path="/track" element={<TrackOrder />} />
                     <Route path="/reviews" element={<Reviews />} />
+                    <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
                   </Route>
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
