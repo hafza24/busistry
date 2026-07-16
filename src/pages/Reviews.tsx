@@ -8,10 +8,9 @@ import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
 import heroPortrait from "@/assets/reviews-hero-portrait.png";
-import interviewImg1 from "@/assets/reviews-interview-1.jpg";
-import interviewImg2 from "@/assets/reviews-interview-2.jpg";
-import interviewImg3 from "@/assets/reviews-interview-3.jpg";
 import { MessageSquare, PenLine, ThumbsUp } from "lucide-react";
+import { usePublishedCaseStudies } from "@/hooks/useCaseStudies";
+import { Link } from "react-router-dom";
 
 const Stars = ({ value, size = "h-3.5 w-3.5" }: { value: number; size?: string }) => (
   <div className="flex gap-0.5" aria-label={`Rated ${value} out of 5`}>
@@ -48,25 +47,8 @@ const initialsOf = (name: string) =>
     .map((s) => s[0]?.toUpperCase())
     .join("") || "U";
 
-const INTERVIEWS = [
-  {
-    img: interviewImg1,
-    title: "Why Amna decided to rebrand & why it worked",
-    tag: "Case study",
-  },
-  {
-    img: interviewImg2,
-    title: "Emma-tech team came up with a new payment processing technology",
-    tag: "Interview",
-  },
-  {
-    img: interviewImg3,
-    title: "The story of a new version of the finest Barista experience",
-    tag: "Story",
-  },
-];
-
 const Reviews = () => {
+  const { data: caseStudies = [] } = usePublishedCaseStudies(6);
   const [query, setQuery] = useState("");
 
   const { data: stats } = useQuery({
