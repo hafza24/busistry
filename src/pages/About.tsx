@@ -104,24 +104,6 @@ const About = () => {
                   <Link to="/how-it-works">How it works <ArrowRight className="h-4 w-4 ml-1" /></Link>
                 </Button>
               </div>
-
-              {/* Stats */}
-              <div className="mt-12 grid grid-cols-3 gap-6 max-w-lg">
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">24–48h</div>
-                  <div className="text-xs text-muted-foreground mt-1">Average launch time</div>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">1,456</div>
-                  <div className="text-xs text-muted-foreground mt-1">Sites launched</div>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold font-display text-foreground">
-                    99<span className="text-primary">%</span>
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">Happy clients</div>
-                </div>
-              </div>
             </div>
 
             {/* Right visual */}
