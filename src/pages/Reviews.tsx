@@ -160,7 +160,7 @@ const Reviews = () => {
 
       <main className="min-h-screen bg-background">
         {/* Hero — Figma-style card with portrait */}
-        <section className="relative bg-[#8b7cf6] py-10 md:py-16">
+        <section className="relative py-10 md:py-16">
           <div className="container max-w-6xl">
             <div className="relative rounded-[28px] bg-white shadow-2xl overflow-hidden px-6 md:px-12 py-10 md:py-14">
               <div className="grid md:grid-cols-2 gap-8 items-center">
