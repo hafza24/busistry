@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
+import storyIllustration from "@/assets/about-story-illustration.png";
 
 const values = [
   { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
@@ -182,26 +183,39 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="container max-w-4xl py-16">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
-          <p className="text-muted-foreground mt-3">Why we started, and where we're going.</p>
-        </div>
-        <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
-          <p>
-            Busistree started with a simple frustration: talented business owners across Pakistan were
-            being priced out of a decent online presence. Agencies quoted lakhs for basic websites,
-            freelancers vanished mid-project, and DIY builders never really fit the local reality.
-          </p>
-          <p>
-            We built Busistree as the middle path — a productized service where you pick a template,
-            we handle the customization and launch, and you get a professional website in 24 to 48
-            hours at a price that makes sense in rupees.
-          </p>
-          <p>
-            Today we serve booking businesses, tutors, travel agencies, retail stores, and service
-            providers across Karachi, Lahore, Islamabad and beyond. And we're just getting started.
-          </p>
+      <section className="container max-w-6xl py-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
+            <img
+              src={storyIllustration}
+              alt="Founder illustration representing the Busistree story"
+              className="w-full max-w-md mx-auto h-auto object-contain drop-shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
+              loading="lazy"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="text-center lg:text-left mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
+              <p className="text-muted-foreground mt-3">Why we started, and where we're going.</p>
+            </div>
+            <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
+              <p>
+                Busistree started with a simple frustration: talented business owners across Pakistan were
+                being priced out of a decent online presence. Agencies quoted lakhs for basic websites,
+                freelancers vanished mid-project, and DIY builders never really fit the local reality.
+              </p>
+              <p>
+                We built Busistree as the middle path — a productized service where you pick a template,
+                we handle the customization and launch, and you get a professional website in 24 to 48
+                hours at a price that makes sense in rupees.
+              </p>
+              <p>
+                Today we serve booking businesses, tutors, travel agencies, retail stores, and service
+                providers across Karachi, Lahore, Islamabad and beyond. And we're just getting started.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
