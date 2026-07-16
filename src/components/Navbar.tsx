@@ -251,7 +251,7 @@ const Navbar = () => {
                   >
                     <div className="rounded-2xl border border-border/60 bg-popover shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.25)] ring-1 ring-foreground/5 overflow-hidden">
                       {openMenu === "marketplace" ? (
-                        <div className="p-4 w-[520px] grid grid-cols-2 gap-2">
+                        <div className="p-4 w-[360px] grid gap-2">
                           {marketplaceItems.map((it) => (
                             <Link
                               key={it.to}
