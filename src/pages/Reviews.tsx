@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Star, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FeedbackDialog from "@/components/feedback/FeedbackDialog";
-import heroPortrait from "@/assets/reviews-hero-portrait.jpg";
+import heroPortrait from "@/assets/reviews-hero-portrait.png";
 import interviewImg1 from "@/assets/reviews-interview-1.jpg";
 import interviewImg2 from "@/assets/reviews-interview-2.jpg";
 import interviewImg3 from "@/assets/reviews-interview-3.jpg";
