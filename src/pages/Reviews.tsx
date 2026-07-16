@@ -166,28 +166,25 @@ const Reviews = () => {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Left copy */}
                 <div>
-                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-[#1a1a3a]">
+                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-foreground">
                     Loved by{" "}
-                    <span className="bg-gradient-to-r from-[#8b5cf6] to-[#c084fc] bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
                       {total.toLocaleString()}+
                     </span>{" "}
                     Happy, Delighted, and Loyal Customers
                   </h1>
-                  <p className="mt-5 text-base md:text-lg text-[#1a1a3a]/70 max-w-md">
+                  <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-md">
                     Real stories from real businesses. See why Pakistani entrepreneurs
                     trust Busistree to launch and grow their websites.
                   </p>
 
                   <div className="mt-7 flex flex-wrap items-center gap-4">
-                    <a
-                      href="#write-review"
-                      className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] hover:opacity-95 transition"
-                    >
-                      Write a Review
-                    </a>
+                    <Button asChild size="lg" className="rounded-full h-12 px-6">
+                      <a href="#write-review">Write a Review</a>
+                    </Button>
                     <a
                       href="#reviews-grid"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1a1a3a] hover:text-[#8b5cf6] transition"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition"
                     >
                       Read Stories <ArrowRight className="h-4 w-4" />
                     </a>
@@ -196,35 +193,35 @@ const Reviews = () => {
                   {/* Stats */}
                   <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
                     <div>
-                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                      <div className="text-2xl md:text-3xl font-extrabold text-foreground">
                         {total.toLocaleString()}+
                       </div>
-                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Reviews</div>
+                      <div className="text-xs text-muted-foreground mt-1">Reviews</div>
                     </div>
                     <div>
-                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                      <div className="text-2xl md:text-3xl font-extrabold text-foreground">
                         {avg.toFixed(1)}
-                        <span className="text-[#8b5cf6]">/5</span>
+                        <span className="text-primary">/5</span>
                       </div>
-                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Avg Rating</div>
+                      <div className="text-xs text-muted-foreground mt-1">Avg Rating</div>
                     </div>
                     <div>
-                      <div className="text-2xl md:text-3xl font-extrabold text-[#1a1a3a]">
+                      <div className="text-2xl md:text-3xl font-extrabold text-foreground">
                         99%
                       </div>
-                      <div className="text-xs text-[#1a1a3a]/60 mt-1">Happy Clients</div>
+                      <div className="text-xs text-muted-foreground mt-1">Happy Clients</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Right: portrait inside circle with arc + floating badges */}
                 <div className="relative h-[380px] md:h-[460px] flex items-center justify-center">
-                  {/* Purple arc ring */}
+                  {/* Primary arc ring */}
                   <div
                     className="absolute inset-0 m-auto h-[340px] w-[340px] md:h-[420px] md:w-[420px] rounded-full"
                     style={{
                       background:
-                        "conic-gradient(from 210deg, #8b5cf6 0deg, #ec4899 120deg, transparent 140deg, transparent 360deg)",
+                        "conic-gradient(from 210deg, hsl(var(--primary)) 0deg, hsl(var(--accent)) 120deg, transparent 140deg, transparent 360deg)",
                       WebkitMask:
                         "radial-gradient(circle, transparent 60%, #000 61%, #000 66%, transparent 67%)",
                       mask: "radial-gradient(circle, transparent 60%, #000 61%, #000 66%, transparent 67%)",
@@ -232,7 +229,7 @@ const Reviews = () => {
                     aria-hidden="true"
                   />
                   {/* Soft circle background */}
-                  <div className="absolute inset-0 m-auto h-[320px] w-[320px] md:h-[400px] md:w-[400px] rounded-full bg-gradient-to-br from-[#f3f0ff] to-[#fce7f3]" />
+                  <div className="absolute inset-0 m-auto h-[320px] w-[320px] md:h-[400px] md:w-[400px] rounded-full bg-gradient-to-br from-primary/10 to-accent/20" />
                   {/* Portrait */}
                   <img
                     src={heroPortrait}
@@ -243,16 +240,16 @@ const Reviews = () => {
                   />
 
                   {/* Floating badge — top right */}
-                  <div className="absolute top-6 right-2 md:right-6 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
-                    <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-[#8b5cf6]" />
+                  <div className="absolute top-6 right-2 md:right-6 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
+                    <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                   {/* Floating badge — left */}
-                  <div className="absolute top-1/3 left-0 md:left-4 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
-                    <PenLine className="h-5 w-5 md:h-6 md:w-6 text-[#ec4899]" />
+                  <div className="absolute top-1/3 left-0 md:left-4 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
+                    <PenLine className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                   {/* Floating badge — bottom right */}
-                  <div className="absolute bottom-8 right-4 md:right-10 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-white shadow-lg flex items-center justify-center">
-                    <ThumbsUp className="h-5 w-5 md:h-6 md:w-6 text-[#8b5cf6]" />
+                  <div className="absolute bottom-8 right-4 md:right-10 z-20 h-12 w-12 md:h-14 md:w-14 rounded-full bg-card border border-border shadow-lg flex items-center justify-center">
+                    <ThumbsUp className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
                 </div>
               </div>
