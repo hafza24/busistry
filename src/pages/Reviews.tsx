@@ -158,7 +158,7 @@ const Reviews = () => {
         <link rel="canonical" href="/reviews" />
       </Helmet>
 
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen">
         {/* Hero — Figma-style card with portrait */}
         <section className="relative py-10 md:py-16">
           <div className="container max-w-6xl">
