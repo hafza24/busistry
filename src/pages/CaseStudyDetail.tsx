@@ -25,6 +25,7 @@ const CaseStudyDetail = () => {
   const seoTitle = data.seo_title || `${data.title} — Case Study`;
   const seoDesc = data.seo_description || data.excerpt || "";
   const ogImage = data.og_image_url || data.cover_image_url || undefined;
+  const canonicalUrl = `https://busistry.lovable.app/case-studies/${data.slug}`;
 
   return (
     <>
@@ -32,12 +33,16 @@ const CaseStudyDetail = () => {
         <title>{seoTitle}</title>
         {seoDesc && <meta name="description" content={seoDesc} />}
         {data.seo_keywords?.length > 0 && <meta name="keywords" content={data.seo_keywords.join(", ")} />}
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={seoTitle} />
         {seoDesc && <meta property="og:description" content={seoDesc} />}
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
         {ogImage && <meta property="og:image" content={ogImage} />}
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href={`/case-studies/${data.slug}`} />
+        <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+        <meta name="twitter:title" content={seoTitle} />
+        {seoDesc && <meta name="twitter:description" content={seoDesc} />}
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
       </Helmet>
 
       <main className="container max-w-3xl py-12 md:py-16">
