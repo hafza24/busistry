@@ -374,13 +374,13 @@ const Index = () => {
 
 
         <div className="container py-8 md:py-12 lg:py-14">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="grid md:grid-cols-12 gap-10 items-center">
             {/* Left: copy */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-7 relative"
+              className="md:col-span-7 relative"
             >
 
               <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/80 shadow-soft mb-7">
@@ -430,7 +430,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="lg:col-span-5 relative"
+              className="md:col-span-5 relative"
             >
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-card via-secondary to-card border border-border shadow-brand">
                 <img
@@ -479,7 +479,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             {showcase.slice(0, 6).map((t: any, i: number) => {
               const Icon = (t.icon as any) ?? ShoppingBag;
               return (
@@ -585,9 +585,9 @@ const Index = () => {
               </span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 relative">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 relative">
             {/* Connecting line for desktop */}
-            <div className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            <div className="hidden md:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
@@ -844,13 +844,13 @@ const Index = () => {
         <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" />
 
         <div className="container relative">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="grid md:grid-cols-12 gap-10 items-center">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="lg:col-span-7"
+              className="md:col-span-7"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
                 <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
@@ -909,7 +909,7 @@ const Index = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="lg:col-span-5 relative"
+              className="md:col-span-5 relative"
             >
               <div className="relative aspect-[4/5] max-w-md mx-auto">
                 {/* Back card */}
