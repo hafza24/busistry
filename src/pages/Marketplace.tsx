@@ -130,7 +130,7 @@ export default function Marketplace() {
         </div>
 
         {/* Category Grid Side */}
-        <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
+        <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:grid-rows-[auto_1fr]">
           {/* Plans — wide */}
           <Link
             to="/pricing"
