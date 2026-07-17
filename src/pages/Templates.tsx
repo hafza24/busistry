@@ -178,7 +178,7 @@ const Templates = () => {
 
 
         {isLoading ? (
-          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-5 xl:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <Card key={i} className="border-border/50 flex flex-col overflow-hidden">
                 <Skeleton className="h-44 w-full rounded-none" />
@@ -207,7 +207,7 @@ const Templates = () => {
         ) : filtered.length === 0 ? (
           <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
         ) : (
-          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-5 xl:gap-6">
             {filtered.map((t) => {
               const features = Array.isArray(t.features) ? (t.features as string[]) : [];
               const stat = statMap.get(t.id);
