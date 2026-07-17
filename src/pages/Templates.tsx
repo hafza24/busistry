@@ -95,6 +95,13 @@ const Templates = () => {
           </div>
         </section>
 
+        {/* Scroll-driven video — scrubs frame-by-frame with page scroll */}
+        <section className="my-8 rounded-3xl overflow-hidden border border-border/60">
+          <ScrollVideo />
+        </section>
+
+
+
         {/* Category nav bar — horizontal editorial style */}
         <nav className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm">
           <div className="flex items-center gap-1 overflow-x-auto px-2 py-2 scrollbar-none">
