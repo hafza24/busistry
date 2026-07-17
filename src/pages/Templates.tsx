@@ -242,7 +242,7 @@ const Templates = () => {
                       {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
                     </div>
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold font-display text-lg text-foreground">{t.name}</h3>
+                      <h3 className="font-semibold font-display text-base md:text-base lg:text-lg text-foreground line-clamp-1">{t.name}</h3>
                     </div>
                     {stat && stat.review_count > 0 && (
                       <div className="flex items-center gap-2 mt-1">
