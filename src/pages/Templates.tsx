@@ -257,7 +257,7 @@ const Templates = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="p-5 pt-0 flex flex-col gap-2">
+                  <CardFooter className="p-4 md:p-4 lg:p-5 pt-0 flex flex-col gap-2">
                     <Button
                       size="lg"
                       className="w-full bg-primary/90 hover:bg-primary shadow-md"
