@@ -737,10 +737,10 @@ const Index = () => {
               />
 
               {/* Header */}
-              <div className="relative grid grid-cols-4 bg-gradient-to-b from-secondary/80 to-secondary/40 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground border-b border-border/70">
-                <div className="p-5">Feature</div>
-                <div className="p-5 text-center relative">
-                  <span className="inline-flex items-center gap-1.5 text-primary">
+              <div className="relative grid grid-cols-4 bg-gradient-to-b from-secondary/80 to-secondary/40 text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.18em] text-muted-foreground border-b border-border/70">
+                <div className="p-2.5 sm:p-5">Feature</div>
+                <div className="p-2.5 sm:p-5 text-center relative">
+                  <span className="inline-flex items-center gap-1 sm:gap-1.5 text-primary">
                     <motion.span
                       animate={{ rotate: [0, 15, -10, 0], scale: [1, 1.15, 1] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -751,8 +751,8 @@ const Index = () => {
                   </span>
                   <span className="absolute -bottom-px left-1/2 -translate-x-1/2 h-[2px] w-10 bg-gradient-to-r from-transparent via-primary to-transparent" />
                 </div>
-                <div className="p-5 text-center">Shopify DIY</div>
-                <div className="p-5 text-center">Hire dev</div>
+                <div className="p-2.5 sm:p-5 text-center">Shopify DIY</div>
+                <div className="p-2.5 sm:p-5 text-center">Hire dev</div>
               </div>
 
               {/* Rows */}
@@ -763,35 +763,35 @@ const Index = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative grid grid-cols-4 items-center text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
+                  className={`relative grid grid-cols-4 items-center text-xs sm:text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
                 >
-                  <div className="p-5 font-semibold text-foreground tracking-tight">
+                  <div className="p-3 sm:p-5 font-semibold text-foreground tracking-tight">
                     <span className="relative inline-block">
                       {row.feature}
                       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
                     </span>
                   </div>
 
-                  <div className="p-5 flex justify-center">
+                  <div className="p-3 sm:p-5 flex justify-center">
                     {row.busistry ? (
                       <motion.div
                         whileHover={{ scale: 1.18, rotate: 6 }}
                         transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                        className="relative h-8 w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30"
+                        className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30"
                       >
                         <span className="absolute inset-0 rounded-full bg-primary/40 blur-md opacity-0 group-hover/row:opacity-100 transition-opacity duration-500" />
-                        <Check className="relative h-4 w-4 text-white" strokeWidth={3} />
+                        <Check className="relative h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" strokeWidth={3} />
                       </motion.div>
                     ) : (
-                      <X className="h-5 w-5 text-muted-foreground/40" />
+                      <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/40" />
                     )}
                   </div>
 
-                  <div className="p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
-                    {row.shopify ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
+                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.shopify ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
                   </div>
-                  <div className="p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
-                    {row.dev ? <Check className="h-5 w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-5 w-5 text-muted-foreground/30" />}
+                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.dev ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
                   </div>
                 </motion.div>
               ))}

@@ -135,7 +135,7 @@ const ReviewsSection = () => {
           </div>
 
           {/* RIGHT — Floating review cards */}
-          <div className="relative min-h-[520px] flex flex-col">
+          <div className="relative md:min-h-[520px] flex flex-col">
             {isLoading ? (
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
