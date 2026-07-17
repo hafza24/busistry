@@ -11,7 +11,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
-import ScrollVideo from "@/components/templates/ScrollVideo";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -94,13 +93,6 @@ const Templates = () => {
             </div>
           </div>
         </section>
-
-        {/* Scroll-driven video — scrubs frame-by-frame with page scroll */}
-        <section className="my-8 rounded-3xl overflow-hidden border border-border/60">
-          <ScrollVideo />
-        </section>
-
-
 
         {/* Category nav bar — horizontal editorial style */}
         <nav className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm">
