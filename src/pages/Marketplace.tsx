@@ -203,9 +203,9 @@ export default function Marketplace() {
                 <Sparkles className="w-5 h-5 text-primary-foreground" />
               </div>
             </div>
-            <div className="relative z-20">
-              <h3 className="font-display text-primary-foreground font-bold text-2xl drop-shadow-lg">Catalog</h3>
-              <p className="text-primary-foreground/95 text-xs font-semibold mt-1 uppercase tracking-wider drop-shadow">Add-ons · Integrations · Updates</p>
+            <div className="relative z-20 min-w-0">
+              <h3 className="font-display text-primary-foreground font-bold text-2xl drop-shadow-lg truncate">Catalog</h3>
+              <p className="text-primary-foreground/95 text-[10px] sm:text-xs font-semibold mt-1 uppercase tracking-wide drop-shadow truncate">Add-ons · Integrations · Updates</p>
             </div>
           </Link>
         </div>
