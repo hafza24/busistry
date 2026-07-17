@@ -183,7 +183,7 @@ export default function Marketplace() {
           {/* Catalog */}
           <Link
             to="/marketplace#catalog"
-            className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square"
+            className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square md:aspect-auto md:min-h-[240px]"
           >
             <img
               src={marketplaceAddons}
