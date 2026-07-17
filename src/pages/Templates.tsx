@@ -236,7 +236,7 @@ const Templates = () => {
                       </div>
                     )}
                   </div>
-                  <CardContent className="p-5 flex-1">
+                  <CardContent className="p-4 md:p-4 lg:p-5 flex-1">
                     <div className="flex flex-wrap gap-1 mb-2">
                       {t.category && <Badge variant="default" className="text-[10px]">{t.category}</Badge>}
                       {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
