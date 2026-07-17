@@ -85,9 +85,9 @@ export default function Marketplace() {
       />
 
       {/* Hero — Dynamic Bento */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Feature Banner */}
-        <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:h-full shadow-2xl">
+        <div className="md:col-span-7 relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 sm:p-10 md:p-12 aspect-[4/5] sm:aspect-[16/10] md:aspect-auto md:h-full shadow-2xl">
           <img
             src={marketplaceHero}
             alt=""
@@ -130,7 +130,7 @@ export default function Marketplace() {
         </div>
 
         {/* Category Grid Side */}
-        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
+        <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
           {/* Plans — wide */}
           <Link
             to="/pricing"
@@ -225,7 +225,7 @@ export default function Marketplace() {
         {plansLoading ? (
           <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {plans.map((p: any) => {
               const isFree = p.type === "free" || p.price_pkr === 0;
               const features: string[] = Array.isArray(p.features) ? p.features : [];
@@ -278,7 +278,7 @@ export default function Marketplace() {
         {templatesLoading ? (
           <div className="py-12 flex justify-center"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
             {templates.map((t: any) => {
               const isFree = !t.price_pkr || t.price_pkr === 0;
               return (
@@ -330,7 +330,7 @@ export default function Marketplace() {
           to="/contact"
           ctaLabel="Talk to us"
         />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {[
             {
               name: "Bizplan",
