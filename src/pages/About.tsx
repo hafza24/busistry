@@ -66,7 +66,7 @@ const About = () => {
       <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/5 via-background to-accent/10">
         <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_80%_20%,hsl(var(--primary)/0.14),transparent_70%),radial-gradient(50%_50%_at_15%_90%,hsl(var(--accent)/0.14),transparent_70%)]" />
         <div className="container max-w-6xl relative py-16 md:py-24">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
+          <div className="grid md:grid-cols-[1.05fr_1fr] gap-12 md:gap-16 items-center">
             {/* Left copy */}
             <div className="relative text-center lg:text-left order-2 lg:order-1">
               <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
@@ -185,7 +185,7 @@ const About = () => {
 
       {/* Story */}
       <section className="container max-w-6xl py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
             <img
@@ -239,7 +239,7 @@ const About = () => {
 
       {/* Team collaboration visual */}
       <section className="container max-w-6xl py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
               <Users className="h-3.5 w-3.5" /> A team behind every launch
@@ -282,7 +282,7 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">What we believe</h2>
           <p className="text-muted-foreground mt-3">The principles behind every website we ship.</p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
           {values.map((v) => (
             <Card key={v.title} className="border-border/60 hover:border-primary/40 hover:shadow-md transition-all">
               <CardContent className="p-6">

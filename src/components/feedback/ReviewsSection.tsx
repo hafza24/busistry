@@ -77,7 +77,7 @@ const ReviewsSection = () => {
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
       <div className="container max-w-6xl relative">
-        <div className="grid lg:grid-cols-2 gap-14 lg:gap-10 items-center">
+        <div className="grid md:grid-cols-2 gap-14 md:gap-10 items-center">
           {/* LEFT — Stats */}
           <div>
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
