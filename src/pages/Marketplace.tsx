@@ -130,7 +130,7 @@ export default function Marketplace() {
         </div>
 
         {/* Category Grid Side */}
-        <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 auto-rows-min">
+        <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:grid-rows-[auto_1fr]">
           {/* Plans — wide */}
           <Link
             to="/pricing"
@@ -155,7 +155,7 @@ export default function Marketplace() {
           {/* Templates */}
           <Link
             to="/templates"
-            className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square"
+            className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square md:aspect-auto md:min-h-[240px]"
           >
             <img
               src={marketplaceTemplates}
@@ -183,7 +183,7 @@ export default function Marketplace() {
           {/* Catalog */}
           <Link
             to="/marketplace#catalog"
-            className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square"
+            className="group relative overflow-hidden rounded-3xl bg-primary flex flex-col justify-end p-6 aspect-square md:aspect-auto md:min-h-[240px]"
           >
             <img
               src={marketplaceAddons}
