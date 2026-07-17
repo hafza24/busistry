@@ -224,7 +224,7 @@ const Templates = () => {
                 >
                   <div className="relative">
                     {t.preview_image_url ? (
-                      <img src={t.preview_image_url} alt={t.name} className="h-44 w-full object-cover" loading="lazy" />
+                      <img src={t.preview_image_url} alt={t.name} className="h-40 md:h-36 lg:h-44 w-full object-cover" loading="lazy" />
                     ) : (
                       <div className="h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <span className="text-4xl opacity-60">🖼️</span>
