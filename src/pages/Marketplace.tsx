@@ -197,15 +197,15 @@ export default function Marketplace() {
               sizes="(min-width: 1024px) 20vw, (min-width: 640px) 24vw, 100vw"
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-glow)/0.5),transparent_70%)]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
             <div className="absolute top-6 left-6 z-20">
-              <div className="w-10 h-10 bg-black/10 backdrop-blur-md rounded-lg flex items-center justify-center border border-black/10">
+              <div className="w-10 h-10 bg-primary-foreground/15 backdrop-blur-md rounded-lg flex items-center justify-center border border-primary-foreground/30">
                 <Sparkles className="w-5 h-5 text-primary-foreground" />
               </div>
             </div>
             <div className="relative z-20">
-              <h3 className="font-display text-primary-foreground font-bold text-xl">Catalog</h3>
-              <p className="text-primary-foreground/70 text-xs mt-1 uppercase tracking-tight">Add-ons · Integrations · Updates</p>
+              <h3 className="font-display text-primary-foreground font-bold text-2xl drop-shadow-lg">Catalog</h3>
+              <p className="text-primary-foreground/95 text-xs font-semibold mt-1 uppercase tracking-wider drop-shadow">Add-ons · Integrations · Updates</p>
             </div>
           </Link>
         </div>
