@@ -174,9 +174,9 @@ export default function Marketplace() {
                 <LayoutTemplate className="w-5 h-5 text-background" />
               </div>
             </div>
-            <div className="relative z-20">
-              <h3 className="font-display text-background font-bold text-2xl drop-shadow-lg">Templates</h3>
-              <p className="text-background/90 text-xs font-semibold mt-1 uppercase tracking-wider drop-shadow">Launch-ready designs</p>
+            <div className="relative z-20 min-w-0">
+              <h3 className="font-display text-background font-bold text-2xl drop-shadow-lg truncate">Templates</h3>
+              <p className="text-background/90 text-[10px] sm:text-xs font-semibold mt-1 uppercase tracking-wide drop-shadow truncate">Launch-ready designs</p>
             </div>
           </Link>
 
