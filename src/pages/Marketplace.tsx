@@ -155,7 +155,7 @@ export default function Marketplace() {
           {/* Templates */}
           <Link
             to="/templates"
-            className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square"
+            className="group relative overflow-hidden rounded-3xl bg-foreground flex flex-col justify-end p-6 aspect-square md:aspect-auto md:min-h-[240px]"
           >
             <img
               src={marketplaceTemplates}
