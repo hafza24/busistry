@@ -85,10 +85,33 @@ const Templates = () => {
             <div className="relative hidden md:flex justify-center items-center">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.15),transparent_65%)]" aria-hidden />
               <div className="relative grid grid-cols-2 gap-4 rotate-[-4deg]">
-                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/20 shadow-xl border border-border/60" />
-                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-accent/30 to-primary/10 shadow-xl border border-border/60 translate-y-6" />
-                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-primary-glow/30 to-primary/20 shadow-xl border border-border/60 -translate-y-2" />
-                <div className="h-40 w-40 rounded-2xl bg-gradient-to-br from-secondary to-primary/20 shadow-xl border border-border/60 translate-y-4" />
+                {[0, 1, 2, 3].map((i) => {
+                  const t = templates[i];
+                  const offset = ["", "translate-y-6", "-translate-y-2", "translate-y-4"][i];
+                  return (
+                    <div
+                      key={t?.id ?? i}
+                      className={`group relative h-40 w-40 rounded-2xl overflow-hidden shadow-xl border border-border/60 bg-card ${offset} transition-transform hover:scale-105`}
+                    >
+                      {/* Fake browser chrome */}
+                      <div className="absolute top-0 inset-x-0 h-4 bg-muted/80 border-b border-border/60 flex items-center gap-1 px-1.5 z-10">
+                        <span className="h-1.5 w-1.5 rounded-full bg-red-400/70" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/70" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-green-400/70" />
+                      </div>
+                      {t?.preview_image_url ? (
+                        <img
+                          src={t.preview_image_url}
+                          alt={t.name}
+                          className="absolute inset-0 h-full w-full object-cover object-top pt-4"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/20" />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
