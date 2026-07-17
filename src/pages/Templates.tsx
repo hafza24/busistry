@@ -178,7 +178,7 @@ const Templates = () => {
 
 
         {isLoading ? (
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <Card key={i} className="border-border/50 flex flex-col overflow-hidden">
                 <Skeleton className="h-44 w-full rounded-none" />
@@ -207,7 +207,7 @@ const Templates = () => {
         ) : filtered.length === 0 ? (
           <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
         ) : (
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-6">
             {filtered.map((t) => {
               const features = Array.isArray(t.features) ? (t.features as string[]) : [];
               const stat = statMap.get(t.id);
@@ -224,9 +224,9 @@ const Templates = () => {
                 >
                   <div className="relative">
                     {t.preview_image_url ? (
-                      <img src={t.preview_image_url} alt={t.name} className="h-44 w-full object-cover" loading="lazy" />
+                      <img src={t.preview_image_url} alt={t.name} className="h-40 md:h-36 lg:h-44 w-full object-cover" loading="lazy" />
                     ) : (
-                      <div className="h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                      <div className="h-40 md:h-36 lg:h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <span className="text-4xl opacity-60">🖼️</span>
                       </div>
                     )}
@@ -236,13 +236,13 @@ const Templates = () => {
                       </div>
                     )}
                   </div>
-                  <CardContent className="p-5 flex-1">
+                  <CardContent className="p-4 md:p-4 lg:p-5 flex-1">
                     <div className="flex flex-wrap gap-1 mb-2">
                       {t.category && <Badge variant="default" className="text-[10px]">{t.category}</Badge>}
                       {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
                     </div>
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold font-display text-lg text-foreground">{t.name}</h3>
+                      <h3 className="font-semibold font-display text-base md:text-base lg:text-lg text-foreground line-clamp-1">{t.name}</h3>
                     </div>
                     {stat && stat.review_count > 0 && (
                       <div className="flex items-center gap-2 mt-1">
@@ -257,7 +257,7 @@ const Templates = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="p-5 pt-0 flex flex-col gap-2">
+                  <CardFooter className="p-4 md:p-4 lg:p-5 pt-0 flex flex-col gap-2">
                     <Button
                       size="lg"
                       className="w-full bg-primary/90 hover:bg-primary shadow-md"
