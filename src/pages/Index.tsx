@@ -359,8 +359,8 @@ const Index = () => {
   return (
     <div>
       <SEO
-        title="Busistree — Launch your online store in 48 hours"
-        description="Done-for-you websites and ecommerce stores for Pakistani businesses — custom-coded or WordPress. Pick a template, fill a smart form, go live in 24–48 hours."
+        title="Busistree — The complete hub for growing businesses"
+        description="Planning, digital presence and packaging, design, and marketing — one hub for everything your business needs, from strategy to launch to growth."
         path="/"
       />
       {/* Hero — busistree split layout */}
@@ -380,37 +380,37 @@ const Index = () => {
             >
 
               <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/80 shadow-soft mb-7">
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Launch in 48 hours — Guaranteed</span>
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One hub · Everything your business needs</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
-                Your complete online presence, live in{" "}
+                The complete hub for{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  48 hours
+                  growing businesses
                 </span>
                 .
               </h1>
 
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
                 <RotatingWords />{" "}
-                Whether you're a business, freelancer or personal brand — we design, build and launch
-                every part of your internet presence, end to end.
+                Planning, digital presence and packaging, design, and marketing —
+                one team, one plan, everything your business needs under one roof.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button variant="glass-brand" size="lg" className="h-12 px-7 text-base rounded-full group" asChild>
-                  <Link to="/templates">
-                    Browse Templates
+                  <Link to="/marketplace">
+                    Explore the hub
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
                 <Button variant="default" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
-                  <Link to="/how-it-works">Watch Demo</Link>
+                  <Link to="/how-it-works">How it works</Link>
                 </Button>
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg text-sm text-muted-foreground">
-                {["No design skills needed", "48-hour delivery", "100% satisfaction guarantee", "Secure & scalable"].map((t) => (
+                {["Business planning included", "Websites & stores built for you", "Brand, product & packaging design", "Marketing, promos & content"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-primary shrink-0" /> {t}
                   </div>
