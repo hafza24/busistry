@@ -843,8 +843,8 @@ const Index = () => {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="md:col-span-7"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
-                <Sparkles className="h-3.5 w-3.5 text-fuchsia-300" />
+              <div className="inline-flex items-center gap-3 mb-6">
+                <span aria-hidden className="h-px w-8 bg-violet-300/60" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200">
                   From the Busistree family
                 </span>
