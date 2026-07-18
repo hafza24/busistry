@@ -462,16 +462,16 @@ const Index = () => {
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Templates</span>
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Digital Presence</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Buy Your perfect{" "}
+              A website, store or landing page —{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Site
+                built to convert
               </span>
             </h2>
             <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-              Hand-picked, conversion-focused designs — fully customizable with your brand.
+              Conversion-focused designs, ready for your brand and products — part of your complete business hub.
             </p>
           </div>
 
