@@ -198,22 +198,24 @@ const About = () => {
           <div className="order-1 lg:order-2">
             <div className="text-center lg:text-left mb-6">
               <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
-              <p className="text-muted-foreground mt-3">Why we started, and where we're going.</p>
+              <p className="text-muted-foreground mt-3">Why we became a hub, not just a builder.</p>
             </div>
             <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
               <p>
-                Busistree started with a simple frustration: talented business owners across Pakistan were
-                being priced out of a decent online presence. Agencies quoted lakhs for basic websites,
-                freelancers vanished mid-project, and DIY builders never really fit the local reality.
+                Busistree started as a way to get small businesses online quickly. But we kept
+                hearing the same thing from founders: "The website is great — now what?" They
+                needed a plan, a brand, packaging, and someone to actually market the thing.
               </p>
               <p>
-                We built Busistree as the middle path — a productized service where you pick a template,
-                we handle the customization and launch, and you get a professional website in 24 to 48
-                hours at a price that makes sense in rupees.
+                So we grew into a hub. Today, one team handles the four things every business
+                needs — planning your offer and positioning, building your digital presence and
+                packaging, designing the brand and product, and running the marketing that
+                drives real customers in.
               </p>
               <p>
-                Today we serve booking businesses, tutors, travel agencies, retail stores, and service
-                providers across Karachi, Lahore, Islamabad and beyond. And we're just getting started.
+                From founders launching their first product to established brands leveling up
+                their presence, we're the single partner behind the whole business — not just
+                the website.
               </p>
             </div>
           </div>
