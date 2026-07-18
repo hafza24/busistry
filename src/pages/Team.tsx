@@ -77,8 +77,8 @@ const Team = () => {
 
               {/* Content */}
               <div className="relative z-10 text-white">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur border border-white/30 px-3 py-1 text-xs font-semibold mb-4">
-                  <Sparkles className="h-3.5 w-3.5" /> Founder
+                <div className="italic text-sm text-white/75 tracking-wide mb-3 font-light">
+                  — Founder
                 </div>
                 <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
                   {m.name}
