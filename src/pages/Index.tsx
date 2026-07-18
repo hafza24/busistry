@@ -128,10 +128,6 @@ const ROTATING_PHRASES = [
   "Grow your audience",
   "…all in one hub.",
 ];
-  "Blogs",
-  "Product sites",
-  "…and more.",
-];
 
 const RotatingWords = () => {
   const [i, setI] = useState(0);
