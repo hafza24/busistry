@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Linkedin, Mail, Twitter, Users, Sparkles, ArrowRight } from "lucide-react";
+import { Linkedin, Mail, Twitter, Sparkles, ArrowRight } from "lucide-react";
 import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
@@ -55,24 +55,6 @@ const Team = () => {
         path="/team"
       />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_50%_0%,hsl(var(--primary)/0.18),transparent_70%)]" />
-        <div className="container max-w-4xl relative py-16 md:py-20 text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-5">
-            <Users className="h-3.5 w-3.5" /> The team
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold font-display text-foreground leading-tight tracking-tight">
-            Small team.<br />Big ambitions.
-          </h1>
-          <p className="text-lg text-muted-foreground mt-6 max-w-2xl mx-auto">
-            A tight crew obsessed with helping Pakistani businesses plan, design, launch and grow —
-            all in one hub.
-          </p>
-        </div>
-      </section>
-
-      {/* Team grid */}
       <section className="container max-w-6xl py-16 space-y-8">
         {/* CEO hero card */}
         {(() => {
