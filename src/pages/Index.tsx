@@ -830,15 +830,6 @@ const Index = () => {
       <section className="relative py-20 md:py-28 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
         {/* Aurora glows */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.12] mix-blend-screen pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.4) 1px,transparent 1px)",
-            backgroundSize: "36px 36px",
-          }}
-        />
         {/* Floating orbs */}
         <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-violet-500/30 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" />
