@@ -1,4 +1,7 @@
 import SEO from "@/components/SEO";
+import teamHafza from "@/assets/team-hafza.png";
+import teamRohma from "@/assets/team-rohma.png";
+import teamAsim from "@/assets/team-asim.png";
 import TrustBadges from "@/components/TrustBadges";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
