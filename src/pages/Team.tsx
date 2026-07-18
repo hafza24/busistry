@@ -46,6 +46,14 @@ const team: Member[] = [
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
     socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
   },
+  {
+    name: "Kiran Masood",
+    role: "HR Manager",
+    image: teamKiran,
+    cardGradient: "from-[#c98a6b] to-[#e8b89a]",
+    bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
+    socials: { linkedin: "#", twitter: "#", email: "kiran@busistree.com" },
+  },
 ];
 
 const Team = () => {
