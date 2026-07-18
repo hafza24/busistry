@@ -30,7 +30,7 @@ const team: Member[] = [
     image: teamHafza,
     cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
     bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
-    socials: { linkedin: "#", instagram?: "#", email: "hafza@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
   },
   {
     name: "Rohma Shahid",
@@ -38,7 +38,7 @@ const team: Member[] = [
     image: teamRohma,
     cardGradient: "from-[#389c84] to-[#6ec4a8]",
     bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
-    socials: { linkedin: "#", instagram?: "#", email: "rohma@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "rohma@busistree.com" },
   },
   {
     name: "Asim Azeemi",
@@ -46,7 +46,7 @@ const team: Member[] = [
     image: teamAsim,
     cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
-    socials: { linkedin: "#", instagram?: "#", email: "asim@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "asim@busistree.com" },
   },
   {
     name: "Kiran Masood",
@@ -54,7 +54,7 @@ const team: Member[] = [
     image: teamKiran,
     cardGradient: "from-[#7c5fb8] to-[#b89ad9]",
     bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
-    socials: { linkedin: "#", instagram?: "#", email: "kiran@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "kiran@busistree.com" },
   },
   {
     name: "Roha Shahid",
@@ -62,7 +62,7 @@ const team: Member[] = [
     image: teamRoha,
     cardGradient: "from-[#4a7c6f] to-[#8ab8a8]",
     bio: "Roha architects and builds Busistree end-to-end. From database schemas to pixel-perfect interfaces, she ships the platform that Pakistani founders rely on every day.",
-    socials: { linkedin: "#", instagram?: "#", email: "roha@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "roha@busistree.com" },
   },
 ];
 
