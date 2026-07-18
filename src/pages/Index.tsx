@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
-import teamHafza from "@/assets/team-hafza.png";
+import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
+const teamHafza = teamHafzaAsset.url;
 import teamRohma from "@/assets/team-rohma.png";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 const teamAsim = teamAsimAsset.url;
