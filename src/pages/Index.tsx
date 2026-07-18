@@ -1133,7 +1133,7 @@ const TeamDeck = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[380px] max-w-5xl"
+        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[520px] max-w-5xl"
       >
         <p className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70 tracking-widest uppercase opacity-100 group-hover/deck:opacity-0 transition-opacity duration-300">
           Hover to meet the team
