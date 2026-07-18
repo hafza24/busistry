@@ -698,9 +698,9 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Why Busistree</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Faster than DIY.{" "}
+              More than a builder.{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Cheaper than hiring.
+                A full business hub.
               </span>
             </h2>
           </div>
