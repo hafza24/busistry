@@ -88,7 +88,7 @@ const Team = () => {
               {/* Content */}
               <div className="relative z-10 text-white order-2 md:order-1">
                 <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/85 mb-4">
-                  <span className="h-px w-8 bg-white/60" /> Meet the Team
+                  <span className="h-px w-8 bg-white/60" /> Founder
                 </div>
                 <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight leading-[1.15]">
                   <span aria-hidden className="text-white/40 font-display mr-2">“</span>
