@@ -90,8 +90,9 @@ const Team = () => {
                 <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/85 mb-4">
                   <span className="h-px w-8 bg-white/60" /> Meet the Team
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold font-display tracking-tight leading-[1.05]">
-                  The people building <span className="italic font-light">Busistree</span>.
+                <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight leading-[1.15]">
+                  <span aria-hidden className="text-white/40 font-display mr-2">“</span>
+                  Every Pakistani founder deserves a beautiful online store — <span className="italic font-light">without the tech tax, the agency wait, or the guesswork.</span>
                 </h1>
                 <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed max-w-xl">
                   Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
