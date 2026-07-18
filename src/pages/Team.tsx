@@ -79,44 +79,37 @@ const Team = () => {
       {(() => {
         const m = team[0];
         return (
-          <section className={`relative overflow-hidden bg-gradient-to-br ${m.cardGradient}`}>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
-            <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-black/10 blur-3xl pointer-events-none" />
-
+          <section className="relative overflow-hidden">
             <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 md:gap-12 items-center py-16 md:py-24">
               {/* Content */}
-              <div className="relative z-10 text-white order-2 md:order-1">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/85 mb-4">
-                  <span className="h-px w-8 bg-white/60" /> Founder
+              <div className="relative z-10 order-2 md:order-1">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4">
+                  <span className="h-px w-8 bg-foreground/40" /> Founder
                 </div>
-                <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight leading-[1.15]">
-                  <span aria-hidden className="text-white/40 font-display mr-2">“</span>
-                  Every Pakistani founder deserves a beautiful online store — <span className="italic font-light">without the tech tax, the agency wait, or the guesswork.</span>
+                <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight leading-[1.15] text-foreground">
+                  <span aria-hidden className="text-foreground/30 font-display mr-2">“</span>
+                  Every Pakistani founder deserves a beautiful online store — <span className="italic font-light text-primary">without the tech tax, the agency wait, or the guesswork.</span>
                 </h1>
-                <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed max-w-xl">
+                <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
                   Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
                 </p>
-
-
-
 
                 <div className="flex items-center gap-2 mt-6">
                   {m.socials.linkedin && (
                     <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
-                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
                       <Linkedin className="h-4 w-4" />
                     </a>
                   )}
                   {m.socials.twitter && (
                     <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
-                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
                       <Twitter className="h-4 w-4" />
                     </a>
                   )}
                   {m.socials.email && (
                     <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
-                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
                       <Mail className="h-4 w-4" />
                     </a>
                   )}
@@ -124,8 +117,8 @@ const Team = () => {
               </div>
 
               {/* Founder portrait */}
-              <div className="relative flex items-end justify-center order-1 md:order-2">
-                <div className="absolute inset-x-8 bottom-8 h-1/2 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 pointer-events-none" />
+              <div className={`relative flex items-end justify-center order-1 md:order-2 rounded-3xl overflow-hidden bg-gradient-to-br ${m.cardGradient} min-h-[420px] md:min-h-[520px]`}>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
                 <img
                   src={m.image}
                   alt={m.name}
