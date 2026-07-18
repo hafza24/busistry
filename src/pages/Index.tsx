@@ -1,4 +1,7 @@
 import SEO from "@/components/SEO";
+import teamHafza from "@/assets/team-hafza.png";
+import teamRohma from "@/assets/team-rohma.png";
+import teamAsim from "@/assets/team-asim.png";
 import TrustBadges from "@/components/TrustBadges";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
@@ -1007,6 +1010,8 @@ type TeamMember = {
   role: string;
   initials: string;
   gradient: string;
+  cardGradient: string;
+  image: string;
   bio: string;
   socials: { linkedin?: string; twitter?: string; email?: string };
 };
@@ -1017,6 +1022,8 @@ const TEAM: TeamMember[] = [
     role: "CEO",
     initials: "HA",
     gradient: "from-primary to-primary-glow",
+    cardGradient: "from-[#8b7ecf] to-[#b8a5d9]",
+    image: teamHafza,
     bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
     socials: { linkedin: "#", twitter: "#", email: "hafza@busistree.com" },
   },
@@ -1025,6 +1032,8 @@ const TEAM: TeamMember[] = [
     role: "CMO",
     initials: "RS",
     gradient: "from-violet-500 to-fuchsia-500",
+    cardGradient: "from-[#f2b45a] to-[#f5c885]",
+    image: teamRohma,
     bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
     socials: { linkedin: "#", twitter: "#", email: "rohma@busistree.com" },
   },
@@ -1033,15 +1042,17 @@ const TEAM: TeamMember[] = [
     role: "CCO",
     initials: "AA",
     gradient: "from-emerald-500 to-teal-600",
+    cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
+    image: teamAsim,
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
     socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
   },
 ];
 
 const WRAPPERS = [
-  "z-10 -translate-x-6 translate-y-2 -rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[70%] lg:group-hover/deck:-translate-x-[105%]",
+  "z-10 -translate-x-4 translate-y-3 -rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[105%] lg:group-hover/deck:-translate-x-[115%]",
   "z-30 translate-x-0 translate-y-0 rotate-0",
-  "z-20 translate-x-6 translate-y-2 rotate-6 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[70%] lg:group-hover/deck:translate-x-[105%]",
+  "z-20 translate-x-4 translate-y-3 rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[105%] lg:group-hover/deck:translate-x-[115%]",
 ];
 
 const TeamDeck = () => {
@@ -1051,23 +1062,45 @@ const TeamDeck = () => {
       type="button"
       onClick={() => setOpen(m)}
       aria-label={`View bio for ${m.name}`}
-      className="group w-full h-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-5 sm:p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
+      className="group relative w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-[2rem] cursor-pointer"
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-      <div className={`relative mx-auto h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-lg sm:text-2xl font-bold shadow-lg shadow-primary/20 mb-3 sm:mb-5 ${opts?.hoverHint ? "group-hover:scale-105" : ""} transition-transform duration-500`}>
-        {m.initials}
+      {/* Gradient card */}
+      <div className={`relative aspect-[3/4] rounded-[2rem] bg-gradient-to-b ${m.cardGradient} shadow-xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-1 group-hover:shadow-2xl`}>
+        {/* Vertical name */}
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
+          <span
+            className="font-display font-black text-white/85 tracking-tight leading-none whitespace-nowrap drop-shadow-sm"
+            style={{
+              writingMode: "vertical-rl",
+              transform: "rotate(180deg)",
+              fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
+            }}
+          >
+            {m.name.split(" ")[0]}
+          </span>
+        </div>
+        {/* Character portrait */}
+        <img
+          src={m.image}
+          alt={m.name}
+          loading="lazy"
+          width={768}
+          height={1024}
+          className="absolute inset-x-0 bottom-0 mx-auto h-[108%] w-auto object-contain object-bottom -translate-x-2 sm:-translate-x-3 transition-transform duration-500 group-hover:scale-[1.03]"
+        />
       </div>
-      <h3 className="relative text-sm sm:text-xl font-bold text-foreground tracking-tight text-center truncate">
-        {m.name}
-      </h3>
-      <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-primary/10 text-primary text-[10px] sm:text-xs font-semibold tracking-wider uppercase">
-        {m.role}
+      {/* Role pill */}
+      <div className={`relative z-10 -mt-4 mx-auto w-[75%] rounded-full bg-gradient-to-r ${m.cardGradient} shadow-lg px-3 py-2 text-center`}>
+        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
+          {m.role} · <span className="opacity-90 font-semibold">{m.name}</span>
+        </div>
       </div>
-      <div className={`relative mt-2 sm:mt-4 text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
+      <div className={`mt-2 text-center text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
         Tap to read bio
       </div>
     </button>
   );
+
 
   return (
     <>
@@ -1100,7 +1133,7 @@ const TeamDeck = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[380px] max-w-5xl"
+        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[520px] max-w-5xl"
       >
         <p className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70 tracking-widest uppercase opacity-100 group-hover/deck:opacity-0 transition-opacity duration-300">
           Hover to meet the team
