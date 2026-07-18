@@ -94,7 +94,7 @@ const Team = () => {
                   The people building <span className="italic font-light">Busistree</span>.
                 </h1>
                 <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed max-w-xl">
-                  A small, focused team helping Pakistani founders plan, design, launch and grow online.
+                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
                 </p>
 
                 <figure className="mt-8 relative max-w-xl">
