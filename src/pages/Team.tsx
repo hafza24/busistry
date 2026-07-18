@@ -20,7 +20,7 @@ type Member = {
   bio: string;
   image: string;
   cardGradient: string;
-  socials: { linkedin?: string; twitter?: string; email?: string };
+  socials: { linkedin?: string; instagram?: string; email?: string };
 };
 
 const team: Member[] = [
