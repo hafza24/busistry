@@ -97,17 +97,6 @@ const Team = () => {
                   Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
                 </p>
 
-                <figure className="mt-8 relative max-w-xl">
-                  <span aria-hidden className="absolute -top-4 -left-2 text-6xl md:text-7xl leading-none font-display text-white/25 select-none">“</span>
-                  <blockquote className="relative pl-6 border-l-2 border-white/40">
-                    <p className="text-white text-base md:text-lg italic font-light leading-relaxed">
-                      Every Pakistani founder deserves a beautiful online store — without the tech tax, the agency wait, or the guesswork. That's why we built Busistree.
-                    </p>
-                    <figcaption className="mt-3 text-xs tracking-widest uppercase text-white/70 font-semibold">
-                      — {m.name}, {m.role}
-                    </figcaption>
-                  </blockquote>
-                </figure>
 
 
 
