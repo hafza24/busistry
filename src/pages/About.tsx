@@ -13,17 +13,17 @@ import storyIllustration from "@/assets/about-story-illustration.png";
 import teamIllustration from "@/assets/about-team-illustration.png";
 
 const values = [
-  { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
-  { icon: Heart, title: "Built for Pakistan", body: "PKR pricing, local payment wallets, and support tuned to how our customers actually work." },
-  { icon: ShieldCheck, title: "Honest & transparent", body: "Clear pricing, no hidden fees, and plain-language contracts you can actually read." },
-  { icon: Rocket, title: "Fast by default", body: "Websites live in 24–48 hours. Iteration in days, not months." },
+  { icon: Target, title: "One partner, one plan", body: "Strategy, build, design and marketing under one roof — no juggling agencies, freelancers, or tools." },
+  { icon: Heart, title: "Business-first, not tech-first", body: "We start with your business goals, not with a template. Everything we ship is tied to an outcome." },
+  { icon: ShieldCheck, title: "Honest & transparent", body: "Clear pricing, plain-language scopes, and full ownership of everything we build for you." },
+  { icon: Rocket, title: "Momentum matters", body: "Fast planning, fast launches, and always-on marketing so your business keeps moving." },
 ];
 
 const milestones = [
-  { year: "2023", title: "The idea", body: "Founded to help Pakistani businesses launch beautiful websites without the enterprise price tag." },
-  { year: "2024", title: "First 100 stores", body: "Launched our template library and manual JazzCash/Easypaisa checkout to serve local merchants." },
-  { year: "2025", title: "Platform launch", body: "Self-serve dashboard, marketplace add-ons, and the growth services program went live." },
-  { year: "2026", title: "Where we are", body: "Serving hundreds of businesses with templates, custom builds, admin panels, and ongoing support." },
+  { year: "2023", title: "Started as a website builder", body: "Helping businesses get online quickly with done-for-you websites and stores." },
+  { year: "2024", title: "Added design & packaging", body: "Brought brand identity, product and packaging design in-house as BizStyle." },
+  { year: "2025", title: "Became a full hub", body: "Added business planning and marketing/promos — one place for everything a business needs." },
+  { year: "2026", title: "Where we are", body: "A complete business hub serving founders across planning, presence, design and growth." },
 ];
 
 const About = () => {
