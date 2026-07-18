@@ -80,36 +80,46 @@ const Team = () => {
         const m = team[0];
         return (
           <section className="relative overflow-hidden">
-            <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 md:gap-12 items-center py-16 md:py-24">
+            {/* Ambient decorative accents */}
+            <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+            <div aria-hidden className="pointer-events-none absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+
+            <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-10 md:gap-16 items-center py-20 md:py-28">
               {/* Content */}
               <div className="relative z-10 order-2 md:order-1">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-4">
-                  <span className="h-px w-8 bg-foreground/40" /> Founder
+                <div className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-6">
+                  <span className="h-px w-10 bg-primary/60" />
+                  Founder
                 </div>
-                <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight leading-[1.15] text-foreground">
-                  <span aria-hidden className="text-foreground/30 font-display mr-2">“</span>
-                  Every Pakistani founder deserves a beautiful online store — <span className="italic font-light text-primary">without the tech tax, the agency wait, or the guesswork.</span>
+
+                <h1 className="relative text-4xl md:text-5xl lg:text-6xl font-bold font-display tracking-tight leading-[1.1] text-foreground">
+                  <span aria-hidden className="absolute -left-2 -top-6 md:-top-8 text-7xl md:text-8xl leading-none font-display text-primary/15 select-none">“</span>
+                  Every Pakistani founder deserves a beautiful online store —{" "}
+                  <span className="italic font-light text-primary">without the tech tax, the agency wait, or the guesswork.</span>
                 </h1>
-                <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
+
+                <div className="mt-6 h-px w-16 bg-gradient-to-r from-primary to-transparent" />
+
+                <p className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
                   Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
                 </p>
 
-                <div className="flex items-center gap-2 mt-6">
+                <div className="flex items-center gap-2 mt-8">
                   {m.socials.linkedin && (
                     <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
-                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
+                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm">
                       <Linkedin className="h-4 w-4" />
                     </a>
                   )}
                   {m.socials.twitter && (
                     <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
-                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
+                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm">
                       <Twitter className="h-4 w-4" />
                     </a>
                   )}
                   {m.socials.email && (
                     <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
-                       className="h-9 w-9 rounded-md bg-foreground/5 border border-border flex items-center justify-center text-foreground hover:bg-foreground/10 transition-colors">
+                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm">
                       <Mail className="h-4 w-4" />
                     </a>
                   )}
@@ -117,16 +127,33 @@ const Team = () => {
               </div>
 
               {/* Founder portrait */}
-              <div className={`relative flex items-end justify-center order-1 md:order-2 rounded-3xl overflow-hidden bg-gradient-to-br ${m.cardGradient} min-h-[420px] md:min-h-[520px]`}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
-                <img
-                  src={m.image}
-                  alt={m.name}
-                  className="relative max-h-[420px] md:max-h-[520px] w-auto object-contain drop-shadow-2xl"
-                />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/95 backdrop-blur px-4 py-1.5 shadow-lg">
-                  <div className="text-foreground font-bold text-sm tracking-wide whitespace-nowrap">
-                    {m.role} · <span className="text-muted-foreground font-semibold">{m.name}</span>
+              <div className="relative order-1 md:order-2">
+                {/* Soft glow behind card */}
+                <div aria-hidden className={`absolute -inset-4 rounded-[2rem] bg-gradient-to-br ${m.cardGradient} opacity-40 blur-2xl`} />
+
+                <div className={`relative flex items-end justify-center rounded-[2rem] overflow-hidden bg-gradient-to-br ${m.cardGradient} min-h-[440px] md:min-h-[540px] shadow-2xl ring-1 ring-white/20`}>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.35),transparent_60%)] pointer-events-none" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(0,0,0,0.15),transparent_50%)] pointer-events-none" />
+
+                  {/* Floating accent chip */}
+                  <div className="absolute top-5 left-5 rounded-full bg-white/90 backdrop-blur px-3 py-1 shadow-md">
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase text-foreground">
+                      <Sparkles className="h-3 w-3 text-primary" />
+                      Busistree
+                    </div>
+                  </div>
+
+                  <img
+                    src={m.image}
+                    alt={m.name}
+                    className="relative max-h-[440px] md:max-h-[540px] w-auto object-contain drop-shadow-2xl"
+                  />
+
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/95 backdrop-blur px-5 py-2 shadow-xl ring-1 ring-black/5">
+                    <div className="text-foreground font-bold text-sm tracking-wide whitespace-nowrap">
+                      {m.name}
+                      <span className="text-muted-foreground font-medium"> · {m.role}</span>
+                    </div>
                   </div>
                 </div>
               </div>
