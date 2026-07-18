@@ -1089,17 +1089,22 @@ const TeamDeck = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="sm:hidden -mx-4 px-4"
+        className="sm:hidden"
       >
         <p className="text-xs text-muted-foreground/70 tracking-widest uppercase text-center mb-4">
-          Swipe to meet the team
+          Meet the team
         </p>
-        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          {TEAM.map((m) => (
-            <div key={m.name} className="snap-center shrink-0 w-[80%] max-w-[300px]">
-              {renderCard(m)}
-            </div>
-          ))}
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-[62%] max-w-[220px]">
+            {renderCard(TEAM[0])}
+          </div>
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {TEAM.slice(1).map((m) => (
+              <div key={m.name}>
+                {renderCard(m)}
+              </div>
+            ))}
+          </div>
         </div>
       </motion.div>
 
