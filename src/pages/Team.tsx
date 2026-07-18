@@ -73,16 +73,80 @@ const Team = () => {
       </section>
 
       {/* Team grid */}
-      <section className="container max-w-6xl py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {team.map((m) => (
+      <section className="container max-w-6xl py-16 space-y-8">
+        {/* CEO hero card */}
+        {(() => {
+          const m = team[0];
+          return (
+            <div
+              className={`relative rounded-3xl bg-gradient-to-br ${m.cardGradient} p-8 md:p-10 shadow-xl overflow-hidden grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 md:gap-10 items-center`}
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
+
+              <div className="absolute right-4 top-6 bottom-6 hidden md:flex items-center">
+                <span
+                  className="text-white/70 font-bold font-display tracking-widest text-2xl uppercase"
+                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                >
+                  {m.name.split(" ")[0]}
+                </span>
+              </div>
+
+              {/* Portrait */}
+              <div className="relative flex items-end justify-center">
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  className="max-h-[360px] w-auto object-contain drop-shadow-2xl"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 text-white">
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur border border-white/30 px-3 py-1 text-xs font-semibold mb-4">
+                  <Sparkles className="h-3.5 w-3.5" /> Founder
+                </div>
+                <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
+                  {m.name}
+                </h2>
+                <div className="text-lg font-semibold mt-1 text-white/85">{m.role}</div>
+                <p className="mt-4 text-base text-white/90 leading-relaxed max-w-xl">
+                  {m.bio}
+                </p>
+                <div className="flex items-center gap-2 mt-5">
+                  {m.socials.linkedin && (
+                    <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Linkedin className="h-4 w-4" />
+                    </a>
+                  )}
+                  {m.socials.twitter && (
+                    <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Twitter className="h-4 w-4" />
+                    </a>
+                  )}
+                  {m.socials.email && (
+                    <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Mail className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Remaining team */}
+        <div className="grid sm:grid-cols-2 gap-8">
+          {team.slice(1).map((m) => (
             <div
               key={m.name}
               className={`group relative rounded-3xl bg-gradient-to-br ${m.cardGradient} p-6 pt-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden`}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)] pointer-events-none" />
 
-              {/* Vertical name label */}
               <div className="absolute right-3 top-6 bottom-24 flex items-center">
                 <span
                   className="text-white/80 font-bold font-display tracking-widest text-lg uppercase"
@@ -92,58 +156,34 @@ const Team = () => {
                 </span>
               </div>
 
-              {/* Portrait */}
               <div className="relative aspect-square flex items-end justify-center">
-                <img
-                  src={m.image}
-                  alt={m.name}
-                  loading="lazy"
-                  className="max-h-full w-auto object-contain drop-shadow-2xl"
-                />
+                <img src={m.image} alt={m.name} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-2xl" />
               </div>
 
-              {/* Role pill */}
               <div className="relative z-10 -mt-2 mx-auto w-fit rounded-full bg-white/95 backdrop-blur px-4 py-1.5 shadow-md">
                 <div className="text-foreground font-bold text-sm tracking-wide">
                   {m.role} · <span className="text-muted-foreground font-semibold">{m.name}</span>
                 </div>
               </div>
 
-              {/* Bio */}
-              <p className="relative z-10 mt-4 text-sm text-white/90 leading-relaxed">
-                {m.bio}
-              </p>
+              <p className="relative z-10 mt-4 text-sm text-white/90 leading-relaxed">{m.bio}</p>
 
-              {/* Socials */}
               <div className="relative z-10 flex items-center gap-2 mt-4">
                 {m.socials.linkedin && (
-                  <a
-                    href={m.socials.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${m.name} on LinkedIn`}
-                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                  >
+                  <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
+                     className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                     <Linkedin className="h-4 w-4" />
                   </a>
                 )}
                 {m.socials.twitter && (
-                  <a
-                    href={m.socials.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${m.name} on Twitter`}
-                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                  >
+                  <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
+                     className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                     <Twitter className="h-4 w-4" />
                   </a>
                 )}
                 {m.socials.email && (
-                  <a
-                    href={`mailto:${m.socials.email}`}
-                    aria-label={`Email ${m.name}`}
-                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                  >
+                  <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
+                     className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                     <Mail className="h-4 w-4" />
                   </a>
                 )}
@@ -152,6 +192,7 @@ const Team = () => {
           ))}
         </div>
       </section>
+
 
       {/* Join us */}
       <section className="container max-w-5xl">
