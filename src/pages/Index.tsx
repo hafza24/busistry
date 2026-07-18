@@ -479,8 +479,8 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {showcase.slice(0, 6).map((t: any, i: number) => {
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            {showcase.slice(0, 4).map((t: any, i: number) => {
               const Icon = (t.icon as any) ?? ShoppingBag;
               return (
                 <motion.div
