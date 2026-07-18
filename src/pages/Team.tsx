@@ -83,14 +83,6 @@ const Team = () => {
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
 
-              <div className="absolute right-4 top-6 bottom-6 hidden md:flex items-center">
-                <span
-                  className="text-white/70 font-bold font-display tracking-widest text-2xl uppercase"
-                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-                >
-                  {m.name.split(" ")[0]}
-                </span>
-              </div>
 
               {/* Portrait */}
               <div className="relative flex items-end justify-center">
