@@ -1098,9 +1098,6 @@ const TeamDeck = () => {
           {m.role}
         </div>
       </div>
-      <div className={`mt-2 text-center text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
-        Tap to read bio
-      </div>
     </button>
   );
 
