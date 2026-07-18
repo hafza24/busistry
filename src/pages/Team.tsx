@@ -110,16 +110,6 @@ const Team = () => {
                 </figure>
 
 
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="h-14 w-14 rounded-full ring-2 ring-white/40 overflow-hidden bg-white/20 backdrop-blur flex-shrink-0">
-                    <img src={m.image} alt={m.name} className="h-full w-full object-cover object-top" />
-                  </div>
-                  <div>
-                    <div className="italic text-xs text-white/70 tracking-wide font-light">— Founder</div>
-                    <div className="font-bold font-display">{m.name}</div>
-                    <div className="text-xs text-white/80">{m.role}</div>
-                  </div>
-                </div>
 
                 <div className="flex items-center gap-2 mt-6">
                   {m.socials.linkedin && (
