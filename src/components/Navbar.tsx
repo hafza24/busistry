@@ -125,7 +125,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 px-3 md:px-6 transition-all duration-300 ease-out ${
+      className={`sticky top-0 z-50 transition-all duration-300 ease-out ${
         scrolled ? "pt-2 pb-2" : "pt-4 pb-3"
       }`}
     >
