@@ -646,9 +646,9 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Pricing</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Simple plans.{" "}
+              One partner.{" "}
               <span className="relative inline-block bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                No surprises.
+                One clear plan.
                 <span
                   aria-hidden="true"
                   className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/0 via-primary/60 to-accent/0"
@@ -656,7 +656,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Rent monthly or buy for life — transparent PKR pricing, cancel anytime.
+              Bundle planning, presence, design and marketing — or start with just what you need today.
             </p>
           </div>
 
