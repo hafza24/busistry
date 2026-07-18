@@ -57,8 +57,8 @@ const About = () => {
   return (
     <div className="pb-16">
       <SEO
-        title="About Busistree — Launching Pakistani businesses online"
-        description="Busistree is a Pakistani SaaS platform helping small businesses launch beautiful websites in 24–48 hours with PKR pricing and local support."
+        title="About Busistree — The complete hub for growing businesses"
+        description="Busistree is a business hub covering planning, digital presence and packaging, design, and marketing — one team behind every part of your business."
         path="/about"
       />
 
@@ -70,19 +70,19 @@ const About = () => {
             {/* Left copy */}
             <div className="relative text-center lg:text-left order-2 lg:order-1">
               <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                — Because your business deserves better
+                — One hub for everything your business needs
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-foreground leading-[1.05] tracking-tight">
-                Websites built for{" "}
+                Planning, presence, design and{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  who you serve,
+                  marketing —
                 </span>{" "}
-                not what tech expects.
+                one team behind it all.
               </h1>
               <p className="text-base md:text-lg text-muted-foreground mt-6 max-w-lg mx-auto lg:mx-0">
-                We build, launch, and manage websites for Pakistani businesses — fully branded,
-                fully managed, and priced in rupees. Everything you need to sell online, without
-                the enterprise complexity.
+                Busistree is the complete hub for growing businesses. We plan your business,
+                build your digital presence, design your brand and products, and run the
+                marketing that brings customers in — under one roof.
               </p>
 
               {/* Action row */}
