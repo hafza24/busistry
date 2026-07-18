@@ -135,13 +135,6 @@ const Team = () => {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.35),transparent_60%)] pointer-events-none" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_90%,rgba(0,0,0,0.15),transparent_50%)] pointer-events-none" />
 
-                  {/* Floating accent chip */}
-                  <div className="absolute top-5 left-5 rounded-full bg-white/90 backdrop-blur px-3 py-1 shadow-md">
-                    <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase text-foreground">
-                      <Sparkles className="h-3 w-3 text-primary" />
-                      Busistree
-                    </div>
-                  </div>
 
                   <img
                     src={m.image}
