@@ -6,11 +6,13 @@ import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
+import teamRohaAsset from "@/assets/team-roha.png.asset.json";
 
 const teamHafza = teamHafzaAsset.url;
 const teamRohma = teamRohmaAsset.url;
 const teamAsim = teamAsimAsset.url;
 const teamKiran = teamKiranAsset.url;
+const teamRoha = teamRohaAsset.url;
 
 type Member = {
   name: string;
@@ -53,6 +55,14 @@ const team: Member[] = [
     cardGradient: "from-[#c98a6b] to-[#e8b89a]",
     bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
     socials: { linkedin: "#", twitter: "#", email: "kiran@busistree.com" },
+  },
+  {
+    name: "Roha Shahid",
+    role: "Senior Fullstack Developer",
+    image: teamRoha,
+    cardGradient: "from-[#4a7c6f] to-[#8ab8a8]",
+    bio: "Roha architects and builds Busistree end-to-end. From database schemas to pixel-perfect interfaces, she ships the platform that Pakistani founders rely on every day.",
+    socials: { linkedin: "#", twitter: "#", email: "roha@busistree.com" },
   },
 ];
 
