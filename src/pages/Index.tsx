@@ -805,13 +805,13 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Our Team</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              The people behind{" "}
+              The team behind your{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Busistree
+                business hub
               </span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-muted-foreground">
-              A small team obsessed with launching beautiful, high-performing stores for ambitious founders.
+              Strategists, designers, developers and marketers — all working on your business, together.
             </p>
           </div>
 
