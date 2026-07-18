@@ -97,6 +97,19 @@ const Team = () => {
                   A small, focused team helping Pakistani founders plan, design, launch and grow online.
                 </p>
 
+                <figure className="mt-8 relative max-w-xl">
+                  <span aria-hidden className="absolute -top-4 -left-2 text-6xl md:text-7xl leading-none font-display text-white/25 select-none">“</span>
+                  <blockquote className="relative pl-6 border-l-2 border-white/40">
+                    <p className="text-white text-base md:text-lg italic font-light leading-relaxed">
+                      Every Pakistani founder deserves a beautiful online store — without the tech tax, the agency wait, or the guesswork. That's why we built Busistree.
+                    </p>
+                    <figcaption className="mt-3 text-xs tracking-widest uppercase text-white/70 font-semibold">
+                      — {m.name}, {m.role}
+                    </figcaption>
+                  </blockquote>
+                </figure>
+
+
                 <div className="mt-8 flex items-center gap-4">
                   <div className="h-14 w-14 rounded-full ring-2 ring-white/40 overflow-hidden bg-white/20 backdrop-blur flex-shrink-0">
                     <img src={m.image} alt={m.name} className="h-full w-full object-cover object-top" />
