@@ -20,7 +20,7 @@ const HowItWorks = () => (
     />
     <div className="container max-w-3xl">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:the-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
           One hub, four pillars. From planning your business to running your promos — here's how we work with you, end to end.
         </p>
