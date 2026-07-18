@@ -5,10 +5,12 @@ import { Linkedin, Mail, Twitter, Sparkles, ArrowRight } from "lucide-react";
 import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
+import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
 
 const teamHafza = teamHafzaAsset.url;
 const teamRohma = teamRohmaAsset.url;
 const teamAsim = teamAsimAsset.url;
+const teamKiran = teamKiranAsset.url;
 
 type Member = {
   name: string;
@@ -43,6 +45,14 @@ const team: Member[] = [
     cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
     socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
+  },
+  {
+    name: "Kiran Masood",
+    role: "HR Manager",
+    image: teamKiran,
+    cardGradient: "from-[#c98a6b] to-[#e8b89a]",
+    bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
+    socials: { linkedin: "#", twitter: "#", email: "kiran@busistree.com" },
   },
 ];
 
