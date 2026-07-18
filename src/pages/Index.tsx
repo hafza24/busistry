@@ -1098,9 +1098,6 @@ const TeamDeck = () => {
           {m.role}
         </div>
       </div>
-      <div className={`mt-2 text-center text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
-        Tap to read bio
-      </div>
     </button>
   );
 
@@ -1114,9 +1111,6 @@ const TeamDeck = () => {
         viewport={{ once: true }}
         className="sm:hidden"
       >
-        <p className="text-xs text-muted-foreground/70 tracking-widest uppercase text-center mb-4">
-          Meet the team
-        </p>
         <div className="flex flex-col items-center gap-3">
           <div className="w-[62%] max-w-[220px]">
             {renderCard(TEAM[0])}
