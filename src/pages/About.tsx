@@ -244,15 +244,15 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
-              <Users className="h-3.5 w-3.5" /> A team behind every launch
+              <Users className="h-3.5 w-3.5" /> One team, every pillar
             </div>
             <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">
-              Real people building your website — end to end.
+              Strategists, designers, developers and marketers — under one roof.
             </h2>
             <p className="text-muted-foreground mt-4">
-              From design and copy to analytics and post-launch tweaks, our team collaborates on
-              every store so you don't have to juggle freelancers, agencies, and tools. One partner,
-              one price, one clear plan.
+              Every business we work with gets a dedicated crew across all four pillars —
+              planning, presence, design and marketing. No handoffs between agencies. No
+              chasing freelancers. Just one team owning the outcome.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild>
