@@ -1064,19 +1064,19 @@ const TeamDeck = () => {
       type="button"
       onClick={() => setOpen(m)}
       aria-label={`View bio for ${m.name}`}
-      className="group w-full h-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
+      className="group w-full h-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-5 sm:p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-      <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 ${opts?.hoverHint ? "group-hover:scale-105" : ""} transition-transform duration-500`}>
+      <div className={`relative mx-auto h-16 w-16 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-lg sm:text-2xl font-bold shadow-lg shadow-primary/20 mb-3 sm:mb-5 ${opts?.hoverHint ? "group-hover:scale-105" : ""} transition-transform duration-500`}>
         {m.initials}
       </div>
-      <h3 className="relative text-xl font-bold text-foreground tracking-tight text-center">
+      <h3 className="relative text-sm sm:text-xl font-bold text-foreground tracking-tight text-center truncate">
         {m.name}
       </h3>
-      <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
+      <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-primary/10 text-primary text-[10px] sm:text-xs font-semibold tracking-wider uppercase">
         {m.role}
       </div>
-      <div className={`relative mt-4 text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
+      <div className={`relative mt-2 sm:mt-4 text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
         Tap to read bio
       </div>
     </button>
