@@ -125,7 +125,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 px-3 md:px-6 transition-all duration-300 ease-out ${
+      className={`sticky top-0 z-50 transition-all duration-300 ease-out ${
         scrolled ? "pt-2 pb-2" : "pt-4 pb-3"
       }`}
     >
@@ -165,7 +165,7 @@ const Navbar = () => {
 
         {/* Main glass nav bar */}
         <nav
-          className={`relative flex items-center w-full px-4 lg:px-8 bg-transparent transition-all duration-300 ${
+          className={`relative flex items-center w-full bg-transparent transition-all duration-300 ${
             scrolled ? "h-14" : "h-20"
           }`}
         >
