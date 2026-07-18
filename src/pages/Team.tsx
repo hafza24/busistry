@@ -113,7 +113,7 @@ const Team = () => {
         })()}
 
         {/* Remaining team */}
-        <div className="grid sm:grid-cols-2 gap-8">
+        <div className="grid sm:grid-cols-2 gap-8 px-4 sm:px-8 lg:px-16">
           {team.slice(1).map((m) => (
             <div
               key={m.name}
