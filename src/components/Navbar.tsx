@@ -165,7 +165,7 @@ const Navbar = () => {
 
         {/* Main glass nav bar */}
         <nav
-          className={`relative flex items-center w-full px-4 lg:px-8 bg-transparent transition-all duration-300 ${
+          className={`relative flex items-center w-full bg-transparent transition-all duration-300 ${
             scrolled ? "h-14" : "h-20"
           }`}
         >
