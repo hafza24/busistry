@@ -1,69 +1,48 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Linkedin, Mail, Github, Users, Sparkles, ArrowRight } from "lucide-react";
+import { Linkedin, Mail, Twitter, Users, Sparkles, ArrowRight } from "lucide-react";
+import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
+import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
+import teamAsimAsset from "@/assets/team-asim.png.asset.json";
+
+const teamHafza = teamHafzaAsset.url;
+const teamRohma = teamRohmaAsset.url;
+const teamAsim = teamAsimAsset.url;
 
 type Member = {
   name: string;
   role: string;
   bio: string;
-  initials: string;
-  gradient: string;
-  linkedin?: string;
-  email?: string;
-  github?: string;
+  image: string;
+  cardGradient: string;
+  socials: { linkedin?: string; twitter?: string; email?: string };
 };
 
 const team: Member[] = [
   {
+    name: "Hafza Azam",
+    role: "CEO",
+    image: teamHafza,
+    cardGradient: "from-[#8b7ecf] to-[#b8a5d9]",
+    bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
+    socials: { linkedin: "#", twitter: "#", email: "hafza@busistree.com" },
+  },
+  {
+    name: "Rohma Shahid",
+    role: "CMO",
+    image: teamRohma,
+    cardGradient: "from-[#389c84] to-[#6ec4a8]",
+    bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
+    socials: { linkedin: "#", twitter: "#", email: "rohma@busistree.com" },
+  },
+  {
     name: "Asim Azeemi",
-    role: "Founder & CEO",
-    bio: "Leads product and strategy. Obsessed with helping local businesses launch fast and grow online.",
-    initials: "AA",
-    gradient: "from-primary to-accent",
-    linkedin: "#",
-    email: "mailto:asimazeemi04@gmail.com",
-  },
-  {
-    name: "Design Lead",
-    role: "Head of Design",
-    bio: "Crafts the visual language for every template and product surface across the Busistree platform.",
-    initials: "DL",
-    gradient: "from-accent to-primary",
-    linkedin: "#",
-  },
-  {
-    name: "Engineering Lead",
-    role: "Head of Engineering",
-    bio: "Owns platform reliability, security, and the developer experience powering every store on Busistree.",
-    initials: "EL",
-    gradient: "from-primary/80 to-primary",
-    github: "#",
-  },
-  {
-    name: "Customer Success",
-    role: "Customer Success",
-    bio: "First point of contact for every launch. Turns onboarding chats into live websites in 24–48 hours.",
-    initials: "CS",
-    gradient: "from-accent/80 to-accent",
-    email: "mailto:hello@busistree.com",
-  },
-  {
-    name: "Growth Partner",
-    role: "Growth & Marketing",
-    bio: "Runs the growth services program — SEO, social, and ads for merchants ready to scale.",
-    initials: "GP",
-    gradient: "from-primary to-primary/70",
-    linkedin: "#",
-  },
-  {
-    name: "Support Lead",
-    role: "Support & Operations",
-    bio: "Keeps the lights on for existing customers — renewals, tickets, and platform operations.",
-    initials: "SL",
-    gradient: "from-accent to-accent/70",
-    email: "mailto:support@busistree.com",
+    role: "CCO",
+    image: teamAsim,
+    cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
+    bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
+    socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
   },
 ];
 
@@ -72,7 +51,7 @@ const Team = () => {
     <div className="pb-16">
       <SEO
         title="Our Team — Busistree"
-        description="Meet the team building Busistree — designers, engineers, and customer success specialists helping Pakistani businesses launch online."
+        description="Meet the team building Busistree — helping Pakistani businesses plan, design, launch and grow online."
         path="/team"
       />
 
@@ -87,49 +66,89 @@ const Team = () => {
             Small team.<br />Big ambitions.
           </h1>
           <p className="text-lg text-muted-foreground mt-6 max-w-2xl mx-auto">
-            A tight crew of designers, engineers, and specialists — obsessed with shipping beautiful,
-            fast, honest websites for Pakistani businesses.
+            A tight crew obsessed with helping Pakistani businesses plan, design, launch and grow —
+            all in one hub.
           </p>
         </div>
       </section>
 
       {/* Team grid */}
       <section className="container max-w-6xl py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {team.map((m) => (
-            <Card key={m.name} className="group border-border/60 hover:shadow-lg hover:border-primary/40 transition-all overflow-hidden">
-              <div className={`aspect-[4/3] bg-gradient-to-br ${m.gradient} flex items-center justify-center relative`}>
-                <span className="text-6xl font-bold font-display text-primary-foreground drop-shadow-lg">
-                  {m.initials}
+            <div
+              key={m.name}
+              className={`group relative rounded-3xl bg-gradient-to-br ${m.cardGradient} p-6 pt-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden`}
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)] pointer-events-none" />
+
+              {/* Vertical name label */}
+              <div className="absolute right-3 top-6 bottom-24 flex items-center">
+                <span
+                  className="text-white/80 font-bold font-display tracking-widest text-lg uppercase"
+                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                >
+                  {m.name.split(" ")[0]}
                 </span>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary-foreground)/0.15),transparent_60%)]" />
               </div>
-              <CardContent className="p-6">
-                <h3 className="font-bold font-display text-lg text-foreground">{m.name}</h3>
-                <div className="text-sm text-primary font-semibold mt-0.5">{m.role}</div>
-                <p className="text-sm text-muted-foreground mt-3">{m.bio}</p>
-                <div className="flex items-center gap-2 mt-4">
-                  {m.linkedin && (
-                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
-                       className="h-8 w-8 rounded-md border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">
-                      <Linkedin className="h-4 w-4" />
-                    </a>
-                  )}
-                  {m.email && (
-                    <a href={m.email} aria-label={`Email ${m.name}`}
-                       className="h-8 w-8 rounded-md border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">
-                      <Mail className="h-4 w-4" />
-                    </a>
-                  )}
-                  {m.github && (
-                    <a href={m.github} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on GitHub`}
-                       className="h-8 w-8 rounded-md border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">
-                      <Github className="h-4 w-4" />
-                    </a>
-                  )}
+
+              {/* Portrait */}
+              <div className="relative aspect-square flex items-end justify-center">
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  loading="lazy"
+                  className="max-h-full w-auto object-contain drop-shadow-2xl"
+                />
+              </div>
+
+              {/* Role pill */}
+              <div className="relative z-10 -mt-2 mx-auto w-fit rounded-full bg-white/95 backdrop-blur px-4 py-1.5 shadow-md">
+                <div className="text-foreground font-bold text-sm tracking-wide">
+                  {m.role} · <span className="text-muted-foreground font-semibold">{m.name}</span>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              {/* Bio */}
+              <p className="relative z-10 mt-4 text-sm text-white/90 leading-relaxed">
+                {m.bio}
+              </p>
+
+              {/* Socials */}
+              <div className="relative z-10 flex items-center gap-2 mt-4">
+                {m.socials.linkedin && (
+                  <a
+                    href={m.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${m.name} on LinkedIn`}
+                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                )}
+                {m.socials.twitter && (
+                  <a
+                    href={m.socials.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${m.name} on Twitter`}
+                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                )}
+                {m.socials.email && (
+                  <a
+                    href={`mailto:${m.socials.email}`}
+                    aria-label={`Email ${m.name}`}
+                    className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </section>
