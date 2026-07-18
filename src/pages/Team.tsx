@@ -76,6 +76,12 @@ const Team = () => {
       />
 
       <section className="container max-w-6xl py-16 space-y-8">
+        <div className="text-center space-y-3">
+          <div className="text-sm font-semibold tracking-widest uppercase text-primary">— The People</div>
+          <h1 className="text-4xl md:text-5xl font-bold font-display tracking-tight">Meet the Team</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">The people building Busistree — helping Pakistani founders plan, design, launch and grow online.</p>
+        </div>
+
         {/* CEO hero card */}
         {(() => {
           const m = team[0];
