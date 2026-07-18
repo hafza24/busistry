@@ -5,24 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const steps = [
-  { icon: Search, title: "Browse Templates", desc: "Explore our collection of professionally designed store templates, organized by niche — clothing, perfume, jewelry, bakery, and more." },
-  { icon: CreditCard, title: "Choose a Plan & Pay", desc: "Select a plan that fits your budget. Pay easily via Easypaisa, JazzCash, NayaPay, Raast, or bank transfer. All prices in PKR." },
-  { icon: CheckCircle, title: "We Set Up Your Store", desc: "Our team reviews your request and activates your store. You'll get a unique subdomain or custom domain." },
-  { icon: Rocket, title: "Start Selling!", desc: "Add your products, customize your store, and start taking orders. We handle hosting and security." },
+  { icon: Search, title: "1. Plan your business", desc: "We start with strategy — offer, audience, positioning and goals — so every next step ladders up to real business outcomes." },
+  { icon: CreditCard, title: "2. Build your digital presence", desc: "Website, online store, packaging and product pages — a complete, on-brand digital presence, fully done for you." },
+  { icon: CheckCircle, title: "3. Design that sells", desc: "Brand identity, visuals, copy and content — all crafted in-house at BizStyle to look great and convert." },
+  { icon: Rocket, title: "4. Market & grow", desc: "Launch campaigns, ongoing promos, social content and paid ads — we bring the customers, you focus on running the business." },
 ];
 
 const HowItWorks = () => (
   <div className="py-16">
     <SEO
       title="How It Works — Busistree"
-      description="Four steps from template to live website: browse, choose a plan, we set it up, and you start selling. Delivered in 24–48 hours."
+      description="Four pillars, one hub. Planning, digital presence and packaging, design, and marketing — everything your business needs, delivered end to end."
       path="/how-it-works"
     />
     <div className="container max-w-3xl">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
+        <h1 className="text-4xl md:the-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-          Launch your professional online store in four simple steps. We handle the technical heavy lifting while you focus on growth.
+          One hub, four pillars. From planning your business to running your promos — here's how we work with you, end to end.
         </p>
       </div>
 
