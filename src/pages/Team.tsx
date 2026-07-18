@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Linkedin, Mail, Twitter, Sparkles, ArrowRight } from "lucide-react";
+import { Linkedin, Mail, Instagram, Sparkles, ArrowRight } from "lucide-react";
 import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
@@ -20,7 +20,7 @@ type Member = {
   bio: string;
   image: string;
   cardGradient: string;
-  socials: { linkedin?: string; twitter?: string; email?: string };
+  socials: { linkedin?: string; instagram?: string; email?: string };
 };
 
 const team: Member[] = [
@@ -30,7 +30,7 @@ const team: Member[] = [
     image: teamHafza,
     cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
     bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
-    socials: { linkedin: "#", twitter: "#", email: "hafza@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
   },
   {
     name: "Rohma Shahid",
@@ -38,7 +38,7 @@ const team: Member[] = [
     image: teamRohma,
     cardGradient: "from-[#389c84] to-[#6ec4a8]",
     bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
-    socials: { linkedin: "#", twitter: "#", email: "rohma@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "rohma@busistree.com" },
   },
   {
     name: "Asim Azeemi",
@@ -46,7 +46,7 @@ const team: Member[] = [
     image: teamAsim,
     cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
-    socials: { linkedin: "#", twitter: "#", email: "asim@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "asim@busistree.com" },
   },
   {
     name: "Kiran Masood",
@@ -54,7 +54,7 @@ const team: Member[] = [
     image: teamKiran,
     cardGradient: "from-[#7c5fb8] to-[#b89ad9]",
     bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
-    socials: { linkedin: "#", twitter: "#", email: "kiran@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "kiran@busistree.com" },
   },
   {
     name: "Roha Shahid",
@@ -62,7 +62,7 @@ const team: Member[] = [
     image: teamRoha,
     cardGradient: "from-[#4a7c6f] to-[#8ab8a8]",
     bio: "Roha architects and builds Busistree end-to-end. From database schemas to pixel-perfect interfaces, she ships the platform that Pakistani founders rely on every day.",
-    socials: { linkedin: "#", twitter: "#", email: "roha@busistree.com" },
+    socials: { linkedin: "#", instagram: "#", email: "roha@busistree.com" },
   },
 ];
 
@@ -111,10 +111,10 @@ const Team = () => {
                       <Linkedin className="h-4 w-4" />
                     </a>
                   )}
-                  {m.socials.twitter && (
-                    <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
+                  {m.socials.instagram && (
+                    <a href={m.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Instagram`}
                        className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary hover:-translate-y-0.5 transition-all shadow-sm">
-                      <Twitter className="h-4 w-4" />
+                      <Instagram className="h-4 w-4" />
                     </a>
                   )}
                   {m.socials.email && (
@@ -200,10 +200,10 @@ const Team = () => {
                     <Linkedin className="h-4 w-4" />
                   </a>
                 )}
-                {m.socials.twitter && (
-                  <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
+                {m.socials.instagram && (
+                  <a href={m.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Instagram`}
                      className="h-8 w-8 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <Twitter className="h-4 w-4" />
+                    <Instagram className="h-4 w-4" />
                   </a>
                 )}
                 {m.socials.email && (
