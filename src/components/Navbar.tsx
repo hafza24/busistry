@@ -383,35 +383,67 @@ const Navbar = () => {
         >
           <div className="min-h-0 overflow-hidden rounded-3xl border border-border/60 bg-background/95 backdrop-blur-xl shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.15)] ring-1 ring-foreground/5">
             <nav className="flex flex-col p-2">
-              {allLinks.map((link, i) => {
-                const active = location.pathname === link.to;
-                return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setMobileOpen(false)}
-                    style={{
-                      transitionDelay: mobileOpen ? `${80 + i * 40}ms` : "0ms",
-                    }}
-                    className={`group/mlink relative flex items-center h-12 px-4 rounded-2xl text-sm font-semibold overflow-hidden transition-all duration-300 ease-out ${
-                      mobileOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"
-                    } ${
-                      active
-                        ? "text-primary bg-primary/10"
-                        : "text-foreground/80 hover:text-primary hover:bg-secondary hover:translate-x-1"
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`absolute left-2 top-1/2 -translate-y-1/2 w-1 rounded-full bg-gradient-brand transition-all duration-300 ease-out ${
-                        active ? "h-6 opacity-100" : "h-0 opacity-0 group-hover/mlink:h-4 group-hover/mlink:opacity-70"
+              {(() => {
+                const sections: Array<
+                  | { kind: "link"; to: string; label: string }
+                  | { kind: "group"; to: string; label: string; items: typeof marketplaceItems }
+                > = [
+                  { kind: "link", to: "/", label: "Home" },
+                  { kind: "group", to: "/marketplace", label: "Marketplace", items: marketplaceItems },
+                  { kind: "link", to: "/how-it-works", label: "How it works" },
+                  { kind: "group", to: "/about", label: "About", items: aboutItems },
+                  { kind: "link", to: "/contact", label: "Contact" },
+                ];
+                let i = 0;
+                const renderLink = (to: string, label: string, opts?: { sub?: boolean; icon?: any }) => {
+                  const active = location.pathname === to;
+                  const idx = i++;
+                  const Icon = opts?.icon;
+                  return (
+                    <Link
+                      key={to}
+                      to={to}
+                      onClick={() => setMobileOpen(false)}
+                      style={{ transitionDelay: mobileOpen ? `${80 + idx * 30}ms` : "0ms" }}
+                      className={`group/mlink relative flex items-center gap-3 h-12 rounded-2xl text-sm overflow-hidden transition-all duration-300 ease-out ${
+                        opts?.sub ? "pl-10 pr-4 font-medium" : "px-4 font-semibold"
+                      } ${
+                        mobileOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"
+                      } ${
+                        active
+                          ? "text-primary bg-primary/10"
+                          : "text-foreground/80 hover:text-primary hover:bg-secondary hover:translate-x-1"
                       }`}
-                    />
-                    <span className="relative z-10 ml-2">{link.label}</span>
-                  </Link>
-                );
-              })}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`absolute ${opts?.sub ? "left-6" : "left-2"} top-1/2 -translate-y-1/2 w-1 rounded-full bg-gradient-brand transition-all duration-300 ease-out ${
+                          active ? "h-6 opacity-100" : "h-0 opacity-0 group-hover/mlink:h-4 group-hover/mlink:opacity-70"
+                        }`}
+                      />
+                      {Icon && (
+                        <span className="relative z-10 h-7 w-7 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                          <Icon className="h-3.5 w-3.5" />
+                        </span>
+                      )}
+                      <span className="relative z-10 ml-2">{label}</span>
+                    </Link>
+                  );
+                };
+                return sections.map((s) => {
+                  if (s.kind === "link") return renderLink(s.to, s.label);
+                  return (
+                    <div key={s.to} className="flex flex-col">
+                      {renderLink(s.to, s.label)}
+                      <div className="ml-2 mb-1 border-l border-border/60 pl-1">
+                        {s.items.map((it) => renderLink(it.to, it.label, { sub: true, icon: it.icon }))}
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
             </nav>
+
 
             <div
               style={{ transitionDelay: mobileOpen ? `${80 + allLinks.length * 40}ms` : "0ms" }}
