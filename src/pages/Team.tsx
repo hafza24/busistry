@@ -75,12 +75,82 @@ const Team = () => {
         path="/team"
       />
 
+      {/* Hero */}
+      {(() => {
+        const m = team[0];
+        return (
+          <section className={`relative overflow-hidden bg-gradient-to-br ${m.cardGradient}`}>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.28),transparent_60%)] pointer-events-none" />
+            <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-black/10 blur-3xl pointer-events-none" />
+
+            <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 md:gap-12 items-center py-16 md:py-24">
+              {/* Content */}
+              <div className="relative z-10 text-white order-2 md:order-1">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-white/85 mb-4">
+                  <span className="h-px w-8 bg-white/60" /> Meet the Team
+                </div>
+                <h1 className="text-4xl md:text-6xl font-bold font-display tracking-tight leading-[1.05]">
+                  The people building <span className="italic font-light">Busistree</span>.
+                </h1>
+                <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed max-w-xl">
+                  A small, focused team helping Pakistani founders plan, design, launch and grow online.
+                </p>
+
+                <div className="mt-8 flex items-center gap-4">
+                  <div className="h-14 w-14 rounded-full ring-2 ring-white/40 overflow-hidden bg-white/20 backdrop-blur flex-shrink-0">
+                    <img src={m.image} alt={m.name} className="h-full w-full object-cover object-top" />
+                  </div>
+                  <div>
+                    <div className="italic text-xs text-white/70 tracking-wide font-light">— Founder</div>
+                    <div className="font-bold font-display">{m.name}</div>
+                    <div className="text-xs text-white/80">{m.role}</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 mt-6">
+                  {m.socials.linkedin && (
+                    <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Linkedin className="h-4 w-4" />
+                    </a>
+                  )}
+                  {m.socials.twitter && (
+                    <a href={m.socials.twitter} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Twitter`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Twitter className="h-4 w-4" />
+                    </a>
+                  )}
+                  {m.socials.email && (
+                    <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
+                       className="h-9 w-9 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                      <Mail className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Founder portrait */}
+              <div className="relative flex items-end justify-center order-1 md:order-2">
+                <div className="absolute inset-x-8 bottom-8 h-1/2 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 pointer-events-none" />
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  className="relative max-h-[420px] md:max-h-[520px] w-auto object-contain drop-shadow-2xl"
+                />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/95 backdrop-blur px-4 py-1.5 shadow-lg">
+                  <div className="text-foreground font-bold text-sm tracking-wide whitespace-nowrap">
+                    {m.role} · <span className="text-muted-foreground font-semibold">{m.name}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
       <section className="container max-w-6xl py-16 space-y-8">
-        <div className="text-center space-y-3">
-          <div className="text-sm font-semibold tracking-widest uppercase text-primary">— The People</div>
-          <h1 className="text-4xl md:text-5xl font-bold font-display tracking-tight">Meet the Team</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">The people building Busistree — helping Pakistani founders plan, design, launch and grow online.</p>
-        </div>
+
 
         {/* CEO hero card */}
         {(() => {
