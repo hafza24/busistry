@@ -1035,7 +1035,7 @@ const TEAM: TeamMember[] = [
     role: "CMO",
     initials: "RS",
     gradient: "from-violet-500 to-fuchsia-500",
-    cardGradient: "from-[#f2b45a] to-[#f5c885]",
+    cardGradient: "from-[#389c84] to-[#6ec4a8]",
     image: teamRohma,
     bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
     socials: { linkedin: "#", twitter: "#", email: "rohma@busistree.com" },
