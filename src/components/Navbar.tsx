@@ -433,11 +433,33 @@ const Navbar = () => {
                 };
                 return sections.map((s) => {
                   if (s.kind === "link") return renderLink(s.to, s.label);
+                  const isOpen = openMobileGroup === s.to;
                   return (
                     <div key={s.to} className="flex flex-col">
-                      {renderLink(s.to, s.label)}
-                      <div className="ml-2 mb-1 border-l border-border/60 pl-1">
-                        {s.items.map((it) => renderLink(it.to, it.label, { sub: true, icon: it.icon }))}
+                      <div className="relative flex items-center">
+                        <div className="flex-1">{renderLink(s.to, s.label)}</div>
+                        <button
+                          type="button"
+                          aria-label={`Toggle ${s.label} submenu`}
+                          aria-expanded={isOpen}
+                          onClick={() => setOpenMobileGroup(isOpen ? null : s.to)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 inline-flex items-center justify-center rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                        >
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                          />
+                        </button>
+                      </div>
+                      <div
+                        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <div className="min-h-0 overflow-hidden">
+                          <div className="ml-2 my-1 border-l border-border/60 pl-1 flex flex-col rounded-xl">
+                            {s.items.map((it) => renderLink(it.to, it.label, { sub: true, icon: it.icon }))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
