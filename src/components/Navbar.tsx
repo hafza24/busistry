@@ -326,7 +326,8 @@ const Navbar = () => {
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="glass-accent" size="sm" className="rounded-full" onClick={signOut}>
+                <Button variant="ghost" size="sm" className="rounded-full gap-1.5 text-muted-foreground hover:text-foreground hover:bg-destructive/10 hover:text-destructive transition-colors" onClick={signOut}>
+                  <LogOut className="h-4 w-4" />
                   Sign Out
                 </Button>
               </div>
