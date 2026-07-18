@@ -146,7 +146,7 @@ const Team = () => {
 
         <div className="text-center space-y-2 mb-4">
           <div className="text-xs font-semibold tracking-widest uppercase text-primary">— The Crew</div>
-          <h2 className="text-3xl md:text-4xl font-bold font-display tracking-tight">The rest of the team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold font-display tracking-tight">Meet the team</h2>
         </div>
 
 
