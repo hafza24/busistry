@@ -150,7 +150,7 @@ const Navbar = () => {
         {/* Central Logo Hub overlay */}
         <Link
           to="/"
-          className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 items-center justify-center pointer-events-auto transition-transform duration-500 group-hover:scale-105"
+          className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 items-center justify-center pointer-events-auto transition-transform duration-500 group-hover:scale-105"
           aria-label="Busistree home"
         >
           <img
@@ -164,17 +164,17 @@ const Navbar = () => {
 
         {/* Main glass nav bar */}
         <nav
-          className={`relative flex items-center w-full px-4 md:px-8 bg-transparent transition-all duration-300 ${
+          className={`relative flex items-center w-full px-4 lg:px-8 bg-transparent transition-all duration-300 ${
             scrolled ? "h-14" : "h-20"
           }`}
         >
           {/* Mobile logo (left) */}
-          <Link to="/" className="md:hidden flex items-center gap-2">
+          <Link to="/" className="lg:hidden flex items-center gap-2">
             <img src={logo} alt="Busistree" className="h-8 w-auto object-contain" />
           </Link>
 
           {/* Left links + mega menus */}
-          <div className="hidden md:flex items-center flex-1 min-w-0">
+          <div className="hidden lg:flex items-center flex-1 min-w-0">
             <div className="inline-flex items-center gap-1 px-1.5 py-1 max-w-full overflow-visible">
               {/* Home */}
               <Link to="/" className={linkClass(location.pathname === "/")}>
@@ -308,10 +308,10 @@ const Navbar = () => {
           </div>
 
           {/* Spacer for logo hub */}
-          <div className="hidden md:block w-32 lg:w-40 xl:w-48 shrink-0" aria-hidden="true" />
+          <div className="hidden lg:block w-32 lg:w-40 xl:w-48 shrink-0" aria-hidden="true" />
 
           {/* Right links + auth */}
-          <div className="hidden md:flex items-center gap-1 flex-1 justify-end">
+          <div className="hidden lg:flex items-center gap-1 flex-1 justify-end">
             {rightLinks.map((link) => (
               <Link key={link.to} to={link.to} className={linkClass(location.pathname === link.to)}>
                 {link.label}
@@ -349,7 +349,7 @@ const Navbar = () => {
           {/* Mobile toggle */}
           <button
             type="button"
-            className="md:hidden ml-auto p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="lg:hidden ml-auto p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -375,7 +375,7 @@ const Navbar = () => {
       {mobileRender && (
         <div
           id="mobile-menu"
-          className={`md:hidden mt-3 w-full grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`lg:hidden mt-3 w-full grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
             mobileOpen
               ? "grid-rows-[1fr] opacity-100 translate-y-0"
               : "grid-rows-[0fr] opacity-0 -translate-y-2"
