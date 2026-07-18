@@ -226,13 +226,13 @@ const About = () => {
       <section className="border-y border-border/50 bg-muted/30">
         <div className="container max-w-5xl py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { k: "24–48h", v: "Average launch time" },
-            { k: "PKR", v: "Localized pricing" },
-            { k: "100%", v: "Branded to you" },
-            { k: "24/7", v: "Support channels" },
+            { k: "Plan", v: "Strategy & positioning" },
+            { k: "Presence", v: "Websites, stores, packaging" },
+            { k: "Design", v: "Brand & product design" },
+            { k: "Promote", v: "Marketing & launch promos" },
           ].map((s) => (
             <div key={s.v}>
-              <div className="text-3xl md:text-4xl font-bold font-display text-primary">{s.k}</div>
+              <div className="text-2xl md:text-3xl font-bold font-display text-primary">{s.k}</div>
               <div className="text-sm text-muted-foreground mt-1">{s.v}</div>
             </div>
           ))}
