@@ -842,7 +842,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-3 mb-6">
                 <span aria-hidden className="h-px w-8 bg-violet-300/60" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200">
-                  From the Busistree family
+                  Design & Packaging pillar
                 </span>
               </div>
 
@@ -851,13 +851,13 @@ const Index = () => {
                   BizStyle
                 </span>
                 <span className="block text-white/90 mt-2 text-3xl md:text-5xl">
-                  Printing ideas into powerful brands.
+                  Brand identity, product & packaging design.
                 </span>
               </h2>
 
               <p className="mt-6 text-lg text-violet-100/70 max-w-xl leading-relaxed">
-                Premium printing, packaging, branding and creative studio work — from concept to
-                delivery. Everything your brand touches, crafted with intent.
+                The design studio inside Busistree. Logos, brand systems, product packaging and print —
+                so what customers see, hold and share always feels intentional.
               </p>
 
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
