@@ -979,20 +979,20 @@ const Index = () => {
           >
             
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Start your store today.
+              Everything your business needs — in one hub.
             </h2>
             <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-              The easiest, fastest way to launch a fully functional website — without doing anything yourself.
+              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
-                <Link to="/templates">
-                  Browse Templates
+                <Link to="/marketplace">
+                  Explore the hub
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
-                <Link to="/pricing">Get Started</Link>
+                <Link to="/contact">Talk to us</Link>
               </Button>
             </div>
           </motion.div>
