@@ -1059,13 +1059,56 @@ const WRAPPERS = [
 
 const TeamDeck = () => {
   const [open, setOpen] = useState<TeamMember | null>(null);
+  const renderCard = (m: TeamMember, opts?: { hoverHint?: boolean }) => (
+    <button
+      type="button"
+      onClick={() => setOpen(m)}
+      aria-label={`View bio for ${m.name}`}
+      className="group w-full h-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
+    >
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+      <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 ${opts?.hoverHint ? "group-hover:scale-105" : ""} transition-transform duration-500`}>
+        {m.initials}
+      </div>
+      <h3 className="relative text-xl font-bold text-foreground tracking-tight text-center">
+        {m.name}
+      </h3>
+      <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
+        {m.role}
+      </div>
+      <div className={`relative mt-4 text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
+        Tap to read bio
+      </div>
+    </button>
+  );
+
   return (
     <>
+      {/* Mobile: horizontal snap scroll */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="group/deck relative mx-auto flex items-center justify-center h-[380px] max-w-5xl"
+        className="sm:hidden -mx-4 px-4"
+      >
+        <p className="text-xs text-muted-foreground/70 tracking-widest uppercase text-center mb-4">
+          Swipe to meet the team
+        </p>
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {TEAM.map((m) => (
+            <div key={m.name} className="snap-center shrink-0 w-[80%] max-w-[300px]">
+              {renderCard(m)}
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Tablet/Desktop: hover deck */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[380px] max-w-5xl"
       >
         <p className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-xs text-muted-foreground/70 tracking-widest uppercase opacity-100 group-hover/deck:opacity-0 transition-opacity duration-300">
           Hover to meet the team
@@ -1076,26 +1119,7 @@ const TeamDeck = () => {
             className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${WRAPPERS[i]}`}
             style={{ transitionDelay: `${i * 80}ms` }}
           >
-            <button
-              type="button"
-              onClick={() => setOpen(m)}
-              aria-label={`View bio for ${m.name}`}
-              className="group w-full text-left relative bg-card/80 backdrop-blur-sm border border-border/70 rounded-3xl p-8 text-center hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-500 overflow-hidden cursor-pointer"
-            >
-              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-              <div className={`relative mx-auto h-24 w-24 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-primary/20 mb-5 group-hover:scale-105 transition-transform duration-500`}>
-                {m.initials}
-              </div>
-              <h3 className="relative text-xl font-bold text-foreground tracking-tight text-center">
-                {m.name}
-              </h3>
-              <div className="relative mt-1.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase">
-                {m.role}
-              </div>
-              <div className="relative mt-4 text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Click to read bio
-              </div>
-            </button>
+            {renderCard(m, { hoverHint: true })}
           </div>
         ))}
       </motion.div>
