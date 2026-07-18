@@ -516,36 +516,36 @@ const Index = () => {
 
                     <Badge
                       variant="secondary"
-                      className="absolute top-4 left-4 backdrop-blur-md bg-background/85 border border-border/60 shadow-sm text-[11px] font-semibold tracking-wide px-2.5 py-1"
+                      className="absolute top-2 left-2 sm:top-4 sm:left-4 backdrop-blur-md bg-background/85 border border-border/60 shadow-sm text-[9px] sm:text-[11px] font-semibold tracking-wide px-1.5 sm:px-2.5 py-0.5 sm:py-1"
                     >
                       {t.niche}
                     </Badge>
                   </div>
 
-                  <div className="p-5 relative">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
+                  <div className="p-3 sm:p-5 relative">
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <h3 className="text-sm sm:text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors truncate">
                         {t.name}
                       </h3>
-                      <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
+                      <div className="hidden sm:flex h-6 w-6 rounded-full bg-primary/10 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
                         <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5 sm:gap-2">
                       {t.demo_url ? (
-                        <Button variant="default" size="sm" className="flex-1 rounded-full" asChild>
+                        <Button variant="default" size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                            Preview <ExternalLink className="h-3 w-3 ml-1.5" />
+                            Preview <ExternalLink className="h-3 w-3 ml-1 hidden sm:inline" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="default" size="sm" className="flex-1 rounded-full" asChild>
+                        <Button variant="default" size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="sm" className="flex-1 rounded-full bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:shadow-lg hover:shadow-primary/25 hover:opacity-95 transition-all" asChild>
+                      <Button size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3 bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:shadow-lg hover:shadow-primary/25 hover:opacity-95 transition-all" asChild>
                         <Link to="/templates">
-                          Select <ArrowRight className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-0.5" />
+                          Select <ArrowRight className="h-3 w-3 ml-1 hidden sm:inline transition-transform group-hover:translate-x-0.5" />
                         </Link>
                       </Button>
                     </div>
