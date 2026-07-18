@@ -44,7 +44,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const trust = ["No coding", "Fast delivery", "Beginner-friendly"];
+const trust = ["Strategy included", "In-house design", "End-to-end delivery"];
 
 const fallbackTemplates = [
   { name: "Fashion Store", niche: "Fashion", icon: ShoppingBag },
@@ -55,25 +55,25 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: LayoutTemplate, title: "Choose Your Template", desc: "Browse our collection of professionally designed templates for any industry.", gradient: "from-sky-500 to-blue-600" },
-  { num: "02", icon: PencilRuler, title: "Complete Smart Form", desc: "Answer a few simple questions about your brand, products, and preferences.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Palette, title: "We Build & Customize", desc: "Our expert team transforms your template into a unique, fully-functional store.", gradient: "from-violet-500 to-fuchsia-500" },
-  { num: "04", icon: Rocket, title: "Launch & Grow", desc: "Review your store, request changes, and launch with confidence.", gradient: "from-emerald-500 to-teal-600" },
+  { num: "01", icon: LayoutTemplate, title: "Plan Your Business", desc: "We map your offer, audience and goals — a clear plan before anything gets built.", gradient: "from-sky-500 to-blue-600" },
+  { num: "02", icon: PencilRuler, title: "Build Your Presence", desc: "Website, store, packaging and product identity — a full digital presence, done for you.", gradient: "from-primary to-primary-glow" },
+  { num: "03", icon: Palette, title: "Design That Sells", desc: "Brand, visuals and content crafted to convert — not just to look pretty.", gradient: "from-violet-500 to-fuchsia-500" },
+  { num: "04", icon: Rocket, title: "Market & Grow", desc: "Launch campaigns, promos and always-on marketing to bring customers in.", gradient: "from-emerald-500 to-teal-600" },
 ];
 
 const includes = [
-  { icon: Globe, title: "Fully designed website / store" },
-  { icon: Smartphone, title: "Mobile responsive" },
-  { icon: LayoutDashboard, title: "Easy dashboard access" },
-  { icon: CreditCard, title: "Payment & contact integration" },
-  { icon: ShoppingBag, title: "Product or service setup" },
-  { icon: MessageCircle, title: "WhatsApp integration" },
+  { icon: Globe, title: "Business plan & positioning" },
+  { icon: Smartphone, title: "Website / online store built" },
+  { icon: LayoutDashboard, title: "Brand identity & guidelines" },
+  { icon: CreditCard, title: "Product & packaging design" },
+  { icon: ShoppingBag, title: "Content & creatives ready" },
+  { icon: MessageCircle, title: "Launch & promo campaigns" },
 ];
 
 const tiers = [
   {
     name: "Starter",
-    blurb: "Perfect to test the waters",
+    blurb: "Get online with the essentials",
     price: "PKR 9,999",
     delivery: "5–7 days",
     features: ["Up to 10 products / 5 pages", "Basic customization", "Mobile responsive", "Contact form"],
@@ -81,7 +81,7 @@ const tiers = [
   },
   {
     name: "Growth",
-    blurb: "Most popular for growing brands",
+    blurb: "Most popular for scaling brands",
     price: "PKR 24,999",
     delivery: "3–5 days",
     features: ["Up to 50 products / 10 pages", "Advanced customization", "Payment gateway setup", "WhatsApp integration", "SEO basics"],
@@ -89,7 +89,7 @@ const tiers = [
   },
   {
     name: "Premium",
-    blurb: "Full-feature, priority build",
+    blurb: "Full-stack build with priority delivery",
     price: "PKR 49,999",
     delivery: "24–48 hours",
     features: ["Unlimited products / pages", "Premium customization", "All integrations", "Priority delivery", "30 days support"],
@@ -98,36 +98,36 @@ const tiers = [
 ];
 
 const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "I had a fully working store in two days. I didn't touch a single line of code." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "The form made it feel like onboarding to a real product, not commissioning a website." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "Clean, fast, and exactly what we asked for. Worth every rupee." },
+  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
+  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
+  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
 ];
 
 const comparison = [
-  { feature: "Done-for-you build", busistry: true, shopify: false, dev: true },
-  { feature: "Launch in 24–48 hours", busistry: true, shopify: false, dev: false },
-  { feature: "No technical skills needed", busistry: true, shopify: false, dev: true },
-  { feature: "Fixed upfront price", busistry: true, shopify: true, dev: false },
-  { feature: "Full ownership of your site", busistry: true, shopify: false, dev: true },
+  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
+  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
+  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
+  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
+  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
 ];
 
 const faqs = [
-  { q: "How fast will my store be delivered?", a: "Most stores are delivered within 24–48 hours. Larger custom builds take 3–7 days depending on the plan." },
-  { q: "Can I edit the website myself later?", a: "Yes. You get full dashboard access — edit content, add products, change images, and manage orders any time." },
-  { q: "Do I need any technical experience?", a: "Not at all. You pick a template, answer a short form, and we handle everything from design to launch." },
-  { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
+  { q: "What exactly does Busistree do?", a: "We're a business hub. We handle four things end-to-end: planning your business, building your digital presence (website, store, packaging), designing your brand and products, and running marketing and promos." },
+  { q: "Do I have to buy everything together?", a: "No. Start with a website, brand, or a marketing campaign — add the rest whenever you're ready. Everything is modular but built to work together." },
+  { q: "Do I need any technical or design skills?", a: "None. You share your goals, we do the strategy, design, build and launch. You always keep full ownership and access." },
+  { q: "How fast can we launch?", a: "Most websites and stores go live within 24–48 hours. Full brand + launch campaigns typically take 1–2 weeks depending on scope." },
 ];
 
 const ROTATING_PHRASES = [
-  "Websites",
-  "Online stores",
-  "Portfolios",
-  "Booking systems",
-  "Landing pages",
-  "Invites",
-  "Internal systems",
-  "Company sites",
-  "CV portfolios",
+  "Plan your business",
+  "Build your website",
+  "Launch your store",
+  "Design your brand",
+  "Package your product",
+  "Run your promos",
+  "Grow your audience",
+  "…all in one hub.",
+];
   "Blogs",
   "Product sites",
   "…and more.",
