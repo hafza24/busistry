@@ -84,7 +84,7 @@ const Team = () => {
             <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
             <div aria-hidden className="pointer-events-none absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
 
-            <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-10 md:gap-16 items-center py-20 md:py-28">
+            <div className="container max-w-6xl relative grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-10 md:gap-16 items-center pt-6 md:pt-8 pb-20 md:pb-28">
               {/* Content */}
               <div className="relative z-10 order-2 md:order-1">
                 <div className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-6">
