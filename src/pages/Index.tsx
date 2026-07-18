@@ -1095,7 +1095,7 @@ const TeamDeck = () => {
       {/* Role pill */}
       <div className={`relative z-10 -mt-4 mx-auto w-[75%] rounded-full bg-gradient-to-r ${m.cardGradient} shadow-lg px-3 py-2 text-center`}>
         <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
-          {m.role} · <span className="opacity-90 font-semibold">{m.name}</span>
+          {m.role}
         </div>
       </div>
       <div className={`mt-2 text-center text-[10px] sm:text-xs text-muted-foreground ${opts?.hoverHint ? "opacity-0 group-hover:opacity-100" : "opacity-70"} transition-opacity duration-300`}>
