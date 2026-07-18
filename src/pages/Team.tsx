@@ -24,7 +24,7 @@ const team: Member[] = [
     name: "Hafza Azam",
     role: "CEO",
     image: teamHafza,
-    cardGradient: "from-[#8b7ecf] to-[#b8a5d9]",
+    cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
     bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
     socials: { linkedin: "#", twitter: "#", email: "hafza@busistree.com" },
   },
