@@ -13,17 +13,17 @@ import storyIllustration from "@/assets/about-story-illustration.png";
 import teamIllustration from "@/assets/about-team-illustration.png";
 
 const values = [
-  { icon: Target, title: "Focused on outcomes", body: "We measure success by whether your business grows — not by lines of code shipped." },
-  { icon: Heart, title: "Built for Pakistan", body: "PKR pricing, local payment wallets, and support tuned to how our customers actually work." },
-  { icon: ShieldCheck, title: "Honest & transparent", body: "Clear pricing, no hidden fees, and plain-language contracts you can actually read." },
-  { icon: Rocket, title: "Fast by default", body: "Websites live in 24–48 hours. Iteration in days, not months." },
+  { icon: Target, title: "One partner, one plan", body: "Strategy, build, design and marketing under one roof — no juggling agencies, freelancers, or tools." },
+  { icon: Heart, title: "Business-first, not tech-first", body: "We start with your business goals, not with a template. Everything we ship is tied to an outcome." },
+  { icon: ShieldCheck, title: "Honest & transparent", body: "Clear pricing, plain-language scopes, and full ownership of everything we build for you." },
+  { icon: Rocket, title: "Momentum matters", body: "Fast planning, fast launches, and always-on marketing so your business keeps moving." },
 ];
 
 const milestones = [
-  { year: "2023", title: "The idea", body: "Founded to help Pakistani businesses launch beautiful websites without the enterprise price tag." },
-  { year: "2024", title: "First 100 stores", body: "Launched our template library and manual JazzCash/Easypaisa checkout to serve local merchants." },
-  { year: "2025", title: "Platform launch", body: "Self-serve dashboard, marketplace add-ons, and the growth services program went live." },
-  { year: "2026", title: "Where we are", body: "Serving hundreds of businesses with templates, custom builds, admin panels, and ongoing support." },
+  { year: "2023", title: "Started as a website builder", body: "Helping businesses get online quickly with done-for-you websites and stores." },
+  { year: "2024", title: "Added design & packaging", body: "Brought brand identity, product and packaging design in-house as BizStyle." },
+  { year: "2025", title: "Became a full hub", body: "Added business planning and marketing/promos — one place for everything a business needs." },
+  { year: "2026", title: "Where we are", body: "A complete business hub serving founders across planning, presence, design and growth." },
 ];
 
 const About = () => {
@@ -57,8 +57,8 @@ const About = () => {
   return (
     <div className="pb-16">
       <SEO
-        title="About Busistree — Launching Pakistani businesses online"
-        description="Busistree is a Pakistani SaaS platform helping small businesses launch beautiful websites in 24–48 hours with PKR pricing and local support."
+        title="About Busistree — The complete hub for growing businesses"
+        description="Busistree is a business hub covering planning, digital presence and packaging, design, and marketing — one team behind every part of your business."
         path="/about"
       />
 
@@ -70,19 +70,19 @@ const About = () => {
             {/* Left copy */}
             <div className="relative text-center lg:text-left order-2 lg:order-1">
               <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                — Because your business deserves better
+                — One hub for everything your business needs
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-foreground leading-[1.05] tracking-tight">
-                Websites built for{" "}
+                Planning, presence, design and{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  who you serve,
+                  marketing —
                 </span>{" "}
-                not what tech expects.
+                one team behind it all.
               </h1>
               <p className="text-base md:text-lg text-muted-foreground mt-6 max-w-lg mx-auto lg:mx-0">
-                We build, launch, and manage websites for Pakistani businesses — fully branded,
-                fully managed, and priced in rupees. Everything you need to sell online, without
-                the enterprise complexity.
+                Busistree is the complete hub for growing businesses. We plan your business,
+                build your digital presence, design your brand and products, and run the
+                marketing that brings customers in — under one roof.
               </p>
 
               {/* Action row */}
@@ -198,22 +198,24 @@ const About = () => {
           <div className="order-1 lg:order-2">
             <div className="text-center lg:text-left mb-6">
               <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
-              <p className="text-muted-foreground mt-3">Why we started, and where we're going.</p>
+              <p className="text-muted-foreground mt-3">Why we became a hub, not just a builder.</p>
             </div>
             <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
               <p>
-                Busistree started with a simple frustration: talented business owners across Pakistan were
-                being priced out of a decent online presence. Agencies quoted lakhs for basic websites,
-                freelancers vanished mid-project, and DIY builders never really fit the local reality.
+                Busistree started as a way to get small businesses online quickly. But we kept
+                hearing the same thing from founders: "The website is great — now what?" They
+                needed a plan, a brand, packaging, and someone to actually market the thing.
               </p>
               <p>
-                We built Busistree as the middle path — a productized service where you pick a template,
-                we handle the customization and launch, and you get a professional website in 24 to 48
-                hours at a price that makes sense in rupees.
+                So we grew into a hub. Today, one team handles the four things every business
+                needs — planning your offer and positioning, building your digital presence and
+                packaging, designing the brand and product, and running the marketing that
+                drives real customers in.
               </p>
               <p>
-                Today we serve booking businesses, tutors, travel agencies, retail stores, and service
-                providers across Karachi, Lahore, Islamabad and beyond. And we're just getting started.
+                From founders launching their first product to established brands leveling up
+                their presence, we're the single partner behind the whole business — not just
+                the website.
               </p>
             </div>
           </div>
@@ -224,13 +226,13 @@ const About = () => {
       <section className="border-y border-border/50 bg-muted/30">
         <div className="container max-w-5xl py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { k: "24–48h", v: "Average launch time" },
-            { k: "PKR", v: "Localized pricing" },
-            { k: "100%", v: "Branded to you" },
-            { k: "24/7", v: "Support channels" },
+            { k: "Plan", v: "Strategy & positioning" },
+            { k: "Presence", v: "Websites, stores, packaging" },
+            { k: "Design", v: "Brand & product design" },
+            { k: "Promote", v: "Marketing & launch promos" },
           ].map((s) => (
             <div key={s.v}>
-              <div className="text-3xl md:text-4xl font-bold font-display text-primary">{s.k}</div>
+              <div className="text-2xl md:text-3xl font-bold font-display text-primary">{s.k}</div>
               <div className="text-sm text-muted-foreground mt-1">{s.v}</div>
             </div>
           ))}
@@ -242,15 +244,15 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
-              <Users className="h-3.5 w-3.5" /> A team behind every launch
+              <Users className="h-3.5 w-3.5" /> One team, every pillar
             </div>
             <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">
-              Real people building your website — end to end.
+              Strategists, designers, developers and marketers — under one roof.
             </h2>
             <p className="text-muted-foreground mt-4">
-              From design and copy to analytics and post-launch tweaks, our team collaborates on
-              every store so you don't have to juggle freelancers, agencies, and tools. One partner,
-              one price, one clear plan.
+              Every business we work with gets a dedicated crew across all four pillars —
+              planning, presence, design and marketing. No handoffs between agencies. No
+              chasing freelancers. Just one team owning the outcome.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild>

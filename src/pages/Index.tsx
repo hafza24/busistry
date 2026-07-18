@@ -44,7 +44,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const trust = ["No coding", "Fast delivery", "Beginner-friendly"];
+const trust = ["Strategy included", "In-house design", "End-to-end delivery"];
 
 const fallbackTemplates = [
   { name: "Fashion Store", niche: "Fashion", icon: ShoppingBag },
@@ -55,25 +55,25 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: LayoutTemplate, title: "Choose Your Template", desc: "Browse our collection of professionally designed templates for any industry.", gradient: "from-sky-500 to-blue-600" },
-  { num: "02", icon: PencilRuler, title: "Complete Smart Form", desc: "Answer a few simple questions about your brand, products, and preferences.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Palette, title: "We Build & Customize", desc: "Our expert team transforms your template into a unique, fully-functional store.", gradient: "from-violet-500 to-fuchsia-500" },
-  { num: "04", icon: Rocket, title: "Launch & Grow", desc: "Review your store, request changes, and launch with confidence.", gradient: "from-emerald-500 to-teal-600" },
+  { num: "01", icon: LayoutTemplate, title: "Plan Your Business", desc: "We map your offer, audience and goals — a clear plan before anything gets built.", gradient: "from-sky-500 to-blue-600" },
+  { num: "02", icon: PencilRuler, title: "Build Your Presence", desc: "Website, store, packaging and product identity — a full digital presence, done for you.", gradient: "from-primary to-primary-glow" },
+  { num: "03", icon: Palette, title: "Design That Sells", desc: "Brand, visuals and content crafted to convert — not just to look pretty.", gradient: "from-violet-500 to-fuchsia-500" },
+  { num: "04", icon: Rocket, title: "Market & Grow", desc: "Launch campaigns, promos and always-on marketing to bring customers in.", gradient: "from-emerald-500 to-teal-600" },
 ];
 
 const includes = [
-  { icon: Globe, title: "Fully designed website / store" },
-  { icon: Smartphone, title: "Mobile responsive" },
-  { icon: LayoutDashboard, title: "Easy dashboard access" },
-  { icon: CreditCard, title: "Payment & contact integration" },
-  { icon: ShoppingBag, title: "Product or service setup" },
-  { icon: MessageCircle, title: "WhatsApp integration" },
+  { icon: Globe, title: "Business plan & positioning" },
+  { icon: Smartphone, title: "Website / online store built" },
+  { icon: LayoutDashboard, title: "Brand identity & guidelines" },
+  { icon: CreditCard, title: "Product & packaging design" },
+  { icon: ShoppingBag, title: "Content & creatives ready" },
+  { icon: MessageCircle, title: "Launch & promo campaigns" },
 ];
 
 const tiers = [
   {
     name: "Starter",
-    blurb: "Perfect to test the waters",
+    blurb: "Get online with the essentials",
     price: "PKR 9,999",
     delivery: "5–7 days",
     features: ["Up to 10 products / 5 pages", "Basic customization", "Mobile responsive", "Contact form"],
@@ -81,7 +81,7 @@ const tiers = [
   },
   {
     name: "Growth",
-    blurb: "Most popular for growing brands",
+    blurb: "Most popular for scaling brands",
     price: "PKR 24,999",
     delivery: "3–5 days",
     features: ["Up to 50 products / 10 pages", "Advanced customization", "Payment gateway setup", "WhatsApp integration", "SEO basics"],
@@ -89,7 +89,7 @@ const tiers = [
   },
   {
     name: "Premium",
-    blurb: "Full-feature, priority build",
+    blurb: "Full-stack build with priority delivery",
     price: "PKR 49,999",
     delivery: "24–48 hours",
     features: ["Unlimited products / pages", "Premium customization", "All integrations", "Priority delivery", "30 days support"],
@@ -98,39 +98,35 @@ const tiers = [
 ];
 
 const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "I had a fully working store in two days. I didn't touch a single line of code." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "The form made it feel like onboarding to a real product, not commissioning a website." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "Clean, fast, and exactly what we asked for. Worth every rupee." },
+  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
+  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
+  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
 ];
 
 const comparison = [
-  { feature: "Done-for-you build", busistry: true, shopify: false, dev: true },
-  { feature: "Launch in 24–48 hours", busistry: true, shopify: false, dev: false },
-  { feature: "No technical skills needed", busistry: true, shopify: false, dev: true },
-  { feature: "Fixed upfront price", busistry: true, shopify: true, dev: false },
-  { feature: "Full ownership of your site", busistry: true, shopify: false, dev: true },
+  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
+  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
+  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
+  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
+  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
 ];
 
 const faqs = [
-  { q: "How fast will my store be delivered?", a: "Most stores are delivered within 24–48 hours. Larger custom builds take 3–7 days depending on the plan." },
-  { q: "Can I edit the website myself later?", a: "Yes. You get full dashboard access — edit content, add products, change images, and manage orders any time." },
-  { q: "Do I need any technical experience?", a: "Not at all. You pick a template, answer a short form, and we handle everything from design to launch." },
-  { q: "Do you offer custom-coded sites too?", a: "Yes. We build both WordPress sites and fully custom-coded websites — pick whichever fits your needs and budget." },
+  { q: "What exactly does Busistree do?", a: "We're a business hub. We handle four things end-to-end: planning your business, building your digital presence (website, store, packaging), designing your brand and products, and running marketing and promos." },
+  { q: "Do I have to buy everything together?", a: "No. Start with a website, brand, or a marketing campaign — add the rest whenever you're ready. Everything is modular but built to work together." },
+  { q: "Do I need any technical or design skills?", a: "None. You share your goals, we do the strategy, design, build and launch. You always keep full ownership and access." },
+  { q: "How fast can we launch?", a: "Most websites and stores go live within 24–48 hours. Full brand + launch campaigns typically take 1–2 weeks depending on scope." },
 ];
 
 const ROTATING_PHRASES = [
-  "Websites",
-  "Online stores",
-  "Portfolios",
-  "Booking systems",
-  "Landing pages",
-  "Invites",
-  "Internal systems",
-  "Company sites",
-  "CV portfolios",
-  "Blogs",
-  "Product sites",
-  "…and more.",
+  "Plan your business",
+  "Build your website",
+  "Launch your store",
+  "Design your brand",
+  "Package your product",
+  "Run your promos",
+  "Grow your audience",
+  "…all in one hub.",
 ];
 
 const RotatingWords = () => {
@@ -363,8 +359,8 @@ const Index = () => {
   return (
     <div>
       <SEO
-        title="Busistree — Launch your online store in 48 hours"
-        description="Done-for-you websites and ecommerce stores for Pakistani businesses — custom-coded or WordPress. Pick a template, fill a smart form, go live in 24–48 hours."
+        title="Busistree — The complete hub for growing businesses"
+        description="Planning, digital presence and packaging, design, and marketing — one hub for everything your business needs, from strategy to launch to growth."
         path="/"
       />
       {/* Hero — busistree split layout */}
@@ -384,37 +380,37 @@ const Index = () => {
             >
 
               <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/80 shadow-soft mb-7">
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Launch in 48 hours — Guaranteed</span>
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One hub · Everything your business needs</span>
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
-                Your complete online presence, live in{" "}
+                The complete hub for{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  48 hours
+                  growing businesses
                 </span>
                 .
               </h1>
 
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
                 <RotatingWords />{" "}
-                Whether you're a business, freelancer or personal brand — we design, build and launch
-                every part of your internet presence, end to end.
+                Planning, digital presence and packaging, design, and marketing —
+                one team, one plan, everything your business needs under one roof.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button variant="glass-brand" size="lg" className="h-12 px-7 text-base rounded-full group" asChild>
-                  <Link to="/templates">
-                    Browse Templates
+                  <Link to="/marketplace">
+                    Explore the hub
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
                 <Button variant="default" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
-                  <Link to="/how-it-works">Watch Demo</Link>
+                  <Link to="/how-it-works">How it works</Link>
                 </Button>
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg text-sm text-muted-foreground">
-                {["No design skills needed", "48-hour delivery", "100% satisfaction guarantee", "Secure & scalable"].map((t) => (
+                {["Business planning included", "Websites & stores built for you", "Brand, product & packaging design", "Marketing, promos & content"].map((t) => (
                   <div key={t} className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-primary shrink-0" /> {t}
                   </div>
@@ -466,16 +462,16 @@ const Index = () => {
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Templates</span>
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Digital Presence</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Buy Your perfect{" "}
+              A website, store or landing page —{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Site
+                built to convert
               </span>
             </h2>
             <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-              Hand-picked, conversion-focused designs — fully customizable with your brand.
+              Conversion-focused designs, ready for your brand and products — part of your complete business hub.
             </p>
           </div>
 
@@ -575,13 +571,13 @@ const Index = () => {
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Simple Process</span>
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">The four pillars</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              From template to launch in
+              From idea to launch to growth —
               <br />
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                4 simple steps
+                one hub, four pillars
               </span>
             </h2>
           </div>
@@ -650,9 +646,9 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Pricing</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Simple plans.{" "}
+              One partner.{" "}
               <span className="relative inline-block bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                No surprises.
+                One clear plan.
                 <span
                   aria-hidden="true"
                   className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/0 via-primary/60 to-accent/0"
@@ -660,7 +656,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Rent monthly or buy for life — transparent PKR pricing, cancel anytime.
+              Bundle planning, presence, design and marketing — or start with just what you need today.
             </p>
           </div>
 
@@ -702,9 +698,9 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Why Busistree</span>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              Faster than DIY.{" "}
+              More than a builder.{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Cheaper than hiring.
+                A full business hub.
               </span>
             </h2>
           </div>
@@ -809,13 +805,13 @@ const Index = () => {
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Our Team</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              The people behind{" "}
+              The team behind your{" "}
               <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                Busistree
+                business hub
               </span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-muted-foreground">
-              A small team obsessed with launching beautiful, high-performing stores for ambitious founders.
+              Strategists, designers, developers and marketers — all working on your business, together.
             </p>
           </div>
 
@@ -846,7 +842,7 @@ const Index = () => {
               <div className="inline-flex items-center gap-3 mb-6">
                 <span aria-hidden className="h-px w-8 bg-violet-300/60" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200">
-                  From the Busistree family
+                  Design & Packaging pillar
                 </span>
               </div>
 
@@ -855,13 +851,13 @@ const Index = () => {
                   BizStyle
                 </span>
                 <span className="block text-white/90 mt-2 text-3xl md:text-5xl">
-                  Printing ideas into powerful brands.
+                  Brand identity, product & packaging design.
                 </span>
               </h2>
 
               <p className="mt-6 text-lg text-violet-100/70 max-w-xl leading-relaxed">
-                Premium printing, packaging, branding and creative studio work — from concept to
-                delivery. Everything your brand touches, crafted with intent.
+                The design studio inside Busistree. Logos, brand systems, product packaging and print —
+                so what customers see, hold and share always feels intentional.
               </p>
 
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl">
@@ -983,20 +979,20 @@ const Index = () => {
           >
             
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Start your store today.
+              Everything your business needs — in one hub.
             </h2>
             <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-              The easiest, fastest way to launch a fully functional website — without doing anything yourself.
+              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
-                <Link to="/templates">
-                  Browse Templates
+                <Link to="/marketplace">
+                  Explore the hub
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
-                <Link to="/pricing">Get Started</Link>
+                <Link to="/contact">Talk to us</Link>
               </Button>
             </div>
           </motion.div>

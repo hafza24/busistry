@@ -154,12 +154,12 @@ const Footer = () => {
                 Weekly Insights · Every Friday
               </div>
               <h3 className="font-display text-3xl md:text-[2.5rem] font-bold text-primary-foreground leading-[1.1] mb-4 tracking-tight">
-                Level up your business,
+                Grow every part of your business,
                 <br className="hidden md:block" /> one email at a time.
               </h3>
               <p className="text-primary-foreground/80 text-sm md:text-base max-w-lg leading-relaxed">
-                Growth playbooks, template drops, and Pakistan-first commerce tips.
-                No fluff — unsubscribe anytime.
+                Playbooks for planning, digital presence, brand & packaging design, and marketing —
+                straight from the Busistree hub. No fluff, unsubscribe anytime.
               </p>
 
               {/* Social proof */}
