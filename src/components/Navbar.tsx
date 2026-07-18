@@ -171,7 +171,7 @@ const Navbar = () => {
         >
           {/* Mobile logo (left) */}
           <Link to="/" className="lg:hidden flex items-center gap-2">
-            <img src={logo} alt="Busistree" className="h-8 md:h-12 w-auto object-contain" />
+            <img src={logo} alt="Busistree" className="h-12 md:h-16 w-auto object-contain" />
           </Link>
 
           {/* Left links + mega menus */}
