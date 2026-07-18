@@ -5,10 +5,12 @@ import { Linkedin, Mail, Twitter, Sparkles, ArrowRight } from "lucide-react";
 import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
+import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
 
 const teamHafza = teamHafzaAsset.url;
 const teamRohma = teamRohmaAsset.url;
 const teamAsim = teamAsimAsset.url;
+const teamKiran = teamKiranAsset.url;
 
 type Member = {
   name: string;
