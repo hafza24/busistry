@@ -1111,9 +1111,6 @@ const TeamDeck = () => {
         viewport={{ once: true }}
         className="sm:hidden"
       >
-        <p className="text-xs text-muted-foreground/70 tracking-widest uppercase text-center mb-4">
-          Meet the team
-        </p>
         <div className="flex flex-col items-center gap-3">
           <div className="w-[62%] max-w-[220px]">
             {renderCard(TEAM[0])}
