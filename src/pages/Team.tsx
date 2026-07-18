@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Linkedin, Mail, Twitter, Users, Sparkles, ArrowRight } from "lucide-react";
+import { Linkedin, Mail, Twitter, Sparkles, ArrowRight } from "lucide-react";
 import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
