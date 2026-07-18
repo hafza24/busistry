@@ -52,7 +52,7 @@ const team: Member[] = [
     name: "Kiran Masood",
     role: "HR Manager",
     image: teamKiran,
-    cardGradient: "from-[#c98a6b] to-[#e8b89a]",
+    cardGradient: "from-[#7c5fb8] to-[#b89ad9]",
     bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
     socials: { linkedin: "#", twitter: "#", email: "kiran@busistree.com" },
   },
