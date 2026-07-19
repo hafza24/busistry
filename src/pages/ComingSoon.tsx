@@ -62,7 +62,8 @@ const ComingSoon = () => {
         path="/coming-soon"
       />
       <main
-        className="relative min-h-screen w-full overflow-hidden text-white font-display"
+        className="relative h-screen w-full overflow-hidden text-white font-display flex flex-col"
+
         style={{
           background:
             "radial-gradient(1200px 700px at 85% 20%, #1d6a5c 0%, transparent 55%)," +
