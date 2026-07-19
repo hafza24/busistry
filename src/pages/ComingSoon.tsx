@@ -267,9 +267,9 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative mx-auto w-full max-w-xl">
+          <div className="relative mx-auto w-full max-w-xl h-full">
             <div
-              className="relative rounded-[2rem] overflow-hidden border border-white/15 backdrop-blur-xl p-8 md:p-12 text-center shadow-[0_30px_80px_-20px_rgba(56,156,132,0.45)]"
+              className="relative h-full rounded-[2rem] overflow-hidden border border-white/15 backdrop-blur-xl p-8 md:p-12 text-center shadow-[0_30px_80px_-20px_rgba(56,156,132,0.45)] flex flex-col justify-center"
               style={{
                 background:
                   "radial-gradient(120% 90% at 20% 0%, rgba(56,156,132,0.35) 0%, transparent 55%)," +
@@ -289,7 +289,6 @@ const ComingSoon = () => {
                 alt="Busistree"
                 className="relative mx-auto h-14 md:h-16 w-auto object-contain mb-6 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
               />
-
 
               <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
                 — Site under reconstruction —
@@ -325,32 +324,7 @@ const ComingSoon = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative z-20 pb-6 pt-10 px-6 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-5">
-            <a
-              href="mailto:info@busistree.com"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-            >
-              <Mail className="h-3.5 w-3.5 text-[#5bc3a8]" />
-              info@busistree.com
-            </a>
-            <a
-              href="https://wa.me/923370428337"
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-            >
-              <MessageCircle className="h-3.5 w-3.5 text-[#5bc3a8]" />
-              WhatsApp
-            </a>
-            <a
-              href="tel:+923370428337"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-            >
-              <Phone className="h-3.5 w-3.5 text-[#5bc3a8]" />
-              +92 337 0428337
-            </a>
-          </div>
+        <footer className="relative z-20 pb-6 pt-4 px-6 text-center">
           <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50">
             Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
           </p>
@@ -361,3 +335,4 @@ const ComingSoon = () => {
 };
 
 export default ComingSoon;
+
