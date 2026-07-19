@@ -195,9 +195,7 @@ const ComingSoon = () => {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="mt-3 text-xs tracking-[0.4em] text-white/70">
-              {progress.toFixed(0)}%
-            </p>
+
           </div>
 
           {/* Waitlist */}
