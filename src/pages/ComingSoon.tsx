@@ -151,33 +151,6 @@ const ComingSoon = () => {
         </div>
 
 
-        {/* Moon left */}
-        <div
-          className="pointer-events-none absolute rounded-full"
-          style={{
-            top: "18%",
-            left: "-6%",
-            width: "340px",
-            height: "340px",
-            background:
-              "radial-gradient(circle at 35% 35%, #d97aa8 0%, #8a3f7a 40%, #3a1846 75%, transparent 100%)",
-            boxShadow: "0 0 120px rgba(217, 122, 168, 0.35)",
-          }}
-        />
-        {/* Moon right */}
-        <div
-          className="pointer-events-none absolute rounded-full"
-          style={{
-            top: "8%",
-            right: "-10%",
-            width: "520px",
-            height: "520px",
-            background:
-              "radial-gradient(circle at 30% 30%, #e79ac6 0%, #a24d8a 45%, #4a1e5c 78%, transparent 100%)",
-            boxShadow: "0 0 160px rgba(231, 154, 198, 0.3)",
-          }}
-        />
-
         {/* Clouds / nebula */}
         <div
           className="pointer-events-none absolute -bottom-20 right-0 w-[70%] h-[55%]"
