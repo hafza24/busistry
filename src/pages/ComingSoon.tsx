@@ -65,10 +65,10 @@ const ComingSoon = () => {
         className="relative min-h-screen w-full overflow-hidden text-white font-display"
         style={{
           background:
-            "radial-gradient(1200px 700px at 85% 20%, #6b2a5a 0%, transparent 55%)," +
-            "radial-gradient(900px 600px at 15% 80%, #3a1a5c 0%, transparent 60%)," +
-            "radial-gradient(700px 500px at 50% 50%, #1a1030 0%, transparent 70%)," +
-            "linear-gradient(180deg, #0a0616 0%, #120a24 50%, #0a0616 100%)",
+            "radial-gradient(1200px 700px at 85% 20%, #1d6a5c 0%, transparent 55%)," +
+            "radial-gradient(900px 600px at 15% 80%, #1a4a6b 0%, transparent 60%)," +
+            "radial-gradient(700px 500px at 50% 50%, #0f2a2f 0%, transparent 70%)," +
+            "linear-gradient(180deg, #05100f 0%, #082018 50%, #05100f 100%)",
         }}
       >
         {/* Starfield */}
