@@ -313,9 +313,6 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
                             }`}
                           />
                           <span>{group.group}</span>
-                          <span className="ml-auto normal-case tracking-normal text-[10px] text-muted-foreground/70">
-                            {group.rows.length} {group.rows.length === 1 ? "row" : "rows"}
-                          </span>
                         </button>
                       </td>
                     </tr>
