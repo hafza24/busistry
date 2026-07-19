@@ -190,7 +190,7 @@ const ComingSoon = () => {
           <div className="mt-12 w-full max-w-md">
             <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-pink-300 via-fuchsia-300 to-white transition-all duration-1000"
+                className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
                 style={{ width: `${progress}%` }}
               />
             </div>
