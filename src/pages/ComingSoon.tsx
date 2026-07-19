@@ -344,11 +344,12 @@ const ComingSoon = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative z-20 py-2 px-6 text-center shrink-0">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-white/50">
-            Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
+        <footer className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 px-6 text-center pointer-events-none">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-white/40">
+            © {new Date().getFullYear()} Busistree
           </p>
         </footer>
+
 
       </main>
     </>
