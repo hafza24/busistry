@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
