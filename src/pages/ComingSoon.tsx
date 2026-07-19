@@ -16,9 +16,20 @@ const TOTAL_MS = 30 * 24 * 60 * 60 * 1000;
 
 const ComingSoon = () => {
   const [now, setNow] = useState(() => Date.now());
+  const [mounted, setMounted] = useState(false);
+  const [exiting, setExiting] = useState(false);
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
+    const t = requestAnimationFrame(() => setMounted(true));
+    // Play exit animation on tab close / route change
+    const onHide = () => setExiting(true);
+    window.addEventListener("beforeunload", onHide);
+    return () => {
+      clearInterval(id);
+      cancelAnimationFrame(t);
+      window.removeEventListener("beforeunload", onHide);
+      setExiting(true);
+    };
   }, []);
   const remaining = Math.max(0, LAUNCH_DATE.getTime() - now);
   const progress = Math.min(100, Math.max(0, ((TOTAL_MS - remaining) / TOTAL_MS) * 100));
