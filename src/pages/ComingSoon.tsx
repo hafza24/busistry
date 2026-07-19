@@ -98,49 +98,49 @@ const ComingSoon = () => {
             src={tpl1.url}
             alt=""
             aria-hidden
-            className="cs-drift-a absolute opacity-[0.12] mix-blend-screen blur-[1px] rounded-xl shadow-2xl"
+            className="cs-drift-a absolute opacity-[0.06] mix-blend-screen blur-[2px] rounded-xl shadow-2xl"
             style={{ top: "8%", left: "4%", width: "clamp(280px, 32vw, 520px)" }}
           />
           <img
             src={tpl2.url}
             alt=""
             aria-hidden
-            className="cs-drift-b absolute opacity-[0.14] mix-blend-screen blur-[1px] rounded-xl shadow-2xl"
+            className="cs-drift-b absolute opacity-[0.07] mix-blend-screen blur-[2px] rounded-xl shadow-2xl"
             style={{ bottom: "6%", right: "3%", width: "clamp(320px, 36vw, 620px)" }}
           />
           <img
             src={tpl2.url}
             alt=""
             aria-hidden
-            className="cs-drift-c absolute opacity-[0.08] mix-blend-screen blur-[2px] rounded-xl"
+            className="cs-drift-c absolute opacity-[0.04] mix-blend-screen blur-[3px] rounded-xl"
             style={{ top: "12%", right: "18%", width: "clamp(220px, 22vw, 380px)" }}
           />
           <img
             src={tpl1.url}
             alt=""
             aria-hidden
-            className="cs-drift-d absolute opacity-[0.09] mix-blend-screen blur-[2px] rounded-xl"
+            className="cs-drift-d absolute opacity-[0.05] mix-blend-screen blur-[3px] rounded-xl"
             style={{ bottom: "14%", left: "16%", width: "clamp(220px, 22vw, 380px)" }}
           />
           <img
             src={tpl3.url}
             alt=""
             aria-hidden
-            className="cs-drift-a absolute opacity-[0.13] mix-blend-screen blur-[1px] rounded-xl shadow-2xl"
+            className="cs-drift-a absolute opacity-[0.06] mix-blend-screen blur-[2px] rounded-xl shadow-2xl"
             style={{ top: "40%", left: "50%", transform: "translate(-50%, -50%)", width: "clamp(360px, 44vw, 720px)" }}
           />
           <img
             src={tpl3.url}
             alt=""
             aria-hidden
-            className="cs-drift-b absolute opacity-[0.10] mix-blend-screen blur-[2px] rounded-xl"
+            className="cs-drift-b absolute opacity-[0.05] mix-blend-screen blur-[3px] rounded-xl"
             style={{ top: "6%", right: "28%", width: "clamp(240px, 26vw, 440px)" }}
           />
           <img
             src={tpl3.url}
             alt=""
             aria-hidden
-            className="cs-drift-c absolute opacity-[0.09] mix-blend-screen blur-[2px] rounded-xl"
+            className="cs-drift-c absolute opacity-[0.04] mix-blend-screen blur-[3px] rounded-xl"
             style={{ bottom: "8%", left: "2%", width: "clamp(240px, 26vw, 440px)" }}
           />
 
