@@ -87,7 +87,7 @@ const App = () => (
                     <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
-                    <Route path="/coming-soon" element={<ComingSoon />} />
+                    
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/team" element={<Team />} />
@@ -104,6 +104,7 @@ const App = () => (
                     <Route path="/reviews" element={<Reviews />} />
                     <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
                   </Route>
+                  <Route path="/coming-soon" element={<ComingSoon />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/onboarding" element={<Onboarding />} />
                   <Route path="/dashboard" element={<Dashboard />} />

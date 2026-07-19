@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Mail, Sparkles } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -8,34 +8,17 @@ import SEO from "@/components/SEO";
 
 const LAUNCH_DATE = new Date();
 LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
+const TOTAL_MS = 30 * 24 * 60 * 60 * 1000;
 
-function useCountdown(target: Date) {
+const ComingSoon = () => {
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
-  const diff = Math.max(0, target.getTime() - now);
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff / 3600000) % 24);
-  const minutes = Math.floor((diff / 60000) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-  return { days, hours, minutes, seconds };
-}
+  const remaining = Math.max(0, LAUNCH_DATE.getTime() - now);
+  const progress = Math.min(100, Math.max(0, ((TOTAL_MS - remaining) / TOTAL_MS) * 100));
 
-const TimeCell = ({ value, label }: { value: number; label: string }) => (
-  <div className="glass-frame flex flex-col items-center justify-center min-w-[84px] md:min-w-[110px] py-4 md:py-6 px-2">
-    <span className="font-display text-4xl md:text-6xl font-bold text-gradient-brand tabular-nums leading-none">
-      {String(value).padStart(2, "0")}
-    </span>
-    <span className="mt-2 text-[10px] md:text-xs uppercase tracking-[0.2em] text-muted-foreground">
-      {label}
-    </span>
-  </div>
-);
-
-const ComingSoon = () => {
-  const { days, hours, minutes, seconds } = useCountdown(LAUNCH_DATE);
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -52,90 +35,196 @@ const ComingSoon = () => {
     toast.success("You're on the list! We'll let you know when it launches.");
   };
 
+  // Deterministic starfield
+  const stars = Array.from({ length: 90 }, (_, i) => {
+    const seed = (i * 9301 + 49297) % 233280;
+    const rand = seed / 233280;
+    const rand2 = ((i * 15731 + 789221) % 233280) / 233280;
+    const rand3 = ((i * 2749 + 12345) % 233280) / 233280;
+    return {
+      top: `${(rand * 100).toFixed(2)}%`,
+      left: `${(rand2 * 100).toFixed(2)}%`,
+      size: (rand3 * 2 + 0.5).toFixed(2),
+      opacity: (rand3 * 0.7 + 0.3).toFixed(2),
+      delay: `${(rand * 4).toFixed(2)}s`,
+    };
+  });
+
   return (
     <>
       <SEO
         title="Coming Soon — Busistree"
-        description="Something new is on the way. Join the waitlist to be the first to know when we launch."
+        description="Site under reconstruction. Something new is on the way — join the waitlist."
         path="/coming-soon"
       />
-      <section className="dark bg-background text-foreground relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 md:py-24 overflow-hidden">
-        {/* Dark base + subtle grid */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.18),transparent_60%)]" />
+      <main
+        className="relative min-h-screen w-full overflow-hidden text-white font-display"
+        style={{
+          background:
+            "radial-gradient(1200px 700px at 85% 20%, #6b2a5a 0%, transparent 55%)," +
+            "radial-gradient(900px 600px at 15% 80%, #3a1a5c 0%, transparent 60%)," +
+            "radial-gradient(700px 500px at 50% 50%, #1a1030 0%, transparent 70%)," +
+            "linear-gradient(180deg, #0a0616 0%, #120a24 50%, #0a0616 100%)",
+        }}
+      >
+        {/* Starfield */}
+        <div className="pointer-events-none absolute inset-0">
+          {stars.map((s, i) => (
+            <span
+              key={i}
+              className="absolute rounded-full bg-white animate-pulse"
+              style={{
+                top: s.top,
+                left: s.left,
+                width: `${s.size}px`,
+                height: `${s.size}px`,
+                opacity: Number(s.opacity),
+                animationDelay: s.delay,
+                animationDuration: "3s",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Moon left */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.05]"
+          className="pointer-events-none absolute rounded-full"
           style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
+            top: "18%",
+            left: "-6%",
+            width: "340px",
+            height: "340px",
+            background:
+              "radial-gradient(circle at 35% 35%, #d97aa8 0%, #8a3f7a 40%, #3a1846 75%, transparent 100%)",
+            boxShadow: "0 0 120px rgba(217, 122, 168, 0.35)",
           }}
         />
-        {/* Ambient accents */}
-        <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-primary/30 blur-[120px]" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-accent/30 blur-[120px]" />
-        <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-[280px] w-[280px] rounded-full bg-primary-glow/25 blur-[120px]" />
+        {/* Moon right */}
+        <div
+          className="pointer-events-none absolute rounded-full"
+          style={{
+            top: "8%",
+            right: "-10%",
+            width: "520px",
+            height: "520px",
+            background:
+              "radial-gradient(circle at 30% 30%, #e79ac6 0%, #a24d8a 45%, #4a1e5c 78%, transparent 100%)",
+            boxShadow: "0 0 160px rgba(231, 154, 198, 0.3)",
+          }}
+        />
 
+        {/* Clouds / nebula */}
+        <div
+          className="pointer-events-none absolute -bottom-20 right-0 w-[70%] h-[55%]"
+          style={{
+            background:
+              "radial-gradient(ellipse at 60% 70%, rgba(255, 180, 210, 0.25) 0%, transparent 60%)," +
+              "radial-gradient(ellipse at 30% 90%, rgba(140, 90, 190, 0.35) 0%, transparent 55%)",
+            filter: "blur(20px)",
+          }}
+        />
 
-        <div className="relative w-full max-w-4xl mx-auto text-center animate-fade-in">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 backdrop-blur px-4 py-1.5 text-xs md:text-sm text-muted-foreground">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            <span>— Something new is brewing at Busistree</span>
-          </div>
+        {/* Top bar */}
+        <header className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-8">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-9 h-9 rounded-md bg-gradient-to-br from-pink-400 to-purple-600 flex items-center justify-center shadow-lg">
+              <span className="font-bold text-white text-sm">B</span>
+            </div>
+            <span className="text-sm tracking-[0.25em] uppercase text-white/90">
+              Busistree
+            </span>
+          </Link>
+          <Link
+            to="/contact"
+            className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/80 hover:text-white transition-colors"
+          >
+            Contact
+          </Link>
+        </header>
 
-          <h1 className="mt-6 font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
-            <span className="text-gradient-brand">Coming</span>{" "}
-            <span className="text-foreground">Soon</span>
+        {/* Vertical socials left */}
+        <div className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4 [writing-mode:vertical-rl] rotate-180">
+          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
+            Instagram
+          </span>
+          <span className="text-white/30">|</span>
+          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
+            Facebook
+          </span>
+          <span className="text-white/30">|</span>
+          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
+            Twitter
+          </span>
+        </div>
+
+        {/* Vertical numbers right */}
+        <div className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3">
+          {["01", "02", "03", "04"].map((n, i) => (
+            <span
+              key={n}
+              className={`text-xs tracking-[0.3em] ${
+                i === 2 ? "text-white" : "text-white/40"
+              }`}
+            >
+              {n}
+            </span>
+          ))}
+        </div>
+
+        {/* Center content */}
+        <section className="relative z-10 flex flex-col items-center justify-center px-6 text-center min-h-[calc(100vh-14rem)] pt-10">
+          <p className="text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
+            — Site under reconstruction —
+          </p>
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[0.15em] md:tracking-[0.25em] leading-none">
+            COMING SOON
           </h1>
 
-          <p className="mt-5 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground">
-            We're crafting something special to help you plan, launch, and grow your
-            business — all from one hub. Drop your email and we'll ping you the
-            moment it goes live.
-          </p>
-
-          {/* Countdown */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            <TimeCell value={days} label="Days" />
-            <TimeCell value={hours} label="Hours" />
-            <TimeCell value={minutes} label="Minutes" />
-            <TimeCell value={seconds} label="Seconds" />
+          {/* Progress */}
+          <div className="mt-12 w-full max-w-md">
+            <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-pink-300 via-fuchsia-300 to-white transition-all duration-1000"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p className="mt-3 text-xs tracking-[0.4em] text-white/70">
+              {progress.toFixed(0)}%
+            </p>
           </div>
 
           {/* Waitlist */}
           <form
             onSubmit={onSubmit}
-            className="mt-10 mx-auto flex w-full max-w-md flex-col sm:flex-row items-center gap-2 glass-frame !p-2"
+            className="mt-10 flex w-full max-w-md flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5"
           >
             <div className="relative flex-1 w-full">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@business.com"
-                className="pl-9 h-11 bg-background/60 border-transparent focus-visible:ring-primary"
+                className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
             <Button
               type="submit"
               disabled={submitting}
-              className="h-11 w-full sm:w-auto bg-gradient-brand text-primary-foreground shadow-brand hover:opacity-95"
+              className="h-10 w-full sm:w-auto rounded-full bg-white text-purple-900 hover:bg-white/90 tracking-[0.2em] text-xs uppercase font-semibold px-6"
             >
               {submitting ? "Adding..." : "Notify me"}
             </Button>
           </form>
+        </section>
 
-          <div className="mt-10">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground story-link"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to home
-            </Link>
-          </div>
-        </div>
-      </section>
+        {/* Footer */}
+        <footer className="relative z-20 pb-6 text-center">
+          <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50">
+            Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
+          </p>
+        </footer>
+      </main>
     </>
   );
 };
