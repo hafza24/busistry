@@ -234,9 +234,9 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative w-full h-full min-h-screen">
+          <div className="relative w-full h-full min-h-0 overflow-hidden">
             <div
-              className="relative h-full min-h-screen overflow-hidden p-8 md:p-12 lg:p-16 text-center flex flex-col justify-center"
+              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
 
               <div className="pointer-events-none absolute inset-0">
@@ -249,19 +249,19 @@ const ComingSoon = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="relative mx-auto h-14 md:h-16 w-auto object-contain mb-6 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+                className="relative mx-auto h-12 md:h-14 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
               />
 
-              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
+              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4">
                 — Site under reconstruction —
               </p>
-              <h1 className="relative text-5xl sm:text-6xl md:text-7xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
+              <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
                 COMING
                 <br />
                 SOON
               </h1>
 
-              <div className="relative mt-10 w-full">
+              <div className="relative mt-6 w-full">
                 <div className="flex items-center justify-between text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 mb-2">
                   <span>Loading</span>
                   <span className="font-semibold text-white tabular-nums">99%</span>
@@ -278,15 +278,16 @@ const ComingSoon = () => {
               </div>
 
 
-              <p className="relative mt-6 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
+              <p className="relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
                 Something new is on the way
               </p>
 
               {/* Contact chips */}
-              <div className="relative mt-8 pt-6 border-t border-white/10">
+              <div className="relative mt-5 pt-4 border-t border-white/10">
                 <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
                   — Get in touch
                 </p>
+
                 <div className="flex flex-wrap justify-center gap-2">
                   <a
                     href="mailto:info@busistree.com"
