@@ -62,7 +62,8 @@ const ComingSoon = () => {
         path="/coming-soon"
       />
       <main
-        className="relative h-screen w-full overflow-hidden text-white font-display flex flex-col"
+        className="relative min-h-screen lg:h-screen w-full overflow-x-hidden lg:overflow-hidden text-white font-display flex flex-col"
+
 
         style={{
           background:
