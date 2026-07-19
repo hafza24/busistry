@@ -163,18 +163,6 @@ const ComingSoon = () => {
           }}
         />
 
-        {/* Top bar */}
-        <header className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-6">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Busistree" className="h-12 md:h-14 w-auto object-contain drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]" />
-          </Link>
-          <Link
-            to="/contact"
-            className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/80 hover:text-white transition-colors"
-          >
-            Contact
-          </Link>
-        </header>
 
 
         {/* Two-column content */}
