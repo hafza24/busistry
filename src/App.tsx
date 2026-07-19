@@ -87,7 +87,7 @@ const App = () => (
                     <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
-                    <Route path="/coming-soon" element={<ComingSoon />} />
+                    
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/team" element={<Team />} />
