@@ -107,7 +107,8 @@ const ComingSoon = () => {
           className={`pointer-events-none fixed inset-0 z-50 bg-[#02090a] transition-opacity duration-500 ${exiting ? "opacity-100" : "opacity-0"}`}
         />
 
-
+        {/* Starfield */}
+        <div className={`pointer-events-none absolute inset-0 cs-enter ${mounted ? "cs-in-fade" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: mounted ? "0.1s" : undefined }}>
           {stars.map((s, i) => (
             <span
               key={i}
