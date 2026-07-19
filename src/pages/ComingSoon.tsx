@@ -62,7 +62,8 @@ const ComingSoon = () => {
         path="/coming-soon"
       />
       <main
-        className="relative min-h-screen w-full overflow-hidden text-white font-display"
+        className="relative h-screen w-full overflow-hidden text-white font-display flex flex-col"
+
         style={{
           background:
             "radial-gradient(1200px 700px at 85% 20%, #1d6a5c 0%, transparent 55%)," +
@@ -166,26 +167,27 @@ const ComingSoon = () => {
 
 
         {/* Two-column content */}
-        <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full min-h-screen">
+        <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full flex-1 min-h-0">
           {/* Left: About Busistree */}
-          <div className="relative w-full h-full min-h-screen">
+          <div className="relative w-full h-full min-h-0 overflow-hidden">
             <div
-              className="relative h-full min-h-screen overflow-hidden p-8 md:p-12 lg:p-16 text-left flex flex-col justify-center"
+              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
             >
 
-              <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
+
+              <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3">
                 — About Busistree
               </p>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3">
                 The hub for everything your business needs to grow.
               </h2>
-              <p className="text-sm md:text-base text-white/75 leading-relaxed mb-6">
+              <p className="text-xs md:text-sm text-white/75 leading-relaxed mb-4">
                 Busistree brings planning, digital presence, product packaging, design,
                 and marketing under one roof — so founders can launch, sell, and scale
                 without juggling ten different tools or teams.
               </p>
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 mb-5">
                 {[
                   { t: "Planning", d: "Business roadmaps, positioning & offers that convert." },
                   { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
@@ -195,8 +197,8 @@ const ComingSoon = () => {
                   <li key={f.t} className="flex gap-3">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
                     <div>
-                      <p className="text-sm md:text-base font-semibold text-white">{f.t}</p>
-                      <p className="text-xs md:text-sm text-white/65">{f.d}</p>
+                      <p className="text-sm font-semibold text-white leading-tight">{f.t}</p>
+                      <p className="text-xs text-white/65 leading-snug">{f.d}</p>
                     </div>
                   </li>
                 ))}
@@ -205,7 +207,7 @@ const ComingSoon = () => {
               {/* Waitlist */}
               <form
                 onSubmit={onSubmit}
-                className="flex w-full flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5 mb-6"
+                className="flex w-full flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5"
               >
                 <div className="relative flex-1 w-full">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
@@ -214,26 +216,27 @@ const ComingSoon = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@business.com"
-                    className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="pl-10 h-9 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
                 </div>
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
+                  className="h-9 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
                 >
                   {submitting ? "Adding..." : "Notify me"}
                 </Button>
               </form>
+
 
             </div>
           </div>
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative w-full h-full min-h-screen">
+          <div className="relative w-full h-full min-h-0 overflow-hidden">
             <div
-              className="relative h-full min-h-screen overflow-hidden p-8 md:p-12 lg:p-16 text-center flex flex-col justify-center"
+              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
 
               <div className="pointer-events-none absolute inset-0">
@@ -246,19 +249,19 @@ const ComingSoon = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="relative mx-auto h-14 md:h-16 w-auto object-contain mb-6 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+                className="relative mx-auto h-12 md:h-14 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
               />
 
-              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
+              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4">
                 — Site under reconstruction —
               </p>
-              <h1 className="relative text-5xl sm:text-6xl md:text-7xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
+              <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
                 COMING
                 <br />
                 SOON
               </h1>
 
-              <div className="relative mt-10 w-full">
+              <div className="relative mt-6 w-full">
                 <div className="flex items-center justify-between text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 mb-2">
                   <span>Loading</span>
                   <span className="font-semibold text-white tabular-nums">99%</span>
@@ -275,15 +278,16 @@ const ComingSoon = () => {
               </div>
 
 
-              <p className="relative mt-6 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
+              <p className="relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
                 Something new is on the way
               </p>
 
               {/* Contact chips */}
-              <div className="relative mt-8 pt-6 border-t border-white/10">
+              <div className="relative mt-5 pt-4 border-t border-white/10">
                 <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
                   — Get in touch
                 </p>
+
                 <div className="flex flex-wrap justify-center gap-2">
                   <a
                     href="mailto:info@busistree.com"
@@ -324,11 +328,12 @@ const ComingSoon = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative z-20 pb-6 pt-4 px-6 text-center">
-          <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50">
+        <footer className="relative z-20 py-2 px-6 text-center shrink-0">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-white/50">
             Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
           </p>
         </footer>
+
       </main>
     </>
   );
