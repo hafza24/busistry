@@ -239,9 +239,8 @@ const ComingSoon = () => {
                   {submitting ? "Adding..." : "Notify me →"}
                 </Button>
               </form>
-              <p className="mt-2 text-[10px] tracking-[0.25em] uppercase text-white/40">
-                No spam. Just the launch.
-              </p>
+
+
 
 
 
