@@ -201,39 +201,6 @@ const ComingSoon = () => {
                 ))}
               </ul>
 
-              {/* Waitlist */}
-              <form
-                onSubmit={onSubmit}
-                className="group relative flex w-full flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-1.5 rounded-2xl sm:rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-xl p-2 sm:p-1.5 shadow-[0_10px_40px_-12px_rgba(56,156,132,0.35)] focus-within:border-[#5bc3a8]/50 focus-within:shadow-[0_10px_40px_-12px_rgba(91,195,168,0.55)] transition-all duration-300"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-px rounded-2xl sm:rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background:
-                      "linear-gradient(120deg, rgba(56,156,132,0.35), rgba(56,126,177,0.35))",
-                    filter: "blur(14px)",
-                    zIndex: -1,
-                  }}
-                />
-                <div className="relative flex-1 w-full">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5bc3a8]" />
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@business.com"
-                    className="pl-11 h-11 sm:h-10 bg-transparent border-0 text-white placeholder:text-white/40 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  className="h-11 sm:h-10 w-full sm:w-auto rounded-xl sm:rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-95 hover:shadow-[0_12px_28px_-8px_rgba(56,156,132,0.7)] tracking-[0.2em] text-[11px] uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)] transition-all duration-300"
-                >
-                  {submitting ? "Adding..." : "Notify me →"}
-                </Button>
-              </form>
 
 
 
