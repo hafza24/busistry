@@ -241,6 +241,13 @@ const ComingSoon = () => {
                 <span className="absolute bottom-20 right-8 h-1.5 w-1.5 rounded-full bg-white/70 animate-pulse" style={{ animationDelay: "0.5s" }} />
               </div>
 
+              <img
+                src={logo}
+                alt="Busistree"
+                className="relative mx-auto h-14 md:h-16 w-auto object-contain mb-6 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+              />
+
+
               <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
                 — Site under reconstruction —
               </p>
