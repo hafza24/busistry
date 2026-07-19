@@ -215,7 +215,7 @@ const ComingSoon = () => {
             <Button
               type="submit"
               disabled={submitting}
-              className="h-10 w-full sm:w-auto rounded-full bg-white text-purple-900 hover:bg-white/90 tracking-[0.2em] text-xs uppercase font-semibold px-6"
+              className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
             >
               {submitting ? "Adding..." : "Notify me"}
             </Button>
