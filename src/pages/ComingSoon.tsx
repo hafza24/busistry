@@ -223,8 +223,8 @@ const ComingSoon = () => {
                   { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
                   { t: "Design", d: "Logos, visuals and identity systems built to stand out." },
                   { t: "Marketing & Promos", d: "Campaigns, content and growth engines that ship." },
-                ].map((f) => (
-                  <li key={f.t} className="flex gap-3">
+                ].map((f, i) => (
+                  <li key={f.t} className={`flex gap-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: `${0.55 + i * 0.1}s` }}>
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
                     <div>
                       <p className="text-sm font-semibold text-white leading-tight">{f.t}</p>
