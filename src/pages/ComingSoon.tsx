@@ -269,13 +269,21 @@ const ComingSoon = () => {
               </h1>
 
               <div className="relative mt-10 w-full">
-                <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
+                <div className="flex items-center justify-between text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 mb-2">
+                  <span>Loading</span>
+                  <span className="font-semibold text-white tabular-nums">99%</span>
+                </div>
+                <div className="relative h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
-                    style={{ width: `${progress}%` }}
+                    style={{ width: `99%` }}
+                  />
+                  <div
+                    className="absolute inset-y-0 w-1/3 -translate-x-full animate-[cs-shimmer_2.2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
                   />
                 </div>
               </div>
+
 
               <p className="relative mt-6 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
                 Something new is on the way

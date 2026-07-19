@@ -397,3 +397,9 @@
 .cs-drift-b { animation: cs-drift-b 26s ease-in-out infinite; will-change: transform; }
 .cs-drift-c { animation: cs-drift-c 30s ease-in-out infinite; will-change: transform; }
 .cs-drift-d { animation: cs-drift-d 34s ease-in-out infinite; will-change: transform; }
+
+@keyframes cs-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
