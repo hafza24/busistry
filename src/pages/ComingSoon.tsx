@@ -259,7 +259,7 @@ const ComingSoon = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="relative mx-auto h-12 md:h-14 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+                className="relative mx-auto h-24 md:h-32 lg:h-40 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
               />
 
               <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4">
