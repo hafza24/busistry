@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import tpl1 from "@/assets/cs-tpl-1.jpg.asset.json";
 import tpl2 from "@/assets/cs-tpl-2.jpg.asset.json";
+import tpl3 from "@/assets/cs-tpl-3.jpg.asset.json";
 
 const LAUNCH_DATE = new Date();
 LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
