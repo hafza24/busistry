@@ -46,6 +46,7 @@ const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 const ProfileView = lazy(() => import("./pages/ProfileView"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail"));
+const ComingSoon = lazy(() => import("./pages/ComingSoon"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -86,6 +87,7 @@ const App = () => (
                     <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
+                    <Route path="/coming-soon" element={<ComingSoon />} />
                     <Route path="/how-it-works" element={<HowItWorks />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/team" element={<Team />} />
