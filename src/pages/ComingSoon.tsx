@@ -59,11 +59,22 @@ const ComingSoon = () => {
         description="Something new is on the way. Join the waitlist to be the first to know when we launch."
         path="/coming-soon"
       />
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 md:py-24 overflow-hidden">
+      <section className="dark bg-background text-foreground relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 md:py-24 overflow-hidden">
+        {/* Dark base + subtle grid */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.18),transparent_60%)]" />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
         {/* Ambient accents */}
-        <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-primary/25 blur-[120px]" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-accent/25 blur-[120px]" />
-        <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-[280px] w-[280px] rounded-full bg-primary-glow/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-primary/30 blur-[120px]" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-accent/30 blur-[120px]" />
+        <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 h-[280px] w-[280px] rounded-full bg-primary-glow/25 blur-[120px]" />
+
 
         <div className="relative w-full max-w-4xl mx-auto text-center animate-fade-in">
           <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 backdrop-blur px-4 py-1.5 text-xs md:text-sm text-muted-foreground">
