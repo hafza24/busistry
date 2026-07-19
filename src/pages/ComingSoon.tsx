@@ -85,8 +85,29 @@ const ComingSoon = () => {
         }}
 
       >
-        {/* Starfield */}
-        <div className="pointer-events-none absolute inset-0">
+        <style>{`
+          @keyframes cs-rise { 0% { opacity: 0; transform: translateY(28px) scale(.98); filter: blur(8px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+          @keyframes cs-fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+          @keyframes cs-zoom { 0% { opacity: 0; transform: scale(1.06); } 100% { opacity: 1; transform: scale(1); } }
+          @keyframes cs-slide-l { 0% { opacity: 0; transform: translateX(-40px); } 100% { opacity: 1; transform: translateX(0); } }
+          @keyframes cs-slide-r { 0% { opacity: 0; transform: translateX(40px); } 100% { opacity: 1; transform: translateX(0); } }
+          @keyframes cs-bar { 0% { width: 0%; } 100% { width: 99%; } }
+          .cs-enter { opacity: 0; will-change: transform, opacity, filter; }
+          .cs-in-rise { animation: cs-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-fade { animation: cs-fade 1.2s ease-out forwards; }
+          .cs-in-zoom { animation: cs-zoom 1.4s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-l { animation: cs-slide-l .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-r { animation: cs-slide-r .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-exit { animation: cs-fade .5s ease-in reverse forwards; }
+          .cs-bar-fill { animation: cs-bar 1.8s cubic-bezier(.2,.7,.2,1) .6s forwards; width: 0%; }
+        `}</style>
+
+        {/* Page-level exit veil */}
+        <div
+          className={`pointer-events-none fixed inset-0 z-50 bg-[#02090a] transition-opacity duration-500 ${exiting ? "opacity-100" : "opacity-0"}`}
+        />
+
+
           {stars.map((s, i) => (
             <span
               key={i}
