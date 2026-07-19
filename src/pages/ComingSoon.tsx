@@ -205,13 +205,13 @@ const ComingSoon = () => {
 
 
 
-              <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3">
+              <p className={`text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.25s" }}>
                 — About Busistree
               </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3">
+              <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.35s" }}>
                 The hub for everything your business needs to grow.
               </h2>
-              <p className="text-xs md:text-sm text-white/75 leading-relaxed mb-4">
+              <p className={`text-xs md:text-sm text-white/75 leading-relaxed mb-4 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.45s" }}>
                 Busistree brings planning, digital presence, product packaging, design,
                 and marketing under one roof — so founders can launch, sell, and scale
                 without juggling ten different tools or teams.
