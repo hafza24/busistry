@@ -244,7 +244,7 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className={`relative w-full h-full min-h-0 lg:overflow-hidden border-t border-white/10 lg:border-t-0 lg:border-l cs-enter ${mounted ? "cs-in-r" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: "0.15s" }}>
+          <div className={`relative w-full h-full min-h-0 lg:overflow-hidden border-b border-white/10 lg:border-b-0 lg:border-l order-1 lg:order-2 cs-enter ${mounted ? "cs-in-r" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: "0.15s" }}>
             <div
               className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
