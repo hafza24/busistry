@@ -146,25 +146,28 @@ const ComingSoon = () => {
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(10,6,22,0.55) 0%, rgba(10,6,22,0.85) 60%, rgba(10,6,22,0.95) 100%)",
+                "radial-gradient(ellipse at center, rgba(5,16,15,0.55) 0%, rgba(5,16,15,0.85) 60%, rgba(5,16,15,0.95) 100%)",
             }}
           />
         </div>
 
 
-        {/* Clouds / nebula */}
+        {/* Clouds / nebula — brand tinted */}
         <div
           className="pointer-events-none absolute -bottom-20 right-0 w-[70%] h-[55%]"
           style={{
             background:
-              "radial-gradient(ellipse at 60% 70%, rgba(255, 180, 210, 0.25) 0%, transparent 60%)," +
-              "radial-gradient(ellipse at 30% 90%, rgba(140, 90, 190, 0.35) 0%, transparent 55%)",
+              "radial-gradient(ellipse at 60% 70%, rgba(56, 156, 132, 0.28) 0%, transparent 60%)," +
+              "radial-gradient(ellipse at 30% 90%, rgba(56, 126, 177, 0.30) 0%, transparent 55%)",
             filter: "blur(20px)",
           }}
         />
 
         {/* Top bar */}
-        <header className="relative z-20 flex items-center justify-end px-6 md:px-12 pt-8">
+        <header className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-6">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Busistree" className="h-12 md:h-14 w-auto object-contain drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]" />
+          </Link>
           <Link
             to="/contact"
             className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/80 hover:text-white transition-colors"
