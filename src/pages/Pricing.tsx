@@ -263,17 +263,18 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
           </div>
         </div>
 
-        <div className="flex justify-end mb-3">
-          <Button variant="ghost" size="sm" onClick={() => setAll(!allOpen)}>
-            {allOpen ? "Collapse all" : "Expand all"}
-          </Button>
-        </div>
-
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
           <table className="w-full min-w-[720px] text-sm">
             <thead className="sticky top-0 bg-card z-10">
               <tr className="border-b border-border">
-                <th className="text-left font-semibold text-foreground px-4 py-3 w-[24%]">Feature</th>
+                <th className="text-left font-semibold text-foreground px-4 py-3 w-[24%]">
+                  <div className="flex items-center justify-between gap-2">
+                    <span>Feature</span>
+                    <Button variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => setAll(!allOpen)}>
+                      {allOpen ? "Collapse all" : "Expand all"}
+                    </Button>
+                  </div>
+                </th>
 
                 {visiblePlans.map((p) => (
                   <th
