@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import tpl1 from "@/assets/cs-tpl-1.jpg.asset.json";
 import tpl2 from "@/assets/cs-tpl-2.jpg.asset.json";
+import tpl3 from "@/assets/cs-tpl-3.jpg.asset.json";
 
 const LAUNCH_DATE = new Date();
 LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
@@ -117,6 +118,27 @@ const ComingSoon = () => {
             aria-hidden
             className="cs-drift-d absolute opacity-[0.09] mix-blend-screen blur-[2px] rounded-xl"
             style={{ bottom: "14%", left: "16%", width: "clamp(220px, 22vw, 380px)" }}
+          />
+          <img
+            src={tpl3.url}
+            alt=""
+            aria-hidden
+            className="cs-drift-a absolute opacity-[0.13] mix-blend-screen blur-[1px] rounded-xl shadow-2xl"
+            style={{ top: "40%", left: "50%", transform: "translate(-50%, -50%)", width: "clamp(360px, 44vw, 720px)" }}
+          />
+          <img
+            src={tpl3.url}
+            alt=""
+            aria-hidden
+            className="cs-drift-b absolute opacity-[0.10] mix-blend-screen blur-[2px] rounded-xl"
+            style={{ top: "6%", right: "28%", width: "clamp(240px, 26vw, 440px)" }}
+          />
+          <img
+            src={tpl3.url}
+            alt=""
+            aria-hidden
+            className="cs-drift-c absolute opacity-[0.09] mix-blend-screen blur-[2px] rounded-xl"
+            style={{ bottom: "8%", left: "2%", width: "clamp(240px, 26vw, 440px)" }}
           />
           {/* Vignette to soften edges and keep center readable */}
           <div
