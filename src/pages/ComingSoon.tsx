@@ -168,15 +168,7 @@ const ComingSoon = () => {
         />
 
         {/* Top bar */}
-        <header className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-8">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-md bg-gradient-to-br from-pink-400 to-purple-600 flex items-center justify-center shadow-lg">
-              <span className="font-bold text-white text-sm">B</span>
-            </div>
-            <span className="text-sm tracking-[0.25em] uppercase text-white/90">
-              Busistree
-            </span>
-          </Link>
+        <header className="relative z-20 flex items-center justify-end px-6 md:px-12 pt-8">
           <Link
             to="/contact"
             className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/80 hover:text-white transition-colors"
@@ -185,34 +177,6 @@ const ComingSoon = () => {
           </Link>
         </header>
 
-        {/* Vertical socials left */}
-        <div className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4 [writing-mode:vertical-rl] rotate-180">
-          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
-            Instagram
-          </span>
-          <span className="text-white/30">|</span>
-          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
-            Facebook
-          </span>
-          <span className="text-white/30">|</span>
-          <span className="text-[10px] tracking-[0.5em] uppercase text-white/70">
-            Twitter
-          </span>
-        </div>
-
-        {/* Vertical numbers right */}
-        <div className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3">
-          {["01", "02", "03", "04"].map((n, i) => (
-            <span
-              key={n}
-              className={`text-xs tracking-[0.3em] ${
-                i === 2 ? "text-white" : "text-white/40"
-              }`}
-            >
-              {n}
-            </span>
-          ))}
-        </div>
 
         {/* Center content */}
         <section className="relative z-10 flex flex-col items-center justify-center px-6 text-center min-h-[calc(100vh-14rem)] pt-10">
