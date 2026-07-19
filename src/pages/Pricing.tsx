@@ -437,7 +437,7 @@ const Pricing = () => {
       </section>
 
       {/* Comparison matrix */}
-      <ComparisonMatrix />
+      <ComparisonMatrix plans={plans ?? []} />
 
       {/* FAQ */}
       <FaqSection />
