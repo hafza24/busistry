@@ -67,11 +67,12 @@ const ComingSoon = () => {
 
         style={{
           background:
-            "radial-gradient(1200px 700px at 85% 20%, #1d6a5c 0%, transparent 55%)," +
-            "radial-gradient(900px 600px at 15% 80%, #1a4a6b 0%, transparent 60%)," +
-            "radial-gradient(700px 500px at 50% 50%, #0f2a2f 0%, transparent 70%)," +
-            "linear-gradient(180deg, #05100f 0%, #082018 50%, #05100f 100%)",
+            "radial-gradient(1200px 700px at 85% 20%, #12463c 0%, transparent 55%)," +
+            "radial-gradient(900px 600px at 15% 80%, #10334a 0%, transparent 60%)," +
+            "radial-gradient(700px 500px at 50% 50%, #061a1d 0%, transparent 70%)," +
+            "linear-gradient(180deg, #02090a 0%, #04120e 50%, #02090a 100%)",
         }}
+
       >
         {/* Starfield */}
         <div className="pointer-events-none absolute inset-0">
