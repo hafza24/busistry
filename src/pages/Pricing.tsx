@@ -275,7 +275,7 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
               <tr className="border-b border-border">
                 <th className="text-left font-semibold text-foreground px-4 py-3 w-[24%]">Feature</th>
 
-                {plans.map((p) => (
+                {visiblePlans.map((p) => (
                   <th
                     key={p.id}
                     className="px-4 py-3 text-center font-semibold text-foreground whitespace-nowrap"
