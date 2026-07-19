@@ -104,62 +104,71 @@ const REASSURE = [
 ];
 
 /* ---------------------- Feature comparison matrix ------------------------- */
-type Cell = boolean | string;
-interface MatrixRow {
-  group: string;
-  rows: { label: string; values: Cell[] }[];
-}
+type Cell = boolean | string | number;
 
-/** Tiers are ordered: Basic, Professional, Business, Enterprise */
-const MATRIX: MatrixRow[] = [
+const fmtLimit = (n: number | null | undefined) => {
+  if (n === null || n === undefined) return "—";
+  if (n === 0) return "Unlimited";
+  return n.toLocaleString();
+};
+
+const fmtDomain = (v: string | null | undefined) => {
+  if (!v) return "—";
+  if (v === "subdomain") return "Subdomain";
+  if (v === "custom") return "Custom domain";
+  if (v === "own") return "Own domain";
+  return v.charAt(0).toUpperCase() + v.slice(1);
+};
+
+const fmtDuration = (p: any) => {
+  if (p.type === "buy") return "Lifetime";
+  if (p.type === "free" && p.duration_days) return `${p.duration_days} days`;
+  if (p.duration_days) return `${p.duration_days} days`;
+  return "—";
+};
+
+const fmtPrice = (p: any) => {
+  if (p.price_pkr === 0) return "Free";
+  const base = `PKR ${Number(p.price_pkr).toLocaleString()}`;
+  if (p.type === "rent" && p.duration_days) return `${base} / ${p.duration_days}d`;
+  if (p.type === "buy") return `${base} one-time`;
+  return base;
+};
+
+const buildMatrix = (plans: any[]) => [
   {
-    group: "Core",
+    group: "Pricing",
     rows: [
-      { label: "Custom WordPress build", values: [true, true, true, true] },
-      { label: "Mobile responsive", values: [true, true, true, true] },
-      { label: "SSL / HTTPS", values: [true, true, true, true] },
-      { label: "Pages included", values: ["3", "8", "15", "Unlimited"] },
-      { label: "Products / catalog", values: ["10", "100", "500", "Unlimited"] },
+      { label: "Price", values: plans.map((p) => fmtPrice(p)) as Cell[] },
+      { label: "Duration", values: plans.map((p) => fmtDuration(p)) as Cell[] },
     ],
   },
   {
-    group: "Commerce",
+    group: "Store limits",
     rows: [
-      { label: "WooCommerce store", values: [false, true, true, true] },
-      { label: "Pakistan payment gateways", values: [false, true, true, true] },
-      { label: "Shipping & inventory", values: [false, true, true, true] },
-      { label: "Abandoned-cart recovery", values: [false, false, true, true] },
+      { label: "Products", values: plans.map((p) => fmtLimit(p.max_products)) as Cell[] },
+      { label: "Categories", values: plans.map((p) => fmtLimit(p.max_categories)) as Cell[] },
+      { label: "Pages", values: plans.map((p) => fmtLimit(p.max_pages)) as Cell[] },
     ],
   },
   {
-    group: "Branding & content",
+    group: "Team & communication",
     rows: [
-      { label: "Logo design", values: [false, "Basic", "Custom", "Premium"] },
-      { label: "Copywriting", values: [false, false, true, true] },
-      { label: "Product photography help", values: [false, false, false, true] },
+      { label: "Team seats", values: plans.map((p) => fmtLimit(p.team_users)) as Cell[] },
+      { label: "Email accounts", values: plans.map((p) => fmtLimit(p.email_accounts)) as Cell[] },
     ],
   },
   {
-    group: "Marketing & growth",
+    group: "Platform",
     rows: [
-      { label: "SEO setup (on-page)", values: [false, true, true, true] },
-      { label: "Google Analytics", values: [true, true, true, true] },
-      { label: "Email capture / newsletter", values: [false, true, true, true] },
-      { label: "Social media integration", values: [false, true, true, true] },
-    ],
-  },
-  {
-    group: "Support",
-    rows: [
-      { label: "WhatsApp support", values: ["Email only", "Business hrs", "Priority", "Dedicated"] },
-      { label: "Revisions included", values: ["1", "3", "Unlimited", "Unlimited"] },
-      { label: "Training session", values: [false, "30 min", "1 hr", "On-site"] },
-      { label: "Maintenance (mo.)", values: [false, false, true, true] },
+      { label: "Domain", values: plans.map((p) => fmtDomain(p.domain_type)) as Cell[] },
+      {
+        label: "Platform",
+        values: plans.map((p) => (p.platform_type ? p.platform_type.charAt(0).toUpperCase() + p.platform_type.slice(1) : "—")) as Cell[],
+      },
     ],
   },
 ];
-
-const TIER_NAMES = ["Basic", "Professional", "Business", "Enterprise"];
 
 const renderCell = (value: Cell) => {
   if (value === true)
@@ -169,64 +178,68 @@ const renderCell = (value: Cell) => {
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
-const ComparisonMatrix = () => (
-  <section className="py-16" aria-labelledby="comparison-heading">
-    <div className="container">
-      <div className="text-center mb-10">
-        <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
-          Compare every feature
-        </h2>
-        <p className="text-muted-foreground mt-2 text-sm">
-          Everything that's included at each tier. No hidden upsells.
-        </p>
-      </div>
+const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
+  if (!plans?.length) return null;
+  const matrix = buildMatrix(plans);
+  const colCount = plans.length + 1;
+  return (
+    <section className="py-16" aria-labelledby="comparison-heading">
+      <div className="container">
+        <div className="text-center mb-10">
+          <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
+            Compare every plan
+          </h2>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Side-by-side specs pulled from live plan data.
+          </p>
+        </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
-        <table className="w-full min-w-[720px] text-sm">
-          <thead className="sticky top-0 bg-card z-10">
-            <tr className="border-b border-border">
-              <th className="text-left font-semibold text-foreground px-4 py-3 w-[34%]">Feature</th>
-              {TIER_NAMES.map((t, i) => (
-                <th
-                  key={t}
-                  className={`px-4 py-3 text-center font-semibold ${
-                    i === 1 ? "text-primary" : "text-foreground"
-                  }`}
-                >
-                  {t}
-                  {i === 1 && (
-                    <div className="text-[10px] font-normal text-primary mt-0.5">Most Popular</div>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {MATRIX.map((group) => (
-              <Fragment key={group.group}>
-                <tr className="bg-muted/40">
-                  <td colSpan={5} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    {group.group}
-                  </td>
-                </tr>
-                {group.rows.map((row) => (
-                  <tr key={row.label} className="border-b border-border last:border-b-0">
-                    <td className="px-4 py-3 text-foreground">{row.label}</td>
-                    {row.values.map((v, i) => (
-                      <td key={i} className="px-4 py-3 text-center">
-                        {renderCell(v)}
-                      </td>
-                    ))}
-                  </tr>
+        <div className="overflow-x-auto rounded-xl border border-border bg-card">
+          <table className="w-full min-w-[720px] text-sm">
+            <thead className="sticky top-0 bg-card z-10">
+              <tr className="border-b border-border">
+                <th className="text-left font-semibold text-foreground px-4 py-3 w-[24%]">Feature</th>
+                {plans.map((p) => (
+                  <th
+                    key={p.id}
+                    className="px-4 py-3 text-center font-semibold text-foreground whitespace-nowrap"
+                  >
+                    <div>{p.name}</div>
+                    <div className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mt-0.5">
+                      {p.type}
+                    </div>
+                  </th>
                 ))}
-              </Fragment>
-            ))}
-          </tbody>
-        </table>
+              </tr>
+            </thead>
+            <tbody>
+              {matrix.map((group) => (
+                <Fragment key={group.group}>
+                  <tr className="bg-muted/40">
+                    <td colSpan={colCount} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      {group.group}
+                    </td>
+                  </tr>
+                  {group.rows.map((row) => (
+                    <tr key={row.label} className="border-b border-border last:border-b-0">
+                      <td className="px-4 py-3 text-foreground">{row.label}</td>
+                      {row.values.map((v, i) => (
+                        <td key={i} className="px-4 py-3 text-center">
+                          {renderCell(v)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+
 
 /* ----------------------------------- FAQ ---------------------------------- */
 const FAQS = [
@@ -424,7 +437,7 @@ const Pricing = () => {
       </section>
 
       {/* Comparison matrix */}
-      <ComparisonMatrix />
+      <ComparisonMatrix plans={plans ?? []} />
 
       {/* FAQ */}
       <FaqSection />
