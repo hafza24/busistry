@@ -183,16 +183,29 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
   if (!plans?.length) return null;
   const matrix = buildMatrix(plans);
   const colCount = plans.length + 1;
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(matrix.map((g) => [g.group, true]))
+  );
+  const toggle = (g: string) => setOpenGroups((s) => ({ ...s, [g]: !s[g] }));
+  const allOpen = matrix.every((g) => openGroups[g.group]);
+  const setAll = (v: boolean) =>
+    setOpenGroups(Object.fromEntries(matrix.map((g) => [g.group, v])));
+
   return (
     <section className="py-16" aria-labelledby="comparison-heading">
       <div className="container">
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
             Compare every plan
           </h2>
           <p className="text-muted-foreground mt-2 text-sm">
             Side-by-side specs pulled from live plan data.
           </p>
+        </div>
+        <div className="flex justify-end mb-3">
+          <Button variant="ghost" size="sm" onClick={() => setAll(!allOpen)}>
+            {allOpen ? "Collapse all" : "Expand all"}
+          </Button>
         </div>
 
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
@@ -214,25 +227,54 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
               </tr>
             </thead>
             <tbody>
-              {matrix.map((group) => (
-                <Fragment key={group.group}>
-                  <tr className="bg-muted/40">
-                    <td colSpan={colCount} className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      {group.group}
-                    </td>
-                  </tr>
-                  {group.rows.map((row) => (
-                    <tr key={row.label} className="border-b border-border last:border-b-0">
-                      <td className="px-4 py-3 text-foreground">{row.label}</td>
-                      {row.values.map((v, i) => (
-                        <td key={i} className="px-4 py-3 text-center">
-                          {renderCell(v)}
-                        </td>
-                      ))}
+              {matrix.map((group) => {
+                const isOpen = openGroups[group.group];
+                return (
+                  <Fragment key={group.group}>
+                    <tr
+                      className="bg-muted/40 hover:bg-muted/60 cursor-pointer transition-colors"
+                      onClick={() => toggle(group.group)}
+                    >
+                      <td
+                        colSpan={colCount}
+                        className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                      >
+                        <button
+                          type="button"
+                          className="flex items-center gap-2 w-full text-left"
+                          aria-expanded={isOpen}
+                          aria-controls={`grp-${group.group}`}
+                        >
+                          <ChevronDown
+                            className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                              isOpen ? "rotate-0" : "-rotate-90"
+                            }`}
+                          />
+                          <span>{group.group}</span>
+                          <span className="ml-auto normal-case tracking-normal text-[10px] text-muted-foreground/70">
+                            {group.rows.length} {group.rows.length === 1 ? "row" : "rows"}
+                          </span>
+                        </button>
+                      </td>
                     </tr>
-                  ))}
-                </Fragment>
-              ))}
+                    {isOpen &&
+                      group.rows.map((row) => (
+                        <tr
+                          key={row.label}
+                          id={`grp-${group.group}`}
+                          className="border-b border-border last:border-b-0"
+                        >
+                          <td className="px-4 py-3 text-foreground">{row.label}</td>
+                          {row.values.map((v, i) => (
+                            <td key={i} className="px-4 py-3 text-center">
+                              {renderCell(v)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                  </Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -240,6 +282,7 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
     </section>
   );
 };
+
 
 
 /* ----------------------------------- FAQ ---------------------------------- */
