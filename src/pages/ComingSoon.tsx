@@ -260,27 +260,27 @@ const ComingSoon = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="relative mx-auto h-24 md:h-32 lg:h-40 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+                className={`relative mx-auto h-24 md:h-32 lg:h-40 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)] cs-enter ${mounted ? "cs-in-zoom" : ""}`}
+                style={{ animationDelay: "0.3s" }}
               />
 
-              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4">
+              <p className={`relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.55s" }}>
                 — Site under reconstruction —
               </p>
-              <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
+              <h1 className={`relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.65s" }}>
                 COMING
                 <br />
                 SOON
               </h1>
 
-              <div className="relative mt-6 w-full">
+              <div className={`relative mt-6 w-full cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.85s" }}>
                 <div className="flex items-center justify-between text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 mb-2">
                   <span>Loading</span>
                   <span className="font-semibold text-white tabular-nums">99%</span>
                 </div>
                 <div className="relative h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
-                    style={{ width: `99%` }}
+                    className={`h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white ${mounted ? "cs-bar-fill" : ""}`}
                   />
                   <div
                     className="absolute inset-y-0 w-1/3 -translate-x-full animate-[cs-shimmer_2.2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
@@ -289,7 +289,7 @@ const ComingSoon = () => {
               </div>
 
 
-              <p className="relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
+              <p className={`relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "1s" }}>
                 Something new is on the way
               </p>
 
