@@ -454,7 +454,7 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-20 md:py-28 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -560,7 +560,7 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
@@ -632,7 +632,7 @@ const Index = () => {
 
 
       {/* Pricing */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -684,7 +684,7 @@ const Index = () => {
 
 
       {/* Comparison */}
-      <section className="py-20 md:py-28 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -794,7 +794,7 @@ const Index = () => {
 
 
       {/* Team */}
-      <section className="py-20 md:py-28 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -819,7 +819,7 @@ const Index = () => {
       <ReviewsSection />
 
       {/* Biztyle — Sister brand highlight */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
+      <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
         {/* Aurora glows */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
         {/* Floating orbs */}
@@ -943,7 +943,7 @@ const Index = () => {
 
 
       {/* FAQ */}
-      <section className="py-20 md:py-28 border-b border-border/60">
+      <section className="py-12 md:py-16 border-b border-border/60">
         <div className="container max-w-3xl">
           <div className="text-center mb-12">
             <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
@@ -965,7 +965,7 @@ const Index = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 md:py-36">
+      <section className="py-14 md:py-20">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
