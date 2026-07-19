@@ -166,62 +166,105 @@ const ComingSoon = () => {
 
 
         {/* Two-column content */}
-        <section className="relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center px-6 md:px-12 pt-10 pb-12 min-h-[calc(100vh-14rem)]">
+        <section className="relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch px-6 md:px-12 pt-10 pb-12 min-h-[calc(100vh-14rem)]">
           {/* Left: About Busistree */}
-          <div className="text-left max-w-xl mx-auto lg:mx-0">
-            <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
-              — About Busistree
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
-              The hub for everything your business needs to grow.
-            </h2>
-            <p className="text-sm md:text-base text-white/75 leading-relaxed mb-6">
-              Busistree brings planning, digital presence, product packaging, design,
-              and marketing under one roof — so founders can launch, sell, and scale
-              without juggling ten different tools or teams.
-            </p>
-
-            <ul className="space-y-3 mb-8">
-              {[
-                { t: "Planning", d: "Business roadmaps, positioning & offers that convert." },
-                { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
-                { t: "Design", d: "Logos, visuals and identity systems built to stand out." },
-                { t: "Marketing & Promos", d: "Campaigns, content and growth engines that ship." },
-              ].map((f) => (
-                <li key={f.t} className="flex gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
-                  <div>
-                    <p className="text-sm md:text-base font-semibold text-white">{f.t}</p>
-                    <p className="text-xs md:text-sm text-white/65">{f.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            {/* Waitlist */}
-            <form
-              onSubmit={onSubmit}
-              className="flex w-full max-w-md flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5"
+          <div className="relative mx-auto w-full max-w-xl h-full">
+            <div
+              className="relative h-full rounded-[2rem] overflow-hidden border border-white/15 backdrop-blur-xl p-8 md:p-10 text-left shadow-[0_30px_80px_-20px_rgba(56,126,177,0.35)] flex flex-col"
+              style={{
+                background:
+                  "radial-gradient(120% 90% at 10% 0%, rgba(56,156,132,0.28) 0%, transparent 55%)," +
+                  "radial-gradient(120% 90% at 100% 100%, rgba(56,126,177,0.28) 0%, transparent 55%)," +
+                  "linear-gradient(180deg, rgba(8,32,24,0.6) 0%, rgba(5,16,15,0.7) 100%)",
+              }}
             >
-              <div className="relative flex-1 w-full">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@business.com"
-                  className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </div>
-              <Button
-                type="submit"
-                disabled={submitting}
-                className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
+              <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
+                — About Busistree
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
+                The hub for everything your business needs to grow.
+              </h2>
+              <p className="text-sm md:text-base text-white/75 leading-relaxed mb-6">
+                Busistree brings planning, digital presence, product packaging, design,
+                and marketing under one roof — so founders can launch, sell, and scale
+                without juggling ten different tools or teams.
+              </p>
+
+              <ul className="space-y-3 mb-8">
+                {[
+                  { t: "Planning", d: "Business roadmaps, positioning & offers that convert." },
+                  { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
+                  { t: "Design", d: "Logos, visuals and identity systems built to stand out." },
+                  { t: "Marketing & Promos", d: "Campaigns, content and growth engines that ship." },
+                ].map((f) => (
+                  <li key={f.t} className="flex gap-3">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
+                    <div>
+                      <p className="text-sm md:text-base font-semibold text-white">{f.t}</p>
+                      <p className="text-xs md:text-sm text-white/65">{f.d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Waitlist */}
+              <form
+                onSubmit={onSubmit}
+                className="flex w-full flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5 mb-6"
               >
-                {submitting ? "Adding..." : "Notify me"}
-              </Button>
-            </form>
+                <div className="relative flex-1 w-full">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@business.com"
+                    className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
+                >
+                  {submitting ? "Adding..." : "Notify me"}
+                </Button>
+              </form>
+
+              {/* Contact chips */}
+              <div className="mt-auto pt-6 border-t border-white/10">
+                <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
+                  — Get in touch
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href="mailto:info@busistree.com"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+                  >
+                    <Mail className="h-3.5 w-3.5 text-[#5bc3a8]" />
+                    info@busistree.com
+                  </a>
+                  <a
+                    href="https://wa.me/923370428337"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+                  >
+                    <MessageCircle className="h-3.5 w-3.5 text-[#5bc3a8]" />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="tel:+923370428337"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+                  >
+                    <Phone className="h-3.5 w-3.5 text-[#5bc3a8]" />
+                    +92 337 0428337
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
+
 
           {/* Right: Coming Soon poster */}
           <div className="relative mx-auto w-full max-w-xl">
