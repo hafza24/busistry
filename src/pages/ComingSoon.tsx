@@ -223,7 +223,32 @@ const ComingSoon = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative z-20 pb-6 text-center">
+        <footer className="relative z-20 pb-6 pt-10 px-6 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-5">
+            <a
+              href="mailto:info@busistree.com"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+            >
+              <Mail className="h-3.5 w-3.5 text-[#5bc3a8]" />
+              info@busistree.com
+            </a>
+            <a
+              href="https://wa.me/923370428337"
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+            >
+              <MessageCircle className="h-3.5 w-3.5 text-[#5bc3a8]" />
+              WhatsApp
+            </a>
+            <a
+              href="tel:+923370428337"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
+            >
+              <Phone className="h-3.5 w-3.5 text-[#5bc3a8]" />
+              +92 337 0428337
+            </a>
+          </div>
           <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50">
             Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
           </p>
