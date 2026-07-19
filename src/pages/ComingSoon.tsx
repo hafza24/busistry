@@ -198,7 +198,7 @@ const ComingSoon = () => {
         {/* Two-column content */}
         <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full flex-1 min-h-0">
           {/* Left: About Busistree */}
-          <div className="relative w-full h-full min-h-0 lg:overflow-hidden">
+          <div className={`relative w-full h-full min-h-0 lg:overflow-hidden cs-enter ${mounted ? "cs-in-l" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: "0.15s" }}>
             <div
               className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
             >
