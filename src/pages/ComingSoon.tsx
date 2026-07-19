@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
+import tpl1 from "@/assets/cs-tpl-1.jpg.asset.json";
+import tpl2 from "@/assets/cs-tpl-2.jpg.asset.json";
 
 const LAUNCH_DATE = new Date();
 LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
@@ -85,6 +87,47 @@ const ComingSoon = () => {
             />
           ))}
         </div>
+
+        {/* Faded template collage */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <img
+            src={tpl1.url}
+            alt=""
+            aria-hidden
+            className="absolute opacity-[0.12] mix-blend-screen blur-[1px] rotate-[-8deg] rounded-xl shadow-2xl"
+            style={{ top: "8%", left: "4%", width: "clamp(280px, 32vw, 520px)" }}
+          />
+          <img
+            src={tpl2.url}
+            alt=""
+            aria-hidden
+            className="absolute opacity-[0.14] mix-blend-screen blur-[1px] rotate-[6deg] rounded-xl shadow-2xl"
+            style={{ bottom: "6%", right: "3%", width: "clamp(320px, 36vw, 620px)" }}
+          />
+          <img
+            src={tpl2.url}
+            alt=""
+            aria-hidden
+            className="absolute opacity-[0.08] mix-blend-screen blur-[2px] rotate-[-4deg] rounded-xl"
+            style={{ top: "12%", right: "18%", width: "clamp(220px, 22vw, 380px)" }}
+          />
+          <img
+            src={tpl1.url}
+            alt=""
+            aria-hidden
+            className="absolute opacity-[0.09] mix-blend-screen blur-[2px] rotate-[10deg] rounded-xl"
+            style={{ bottom: "14%", left: "16%", width: "clamp(220px, 22vw, 380px)" }}
+          />
+          {/* Vignette to soften edges and keep center readable */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at center, rgba(10,6,22,0.55) 0%, rgba(10,6,22,0.85) 60%, rgba(10,6,22,0.95) 100%)",
+            }}
+          />
+        </div>
+
 
         {/* Moon left */}
         <div
