@@ -181,8 +181,23 @@ const renderCell = (value: Cell) => {
 
 const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
   if (!plans?.length) return null;
-  const matrix = buildMatrix(plans);
-  const colCount = plans.length + 1;
+
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(
+    () => new Set(plans.map((p) => p.id))
+  );
+  const toggleId = (id: string) =>
+    setSelectedIds((s) => {
+      const next = new Set(s);
+      if (next.has(id)) {
+        if (next.size > 1) next.delete(id); // keep at least one
+      } else next.add(id);
+      return next;
+    });
+
+  const visiblePlans = plans.filter((p) => selectedIds.has(p.id));
+  const matrix = buildMatrix(visiblePlans);
+  const colCount = visiblePlans.length + 1;
+
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(matrix.map((g) => [g.group, true]))
   );
@@ -190,6 +205,8 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
   const allOpen = matrix.every((g) => openGroups[g.group]);
   const setAll = (v: boolean) =>
     setOpenGroups(Object.fromEntries(matrix.map((g) => [g.group, v])));
+
+  const allSelected = selectedIds.size === plans.length;
 
   return (
     <section className="py-16" aria-labelledby="comparison-heading">
@@ -199,9 +216,53 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
             Compare every plan
           </h2>
           <p className="text-muted-foreground mt-2 text-sm">
-            Side-by-side specs pulled from live plan data.
+            Pick the plans you want to compare — side-by-side specs pulled from live plan data.
           </p>
         </div>
+
+        {/* Plan selector chips */}
+        <div className="mb-4 rounded-xl border border-border bg-card p-3">
+          <div className="flex items-center justify-between gap-3 mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Plans in table ({selectedIds.size}/{plans.length})
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() =>
+                setSelectedIds(
+                  allSelected ? new Set([plans[0].id]) : new Set(plans.map((p) => p.id))
+                )
+              }
+            >
+              {allSelected ? "Clear" : "Select all"}
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {plans.map((p) => {
+              const active = selectedIds.has(p.id);
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => toggleId(p.id)}
+                  aria-pressed={active}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    active
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-background text-muted-foreground border-border hover:bg-muted"
+                  }`}
+                >
+                  {active && <Check className="h-3 w-3" />}
+                  {p.name}
+                  <span className="opacity-70">·</span>
+                  <span className="uppercase tracking-wider text-[9px] opacity-80">{p.type}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="flex justify-end mb-3">
           <Button variant="ghost" size="sm" onClick={() => setAll(!allOpen)}>
             {allOpen ? "Collapse all" : "Expand all"}
@@ -213,7 +274,8 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
             <thead className="sticky top-0 bg-card z-10">
               <tr className="border-b border-border">
                 <th className="text-left font-semibold text-foreground px-4 py-3 w-[24%]">Feature</th>
-                {plans.map((p) => (
+
+                {visiblePlans.map((p) => (
                   <th
                     key={p.id}
                     className="px-4 py-3 text-center font-semibold text-foreground whitespace-nowrap"
