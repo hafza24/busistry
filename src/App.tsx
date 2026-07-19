@@ -120,6 +120,7 @@ const App = () => (
                   <Route path="/profile/:userId" element={<ProfileView />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
+                </ComingSoonGate>
               </Suspense>
             </ErrorBoundary>
           </AuthProvider>
