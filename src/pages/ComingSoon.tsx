@@ -166,18 +166,13 @@ const ComingSoon = () => {
 
 
         {/* Two-column content */}
-        <section className="relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch px-6 md:px-12 pt-10 pb-12 min-h-[calc(100vh-14rem)]">
+        <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full min-h-screen">
           {/* Left: About Busistree */}
-          <div className="relative mx-auto w-full max-w-xl h-full">
+          <div className="relative w-full h-full min-h-screen">
             <div
-              className="relative h-full rounded-[2rem] overflow-hidden border border-white/15 backdrop-blur-xl p-8 md:p-10 text-left shadow-[0_30px_80px_-20px_rgba(56,126,177,0.35)] flex flex-col"
-              style={{
-                background:
-                  "radial-gradient(120% 90% at 10% 0%, rgba(56,156,132,0.28) 0%, transparent 55%)," +
-                  "radial-gradient(120% 90% at 100% 100%, rgba(56,126,177,0.28) 0%, transparent 55%)," +
-                  "linear-gradient(180deg, rgba(8,32,24,0.6) 0%, rgba(5,16,15,0.7) 100%)",
-              }}
+              className="relative h-full min-h-screen overflow-hidden p-8 md:p-12 lg:p-16 text-left flex flex-col justify-center"
             >
+
               <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
                 — About Busistree
               </p>
