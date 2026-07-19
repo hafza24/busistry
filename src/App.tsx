@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import PublicLayout from "@/components/PublicLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GlassCursor from "@/components/GlassCursor";
+import ComingSoonGate from "@/components/ComingSoonGate";
 import { Loader2 } from "lucide-react";
 
 // Eager: landing-critical
@@ -75,6 +76,7 @@ const App = () => (
           <AuthProvider>
             <ErrorBoundary>
               <Suspense fallback={<RouteFallback />}>
+                <ComingSoonGate>
                 <Routes>
                   <Route element={<PublicLayout />}>
                     <Route path="/" element={<Index />} />

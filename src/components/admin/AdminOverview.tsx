@@ -14,6 +14,7 @@ import {
   Tooltip, XAxis, YAxis, PolarGrid, PolarAngleAxis, Radar, RadarChart,
 } from "recharts";
 import { ChevronLeft, ChevronRight, Download, Plus } from "lucide-react";
+import ComingSoonToggle from "./ComingSoonToggle";
 
 const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
@@ -203,6 +204,7 @@ const AdminOverview = () => {
 
   return (
     <div className="space-y-6">
+      <ComingSoonToggle />
       {/* Header row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card className="lg:col-span-2 p-6 bg-gradient-to-br from-card to-secondary/30 border-border/60">
