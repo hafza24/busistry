@@ -1407,6 +1407,27 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          coming_soon_enabled: boolean
+          id: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          coming_soon_enabled?: boolean
+          id?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          coming_soon_enabled?: boolean
+          id?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       store_addons: {
         Row: {
           admin_notes: string | null
