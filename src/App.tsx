@@ -46,6 +46,7 @@ const TrackOrder = lazy(() => import("./pages/TrackOrder"));
 const ProfileView = lazy(() => import("./pages/ProfileView"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail"));
+const ComingSoon = lazy(() => import("./pages/ComingSoon"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
