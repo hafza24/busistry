@@ -62,7 +62,8 @@ const ComingSoon = () => {
         path="/coming-soon"
       />
       <main
-        className="relative h-screen w-full overflow-hidden text-white font-display flex flex-col"
+        className="relative min-h-screen lg:h-screen w-full overflow-x-hidden lg:overflow-hidden text-white font-display flex flex-col"
+
 
         style={{
           background:
@@ -169,10 +170,11 @@ const ComingSoon = () => {
         {/* Two-column content */}
         <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full flex-1 min-h-0">
           {/* Left: About Busistree */}
-          <div className="relative w-full h-full min-h-0 overflow-hidden">
+          <div className="relative w-full h-full min-h-0 lg:overflow-hidden">
             <div
-              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
+              className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
             >
+
 
 
               <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3">
@@ -234,10 +236,11 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative w-full h-full min-h-0 overflow-hidden">
+          <div className="relative w-full h-full min-h-0 lg:overflow-hidden border-t border-white/10 lg:border-t-0 lg:border-l">
             <div
-              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
+              className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
+
 
               <div className="pointer-events-none absolute inset-0">
                 <span className="absolute top-6 left-8 h-1 w-1 rounded-full bg-white/80 animate-pulse" />
