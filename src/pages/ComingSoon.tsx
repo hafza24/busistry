@@ -143,14 +143,8 @@ const ComingSoon = () => {
             className="cs-drift-c absolute opacity-[0.09] mix-blend-screen blur-[2px] rounded-xl"
             style={{ bottom: "8%", left: "2%", width: "clamp(240px, 26vw, 440px)" }}
           />
-          {/* Vignette to soften edges and keep center readable */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(5,16,15,0.55) 0%, rgba(5,16,15,0.85) 60%, rgba(5,16,15,0.95) 100%)",
-            }}
-          />
+
+
         </div>
 
 
@@ -333,13 +327,6 @@ const ComingSoon = () => {
 
             </div>
 
-            <div
-              className="pointer-events-none absolute -inset-4 -z-10 rounded-[2.5rem] blur-2xl opacity-60"
-              style={{
-                background:
-                  "conic-gradient(from 120deg at 50% 50%, rgba(56,156,132,0.35), rgba(56,126,177,0.25), rgba(56,156,132,0.35))",
-              }}
-            />
           </div>
         </section>
 
