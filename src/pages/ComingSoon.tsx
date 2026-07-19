@@ -16,9 +16,20 @@ const TOTAL_MS = 30 * 24 * 60 * 60 * 1000;
 
 const ComingSoon = () => {
   const [now, setNow] = useState(() => Date.now());
+  const [mounted, setMounted] = useState(false);
+  const [exiting, setExiting] = useState(false);
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
+    const t = requestAnimationFrame(() => setMounted(true));
+    // Play exit animation on tab close / route change
+    const onHide = () => setExiting(true);
+    window.addEventListener("beforeunload", onHide);
+    return () => {
+      clearInterval(id);
+      cancelAnimationFrame(t);
+      window.removeEventListener("beforeunload", onHide);
+      setExiting(true);
+    };
   }, []);
   const remaining = Math.max(0, LAUNCH_DATE.getTime() - now);
   const progress = Math.min(100, Math.max(0, ((TOTAL_MS - remaining) / TOTAL_MS) * 100));
@@ -74,8 +85,30 @@ const ComingSoon = () => {
         }}
 
       >
+        <style>{`
+          @keyframes cs-rise { 0% { opacity: 0; transform: translateY(28px) scale(.98); filter: blur(8px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+          @keyframes cs-fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+          @keyframes cs-zoom { 0% { opacity: 0; transform: scale(1.06); } 100% { opacity: 1; transform: scale(1); } }
+          @keyframes cs-slide-l { 0% { opacity: 0; transform: translateX(-40px); } 100% { opacity: 1; transform: translateX(0); } }
+          @keyframes cs-slide-r { 0% { opacity: 0; transform: translateX(40px); } 100% { opacity: 1; transform: translateX(0); } }
+          @keyframes cs-bar { 0% { width: 0%; } 100% { width: 99%; } }
+          .cs-enter { opacity: 0; will-change: transform, opacity, filter; }
+          .cs-in-rise { animation: cs-rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-fade { animation: cs-fade 1.2s ease-out forwards; }
+          .cs-in-zoom { animation: cs-zoom 1.4s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-l { animation: cs-slide-l .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-in-r { animation: cs-slide-r .9s cubic-bezier(.2,.7,.2,1) forwards; }
+          .cs-exit { animation: cs-fade .5s ease-in reverse forwards; }
+          .cs-bar-fill { animation: cs-bar 1.8s cubic-bezier(.2,.7,.2,1) .6s forwards; width: 0%; }
+        `}</style>
+
+        {/* Page-level exit veil */}
+        <div
+          className={`pointer-events-none fixed inset-0 z-50 bg-[#02090a] transition-opacity duration-500 ${exiting ? "opacity-100" : "opacity-0"}`}
+        />
+
         {/* Starfield */}
-        <div className="pointer-events-none absolute inset-0">
+        <div className={`pointer-events-none absolute inset-0 cs-enter ${mounted ? "cs-in-fade" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: mounted ? "0.1s" : undefined }}>
           {stars.map((s, i) => (
             <span
               key={i}
@@ -165,20 +198,20 @@ const ComingSoon = () => {
         {/* Two-column content */}
         <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full flex-1 min-h-0">
           {/* Left: About Busistree */}
-          <div className="relative w-full h-full min-h-0 lg:overflow-hidden">
+          <div className={`relative w-full h-full min-h-0 lg:overflow-hidden cs-enter ${mounted ? "cs-in-l" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: "0.15s" }}>
             <div
               className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
             >
 
 
 
-              <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3">
+              <p className={`text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.25s" }}>
                 — About Busistree
               </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3">
+              <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.35s" }}>
                 The hub for everything your business needs to grow.
               </h2>
-              <p className="text-xs md:text-sm text-white/75 leading-relaxed mb-4">
+              <p className={`text-xs md:text-sm text-white/75 leading-relaxed mb-4 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.45s" }}>
                 Busistree brings planning, digital presence, product packaging, design,
                 and marketing under one roof — so founders can launch, sell, and scale
                 without juggling ten different tools or teams.
@@ -190,8 +223,8 @@ const ComingSoon = () => {
                   { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
                   { t: "Design", d: "Logos, visuals and identity systems built to stand out." },
                   { t: "Marketing & Promos", d: "Campaigns, content and growth engines that ship." },
-                ].map((f) => (
-                  <li key={f.t} className="flex gap-3">
+                ].map((f, i) => (
+                  <li key={f.t} className={`flex gap-3 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: `${0.55 + i * 0.1}s` }}>
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
                     <div>
                       <p className="text-sm font-semibold text-white leading-tight">{f.t}</p>
@@ -211,7 +244,7 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative w-full h-full min-h-0 lg:overflow-hidden border-t border-white/10 lg:border-t-0 lg:border-l">
+          <div className={`relative w-full h-full min-h-0 lg:overflow-hidden border-t border-white/10 lg:border-t-0 lg:border-l cs-enter ${mounted ? "cs-in-r" : ""} ${exiting ? "cs-exit" : ""}`} style={{ animationDelay: "0.15s" }}>
             <div
               className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
@@ -227,27 +260,27 @@ const ComingSoon = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="relative mx-auto h-24 md:h-32 lg:h-40 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]"
+                className={`relative mx-auto h-24 md:h-32 lg:h-40 w-auto object-contain mb-4 drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)] cs-enter ${mounted ? "cs-in-zoom" : ""}`}
+                style={{ animationDelay: "0.3s" }}
               />
 
-              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4">
+              <p className={`relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-4 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.55s" }}>
                 — Site under reconstruction —
               </p>
-              <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
+              <h1 className={`relative text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.65s" }}>
                 COMING
                 <br />
                 SOON
               </h1>
 
-              <div className="relative mt-6 w-full">
+              <div className={`relative mt-6 w-full cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "0.85s" }}>
                 <div className="flex items-center justify-between text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/70 mb-2">
                   <span>Loading</span>
                   <span className="font-semibold text-white tabular-nums">99%</span>
                 </div>
                 <div className="relative h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
-                    style={{ width: `99%` }}
+                    className={`h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white ${mounted ? "cs-bar-fill" : ""}`}
                   />
                   <div
                     className="absolute inset-y-0 w-1/3 -translate-x-full animate-[cs-shimmer_2.2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent"
@@ -256,12 +289,12 @@ const ComingSoon = () => {
               </div>
 
 
-              <p className="relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
+              <p className={`relative mt-4 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "1s" }}>
                 Something new is on the way
               </p>
 
               {/* Contact chips */}
-              <div className="relative mt-5 pt-4 border-t border-white/10">
+              <div className={`relative mt-5 pt-4 border-t border-white/10 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "1.15s" }}>
                 <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
                   — Get in touch
                 </p>
