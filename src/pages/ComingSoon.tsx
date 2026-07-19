@@ -294,7 +294,7 @@ const ComingSoon = () => {
               </p>
 
               {/* Contact chips */}
-              <div className="relative mt-5 pt-4 border-t border-white/10">
+              <div className={`relative mt-5 pt-4 border-t border-white/10 cs-enter ${mounted ? "cs-in-rise" : ""}`} style={{ animationDelay: "1.15s" }}>
                 <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
                   — Get in touch
                 </p>
