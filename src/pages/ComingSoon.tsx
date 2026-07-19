@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
+import logo from "@/assets/logo.png";
 import tpl1 from "@/assets/cs-tpl-1.jpg.asset.json";
 import tpl2 from "@/assets/cs-tpl-2.jpg.asset.json";
 import tpl3 from "@/assets/cs-tpl-3.jpg.asset.json";
