@@ -328,11 +328,12 @@ const ComingSoon = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative z-20 pb-6 pt-4 px-6 text-center">
-          <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50">
+        <footer className="relative z-20 py-2 px-6 text-center shrink-0">
+          <p className="text-[10px] tracking-[0.3em] uppercase text-white/50">
             Copyright © {new Date().getFullYear()} Busistree — All rights reserved.
           </p>
         </footer>
+
       </main>
     </>
   );
