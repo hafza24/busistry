@@ -57,6 +57,7 @@ const ComingSoon = () => {
       <SEO
         title="Coming Soon — Busistree"
         description="Something new is on the way. Join the waitlist to be the first to know when we launch."
+        path="/coming-soon"
       />
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16 md:py-24 overflow-hidden">
         {/* Ambient accents */}
