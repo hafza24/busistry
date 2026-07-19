@@ -167,12 +167,13 @@ const ComingSoon = () => {
 
 
         {/* Two-column content */}
-        <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full min-h-screen">
+        <section className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-stretch w-full flex-1 min-h-0">
           {/* Left: About Busistree */}
-          <div className="relative w-full h-full min-h-screen">
+          <div className="relative w-full h-full min-h-0 overflow-hidden">
             <div
-              className="relative h-full min-h-screen overflow-hidden p-8 md:p-12 lg:p-16 text-left flex flex-col justify-center"
+              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-left flex flex-col justify-center"
             >
+
 
               <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
                 — About Busistree
