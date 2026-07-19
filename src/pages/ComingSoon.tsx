@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
+import logo from "@/assets/logo.png";
 import tpl1 from "@/assets/cs-tpl-1.jpg.asset.json";
 import tpl2 from "@/assets/cs-tpl-2.jpg.asset.json";
 import tpl3 from "@/assets/cs-tpl-3.jpg.asset.json";
@@ -64,10 +65,10 @@ const ComingSoon = () => {
         className="relative min-h-screen w-full overflow-hidden text-white font-display"
         style={{
           background:
-            "radial-gradient(1200px 700px at 85% 20%, #6b2a5a 0%, transparent 55%)," +
-            "radial-gradient(900px 600px at 15% 80%, #3a1a5c 0%, transparent 60%)," +
-            "radial-gradient(700px 500px at 50% 50%, #1a1030 0%, transparent 70%)," +
-            "linear-gradient(180deg, #0a0616 0%, #120a24 50%, #0a0616 100%)",
+            "radial-gradient(1200px 700px at 85% 20%, #1d6a5c 0%, transparent 55%)," +
+            "radial-gradient(900px 600px at 15% 80%, #1a4a6b 0%, transparent 60%)," +
+            "radial-gradient(700px 500px at 50% 50%, #0f2a2f 0%, transparent 70%)," +
+            "linear-gradient(180deg, #05100f 0%, #082018 50%, #05100f 100%)",
         }}
       >
         {/* Starfield */}
@@ -145,25 +146,28 @@ const ComingSoon = () => {
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(10,6,22,0.55) 0%, rgba(10,6,22,0.85) 60%, rgba(10,6,22,0.95) 100%)",
+                "radial-gradient(ellipse at center, rgba(5,16,15,0.55) 0%, rgba(5,16,15,0.85) 60%, rgba(5,16,15,0.95) 100%)",
             }}
           />
         </div>
 
 
-        {/* Clouds / nebula */}
+        {/* Clouds / nebula — brand tinted */}
         <div
           className="pointer-events-none absolute -bottom-20 right-0 w-[70%] h-[55%]"
           style={{
             background:
-              "radial-gradient(ellipse at 60% 70%, rgba(255, 180, 210, 0.25) 0%, transparent 60%)," +
-              "radial-gradient(ellipse at 30% 90%, rgba(140, 90, 190, 0.35) 0%, transparent 55%)",
+              "radial-gradient(ellipse at 60% 70%, rgba(56, 156, 132, 0.28) 0%, transparent 60%)," +
+              "radial-gradient(ellipse at 30% 90%, rgba(56, 126, 177, 0.30) 0%, transparent 55%)",
             filter: "blur(20px)",
           }}
         />
 
         {/* Top bar */}
-        <header className="relative z-20 flex items-center justify-end px-6 md:px-12 pt-8">
+        <header className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-6">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Busistree" className="h-12 md:h-14 w-auto object-contain drop-shadow-[0_4px_20px_rgba(56,156,132,0.5)]" />
+          </Link>
           <Link
             to="/contact"
             className="text-xs md:text-sm tracking-[0.35em] uppercase text-white/80 hover:text-white transition-colors"
@@ -186,7 +190,7 @@ const ComingSoon = () => {
           <div className="mt-12 w-full max-w-md">
             <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-pink-300 via-fuchsia-300 to-white transition-all duration-1000"
+                className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -211,7 +215,7 @@ const ComingSoon = () => {
             <Button
               type="submit"
               disabled={submitting}
-              className="h-10 w-full sm:w-auto rounded-full bg-white text-purple-900 hover:bg-white/90 tracking-[0.2em] text-xs uppercase font-semibold px-6"
+              className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
             >
               {submitting ? "Adding..." : "Notify me"}
             </Button>
