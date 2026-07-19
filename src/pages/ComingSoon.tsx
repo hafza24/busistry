@@ -236,10 +236,11 @@ const ComingSoon = () => {
 
 
           {/* Right: Coming Soon poster */}
-          <div className="relative w-full h-full min-h-0 overflow-hidden">
+          <div className="relative w-full h-full min-h-0 lg:overflow-hidden border-t border-white/10 lg:border-t-0 lg:border-l">
             <div
-              className="relative h-full overflow-hidden px-6 py-6 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
+              className="relative h-full lg:overflow-hidden px-5 py-10 sm:px-8 md:px-10 md:py-8 lg:px-14 text-center flex flex-col justify-center"
             >
+
 
               <div className="pointer-events-none absolute inset-0">
                 <span className="absolute top-6 left-8 h-1 w-1 rounded-full bg-white/80 animate-pulse" />
