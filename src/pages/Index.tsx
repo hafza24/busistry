@@ -323,14 +323,17 @@ const Index = () => {
         blurb: p.type === "free" ? "Get started free" : p.type === "rent" ? "Flexible rental plan" : "One-time purchase",
         price: p.price_pkr === 0 ? "Free" : `PKR ${p.price_pkr.toLocaleString()}`,
         delivery: p.duration_days ? `${p.duration_days} days` : "24–48 hours",
-        features: (Array.isArray(p.features) ? p.features as string[] : []).length > 0
-          ? (p.features as string[])
-          : [
-              `Up to ${p.max_products} products`,
-              `${p.max_categories} categories`,
-              `${p.max_pages ?? 5} pages`,
-              `${p.team_users ?? 1} team user${(p.team_users ?? 1) > 1 ? "s" : ""}`,
-            ],
+        features: Array.from(new Set([
+          `Up to ${p.max_products} products`,
+          `${p.max_categories} categories`,
+          `${p.max_pages ?? 5} pages`,
+          `${p.team_users ?? 1} team user${(p.team_users ?? 1) > 1 ? "s" : ""}`,
+          `${p.email_accounts ?? 0} email account${(p.email_accounts ?? 0) === 1 ? "" : "s"}`,
+          p.domain_type === "own" ? "Own custom domain" : "Free subdomain",
+          `${(p.platform_type ?? "wordpress").replace(/^\w/, (c: string) => c.toUpperCase())} platform`,
+          ...(p.duration_days ? [`${p.duration_days} days hosting`] : ["Lifetime access"]),
+          ...(Array.isArray(p.features) ? p.features as string[] : []),
+        ])),
         highlighted: arr.length > 1 && i === Math.floor(arr.length / 2),
       }))
     : tiers.map((t) => ({ ...t, id: undefined as string | undefined }));
