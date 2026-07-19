@@ -231,37 +231,6 @@ const ComingSoon = () => {
                 </Button>
               </form>
 
-              {/* Contact chips */}
-              <div className="mt-auto pt-6 border-t border-white/10">
-                <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-white/50 mb-3">
-                  — Get in touch
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <a
-                    href="mailto:info@busistree.com"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-                  >
-                    <Mail className="h-3.5 w-3.5 text-[#5bc3a8]" />
-                    info@busistree.com
-                  </a>
-                  <a
-                    href="https://wa.me/923370428337"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-                  >
-                    <MessageCircle className="h-3.5 w-3.5 text-[#5bc3a8]" />
-                    WhatsApp
-                  </a>
-                  <a
-                    href="tel:+923370428337"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md px-3 py-1.5 text-xs text-white/85 hover:text-white hover:border-[#389c84]/60 hover:bg-[#389c84]/15 transition-colors"
-                  >
-                    <Phone className="h-3.5 w-3.5 text-[#5bc3a8]" />
-                    +92 337 0428337
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
 
