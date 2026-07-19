@@ -177,49 +177,113 @@ const ComingSoon = () => {
         </header>
 
 
-        {/* Center content */}
-        <section className="relative z-10 flex flex-col items-center justify-center px-6 text-center min-h-[calc(100vh-14rem)] pt-10">
-          <p className="text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
-            — Site under reconstruction —
-          </p>
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[0.15em] md:tracking-[0.25em] leading-none">
-            COMING SOON
-          </h1>
+        {/* Two-column content */}
+        <section className="relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center px-6 md:px-12 pt-10 pb-12 min-h-[calc(100vh-14rem)]">
+          {/* Left: About Busistree */}
+          <div className="text-left max-w-xl mx-auto lg:mx-0">
+            <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-[#5bc3a8] mb-5">
+              — About Busistree
+            </p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5">
+              The hub for everything your business needs to grow.
+            </h2>
+            <p className="text-sm md:text-base text-white/75 leading-relaxed mb-6">
+              Busistree brings planning, digital presence, product packaging, design,
+              and marketing under one roof — so founders can launch, sell, and scale
+              without juggling ten different tools or teams.
+            </p>
 
-          {/* Progress */}
-          <div className="mt-12 w-full max-w-md">
-            <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+            <ul className="space-y-3 mb-8">
+              {[
+                { t: "Planning", d: "Business roadmaps, positioning & offers that convert." },
+                { t: "Digital Presence & Packaging", d: "Websites, storefronts and brand-ready product packaging." },
+                { t: "Design", d: "Logos, visuals and identity systems built to stand out." },
+                { t: "Marketing & Promos", d: "Campaigns, content and growth engines that ship." },
+              ].map((f) => (
+                <li key={f.t} className="flex gap-3">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] shrink-0" />
+                  <div>
+                    <p className="text-sm md:text-base font-semibold text-white">{f.t}</p>
+                    <p className="text-xs md:text-sm text-white/65">{f.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
 
+            {/* Waitlist */}
+            <form
+              onSubmit={onSubmit}
+              className="flex w-full max-w-md flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5"
+            >
+              <div className="relative flex-1 w-full">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@business.com"
+                  className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={submitting}
+                className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
+              >
+                {submitting ? "Adding..." : "Notify me"}
+              </Button>
+            </form>
           </div>
 
-          {/* Waitlist */}
-          <form
-            onSubmit={onSubmit}
-            className="mt-10 flex w-full max-w-md flex-col sm:flex-row items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-md p-1.5"
-          >
-            <div className="relative flex-1 w-full">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@business.com"
-                className="pl-10 h-10 bg-transparent border-0 text-white placeholder:text-white/50 focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
-            </div>
-            <Button
-              type="submit"
-              disabled={submitting}
-              className="h-10 w-full sm:w-auto rounded-full bg-gradient-to-r from-[#389c84] to-[#387eb1] text-white hover:opacity-90 tracking-[0.2em] text-xs uppercase font-semibold px-6 shadow-[0_8px_24px_-8px_rgba(56,156,132,0.6)]"
+          {/* Right: Coming Soon poster */}
+          <div className="relative mx-auto w-full max-w-xl">
+            <div
+              className="relative rounded-[2rem] overflow-hidden border border-white/15 backdrop-blur-xl p-8 md:p-12 text-center shadow-[0_30px_80px_-20px_rgba(56,156,132,0.45)]"
+              style={{
+                background:
+                  "radial-gradient(120% 90% at 20% 0%, rgba(56,156,132,0.35) 0%, transparent 55%)," +
+                  "radial-gradient(120% 90% at 90% 100%, rgba(56,126,177,0.35) 0%, transparent 55%)," +
+                  "linear-gradient(180deg, rgba(8,32,24,0.65) 0%, rgba(5,16,15,0.75) 100%)",
+              }}
             >
-              {submitting ? "Adding..." : "Notify me"}
-            </Button>
-          </form>
+              <div className="pointer-events-none absolute inset-0">
+                <span className="absolute top-6 left-8 h-1 w-1 rounded-full bg-white/80 animate-pulse" />
+                <span className="absolute top-16 right-10 h-1.5 w-1.5 rounded-full bg-white/70 animate-pulse" style={{ animationDelay: "1s" }} />
+                <span className="absolute bottom-12 left-14 h-1 w-1 rounded-full bg-white/60 animate-pulse" style={{ animationDelay: "2s" }} />
+                <span className="absolute bottom-20 right-8 h-1.5 w-1.5 rounded-full bg-white/70 animate-pulse" style={{ animationDelay: "0.5s" }} />
+              </div>
+
+              <p className="relative text-[10px] md:text-xs tracking-[0.6em] uppercase text-white/70 mb-6">
+                — Site under reconstruction —
+              </p>
+              <h1 className="relative text-5xl sm:text-6xl md:text-7xl font-bold tracking-[0.15em] md:tracking-[0.2em] leading-none bg-gradient-to-br from-white via-white to-[#5bc3a8] bg-clip-text text-transparent">
+                COMING
+                <br />
+                SOON
+              </h1>
+
+              <div className="relative mt-10 w-full">
+                <div className="h-2 w-full rounded-full bg-white/10 backdrop-blur-sm overflow-hidden border border-white/10">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#389c84] via-[#387eb1] to-white transition-all duration-1000"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+
+              <p className="relative mt-6 text-xs md:text-sm text-white/70 tracking-[0.2em] uppercase">
+                Something new is on the way
+              </p>
+            </div>
+
+            <div
+              className="pointer-events-none absolute -inset-4 -z-10 rounded-[2.5rem] blur-2xl opacity-60"
+              style={{
+                background:
+                  "conic-gradient(from 120deg at 50% 50%, rgba(56,156,132,0.35), rgba(56,126,177,0.25), rgba(56,156,132,0.35))",
+              }}
+            />
+          </div>
         </section>
 
         {/* Footer */}
