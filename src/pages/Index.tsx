@@ -415,16 +415,6 @@ const Index = () => {
                 </Button>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-3 max-w-lg text-sm text-muted-foreground">
-                {["Business planning included", "Websites & stores built for you", "Brand, product & packaging design", "Marketing, promos & content"].map((t) => (
-                  <div key={t} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-primary shrink-0" /> {t}
-                  </div>
-                ))}
-              </div>
-
-              {/* Stats row */}
-              <HeroStatsRow />
             </motion.div>
 
             {/* Right: mockup with floating cards */}
