@@ -219,14 +219,13 @@ const Onboarding = () => {
           >
             {step === 1 && <StepTemplate data={data} update={update} />}
             {step === 2 && <StepPlan data={data} update={update} />}
-            {step === 3 && <StepAddons data={data} update={update} />}
-            {step === 4 && <StepIntegrations data={data} update={update} />}
-            {step === 5 && <StepBusiness data={data} update={update} />}
-            {step === 6 && <StepBranding data={data} update={update} />}
-            {step === 7 && <StepTeam data={data} update={update} />}
-            {step === 8 && <StepStore data={data} update={update} />}
-            {step === 9 && <StepContact data={data} update={update} />}
-            {step === 10 && (
+            {step === 3 && <StepIntegrations data={data} update={update} />}
+            {step === 4 && <StepBusiness data={data} update={update} />}
+            {step === 5 && <StepBranding data={data} update={update} />}
+            {step === 6 && <StepTeam data={data} update={update} />}
+            {step === 7 && <StepStore data={data} update={update} />}
+            {step === 8 && <StepContact data={data} update={update} />}
+            {step === 9 && (
               <StepPayment
                 data={data}
                 update={update}
@@ -236,6 +235,7 @@ const Onboarding = () => {
                 }}
               />
             )}
+
           </motion.div>
         </AnimatePresence>
 
