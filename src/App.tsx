@@ -20,7 +20,7 @@ const TemplateDetail = lazy(() => import("./pages/TemplateDetail"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const About = lazy(() => import("./pages/About"));
-const Team = lazy(() => import("./pages/Team"));
+
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
 const CatalogItem = lazy(() => import("./pages/CatalogItem"));
