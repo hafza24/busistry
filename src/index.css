@@ -47,6 +47,10 @@
     --input: 160 10% 88%;
     --ring: 166 47% 42%;
 
+    /* Neutral gray — dark gray in light theme */
+    --neutral: 0 0% 42%; /* #6a6a6a */
+    --neutral-foreground: 40 20% 98%;
+
     /* One consistent radius */
     --radius: 0.5rem;
 
