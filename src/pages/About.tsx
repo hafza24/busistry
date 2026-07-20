@@ -334,9 +334,6 @@ const About = () => {
                 <h3 className="text-2xl md:text-3xl font-bold font-display tracking-tight leading-tight text-foreground">
                   “We're giving away <span className="italic font-light text-primary">100,000 free websites</span> — because starting a business shouldn't wait six weeks or cost a retainer.”
                 </h3>
-                <p className="mt-5 text-muted-foreground leading-relaxed max-w-xl">
-                  That belief became a mission: <span className="text-foreground font-semibold">100,000 free websites</span> for founders, freelancers and small businesses ready to start — no retainers, no six-week timelines, no gatekeeping. Just a launch-ready site in forty-eight hours so anyone can put their idea online and begin building.
-                </p>
                 <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
                   Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into online businesses with clarity, care and craft.
                 </p>
