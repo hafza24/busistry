@@ -711,17 +711,12 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Why Busistree</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              More than a builder.{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                A full business hub.
-              </span>
-            </h2>
-          </div>
+          <SectionHeading
+            className="mb-14"
+            align="center"
+            eyebrow="Why Busistree"
+            title={<>More than a builder. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">A full business hub.</span></>}
+          />
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
