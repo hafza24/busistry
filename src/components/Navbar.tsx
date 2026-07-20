@@ -336,15 +336,6 @@ const Navbar = () => {
 
                           {marketplaceTab === "templates" && (
                             <div className="p-5 grid grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
-                              <div className="col-span-3 flex items-center justify-between pb-3 mb-2 border-b border-border/50">
-                                <div>
-                                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Browse by category</div>
-                                  <div className="text-sm font-semibold text-foreground">Templates for every kind of website</div>
-                                </div>
-                                <Link to="/templates" onClick={() => setOpenMenu(null)} className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1">
-                                  All templates <ArrowRight className="h-3 w-3" />
-                                </Link>
-                              </div>
                               {Object.keys(templateCats).length === 0 ? (
                                 <p className="col-span-3 text-sm text-muted-foreground py-6 text-center">No templates yet — check back soon.</p>
                               ) : (
