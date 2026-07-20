@@ -461,6 +461,17 @@ const Pricing = () => {
     setSearchParams(next, { replace: true });
   };
 
+  const [compareIds, setCompareIds] = useState<Set<string>>(new Set());
+  const toggleCompare = (id: string) =>
+    setCompareIds((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const clearCompare = () => setCompareIds(new Set());
+  const comparePlans = (plans ?? []).filter((p) => compareIds.has(p.id));
+
   return (
     <div className="pb-24 md:pb-0">
       <SEO
