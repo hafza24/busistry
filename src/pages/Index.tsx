@@ -632,9 +632,7 @@ const Index = () => {
               </span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 relative">
-            {/* Connecting line for desktop */}
-            <div className="hidden md:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
             {steps.map((s, i) => (
               <motion.div
                 key={s.num}
@@ -642,44 +640,30 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group relative bg-card/90 backdrop-blur border border-border/70 rounded-2xl p-7 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1.5 hover:border-primary/40 transition-all duration-500 overflow-hidden"
+                className="group"
               >
-                {/* subtle gradient wash on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-accent/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* step number watermark */}
-                <div className="absolute top-4 right-5 text-5xl font-extrabold font-display text-foreground/[0.04] group-hover:text-primary/10 transition-colors duration-500 tracking-tight leading-none select-none">
-                  {s.num}
-                </div>
-
-                <div className="relative">
-                  <div className={`relative h-12 w-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-6 shadow-lg shadow-primary/10 ring-4 ring-background group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-500`}>
-                    {/* pulsing halo */}
-                    <span className="absolute inset-0 rounded-xl bg-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
-                    {/* shimmer sweep */}
-                    <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
-                      <span className="absolute -inset-y-2 -left-full w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:left-[150%] transition-all duration-[900ms] ease-out" />
-                    </span>
-                    <s.icon
-                      className={`relative h-5 w-5 text-white drop-shadow transition-transform duration-500 ${
-                        i === 0 ? "group-hover:-translate-y-0.5 group-hover:translate-x-0.5" :
-                        i === 1 ? "group-hover:rotate-[8deg]" :
-                        i === 2 ? "group-hover:rotate-[14deg] group-hover:scale-110" :
-                        "group-hover:-translate-y-1 group-hover:rotate-[-6deg]"
-                      }`}
-                      strokeWidth={2.25}
-                    />
+                <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft aspect-[4/5]">
+                  <img
+                    src={stepImages[i]}
+                    alt={s.title}
+                    loading="lazy"
+                    width={1024}
+                    height={1280}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">
+                    STEP {s.num}
                   </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">STEP {s.num}</span>
-                    <span className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                    <h3 className="text-lg font-bold font-display mb-1.5 tracking-tight">{s.title}</h3>
+                    <p className="text-xs text-white/85 leading-relaxed">{s.desc}</p>
                   </div>
-                  <h3 className="text-lg font-bold font-display text-foreground mb-2 tracking-tight">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
+
         </div>
       </section>
 
