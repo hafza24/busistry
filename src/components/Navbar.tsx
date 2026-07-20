@@ -303,11 +303,12 @@ const Navbar = () => {
                   <div
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
-                    className={`absolute top-full ${openMenu === "about" ? "right-0" : "left-0"} mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200`}
+                    className={`absolute top-full ${openMenu === "about" ? "right-0" : "left-0"} mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200 max-w-[calc(100vw-2rem)]`}
                   >
                     <div className="rounded-2xl border border-border/60 bg-popover shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.25)] ring-1 ring-foreground/5 overflow-hidden">
                       {openMenu === "marketplace" && (
-                        <div className="w-[760px]">
+                        <div className="w-[min(760px,calc(100vw-2rem))]">
+
                           {/* Tabs */}
                           <div className="flex items-center gap-1 px-4 pt-3 border-b border-border/50">
                             {([
