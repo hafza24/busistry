@@ -10,7 +10,7 @@ import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
 import storyIllustration from "@/assets/about-story-illustration.png";
-import teamIllustration from "@/assets/about-team-illustration.png";
+
 
 const values = [
   { icon: Target, title: "Free means free", body: "The 48-hour website costs nothing. No card, no trial, no fine print. If we don't earn the next brief, we've still done the work." },
@@ -184,7 +184,7 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="container max-w-6xl py-16">
+      <section className="container max-w-6xl py-20 md:py-28">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
@@ -224,7 +224,7 @@ const About = () => {
 
       {/* Stats */}
       <section className="border-y border-border/50 bg-muted/30">
-        <div className="container max-w-5xl py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="container max-w-5xl py-14 md:py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { k: "Plan", v: "Strategy & positioning" },
             { k: "Presence", v: "Websites, stores, packaging" },
@@ -241,7 +241,7 @@ const About = () => {
 
 
       {/* Values */}
-      <section className="container max-w-6xl py-16">
+      <section className="container max-w-6xl py-20 md:py-28">
 
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">What we believe</h2>
@@ -263,7 +263,7 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="container max-w-4xl py-8 pb-16">
+      <section className="container max-w-4xl py-20 md:py-28">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our journey</h2>
         </div>
@@ -280,7 +280,7 @@ const About = () => {
       </section>
 
       {/* Reviews */}
-      <section className="container max-w-6xl py-16">
+      <section className="container max-w-6xl py-20 md:py-28">
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
             <MessageSquare className="h-3.5 w-3.5" /> What customers say
@@ -350,22 +350,19 @@ const About = () => {
       </section>
 
       {/* CTA */}
-      <section className="container max-w-5xl">
-        <div className="text-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-10 md:p-14">
+      <section className="container max-w-5xl pb-4">
+        <div className="text-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-10 md:p-16">
           <h2 className="text-2xl md:text-4xl font-bold font-display text-foreground">
             Ready to launch your business online?
           </h2>
           <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            Meet the team behind Busistree, or start building your website today.
+            Start your free 48-hour website today — no card, no catch.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-8">
             <Button size="lg" asChild>
               <Link to="/templates"><Rocket className="h-4 w-4 mr-1" /> Get started</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link to="/team"><Users className="h-4 w-4 mr-1" /> Meet the team</Link>
-            </Button>
-            <Button size="lg" variant="ghost" asChild>
               <Link to="/contact"><Globe className="h-4 w-4 mr-1" /> Contact us</Link>
             </Button>
           </div>
