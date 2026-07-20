@@ -670,24 +670,13 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-6">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Pricing</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              One partner.{" "}
-              <span className="relative inline-block bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                One clear plan.
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/0 via-primary/60 to-accent/0"
-                />
-              </span>
-            </h2>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Bundle planning, presence, design and marketing — or start with just what you need today.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-16"
+            align="center"
+            eyebrow="Pricing"
+            title={<>One partner. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One clear plan.</span></>}
+            subtitle="Bundle planning, presence, design and marketing — or start with just what you need today."
+          />
 
           <PricingSlider tiers={displayTiers} />
         </div>
