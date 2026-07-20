@@ -576,7 +576,7 @@ const Pricing = () => {
                   <p className="text-center text-muted-foreground mb-8 text-sm">
                     Pay monthly, cancel anytime
                   </p>
-                  <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
                       <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
@@ -590,7 +590,7 @@ const Pricing = () => {
                   <p className="text-center text-muted-foreground mb-8 text-sm">
                     One-time payment, own it forever
                   </p>
-                  <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
                       <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
