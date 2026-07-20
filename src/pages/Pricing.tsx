@@ -464,16 +464,18 @@ const Pricing = () => {
     setSearchParams(next, { replace: true });
   };
 
+  const MAX_COMPARE = 3;
   const [compareIds, setCompareIds] = useState<Set<string>>(new Set());
   const toggleCompare = (id: string) =>
     setCompareIds((s) => {
       const next = new Set(s);
       if (next.has(id)) next.delete(id);
-      else next.add(id);
+      else if (next.size < MAX_COMPARE) next.add(id);
       return next;
     });
   const clearCompare = () => setCompareIds(new Set());
   const comparePlans = (plans ?? []).filter((p) => compareIds.has(p.id));
+  const compareDisabled = comparePlans.length >= MAX_COMPARE;
 
   return (
     <div className="pb-24 md:pb-0">
