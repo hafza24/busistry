@@ -979,15 +979,14 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-4xl mx-auto"
           >
-            
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Everything your business needs — in one hub.
-            </h2>
-            <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
-            </p>
+            <SectionHeading
+              align="center"
+              eyebrow="Ready when you are"
+              title="Everything your business needs — in one hub."
+              subtitle="Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready."
+            />
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
                 <Link to="/marketplace">
