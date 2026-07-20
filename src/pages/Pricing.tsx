@@ -459,6 +459,10 @@ const Pricing = () => {
     },
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const rawType = searchParams.get("type");
+  const activeType: "buy" | "rent" = rawType === "buy" ? "buy" : "rent";
+
   const freePlans = plans?.filter((p) => p.type === "free") ?? [];
   const rentPlans = plans?.filter((p) => p.type === "rent") ?? [];
   const buyPlans = plans?.filter((p) => p.type === "buy") ?? [];
@@ -467,6 +471,16 @@ const Pricing = () => {
     ...p,
     popular: rentPlans.length >= 3 ? i === Math.floor(rentPlans.length / 2) : false,
   }));
+  const buyWithPopular = buyPlans.map((p, i) => ({
+    ...p,
+    popular: buyPlans.length >= 3 ? i === Math.floor(buyPlans.length / 2) : false,
+  }));
+
+  const setType = (t: "buy" | "rent") => {
+    const next = new URLSearchParams(searchParams);
+    next.set("type", t);
+    setSearchParams(next, { replace: true });
+  };
 
   return (
     <div className="pb-24 md:pb-0">
