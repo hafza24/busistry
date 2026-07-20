@@ -276,6 +276,17 @@ const ComparisonMatrix = ({ plans, onClear, max = 3 }: { plans: any[]; onClear: 
                     </div>
                   </th>
                 ))}
+                {Array.from({ length: emptySlots }).map((_, i) => (
+                  <th key={`empty-${i}`} className="px-4 py-3 text-center whitespace-nowrap">
+                    <a
+                      href="#plans"
+                      className="inline-flex flex-col items-center gap-1 text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <span className="h-7 w-7 rounded-full border border-dashed border-border flex items-center justify-center text-base leading-none">+</span>
+                      Add a plan
+                    </a>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
