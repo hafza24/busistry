@@ -319,6 +319,7 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle className="mr-1" />
 
             {user ? (
               <div className="flex items-center gap-2 ml-3">
