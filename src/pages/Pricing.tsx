@@ -92,6 +92,8 @@ const PriceCard = ({
                 variant={isComparing ? "default" : "outline"}
                 onClick={() => onCompare(id)}
                 aria-pressed={isComparing}
+                disabled={!isComparing && compareDisabled}
+                title={!isComparing && compareDisabled ? "You can compare up to 3 plans" : undefined}
                 className="shrink-0"
               >
                 {isComparing ? (
