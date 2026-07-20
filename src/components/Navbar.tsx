@@ -303,11 +303,12 @@ const Navbar = () => {
                   <div
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
-                    className={`absolute top-full ${openMenu === "about" ? "right-0" : "left-0"} mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200`}
+                    className={`absolute top-full ${openMenu === "about" ? "right-0" : "left-0"} mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200 max-w-[calc(100vw-2rem)]`}
                   >
                     <div className="rounded-2xl border border-border/60 bg-popover shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.25)] ring-1 ring-foreground/5 overflow-hidden">
                       {openMenu === "marketplace" && (
-                        <div className="w-[760px]">
+                        <div className="w-[min(760px,calc(100vw-2rem))]">
+
                           {/* Tabs */}
                           <div className="flex items-center gap-1 px-4 pt-3 border-b border-border/50">
                             {([
@@ -340,9 +341,9 @@ const Navbar = () => {
                           </div>
 
                           {marketplaceTab === "templates" && (
-                            <div className="p-5 grid grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
+                            <div className="p-5 grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
                               {Object.keys(templateCats).length === 0 ? (
-                                <p className="col-span-3 text-sm text-muted-foreground py-6 text-center">No templates yet — check back soon.</p>
+                                <p className="col-span-2 md:col-span-3 text-sm text-muted-foreground py-6 text-center">No templates yet — check back soon.</p>
                               ) : (
                                 Object.entries(templateCats).map(([cat, subs]) => (
                                   <div key={cat} className="min-w-0">
@@ -429,7 +430,7 @@ const Navbar = () => {
                               {saleTemplates.length === 0 ? (
                                 <p className="text-sm text-muted-foreground py-6 text-center">No active sales — check back soon.</p>
                               ) : (
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                   {saleTemplates.map((t: any) => (
                                     <Link
                                       key={t.id}
@@ -462,7 +463,7 @@ const Navbar = () => {
 
 
                       {openMenu === "about" && (
-                        <div className="p-2 w-[200px] grid gap-1">
+                        <div className="p-2 w-56 sm:w-60 grid gap-1">
                           {aboutItems.map((it) => (
                             <Link
                               key={it.to}
