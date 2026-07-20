@@ -1817,6 +1817,51 @@ export type Database = {
         }
         Relationships: []
       }
+      template_plans: {
+        Row: {
+          created_at: string
+          id: string
+          is_recommended: boolean
+          notes: string | null
+          plan_id: string
+          template_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_recommended?: boolean
+          notes?: string | null
+          plan_id: string
+          template_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_recommended?: boolean
+          notes?: string | null
+          plan_id?: string
+          template_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "template_plans_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "template_plans_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       templates: {
         Row: {
           admin_features: Json
