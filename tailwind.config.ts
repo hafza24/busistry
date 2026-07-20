@@ -14,8 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        elev: '0 2px 4px -1px hsl(160 20% 10% / 0.06), 0 8px 24px -8px hsl(160 20% 10% / 0.10)',
       },
       colors: {
         border: "hsl(var(--border))",
