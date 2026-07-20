@@ -152,7 +152,7 @@ const Templates = () => {
         </section>
 
         {/* Category nav bar — horizontal editorial style */}
-        <nav className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm">
+        <nav id="templates-grid" className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm scroll-mt-24">
           <div className="flex items-center gap-1 overflow-x-auto px-2 py-2 scrollbar-none">
             {categories.map((n) => {
               const active = activeCategory === n;
