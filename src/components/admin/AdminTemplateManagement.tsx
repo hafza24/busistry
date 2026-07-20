@@ -248,6 +248,9 @@ const AdminTemplateManagement = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
+                      <Button size="sm" variant="ghost" title="Compatible plans" onClick={() => setPlansDialog({ id: t.id, name: t.name })}>
+                        <ListChecks className="h-4 w-4" />
+                      </Button>
                       <Button size="sm" variant="ghost" onClick={() => openEdit(t)}><Pencil className="h-4 w-4" /></Button>
                       <Button size="sm" variant="ghost" className="text-destructive" onClick={() => deleteMut.mutate(t.id)}>
                         <Trash2 className="h-4 w-4" />
