@@ -530,8 +530,9 @@ const Pricing = () => {
       </section>
 
       {/* Plan cards */}
-      <section className="py-16">
+      <section id="plans" className="py-16 scroll-mt-24">
         <div className="container">
+
           {isLoading ? (
             <div className="py-16 flex justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
