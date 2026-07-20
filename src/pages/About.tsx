@@ -392,43 +392,6 @@ const About = () => {
           );
         })()}
 
-        {/* Remaining team */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {team.slice(1).map((m) => (
-            <div key={m.name} className={`group relative rounded-3xl bg-gradient-to-br ${m.cardGradient} p-5 pt-6 shadow-xl hover:shadow-2xl transition-all overflow-hidden`}>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)] pointer-events-none" />
-              <div className="relative aspect-square flex items-end justify-center">
-                <img src={m.image} alt={m.name} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-2xl" />
-              </div>
-              <div className="relative z-10 -mt-2 mx-auto w-fit rounded-full bg-white/95 backdrop-blur px-4 py-1.5 shadow-md">
-                <div className="text-foreground font-bold text-xs tracking-wide text-center">
-                  {m.role} · <span className="text-muted-foreground font-semibold">{m.name}</span>
-                </div>
-              </div>
-              <p className="relative z-10 mt-3 text-xs text-white/90 leading-relaxed">{m.bio}</p>
-              <div className="relative z-10 flex items-center gap-2 mt-3">
-                {m.socials.linkedin && (
-                  <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
-                     className="h-7 w-7 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <Linkedin className="h-3.5 w-3.5" />
-                  </a>
-                )}
-                {m.socials.instagram && (
-                  <a href={m.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Instagram`}
-                     className="h-7 w-7 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <Instagram className="h-3.5 w-3.5" />
-                  </a>
-                )}
-                {m.socials.email && (
-                  <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
-                     className="h-7 w-7 rounded-md bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <Mail className="h-3.5 w-3.5" />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Reviews */}
