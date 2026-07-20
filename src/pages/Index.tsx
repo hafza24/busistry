@@ -608,72 +608,185 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section id="included-services" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
-
-        <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
-          backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
-        }} />
+      {/* What's included — four pillars, four different treatments */}
+      <section id="included-services" className="py-20 md:py-32 border-b border-border/60 relative overflow-hidden scroll-mt-24">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">The four pillars</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              From idea to launch to growth —
-              <br />
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                one hub, four pillars
-              </span>
+          <div className="max-w-2xl mb-14 md:mb-20">
+            <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary mb-4">— What's included</div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight text-foreground leading-[1.02]">
+              Four things every founder needs.
+              <span className="text-muted-foreground"> Done properly, once.</span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 relative">
-            {/* Connecting line for desktop */}
-            <div className="hidden md:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-            {steps.map((s, i) => (
-              <motion.div
-                key={s.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="group relative bg-card/90 backdrop-blur border border-border/70 rounded-2xl p-7 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1.5 hover:border-primary/40 transition-all duration-500 overflow-hidden"
-              >
-                {/* subtle gradient wash on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-accent/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* step number watermark */}
-                <div className="absolute top-4 right-5 text-5xl font-extrabold font-display text-foreground/[0.04] group-hover:text-primary/10 transition-colors duration-500 tracking-tight leading-none select-none">
-                  {s.num}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
+            {/* 1. PLANNING — featured, large, spans 4 cols. Icon-left with checklist mock */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="md:col-span-4 md:row-span-2 relative bg-foreground text-background rounded-lg p-8 md:p-12 overflow-hidden group"
+            >
+              <div className="flex flex-col h-full min-h-[420px]">
+                <div className="flex items-center gap-3 mb-8">
+                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-background/50">01 / Planning</span>
+                  <span className="h-px flex-1 bg-background/15" />
                 </div>
 
-                <div className="relative">
-                  <div className={`relative h-12 w-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-6 shadow-lg shadow-primary/10 ring-4 ring-background group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-500`}>
-                    {/* pulsing halo */}
-                    <span className="absolute inset-0 rounded-xl bg-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
-                    {/* shimmer sweep */}
-                    <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
-                      <span className="absolute -inset-y-2 -left-full w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:left-[150%] transition-all duration-[900ms] ease-out" />
-                    </span>
-                    <s.icon
-                      className={`relative h-5 w-5 text-white drop-shadow transition-transform duration-500 ${
-                        i === 0 ? "group-hover:-translate-y-0.5 group-hover:translate-x-0.5" :
-                        i === 1 ? "group-hover:rotate-[8deg]" :
-                        i === 2 ? "group-hover:rotate-[14deg] group-hover:scale-110" :
-                        "group-hover:-translate-y-1 group-hover:rotate-[-6deg]"
-                      }`}
-                      strokeWidth={2.25}
-                    />
+                <div className="flex-1 grid md:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 className="text-3xl md:text-5xl font-display font-medium tracking-tight leading-[1.05] mb-5">
+                      A plan you'll actually follow.
+                    </h3>
+                    <p className="text-base md:text-lg text-background/70 leading-relaxed max-w-md">
+                      Turn a rough idea into a validated plan, budget, and 90-day roadmap.
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">STEP {s.num}</span>
-                    <span className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
+
+                  {/* Custom illustration: checklist / roadmap */}
+                  <div className="relative">
+                    <div className="bg-background/[0.06] border border-background/10 rounded-lg p-5 space-y-3 font-mono text-xs">
+                      {[
+                        { w: "80%", label: "Validate offer & audience", done: true },
+                        { w: "65%", label: "Pricing & unit economics", done: true },
+                        { w: "45%", label: "90-day launch roadmap", done: false },
+                        { w: "30%", label: "First-100 customer plan", done: false },
+                      ].map((r, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <span className={`h-3.5 w-3.5 rounded-sm border flex-shrink-0 flex items-center justify-center ${r.done ? "bg-primary border-primary" : "border-background/25"}`}>
+                            {r.done && <Check className="h-2.5 w-2.5 text-primary-foreground" strokeWidth={3} />}
+                          </span>
+                          <span className={r.done ? "text-background/90" : "text-background/45"}>{r.label}</span>
+                          <span className="ml-auto text-background/30 tabular-nums">{r.w}</span>
+                        </div>
+                      ))}
+                      <div className="pt-2 border-t border-background/10 flex items-center justify-between text-[10px] text-background/40">
+                        <span>ROADMAP.MD</span>
+                        <span className="text-primary">● live</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold font-display text-foreground mb-2 tracking-tight">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
+
+            {/* 2. DIGITAL PRESENCE — tall right column, icon-right browser mock */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="md:col-span-2 md:row-span-2 relative bg-card border border-border rounded-lg p-8 overflow-hidden flex flex-col"
+            >
+              <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-6">02 / Digital Presence</div>
+
+              {/* Browser mock */}
+              <div className="relative mb-8 bg-background border border-border rounded-md overflow-hidden shadow-elev">
+                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border bg-secondary/50">
+                  <span className="h-2 w-2 rounded-full bg-destructive/40" />
+                  <span className="h-2 w-2 rounded-full bg-warning/50" />
+                  <span className="h-2 w-2 rounded-full bg-success/60" />
+                  <span className="ml-2 text-[9px] font-mono text-muted-foreground truncate">yourname.com</span>
+                </div>
+                <div className="p-3 space-y-2">
+                  <div className="h-2 w-3/4 bg-foreground/80 rounded-sm" />
+                  <div className="h-1.5 w-full bg-muted rounded-sm" />
+                  <div className="h-1.5 w-5/6 bg-muted rounded-sm" />
+                  <div className="grid grid-cols-2 gap-1.5 pt-2">
+                    <div className="h-8 bg-primary/15 rounded-sm" />
+                    <div className="h-8 bg-secondary rounded-sm" />
+                  </div>
+                </div>
+                <div className="absolute top-1.5 right-2 text-[8px] font-mono text-success flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" /> LIVE
+                </div>
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3 mt-auto">
+                A website that's live this week.
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Not a template link. A working site with your name on it, launched fast.
+              </p>
+            </motion.div>
+
+            {/* 3. DESIGN — icon-left, real color swatches */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.16 }}
+              className="md:col-span-3 relative bg-secondary/60 border border-border rounded-lg p-8 overflow-hidden"
+            >
+              <div className="flex flex-col md:flex-row md:items-center gap-6">
+                {/* Left illustration: color swatches stacked like a paint chip */}
+                <div className="flex-shrink-0 flex gap-1 md:flex-col md:gap-0">
+                  {[
+                    { c: "hsl(160 15% 8%)", label: "INK" },
+                    { c: "hsl(166 55% 32%)", label: "SAGE" },
+                    { c: "hsl(32 40% 78%)", label: "SAND" },
+                    { c: "hsl(40 20% 98%)", label: "BONE", dark: true },
+                  ].map((s, i) => (
+                    <div
+                      key={i}
+                      className="w-14 h-14 md:w-32 md:h-10 flex items-center justify-between px-2 md:px-3 font-mono text-[9px] tracking-wider"
+                      style={{ background: s.c, color: s.dark ? "hsl(160 15% 8%)" : "hsl(40 20% 98%)" }}
+                    >
+                      <span className="hidden md:inline">{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div>
+                  <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-3">03 / Design</div>
+                  <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3">
+                    A brand that looks paid-for.
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Logo, colors, and packaging that hold up next to competitors ten times your size.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 4. MARKETING — icon-right, funnel chart illustration */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.24 }}
+              className="md:col-span-3 relative bg-card border border-border rounded-lg p-8 overflow-hidden"
+            >
+              <div className="flex flex-col md:flex-row-reverse md:items-center gap-6">
+                {/* Right illustration: descending bar funnel */}
+                <div className="flex-shrink-0 flex md:flex-col items-end md:items-stretch gap-1.5 md:w-40">
+                  {[
+                    { w: "100%", n: "10k", label: "Reach" },
+                    { w: "62%", n: "2.4k", label: "Visit" },
+                    { w: "28%", n: "540", label: "Signup" },
+                    { w: "12%", n: "100", label: "Customer" },
+                  ].map((r, i) => (
+                    <div key={i} className="flex items-center gap-2" style={{ width: r.w }}>
+                      <div className="h-7 flex-1 bg-primary rounded-sm flex items-center px-2" style={{ opacity: 1 - i * 0.18 }}>
+                        <span className="font-mono text-[9px] text-primary-foreground tabular-nums">{r.n}</span>
+                      </div>
+                      <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider hidden md:inline w-14">{r.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex-1">
+                  <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-3">04 / Marketing</div>
+                  <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3">
+                    The first 100 customers, mapped out.
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    A concrete plan for where your first customers actually come from.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
