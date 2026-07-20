@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
 
@@ -318,6 +319,7 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            <ThemeToggle className="mr-1" />
 
             {user ? (
               <div className="flex items-center gap-2 ml-3">
@@ -348,9 +350,12 @@ const Navbar = () => {
           </div>
 
           {/* Mobile toggle */}
+          {/* Mobile: theme toggle + hamburger */}
+          <div className="lg:hidden ml-auto flex items-center gap-1">
+            <ThemeToggle />
           <button
             type="button"
-            className="lg:hidden ml-auto p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -369,6 +374,7 @@ const Navbar = () => {
               />
             </span>
           </button>
+          </div>
         </nav>
       </div>
 
