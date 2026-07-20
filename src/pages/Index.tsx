@@ -110,12 +110,38 @@ const tiers = [
 // Real reviews render via <ReviewsSection /> using Supabase data.
 
 
-const comparison = [
-  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
-  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
-  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
-  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
-  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
+type Cell = { has: boolean; note: string };
+const comparison: { feature: string; busistry: Cell; diy: Cell; hire: Cell }[] = [
+  {
+    feature: "Planning & positioning included",
+    busistry: { has: true, note: "Comes with a validated plan and 90-day roadmap." },
+    diy: { has: false, note: "You have to figure out the plan alone before you build." },
+    hire: { has: false, note: "Most freelancers start at the build stage, not the plan." },
+  },
+  {
+    feature: "Website / store fully built for you",
+    busistry: { has: true, note: "Live site with your name on it, launched this week." },
+    diy: { has: false, note: "You assemble themes, apps and copy yourself." },
+    hire: { has: true, note: "Yes — but on their timeline, at their day rate." },
+  },
+  {
+    feature: "Brand, product & packaging design",
+    busistry: { has: true, note: "Logo, colors and packaging designed in-house." },
+    diy: { has: false, note: "Templates only — no real brand system." },
+    hire: { has: false, note: "Usually a separate hire from your developer." },
+  },
+  {
+    feature: "Marketing & launch campaigns",
+    busistry: { has: true, note: "A concrete plan for where your first 100 customers come from." },
+    diy: { has: false, note: "The store goes live and nobody knows it exists." },
+    hire: { has: false, note: "Devs build; marketing is a whole other retainer." },
+  },
+  {
+    feature: "One partner, one clear plan",
+    busistry: { has: true, note: "One team owns strategy, build, brand and launch." },
+    diy: { has: false, note: "You are the project manager of five disconnected tools." },
+    hire: { has: false, note: "Coordinating devs, designers and marketers is on you." },
+  },
 ];
 
 const faqs = [
