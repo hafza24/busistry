@@ -620,17 +620,17 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">The four pillars</span>
+          <div className="max-w-4xl text-left mb-16">
+            <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
+              <span className="h-px w-6 bg-primary" />
+              The four pillars
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              From idea to launch to growth —
-              <br />
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                one hub, four pillars
-              </span>
+            <h2 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[18ch]">
+              From idea to launch to growth — one hub, four pillars.
             </h2>
+            <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+              Everything you'd hire a planner, designer and marketer for — in four clear steps, under one roof.
+            </p>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
             {steps.map((s, i) => (
