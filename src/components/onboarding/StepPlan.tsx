@@ -60,16 +60,41 @@ const StepPlan = ({ data, update }: Props) => {
     },
   });
 
+  // Admin-managed compatibility mapping (takes precedence over tech-stack inference)
+  const { data: mapping = [] } = useQuery({
+    queryKey: ["template_plans", data.template_id],
+    enabled: !!data.template_id,
+    queryFn: async () => {
+      const { data: rows, error } = await (supabase as any)
+        .from("template_plans")
+        .select("plan_id, is_recommended")
+        .eq("template_id", data.template_id as string);
+      if (error) throw error;
+      return rows ?? [];
+    },
+  });
+
+  const compatibleIds = useMemo(
+    () => new Set((mapping as any[]).map((m) => m.plan_id as string)),
+    [mapping],
+  );
+  const recommendedIds = useMemo(
+    () => new Set((mapping as any[]).filter((m) => m.is_recommended).map((m) => m.plan_id as string)),
+    [mapping],
+  );
+
   const templatePlatform = useMemo(
     () => inferTemplatePlatform(template?.tech_stack as string[] | null),
     [template],
   );
 
   const isPlanCompatible = (plan: any) => {
+    // If admin has defined an explicit mapping for this template, honour it.
+    if (compatibleIds.size > 0) return compatibleIds.has(plan.id);
+    // Otherwise fall back to tech-stack inference
     if (!templatePlatform) return true;
     const planPlatform = (plan.platform_type ?? "wordpress").toLowerCase();
     if (templatePlatform === "wordpress") return planPlatform === "wordpress";
-    // template is custom / coded → wordpress plans cannot host it
     return planPlatform !== "wordpress";
   };
 
@@ -86,11 +111,13 @@ const StepPlan = ({ data, update }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans, templatePlatform]);
 
-  const subtitle = templatePlatform === "custom"
-    ? "This template is a custom-coded build, so WordPress plans aren't available for it."
-    : templatePlatform === "wordpress"
-      ? "This template runs on WordPress. Pick a WordPress-compatible plan below."
-      : "Includes hosting, limits, and support. The Free plan is fine to start — you can upgrade anytime.";
+  const subtitle = compatibleIds.size > 0
+    ? "The plans below are approved by our team for this template."
+    : templatePlatform === "custom"
+      ? "This template is a custom-coded build, so WordPress plans aren't available for it."
+      : templatePlatform === "wordpress"
+        ? "This template runs on WordPress. Pick a WordPress-compatible plan below."
+        : "Includes hosting, limits, and support. The Free plan is fine to start — you can upgrade anytime.";
 
   const renderCard = (p: any, disabled = false) => {
     const selected = data.plan_id === p.id;
@@ -125,6 +152,7 @@ const StepPlan = ({ data, update }: Props) => {
               )}
             </div>
             <div className="flex flex-col items-end gap-1">
+              {recommendedIds.has(p.id) && !disabled && <Badge className="bg-primary/15 text-primary hover:bg-primary/20 text-[10px]">Recommended</Badge>}
               {isFree && <Badge variant="secondary">Starter</Badge>}
               {disabled && <Badge variant="outline" className="text-[10px]">Not compatible</Badge>}
             </div>
