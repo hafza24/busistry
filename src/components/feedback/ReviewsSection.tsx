@@ -93,45 +93,69 @@ const ReviewsSection = () => {
               Real feedback from real Busistree customers.
             </p>
 
-            {/* Big rating block */}
-            <div className="mt-8 rounded-3xl border border-border bg-card/80 backdrop-blur-sm p-6 md:p-8 shadow-soft">
-              <div className="flex items-end gap-4">
-                <div className="text-6xl md:text-7xl font-extrabold leading-none bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
-                  {avg.toFixed(1)}
-                </div>
-                <div className="pb-1">
-                  <Stars value={avg} size="h-5 w-5" />
-                  <div className="text-sm text-muted-foreground mt-1">
-                    Based on {total} review{total !== 1 ? "s" : ""}
-                  </div>
-                </div>
-              </div>
-
-              {/* Distribution */}
-              <div className="mt-6 space-y-2">
-                {distribution.map((d) => (
-                  <div key={d.star} className="flex items-center gap-3 text-sm">
-                    <span className="w-4 font-semibold text-foreground/80">{d.star}</span>
-                    <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-                    <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all"
-                        style={{ width: `${d.pct}%` }}
-                      />
+            {total >= 10 ? (
+              <>
+                {/* Big rating block */}
+                <div className="mt-8 rounded-3xl border border-border bg-card/80 backdrop-blur-sm p-6 md:p-8 shadow-soft">
+                  <div className="flex items-end gap-4">
+                    <div className="text-6xl md:text-7xl font-extrabold leading-none bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
+                      {avg.toFixed(1)}
                     </div>
-                    <span className="w-8 text-right tabular-nums text-muted-foreground">{d.count}</span>
+                    <div className="pb-1">
+                      <Stars value={avg} size="h-5 w-5" />
+                      <div className="text-sm text-muted-foreground mt-1">
+                        Based on {total} review{total !== 1 ? "s" : ""}
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            <div className="mt-7">
-              <FeedbackDialog trigger={
-                <Button size="lg" variant="outline" className="rounded-full h-12 px-7">
-                  Leave a review
-                </Button>
-              } />
-            </div>
+                  {/* Distribution */}
+                  <div className="mt-6 space-y-2">
+                    {distribution.map((d) => (
+                      <div key={d.star} className="flex items-center gap-3 text-sm">
+                        <span className="w-4 font-semibold text-foreground/80">{d.star}</span>
+                        <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
+                        <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all"
+                            style={{ width: `${d.pct}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-right tabular-nums text-muted-foreground">{d.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-7">
+                  <FeedbackDialog trigger={
+                    <Button size="lg" variant="outline" className="rounded-full h-12 px-7">
+                      Leave a review
+                    </Button>
+                  } />
+                </div>
+              </>
+            ) : (
+              <div className="mt-8 rounded-3xl border border-border bg-card/80 backdrop-blur-sm p-6 md:p-8 shadow-soft">
+                <div className="text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-3">
+                  — Just getting started
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl font-semibold text-foreground leading-tight">
+                  Be one of our first reviews.
+                </h3>
+                <p className="mt-3 text-muted-foreground leading-relaxed">
+                  We're a young studio building in the open. If we've worked together, a short, honest note goes a long way — and helps the next founder decide.
+                </p>
+                <div className="mt-6">
+                  <FeedbackDialog trigger={
+                    <Button size="lg" className="rounded-full h-12 px-7 bg-gradient-to-r from-primary to-primary-glow shadow-brand">
+                      Leave the first review
+                    </Button>
+                  } />
+                </div>
+              </div>
+            )}
+
           </div>
 
           {/* RIGHT — Floating review cards */}
