@@ -11,6 +11,7 @@ import step03Asset from "@/assets/step-03.jpg.asset.json";
 import step04Asset from "@/assets/step-04.jpg.asset.json";
 const stepImages = [step01Asset.url, step02Asset.url, step03Asset.url, step04Asset.url];
 import TrustBadges from "@/components/TrustBadges";
+import SectionHeading from "@/components/SectionHeading";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
@@ -510,20 +511,13 @@ const Index = () => {
       {/* Template Showcase */}
       <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Digital Presence</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              A website, store or landing page —{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                built to convert
-              </span>
-            </h2>
-            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-              Conversion-focused designs, ready for your brand and products — part of your complete business hub.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-16"
+            align="center"
+            eyebrow="Digital Presence"
+            title={<>A website, store or landing page — <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">built to convert</span></>}
+            subtitle="Conversion-focused designs, ready for your brand and products — part of your complete business hub."
+          />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {showcase.slice(0, 4).map((t: any, i: number) => {
@@ -676,24 +670,13 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-6">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Pricing</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              One partner.{" "}
-              <span className="relative inline-block bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                One clear plan.
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/0 via-primary/60 to-accent/0"
-                />
-              </span>
-            </h2>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Bundle planning, presence, design and marketing — or start with just what you need today.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-16"
+            align="center"
+            eyebrow="Pricing"
+            title={<>One partner. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One clear plan.</span></>}
+            subtitle="Bundle planning, presence, design and marketing — or start with just what you need today."
+          />
 
           <PricingSlider tiers={displayTiers} />
         </div>
@@ -728,17 +711,12 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Why Busistree</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              More than a builder.{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                A full business hub.
-              </span>
-            </h2>
-          </div>
+          <SectionHeading
+            className="mb-14"
+            align="center"
+            eyebrow="Why Busistree"
+            title={<>More than a builder. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">A full business hub.</span></>}
+          />
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -835,20 +813,13 @@ const Index = () => {
       {/* Team */}
       <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Our Team</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              The team behind your{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                business hub
-              </span>
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-muted-foreground">
-              Strategists, designers, developers and marketers — all working on your business, together.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-14"
+            align="center"
+            eyebrow="Our Team"
+            title={<>The team behind your <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">business hub</span></>}
+            subtitle="Strategists, designers, developers and marketers — all working on your business, together."
+          />
 
           <TeamDeck />
 
@@ -984,14 +955,12 @@ const Index = () => {
       {/* FAQ */}
       <section className="py-12 md:py-16 border-b border-border/60">
         <div className="container max-w-3xl">
-          <div className="text-center mb-12">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              FAQ
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              Questions, answered.
-            </h2>
-          </div>
+          <SectionHeading
+            className="mb-12"
+            align="center"
+            eyebrow="FAQ"
+            title="Questions, answered."
+          />
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
               <AccordionItem key={f.q} value={`faq-${i}`}>
@@ -1010,15 +979,14 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-4xl mx-auto"
           >
-            
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Everything your business needs — in one hub.
-            </h2>
-            <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
-            </p>
+            <SectionHeading
+              align="center"
+              eyebrow="Ready when you are"
+              title="Everything your business needs — in one hub."
+              subtitle="Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready."
+            />
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
                 <Link to="/marketplace">
