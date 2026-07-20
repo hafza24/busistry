@@ -460,7 +460,7 @@ const Pricing = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const rawType = searchParams.get("type");
-  const activeType: "buy" | "rent" = rawType === "buy" ? "buy" : "rent";
+  const activeType: "buy" | "rent" | "all" = rawType === "buy" ? "buy" : rawType === "all" ? "all" : "rent";
 
   const freePlans = plans?.filter((p) => p.type === "free") ?? [];
   const rentPlans = plans?.filter((p) => p.type === "rent") ?? [];
@@ -475,7 +475,7 @@ const Pricing = () => {
     popular: buyPlans.length >= 3 ? i === Math.floor(buyPlans.length / 2) : false,
   }));
 
-  const setType = (t: "buy" | "rent") => {
+  const setType = (t: "buy" | "rent" | "all") => {
     const next = new URLSearchParams(searchParams);
     next.set("type", t);
     setSearchParams(next, { replace: true });
@@ -545,6 +545,18 @@ const Pricing = () => {
                 <div className="inline-flex rounded-full border border-border bg-card p-1">
                   <button
                     type="button"
+                    onClick={() => setType("all")}
+                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
+                      activeType === "all"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    aria-pressed={activeType === "all"}
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => setType("rent")}
                     className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
                       activeType === "rent"
@@ -570,7 +582,7 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {activeType === "rent" && rentWithPopular.length > 0 && (
+              {(activeType === "rent" || activeType === "all") && rentWithPopular.length > 0 && (
                 <div className="mb-16">
                   <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Rent Plans</h2>
                   <p className="text-center text-muted-foreground mb-8 text-sm">
@@ -584,7 +596,7 @@ const Pricing = () => {
                 </div>
               )}
 
-              {activeType === "buy" && buyWithPopular.length > 0 && (
+              {(activeType === "buy" || activeType === "all") && buyWithPopular.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Buy Plans</h2>
                   <p className="text-center text-muted-foreground mb-8 text-sm">
