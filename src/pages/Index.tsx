@@ -5,9 +5,6 @@ import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 const teamRohma = teamRohmaAsset.url;
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 const teamAsim = teamAsimAsset.url;
-import tplTutorAsset from "@/assets/tpl-tutor.jpg.asset.json";
-import tplTravelAsset from "@/assets/tpl-travel.jpg.asset.json";
-import tplBookerAsset from "@/assets/tpl-booker.jpg.asset.json";
 import TrustBadges from "@/components/TrustBadges";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
@@ -106,42 +103,18 @@ const tiers = [
   },
 ];
 
-// Testimonials intentionally removed — we don't invent quotes.
-// Real reviews render via <ReviewsSection /> using Supabase data.
+const testimonials = [
+  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
+  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
+  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
+];
 
-
-type Cell = { has: boolean; note: string };
-const comparison: { feature: string; busistry: Cell; diy: Cell; hire: Cell }[] = [
-  {
-    feature: "Planning & positioning included",
-    busistry: { has: true, note: "Comes with a validated plan and 90-day roadmap." },
-    diy: { has: false, note: "You have to figure out the plan alone before you build." },
-    hire: { has: false, note: "Most freelancers start at the build stage, not the plan." },
-  },
-  {
-    feature: "Website / store fully built for you",
-    busistry: { has: true, note: "Live site with your name on it, launched this week." },
-    diy: { has: false, note: "You assemble themes, apps and copy yourself." },
-    hire: { has: true, note: "Yes — but on their timeline, at their day rate." },
-  },
-  {
-    feature: "Brand, product & packaging design",
-    busistry: { has: true, note: "Logo, colors and packaging designed in-house." },
-    diy: { has: false, note: "Templates only — no real brand system." },
-    hire: { has: false, note: "Usually a separate hire from your developer." },
-  },
-  {
-    feature: "Marketing & launch campaigns",
-    busistry: { has: true, note: "A concrete plan for where your first 100 customers come from." },
-    diy: { has: false, note: "The store goes live and nobody knows it exists." },
-    hire: { has: false, note: "Devs build; marketing is a whole other retainer." },
-  },
-  {
-    feature: "One partner, one clear plan",
-    busistry: { has: true, note: "One team owns strategy, build, brand and launch." },
-    diy: { has: false, note: "You are the project manager of five disconnected tools." },
-    hire: { has: false, note: "Coordinating devs, designers and marketers is on you." },
-  },
+const comparison = [
+  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
+  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
+  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
+  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
+  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
 ];
 
 const faqs = [
@@ -371,27 +344,21 @@ const Index = () => {
       name: "Tutor Busistree",
       niche: "Online Learning",
       demo_url: "https://tutor.busistree.com",
-      preview_image_url: tplTutorAsset.url,
-      accent: "from-emerald-500/30 to-teal-500/10",
-      initial: "T",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://tutor.busistree.com",
     },
     {
       id: "live-travellinks",
       name: "TravelLinks UK",
       niche: "Travel",
       demo_url: "https://travellinks.uk",
-      preview_image_url: tplTravelAsset.url,
-      accent: "from-sky-500/30 to-orange-400/10",
-      initial: "TL",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://travellinks.uk",
     },
     {
       id: "live-booker",
       name: "Booker Busistree",
       niche: "Booking",
       demo_url: "https://booker.busistree.com",
-      preview_image_url: tplBookerAsset.url,
-      accent: "from-fuchsia-500/30 to-purple-500/10",
-      initial: "B",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://booker.busistree.com",
     },
   ];
 
@@ -432,7 +399,7 @@ const Index = () => {
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-6 text-base rounded-full group shadow-elev" asChild>
+                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
                   <Link to="/onboarding">
                     Start my business plan
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -441,7 +408,7 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 px-6 text-base rounded-full"
+                  className="h-12 px-6 text-base rounded-lg"
                   onClick={() => {
                     document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
@@ -536,7 +503,7 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-14 md:py-20 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -568,24 +535,21 @@ const Index = () => {
                   {/* Gradient sheen border on hover */}
                   <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
 
-                  <div className={`aspect-[4/3] bg-gradient-to-br ${t.accent ?? "from-secondary via-background to-secondary/60"} relative overflow-hidden`}>
-                    {/* Branded fallback sits behind the image; shown if the image fails or is missing */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative flex items-center justify-center">
-                        <div className="absolute inset-0 blur-2xl bg-primary/25 rounded-full scale-150" />
-                        <div className="relative h-16 w-16 rounded-2xl bg-background/80 border border-border/60 shadow-sm flex items-center justify-center font-display text-xl font-bold text-primary">
-                          {t.initial ?? (t.name?.[0] ?? "•")}
-                        </div>
-                      </div>
-                    </div>
-                    {t.preview_image_url && (
+                  <div className="aspect-[4/3] bg-gradient-to-br from-secondary via-background to-secondary/60 relative overflow-hidden">
+                    {t.preview_image_url ? (
                       <img
                         src={t.preview_image_url}
-                        alt={`${t.name} — ${t.niche} template preview`}
+                        alt={t.name}
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                         loading="lazy"
-                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                       />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative">
+                          <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full scale-150" />
+                          <Icon className="relative h-16 w-16 text-primary/40" />
+                        </div>
+                      </div>
                     )}
 
                     {/* Image overlay gradient */}
@@ -644,185 +608,72 @@ const Index = () => {
         </div>
       </section>
 
-      {/* What's included — four pillars, four different treatments */}
-      <section id="included-services" className="py-20 md:py-28 border-b border-border/60 relative overflow-hidden scroll-mt-24">
+      {/* How It Works */}
+      <section id="included-services" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
+
+        <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
+          backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
+        }} />
         <div className="container">
-          <div className="max-w-2xl mb-14 md:mb-20">
-            <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary mb-4">— What's included</div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium tracking-tight text-foreground leading-[1.02]">
-              Four things every founder needs.
-              <span className="text-muted-foreground"> Done properly, once.</span>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">The four pillars</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+              From idea to launch to growth —
+              <br />
+              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                one hub, four pillars
+              </span>
             </h2>
           </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 relative">
+            {/* Connecting line for desktop */}
+            <div className="hidden md:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="group relative bg-card/90 backdrop-blur border border-border/70 rounded-2xl p-7 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1.5 hover:border-primary/40 transition-all duration-500 overflow-hidden"
+              >
+                {/* subtle gradient wash on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-accent/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
-            {/* 1. PLANNING — featured, large, spans 4 cols. Icon-left with checklist mock */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="md:col-span-4 md:row-span-2 relative bg-foreground text-background rounded-lg p-8 md:p-12 overflow-hidden group"
-            >
-              <div className="flex flex-col h-full min-h-[420px]">
-                <div className="flex items-center gap-3 mb-8">
-                  <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-background/50">01 / Planning</span>
-                  <span className="h-px flex-1 bg-background/15" />
+                {/* step number watermark */}
+                <div className="absolute top-4 right-5 text-5xl font-extrabold font-display text-foreground/[0.04] group-hover:text-primary/10 transition-colors duration-500 tracking-tight leading-none select-none">
+                  {s.num}
                 </div>
 
-                <div className="flex-1 grid md:grid-cols-2 gap-8 items-center">
-                  <div>
-                    <h3 className="text-3xl md:text-5xl font-display font-medium tracking-tight leading-[1.05] mb-5">
-                      A plan you'll actually follow.
-                    </h3>
-                    <p className="text-base md:text-lg text-background/70 leading-relaxed max-w-md">
-                      Turn a rough idea into a validated plan, budget, and 90-day roadmap.
-                    </p>
+                <div className="relative">
+                  <div className={`relative h-12 w-12 rounded-xl bg-gradient-to-br ${s.gradient} flex items-center justify-center mb-6 shadow-lg shadow-primary/10 ring-4 ring-background group-hover:scale-110 group-hover:rotate-[-4deg] transition-transform duration-500`}>
+                    {/* pulsing halo */}
+                    <span className="absolute inset-0 rounded-xl bg-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
+                    {/* shimmer sweep */}
+                    <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                      <span className="absolute -inset-y-2 -left-full w-1/2 rotate-12 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:left-[150%] transition-all duration-[900ms] ease-out" />
+                    </span>
+                    <s.icon
+                      className={`relative h-5 w-5 text-white drop-shadow transition-transform duration-500 ${
+                        i === 0 ? "group-hover:-translate-y-0.5 group-hover:translate-x-0.5" :
+                        i === 1 ? "group-hover:rotate-[8deg]" :
+                        i === 2 ? "group-hover:rotate-[14deg] group-hover:scale-110" :
+                        "group-hover:-translate-y-1 group-hover:rotate-[-6deg]"
+                      }`}
+                      strokeWidth={2.25}
+                    />
                   </div>
-
-                  {/* Custom illustration: checklist / roadmap */}
-                  <div className="relative">
-                    <div className="bg-background/[0.06] border border-background/10 rounded-lg p-5 space-y-3 font-mono text-xs">
-                      {[
-                        { w: "80%", label: "Validate offer & audience", done: true },
-                        { w: "65%", label: "Pricing & unit economics", done: true },
-                        { w: "45%", label: "90-day launch roadmap", done: false },
-                        { w: "30%", label: "First-100 customer plan", done: false },
-                      ].map((r, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <span className={`h-3.5 w-3.5 rounded-sm border flex-shrink-0 flex items-center justify-center ${r.done ? "bg-primary border-primary" : "border-background/25"}`}>
-                            {r.done && <Check className="h-2.5 w-2.5 text-primary-foreground" strokeWidth={3} />}
-                          </span>
-                          <span className={r.done ? "text-background/90" : "text-background/45"}>{r.label}</span>
-                          <span className="ml-auto text-background/30 tabular-nums">{r.w}</span>
-                        </div>
-                      ))}
-                      <div className="pt-2 border-t border-background/10 flex items-center justify-between text-[10px] text-background/40">
-                        <span>ROADMAP.MD</span>
-                        <span className="text-primary">● live</span>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">STEP {s.num}</span>
+                    <span className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
                   </div>
+                  <h3 className="text-lg font-bold font-display text-foreground mb-2 tracking-tight">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
-              </div>
-            </motion.div>
-
-            {/* 2. DIGITAL PRESENCE — tall right column, icon-right browser mock */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="md:col-span-2 md:row-span-2 relative bg-card border border-border rounded-lg p-8 overflow-hidden flex flex-col"
-            >
-              <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-6">02 / Digital Presence</div>
-
-              {/* Browser mock */}
-              <div className="relative mb-8 bg-background border border-border rounded-md overflow-hidden shadow-elev">
-                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border bg-secondary/50">
-                  <span className="h-2 w-2 rounded-full bg-destructive/40" />
-                  <span className="h-2 w-2 rounded-full bg-warning/50" />
-                  <span className="h-2 w-2 rounded-full bg-success/60" />
-                  <span className="ml-2 text-[9px] font-mono text-muted-foreground truncate">yourname.com</span>
-                </div>
-                <div className="p-3 space-y-2">
-                  <div className="h-2 w-3/4 bg-foreground/80 rounded-sm" />
-                  <div className="h-1.5 w-full bg-muted rounded-sm" />
-                  <div className="h-1.5 w-5/6 bg-muted rounded-sm" />
-                  <div className="grid grid-cols-2 gap-1.5 pt-2">
-                    <div className="h-8 bg-primary/15 rounded-sm" />
-                    <div className="h-8 bg-secondary rounded-sm" />
-                  </div>
-                </div>
-                <div className="absolute top-1.5 right-2 text-[8px] font-mono text-success flex items-center gap-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" /> LIVE
-                </div>
-              </div>
-
-              <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3 mt-auto">
-                A website that's live this week.
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Not a template link. A working site with your name on it, launched fast.
-              </p>
-            </motion.div>
-
-            {/* 3. DESIGN — icon-left, real color swatches */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.16 }}
-              className="md:col-span-3 relative bg-secondary/60 border border-border rounded-lg p-8 overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row md:items-center gap-6">
-                {/* Left illustration: color swatches stacked like a paint chip */}
-                <div className="flex-shrink-0 flex gap-1 md:flex-col md:gap-0">
-                  {[
-                    { c: "hsl(160 15% 8%)", label: "INK" },
-                    { c: "hsl(166 55% 32%)", label: "SAGE" },
-                    { c: "hsl(32 40% 78%)", label: "SAND" },
-                    { c: "hsl(40 20% 98%)", label: "BONE", dark: true },
-                  ].map((s, i) => (
-                    <div
-                      key={i}
-                      className="w-14 h-14 md:w-32 md:h-10 flex items-center justify-between px-2 md:px-3 font-mono text-[9px] tracking-wider"
-                      style={{ background: s.c, color: s.dark ? "hsl(160 15% 8%)" : "hsl(40 20% 98%)" }}
-                    >
-                      <span className="hidden md:inline">{s.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div>
-                  <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-3">03 / Design</div>
-                  <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3">
-                    A brand that looks paid-for.
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Logo, colors, and packaging that hold up next to competitors ten times your size.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 4. MARKETING — icon-right, funnel chart illustration */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.24 }}
-              className="md:col-span-3 relative bg-card border border-border rounded-lg p-8 overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row-reverse md:items-center gap-6">
-                {/* Right illustration: descending bar funnel */}
-                <div className="flex-shrink-0 flex md:flex-col items-end md:items-stretch gap-1.5 md:w-40">
-                  {[
-                    { w: "100%", n: "10k", label: "Reach" },
-                    { w: "62%", n: "2.4k", label: "Visit" },
-                    { w: "28%", n: "540", label: "Signup" },
-                    { w: "12%", n: "100", label: "Customer" },
-                  ].map((r, i) => (
-                    <div key={i} className="flex items-center gap-2" style={{ width: r.w }}>
-                      <div className="h-7 flex-1 bg-primary rounded-sm flex items-center px-2" style={{ opacity: 1 - i * 0.18 }}>
-                        <span className="font-mono text-[9px] text-primary-foreground tabular-nums">{r.n}</span>
-                      </div>
-                      <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider hidden md:inline w-14">{r.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex-1">
-                  <div className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-3">04 / Marketing</div>
-                  <h3 className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-[1.1] mb-3">
-                    The first 100 customers, mapped out.
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    A concrete plan for where your first customers actually come from.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -831,7 +682,7 @@ const Index = () => {
 
 
       {/* Pricing */}
-      <section className="py-14 md:py-20 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -853,9 +704,6 @@ const Index = () => {
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
               Bundle planning, presence, design and marketing — or start with just what you need today.
             </p>
-            <p className="mt-3 text-sm md:text-base text-foreground/70 max-w-xl mx-auto">
-              <span className="font-semibold text-foreground">Rent monthly</span> for a hosted site we maintain, or <span className="font-semibold text-foreground">buy outright</span> and own it forever.
-            </p>
           </div>
 
           <PricingSlider tiers={displayTiers} />
@@ -863,76 +711,30 @@ const Index = () => {
       </section>
 
 
-      {/* What you actually get — founder's note + specific checklist */}
-      <section className="relative py-20 md:py-28 border-b border-border/60 overflow-hidden">
-        <div className="container max-w-6xl">
-          <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
-            {/* Founder's note — first person */}
-            <div className="md:col-span-5">
-              <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary mb-4">— A note from the founder</div>
-              <blockquote className="space-y-5 text-lg md:text-xl leading-relaxed text-foreground font-display">
-                <p>
-                  I built Busistree because I watched too many good ideas die between the planning doc and the first customer.
-                </p>
-                <p className="text-muted-foreground text-base md:text-lg font-sans">
-                  You don't need five freelancers, three subscriptions, and a designer who ghosts you after the logo. You need
-                  someone to sit down with your idea, help you decide what to actually launch, and then ship it — the site, the
-                  brand, the first campaign — while you keep your momentum.
-                </p>
-                <p className="text-muted-foreground text-base md:text-lg font-sans">
-                  That's what we do here. If it's not right for you, we'll say so before you pay.
-                </p>
-              </blockquote>
-              <div className="mt-8 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-secondary border border-border flex items-center justify-center font-display text-lg font-medium text-foreground">
-                  H
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">Hafza Azam</div>
-                  <div className="text-xs text-muted-foreground">Founder, Busistree</div>
-                </div>
-              </div>
-            </div>
+      {/* Social Proof */}
+      <section className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden">
+        {/* Ambient background */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+        </div>
 
-            {/* Specific checklist — what's in the box */}
-            <div className="md:col-span-7">
-              <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6">What's in the box</div>
-              <ul className="divide-y divide-border border-y border-border">
-                {[
-                  { g: "Planning", items: ["A one-page business plan you can actually read", "Pricing sanity-check and unit economics", "90-day roadmap with weekly milestones"] },
-                  { g: "Website", items: ["A working site on your domain, not a template link", "Mobile-tested, SEO basics, contact + WhatsApp wired", "Handover so you can edit without us"] },
-                  { g: "Brand", items: ["Logo, colour palette and type system", "Product and packaging design where it applies", "Ready-to-post launch creatives"] },
-                  { g: "Marketing", items: ["A written plan for your first 100 customers", "First campaign set up and launched with you", "What to track and what to ignore"] },
-                ].map((group) => (
-                  <li key={group.g} className="py-5 grid grid-cols-4 gap-6 items-start">
-                    <div className="col-span-1 pt-1">
-                      <div className="text-sm font-display font-medium text-foreground">{group.g}</div>
-                    </div>
-                    <div className="col-span-3 space-y-2.5">
-                      {group.items.map((t) => (
-                        <div key={t} className="flex items-start gap-3 text-[15px] text-foreground/85 leading-snug">
-                          <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" strokeWidth={2.5} />
-                          <span>{t}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-sm text-muted-foreground">
-                Not every plan includes every line. What you get is scoped in writing before we start — no surprises.
-              </p>
-            </div>
-          </div>
+        <div className="container">
+          <LiveStats />
         </div>
       </section>
 
 
-
-
-
       {/* Comparison */}
-      <section className="py-14 md:py-20 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -956,12 +758,12 @@ const Index = () => {
             className="max-w-4xl mx-auto relative group/table"
           >
             {/* Outer aurora glow */}
-            <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
+            <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
 
             {/* Card */}
-            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-3xl overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
+            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-[1.5rem] overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
               {/* Gradient border sheen */}
-              <div className="pointer-events-none absolute inset-0 rounded-3xl p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+              <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
 
               {/* Highlighted Busistree column */}
               <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.10] via-primary/[0.05] to-transparent border-x border-primary/20" />
@@ -991,61 +793,50 @@ const Index = () => {
                   </span>
                   <span className="absolute -bottom-px left-1/2 -translate-x-1/2 h-[2px] w-10 bg-gradient-to-r from-transparent via-primary to-transparent" />
                 </div>
-                <div className="p-2.5 sm:p-5 text-center">Doing it yourself</div>
-                <div className="p-2.5 sm:p-5 text-center">Hiring a freelancer<span className="hidden sm:inline"> or agency</span></div>
+                <div className="p-2.5 sm:p-5 text-center">Shopify DIY</div>
+                <div className="p-2.5 sm:p-5 text-center">Hire dev</div>
               </div>
 
               {/* Rows */}
-              {comparison.map((row, i) => {
-                const renderCell = (cell: Cell, highlight = false) => (
-                  <div className="p-3 sm:p-5 flex flex-col items-center text-center gap-1.5 sm:gap-2">
-                    {cell.has ? (
-                      highlight ? (
-                        <motion.div
-                          whileHover={{ scale: 1.12, rotate: 4 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 14 }}
-                          className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30 shrink-0"
-                        >
-                          <Check className="relative h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" strokeWidth={3} />
-                        </motion.div>
-                      ) : (
-                        <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center shrink-0">
-                          <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary/70" strokeWidth={2.5} />
-                        </div>
-                      )
-                    ) : (
-                      <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-muted/60 border border-border flex items-center justify-center shrink-0">
-                        <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground/60" strokeWidth={2.5} />
-                      </div>
-                    )}
-                    <p className={`hidden md:block text-[11px] leading-snug font-normal max-w-[22ch] ${highlight ? "text-foreground/80" : "text-muted-foreground"}`}>
-                      {cell.note}
-                    </p>
+              {comparison.map((row, i) => (
+                <motion.div
+                  key={row.feature}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className={`relative grid grid-cols-4 items-center text-xs sm:text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
+                >
+                  <div className="p-3 sm:p-5 font-semibold text-foreground tracking-tight">
+                    <span className="relative inline-block">
+                      {row.feature}
+                      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
+                    </span>
                   </div>
-                );
 
-                return (
-                  <motion.div
-                    key={row.feature}
-                    initial={{ opacity: 0, x: -12 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className={`relative grid grid-cols-4 items-start text-xs sm:text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
-                  >
-                    <div className="p-3 sm:p-5 font-serif text-base sm:text-lg font-semibold text-foreground tracking-tight self-center">
-                      <span className="relative inline-block">
-                        {row.feature}
-                        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
-                      </span>
-                    </div>
+                  <div className="p-3 sm:p-5 flex justify-center">
+                    {row.busistry ? (
+                      <motion.div
+                        whileHover={{ scale: 1.18, rotate: 6 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
+                        className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30"
+                      >
+                        <span className="absolute inset-0 rounded-full bg-primary/40 blur-md opacity-0 group-hover/row:opacity-100 transition-opacity duration-500" />
+                        <Check className="relative h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" strokeWidth={3} />
+                      </motion.div>
+                    ) : (
+                      <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/40" />
+                    )}
+                  </div>
 
-                    {renderCell(row.busistry, true)}
-                    {renderCell(row.diy)}
-                    {renderCell(row.hire)}
-                  </motion.div>
-                );
-              })}
+                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.shopify ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
+                  </div>
+                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
+                    {row.dev ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -1053,7 +844,7 @@ const Index = () => {
 
 
       {/* Team */}
-      <section className="py-14 md:py-20 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -1078,7 +869,7 @@ const Index = () => {
       <ReviewsSection />
 
       {/* Biztyle — Sister brand highlight */}
-      <section className="relative py-14 md:py-20 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
+      <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
         {/* Aurora glows */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
         {/* Floating orbs */}
@@ -1202,7 +993,7 @@ const Index = () => {
 
 
       {/* FAQ */}
-      <section className="py-14 md:py-20 border-b border-border/60">
+      <section className="py-12 md:py-16 border-b border-border/60">
         <div className="container max-w-3xl">
           <div className="text-center mb-12">
             <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
@@ -1223,63 +1014,36 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Final CTA — hesitation remover */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-foreground text-background">
-        {/* Distinct visual treatment: dashed grid on dark, offset accent band */}
-        <div
-          className="absolute inset-0 opacity-[0.08] pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-        <div className="absolute -left-24 top-1/2 -translate-y-1/2 h-40 w-[70%] bg-primary/25 blur-3xl pointer-events-none" />
-        <div className="container relative">
+      {/* Final CTA */}
+      <section className="py-14 md:py-20">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-3xl"
+            className="max-w-4xl mx-auto text-center"
           >
-            <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-background/60 mb-5">
-              — No lock-in
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
-              You don't have to commit to everything on day one.
+            
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
+              Everything your business needs — in one hub.
             </h2>
-            <p className="mt-6 text-lg md:text-xl text-background/70 max-w-2xl font-sans">
-              Pick one thing — the plan, the website, the brand, or the first campaign. No annual contract, no retainer, no bundle you didn't ask for. If it works, we do the next piece. If it doesn't, you walk away owning what we built.
+            <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
+              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
             </p>
-            <ul className="mt-8 space-y-2 text-sm text-background/70">
-              <li className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Start with a single service, month to month
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                No long-term contract or setup fee
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Everything we make is yours to keep
-              </li>
-            </ul>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <Button size="lg" className="h-12 px-8 text-base group rounded-full bg-background text-foreground hover:bg-background/90" asChild>
-                <Link to="/onboarding">
-                  Start with one service
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+              <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
+                <Link to="/marketplace">
+                  Explore the hub
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-full bg-transparent border-background/30 text-background hover:bg-background/10 hover:text-background" asChild>
-                <Link to="/contact">Ask us first</Link>
+              <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
+                <Link to="/contact">Talk to us</Link>
               </Button>
             </div>
           </motion.div>
         </div>
       </section>
-
     </div>
   );
 };
@@ -1328,52 +1092,96 @@ const TEAM: TeamMember[] = [
   },
 ];
 
+const WRAPPERS = [
+  "z-10 -translate-x-4 translate-y-3 -rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[105%] lg:group-hover/deck:-translate-x-[115%]",
+  "z-30 translate-x-0 translate-y-0 rotate-0",
+  "z-20 translate-x-4 translate-y-3 rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[105%] lg:group-hover/deck:translate-x-[115%]",
+];
+
 const TeamDeck = () => {
   const [open, setOpen] = useState<TeamMember | null>(null);
+  const renderCard = (m: TeamMember, opts?: { hoverHint?: boolean }) => (
+    <button
+      type="button"
+      onClick={() => setOpen(m)}
+      aria-label={`View bio for ${m.name}`}
+      className="group relative w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-[2rem] cursor-pointer"
+    >
+      {/* Gradient card */}
+      <div className={`relative aspect-[3/4] rounded-[2rem] bg-gradient-to-b ${m.cardGradient} shadow-xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-1 group-hover:shadow-2xl`}>
+        {/* Vertical name */}
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
+          <span
+            className="font-display font-black text-white/85 tracking-tight leading-none whitespace-nowrap drop-shadow-sm"
+            style={{
+              writingMode: "vertical-rl",
+              transform: "rotate(180deg)",
+              fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
+            }}
+          >
+            {m.name.split(" ")[0]}
+          </span>
+        </div>
+        {/* Character portrait */}
+        <img
+          src={m.image}
+          alt={m.name}
+          loading="lazy"
+          width={768}
+          height={1024}
+          className="absolute inset-x-0 bottom-0 mx-auto h-[108%] w-auto object-contain object-bottom -translate-x-2 sm:-translate-x-3 transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      </div>
+      {/* Role pill */}
+      <div className={`relative z-10 -mt-4 mx-auto w-[75%] rounded-full bg-gradient-to-r ${m.cardGradient} shadow-lg px-3 py-2 text-center`}>
+        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
+          {m.role}
+        </div>
+      </div>
+    </button>
+  );
+
 
   return (
     <>
+      {/* Mobile: horizontal snap scroll */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 max-w-4xl mx-auto"
+        className="sm:hidden"
       >
-        {TEAM.map((m) => (
-          <button
-            key={m.name}
-            type="button"
-            onClick={() => setOpen(m)}
-            aria-label={`View bio for ${m.name}`}
-            className="group relative text-left rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-6 shadow-soft hover-lift transition-all duration-300 hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className={`h-14 w-14 shrink-0 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white font-bold text-lg shadow-md`}
-                aria-hidden
-              >
-                {m.initials}
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-[62%] max-w-[220px]">
+            {renderCard(TEAM[0])}
+          </div>
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {TEAM.slice(1).map((m) => (
+              <div key={m.name}>
+                {renderCard(m)}
               </div>
-              <div className="min-w-0">
-                <div className="font-serif text-lg font-semibold text-foreground leading-tight truncate">
-                  {m.name}
-                </div>
-                <div className="mt-0.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-primary">
-                  {m.role}
-                </div>
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed line-clamp-3">
-              {m.bio}
-            </p>
-            <div className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary/80 group-hover:text-primary transition-colors">
-              Read bio
-              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-            </div>
-          </button>
-        ))}
+            ))}
+          </div>
+        </div>
       </motion.div>
 
+      {/* Tablet/Desktop: hover deck */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[520px] max-w-5xl"
+      >
+        {TEAM.map((m, i) => (
+          <div
+            key={m.name}
+            className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${WRAPPERS[i]}`}
+            style={{ transitionDelay: `${i * 80}ms` }}
+          >
+            {renderCard(m, { hoverHint: true })}
+          </div>
+        ))}
+      </motion.div>
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent className="sm:max-w-md">
