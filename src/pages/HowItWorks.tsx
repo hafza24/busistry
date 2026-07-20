@@ -70,7 +70,7 @@ const HowItWorks = () => (
             <Link to="/templates">Browse templates</Link>
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-3">Free tier available — no card required.</p>
+        
       </div>
 
 
