@@ -28,7 +28,17 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /* ------------------------------- Pricing card ------------------------------ */
-const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular }: any) => {
+const PriceCard = ({
+  id,
+  name,
+  price_pkr,
+  duration_days,
+  features,
+  type,
+  popular,
+  onCompare,
+  isComparing,
+}: any) => {
   const featureList = Array.isArray(features) ? (features as string[]) : [];
   const duration =
     type === "rent" && duration_days
@@ -69,17 +79,36 @@ const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular
               </li>
             ))}
           </ul>
-          <Button className="w-full" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
-            <Link to={`/templates?plan=${id}`}>
-              Choose a Site <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-
+          <div className="flex gap-2">
+            <Button className="flex-1" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
+              <Link to={`/templates?plan=${id}`}>
+                Choose <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            {onCompare && (
+              <Button
+                type="button"
+                variant={isComparing ? "default" : "outline"}
+                onClick={() => onCompare(id)}
+                aria-pressed={isComparing}
+                className="shrink-0"
+              >
+                {isComparing ? (
+                  <>
+                    <Check className="h-4 w-4 mr-1" /> Added
+                  </>
+                ) : (
+                  "Compare"
+                )}
+              </Button>
+            )}
+          </div>
         </CardContent>
       </Card>
     </motion.div>
   );
 };
+
 
 /* ---------------------------- Reassurance strip --------------------------- */
 const REASSURE = [
