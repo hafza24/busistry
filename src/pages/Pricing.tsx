@@ -503,9 +503,6 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Reassurance */}
-      <ReassuranceRow />
-
       {/* Plan cards */}
       <section className="py-16">
         <div className="container">
