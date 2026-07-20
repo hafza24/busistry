@@ -4,41 +4,48 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+// Minimal, refined button system:
+// - Border radius 16-18px (rounded-2xl ≈ 16px)
+// - 1px border, neutral (no colorful borders)
+// - Very subtle shadow
+// - Generous horizontal padding for whitespace
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-medium border border-border/70 shadow-[0_1px_2px_hsl(160_20%_10%/0.04)] ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "glass-surface glass-fill-primary glass-hover-brand px-4 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(158_60%_15%/0.4)]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90",
         destructive:
-          "glass-surface glass-fill-danger px-4 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_60%_20%/0.4)]",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90",
         outline:
-          "glass-surface glass-fill-primary glass-hover-brand px-4 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(158_60%_15%/0.4)]",
+          "bg-background text-foreground hover:bg-muted/60",
         secondary:
-          "glass-surface glass-fill-primary glass-hover-brand px-4 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(158_60%_15%/0.4)]",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost:
+          "border-transparent shadow-none hover:bg-muted/60 hover:text-foreground",
+        link:
+          "border-transparent shadow-none text-primary underline-offset-4 hover:underline",
         glass:
-          "glass-surface glass-fill-primary px-6 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90",
         "glass-accent":
-          "glass-surface glass-fill-accent px-6 font-semibold tracking-wide text-accent-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "bg-accent text-accent-foreground border-transparent hover:bg-accent/90",
         "glass-brand":
-          "glass-surface glass-fill-brand px-6 font-semibold tracking-wide text-primary-foreground [text-shadow:0_1px_0_hsl(220_40%_15%/0.35)]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90",
         "glass-success":
-          "glass-surface glass-fill-success px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(158_60%_15%/0.4)]",
+          "bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))] border-transparent hover:opacity-90",
         "glass-warning":
-          "glass-surface glass-fill-warning px-6 font-semibold tracking-wide text-[hsl(var(--warning-foreground))] [text-shadow:0_1px_0_hsl(0_0%_100%/0.35)]",
+          "bg-[hsl(var(--warning))] text-[hsl(var(--warning-foreground))] border-transparent hover:opacity-90",
         "glass-info":
-          "glass-surface glass-fill-info px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(210_60%_20%/0.4)]",
+          "bg-[hsl(var(--info))] text-[hsl(var(--info-foreground))] border-transparent hover:opacity-90",
         "glass-danger":
-          "glass-surface glass-fill-danger px-6 font-semibold tracking-wide text-white [text-shadow:0_1px_0_hsl(0_60%_20%/0.4)]",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: "h-10 px-6 py-2",
+        sm: "h-9 px-4 rounded-xl",
+        lg: "h-12 px-8",
+        icon: "h-10 w-10 rounded-xl",
       },
     },
     defaultVariants: {
