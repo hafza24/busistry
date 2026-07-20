@@ -74,60 +74,60 @@ const steps = [
 ];
 
 const includes = [
-  { icon: Globe, title: "Business plan & positioning" },
-  { icon: Smartphone, title: "Website / online store built" },
+  { icon: Globe, title: "Positioning & business plan" },
+  { icon: Smartphone, title: "Free 48-hour website" },
   { icon: LayoutDashboard, title: "Brand identity & guidelines" },
   { icon: CreditCard, title: "Product & packaging design" },
-  { icon: ShoppingBag, title: "Content & creatives ready" },
-  { icon: MessageCircle, title: "Launch & promo campaigns" },
+  { icon: ShoppingBag, title: "Editorial content & creatives" },
+  { icon: MessageCircle, title: "Launch & always-on promos" },
 ];
 
 const tiers = [
   {
-    name: "Starter",
-    blurb: "Get online with the essentials",
-    price: "PKR 9,999",
-    delivery: "5–7 days",
-    features: ["Up to 10 products / 5 pages", "Basic customization", "Mobile responsive", "Contact form"],
+    name: "The Free Site",
+    blurb: "A launch-ready website, on the house.",
+    price: "PKR 0",
+    delivery: "48 hours",
+    features: ["Designed & written for you", "Up to 10 pages / 10 products", "Mobile, fast, SEO-clean", "Yours to keep, forever"],
     highlighted: false,
   },
   {
-    name: "Growth",
-    blurb: "Most popular for scaling brands",
+    name: "The Studio",
+    blurb: "The website, dressed properly.",
     price: "PKR 24,999",
     delivery: "3–5 days",
-    features: ["Up to 50 products / 10 pages", "Advanced customization", "Payment gateway setup", "WhatsApp integration", "SEO basics"],
+    features: ["Everything in Free Site", "Brand identity + guidelines", "Product / packaging design", "Payment & WhatsApp set up"],
     highlighted: true,
   },
   {
-    name: "Premium",
-    blurb: "Full-stack build with priority delivery",
+    name: "The Whole Business",
+    blurb: "Plan, ship, brand, market — one studio.",
     price: "PKR 49,999",
-    delivery: "24–48 hours",
-    features: ["Unlimited products / pages", "Premium customization", "All integrations", "Priority delivery", "30 days support"],
+    delivery: "24–48 hours priority",
+    features: ["Everything in Studio", "Written business plan", "Launch campaign + creatives", "30-day marketing support"],
     highlighted: false,
   },
 ];
 
 const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
+  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "The site was live in a weekend. The brand followed the week after. It never felt rushed." },
+  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "I've hired three agencies. This is the first one that actually shipped — and it was the free part." },
+  { name: "Sana M.", role: "Director, Helix Studio", quote: "Packaging, paid ads, product pages. Same voice, same taste, same team. Rare." },
 ];
 
 const comparison = [
-  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
-  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
-  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
-  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
-  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
+  { feature: "Launch-ready website in 48 hours", busistry: true, shopify: false, dev: false },
+  { feature: "Included at no cost", busistry: true, shopify: false, dev: false },
+  { feature: "Brand, product & packaging in-house", busistry: true, shopify: false, dev: false },
+  { feature: "Marketing that keeps running after launch", busistry: true, shopify: false, dev: false },
+  { feature: "One studio, one point of contact", busistry: true, shopify: false, dev: false },
 ];
 
 const faqs = [
-  { q: "What exactly does Busistree do?", a: "We're a business hub. We handle four things end-to-end: planning your business, building your digital presence (website, store, packaging), designing your brand and products, and running marketing and promos." },
-  { q: "Do I have to buy everything together?", a: "No. Start with a website, brand, or a marketing campaign — add the rest whenever you're ready. Everything is modular but built to work together." },
-  { q: "Do I need any technical or design skills?", a: "None. You share your goals, we do the strategy, design, build and launch. You always keep full ownership and access." },
-  { q: "How fast can we launch?", a: "Most websites and stores go live within 24–48 hours. Full brand + launch campaigns typically take 1–2 weeks depending on scope." },
+  { q: "The website is really free?", a: "Yes. A launch-ready site — designed, written and deployed — at no cost, delivered inside 48 hours. It's yours to keep whether or not you ever hire us for anything else." },
+  { q: "Where's the catch?", a: "There isn't one. We over-invest in the first 48 hours so the work speaks for itself. If it does, most founders continue with us for branding, packaging or marketing. If it doesn't, you walk away with a real website — free." },
+  { q: "Do I need any technical or design skills?", a: "None. Share the brief; we handle strategy, writing, design, build and launch. You keep every login, every asset and full ownership." },
+  { q: "How fast is 48 hours, really?", a: "Two working days from a completed brief. Most sites go live between Monday morning and Wednesday morning. Brand and marketing engagements take one to two weeks depending on scope." },
 ];
 
 const ROTATING_PHRASES = [
@@ -374,8 +374,8 @@ const Index = () => {
   return (
     <div>
       <SEO
-        title="Busistree — The complete hub for growing businesses"
-        description="Planning, digital presence and packaging, design, and marketing — one hub for everything your business needs, from strategy to launch to growth."
+        title="Busistree — A website, free. In 48 hours."
+        description="A launch-ready website designed, written and shipped in 48 hours — at no cost. Plus branding, packaging and marketing when you're ready to grow."
         path="/"
       />
       {/* Hero — left-aligned copy + product mock */}
