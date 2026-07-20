@@ -23,7 +23,7 @@ const marketplaceItems = [
 
 const aboutItems = [
   { to: "/about", label: "About us", desc: "Our story, mission, and values.", icon: Info },
-  { to: "/team", label: "Team", desc: "Meet the people behind Busistree.", icon: Users },
+  
   { to: "/reviews", label: "Reviews", desc: "Customer stories, ratings, and case studies.", icon: Star },
 ];
 
@@ -36,7 +36,7 @@ const mobileLinks: NavLink[] = [
   { to: "/pricing", label: "Pricing" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/about", label: "About us" },
-  { to: "/team", label: "Team" },
+  
   { to: "/reviews", label: "Reviews" },
   { to: "/contact", label: "Contact" },
 ];
