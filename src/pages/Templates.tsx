@@ -18,10 +18,44 @@ import {
 
 const Templates = () => {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(searchParams.get("category") || "All");
+  const [activeSub, setActiveSub] = useState<string | null>(searchParams.get("subcategory"));
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
+
+  // Sync URL -> state when the user navigates from the mega menu or browser back/forward
+  useEffect(() => {
+    const cat = searchParams.get("category") || "All";
+    const sub = searchParams.get("subcategory");
+    setActiveCategory(cat);
+    setActiveSub(sub);
+    if (cat !== "All" || sub) {
+      // Scroll to filter area so users see the applied filter
+      setTimeout(() => {
+        document.getElementById("templates-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [searchParams]);
+
+  // Sync state -> URL when user clicks filter chips on the page
+  const updateCategory = (cat: string) => {
+    setActiveCategory(cat);
+    setActiveSub(null);
+    const next = new URLSearchParams(searchParams);
+    if (cat === "All") next.delete("category");
+    else next.set("category", cat);
+    next.delete("subcategory");
+    setSearchParams(next, { replace: true });
+  };
+
+  const updateSub = (sub: string | null) => {
+    setActiveSub(sub);
+    const next = new URLSearchParams(searchParams);
+    if (!sub) next.delete("subcategory");
+    else next.set("subcategory", sub);
+    setSearchParams(next, { replace: true });
+  };
 
   const openPreview = (id: string, url: string) => {
     setPreviewingId(id);
