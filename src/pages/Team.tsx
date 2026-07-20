@@ -70,8 +70,8 @@ const Team = () => {
   return (
     <div className="pb-16">
       <SEO
-        title="Our Team — Busistree"
-        description="Meet the team building Busistree — helping Pakistani businesses plan, design, launch and grow online."
+        title="The Studio — The team behind the 48-hour website | Busistree"
+        description="A small senior team — strategy, design, engineering, marketing — shipping launch-ready websites in forty-eight hours and building the brands behind them."
         path="/team"
       />
 
@@ -94,8 +94,8 @@ const Team = () => {
 
                 <h1 className="relative text-4xl md:text-5xl lg:text-6xl font-bold font-display tracking-tight leading-[1.1] text-foreground">
                   <span aria-hidden className="absolute -left-2 -top-6 md:-top-8 text-7xl md:text-8xl leading-none font-display text-primary/15 select-none">“</span>
-                  Every Pakistani founder deserves a beautiful online store —{" "}
-                  <span className="italic font-light text-primary">without the tech tax, the agency wait, or the guesswork.</span>
+                  A good website shouldn't take six weeks and a retainer —{" "}
+                  <span className="italic font-light text-primary">it should be live by the weekend, and it should be free.</span>
                 </h1>
 
                 <div className="mt-6 h-px w-16 bg-gradient-to-r from-primary to-transparent" />

@@ -13,17 +13,17 @@ import storyIllustration from "@/assets/about-story-illustration.png";
 import teamIllustration from "@/assets/about-team-illustration.png";
 
 const values = [
-  { icon: Target, title: "One partner, one plan", body: "Strategy, build, design and marketing under one roof — no juggling agencies, freelancers, or tools." },
-  { icon: Heart, title: "Business-first, not tech-first", body: "We start with your business goals, not with a template. Everything we ship is tied to an outcome." },
-  { icon: ShieldCheck, title: "Honest & transparent", body: "Clear pricing, plain-language scopes, and full ownership of everything we build for you." },
-  { icon: Rocket, title: "Momentum matters", body: "Fast planning, fast launches, and always-on marketing so your business keeps moving." },
+  { icon: Target, title: "Free means free", body: "The 48-hour website costs nothing. No card, no trial, no fine print. If we don't earn the next brief, we've still done the work." },
+  { icon: Heart, title: "Editorial over templated", body: "Every site gets real copy, real images and a real point of view. If it looks like it came out of a wizard, we haven't done our job." },
+  { icon: ShieldCheck, title: "One studio, one voice", body: "Strategy, writing, design, engineering and marketing sit in one room. You never hand the same story to a new stranger." },
+  { icon: Rocket, title: "Ship, then refine", body: "Live in forty-eight hours beats perfect in six weeks. Momentum, then polish — never the other way around." },
 ];
 
 const milestones = [
-  { year: "2023", title: "Started as a website builder", body: "Helping businesses get online quickly with done-for-you websites and stores." },
-  { year: "2024", title: "Added design & packaging", body: "Brought brand identity, product and packaging design in-house as BizStyle." },
-  { year: "2025", title: "Became a full hub", body: "Added business planning and marketing/promos — one place for everything a business needs." },
-  { year: "2026", title: "Where we are", body: "A complete business hub serving founders across planning, presence, design and growth." },
+  { year: "2023", title: "The 48-hour promise", body: "Started as a small studio with one rule: any business we take on goes live inside two working days." },
+  { year: "2024", title: "The studio grew a spine", body: "Added BizStyle in-house — identity, product and packaging design under the same roof as the site." },
+  { year: "2025", title: "Free became the default", body: "Made the launch website free. The work speaks; the rest of the business is optional, not obligatory." },
+  { year: "2026", title: "Here, now", body: "A small senior team, shipping websites in forty-eight hours and quietly building the brands behind them." },
 ];
 
 const About = () => {
@@ -57,8 +57,8 @@ const About = () => {
   return (
     <div className="pb-16">
       <SEO
-        title="About Busistree — The complete hub for growing businesses"
-        description="Busistree is a business hub covering planning, digital presence and packaging, design, and marketing — one team behind every part of your business."
+        title="About Busistree — The studio behind the 48-hour website"
+        description="A small senior studio shipping launch-ready websites in forty-eight hours — free — and quietly building the brand, packaging and marketing behind them."
         path="/about"
       />
 
@@ -70,19 +70,19 @@ const About = () => {
             {/* Left copy */}
             <div className="relative text-center lg:text-left order-2 lg:order-1">
               <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                — One hub for everything your business needs
+                — The studio behind the 48-hour website
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-foreground leading-[1.05] tracking-tight">
-                Planning, presence, design and{" "}
+                A small studio,{" "}
                 <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  marketing —
+                  a two-day promise,
                 </span>{" "}
-                one team behind it all.
+                and the quiet work that follows.
               </h1>
               <p className="text-base md:text-lg text-muted-foreground mt-6 max-w-lg mx-auto lg:mx-0">
-                Busistree is the complete hub for growing businesses. We plan your business,
-                build your digital presence, design your brand and products, and run the
-                marketing that brings customers in — under one roof.
+                Busistree ships your website — free — in forty-eight hours.
+                Then, if the work is good enough, we stay on for the brand, the
+                packaging and the marketing. That's it. That's the whole studio.
               </p>
 
               {/* Action row */}
@@ -197,25 +197,25 @@ const About = () => {
           </div>
           <div className="order-1 lg:order-2">
             <div className="text-center lg:text-left mb-6">
-              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our story</h2>
-              <p className="text-muted-foreground mt-3">Why we became a hub, not just a builder.</p>
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The story, briefly</h2>
+              <p className="text-muted-foreground mt-3">Why we made the website free.</p>
             </div>
             <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
               <p>
-                Busistree started as a way to get small businesses online quickly. But we kept
-                hearing the same thing from founders: "The website is great — now what?" They
-                needed a plan, a brand, packaging, and someone to actually market the thing.
+                We started as most studios do — quoting, negotiating, chasing.
+                And we kept losing weeks to conversations that should have taken
+                hours. Founders wanted to see the work; we wanted to prove it.
               </p>
               <p>
-                So we grew into a hub. Today, one team handles the four things every business
-                needs — planning your offer and positioning, building your digital presence and
-                packaging, designing the brand and product, and running the marketing that
-                drives real customers in.
+                So we changed the deal. We build your website — designed,
+                written, deployed — inside forty-eight hours, at no cost.
+                No trial, no watermark, no card on file. You get a real site,
+                yours to keep, whether you ever hire us for anything else.
               </p>
               <p>
-                From founders launching their first product to established brands leveling up
-                their presence, we're the single partner behind the whole business — not just
-                the website.
+                Most of the time, founders continue with us — for the brand,
+                the packaging, the campaigns. Sometimes they don't. Either way,
+                the free work stands on its own. That's the point.
               </p>
             </div>
           </div>

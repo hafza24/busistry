@@ -79,8 +79,8 @@ export default function Marketplace() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl space-y-20">
       <SEO
-        title="Marketplace — Plans, Templates & Addons | Busistree"
-        description="Everything you need to launch and grow your Busistree store — pricing plans, ready-made templates, and installable add-ons in one place."
+        title="Marketplace — Plans, Templates & Add-ons | Busistree"
+        description="After the free 48-hour website: plans, editorial templates and add-ons that keep the business growing — hand-picked, PKR-priced, live-ready."
         path="/marketplace"
       />
 
@@ -110,20 +110,20 @@ export default function Marketplace() {
 
           <div className="relative z-10 space-y-4">
             <span className="inline-block px-3 py-1 bg-primary-foreground/15 border border-primary-foreground/25 text-primary-foreground/90 text-xs font-semibold uppercase tracking-widest rounded-full backdrop-blur-sm">
-              Featured Marketplace
+              — After the free 48 hours
             </span>
             <h1 className="font-display text-4xl sm:text-6xl text-primary-foreground font-bold leading-tight">
-              Scale your business<br />with Busistree.
+              The website is live.<br />Now what to do with it.
             </h1>
             <p className="text-primary-foreground/80 text-lg max-w-md">
-              Discover premium templates, powerful add-ons, and scaling plans tailored for modern digital businesses.
+              Plans, templates and add-ons that quietly compound after launch — chosen for taste, not filler.
             </p>
             <div className="pt-4 flex flex-wrap gap-3">
               <Button asChild size="lg" className="rounded-xl bg-background text-primary hover:bg-background/90 font-bold shadow-lg">
-                <Link to="/onboarding">Shop All Collections</Link>
+                <Link to="/onboarding">Claim my free website</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-xl bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-                <Link to="/how-it-works">How it works</Link>
+                <Link to="/how-it-works">How the 48 hours work</Link>
               </Button>
             </div>
           </div>
@@ -217,8 +217,8 @@ export default function Marketplace() {
         <SectionHeader
           icon={CreditCard}
           eyebrow="Plans"
-          title="Choose a plan that scales with you"
-          description="Transparent PKR pricing with hosting, limits, and support included."
+          title="A plan for whichever chapter you're in"
+          description="Transparent PKR pricing. Hosting, limits and support included — no surprise line items."
           to="/pricing"
           ctaLabel="View all plans"
         />

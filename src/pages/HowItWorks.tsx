@@ -64,7 +64,7 @@ const HowItWorks = () => (
 
       <div className="text-center mt-16">
         <Button size="lg" asChild className="shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
-          <Link to="/templates">Browse Templates</Link>
+          <Link to="/onboarding">Claim my free website</Link>
         </Button>
       </div>
     </div>

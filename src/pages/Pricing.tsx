@@ -213,10 +213,10 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
       <div className="container">
         <div className="text-center mb-6">
           <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
-            Compare every plan
+            The website is free. Everything else, line by line.
           </h2>
           <p className="text-muted-foreground mt-2 text-sm">
-            Pick the plans you want to compare — side-by-side specs pulled from live plan data.
+            Compare plans side-by-side. Real limits, real inclusions — pulled straight from live data, not a marketing table.
           </p>
         </div>
 
