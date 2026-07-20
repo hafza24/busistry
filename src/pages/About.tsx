@@ -311,23 +311,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="container max-w-4xl py-20 md:py-28">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our journey</h2>
-        </div>
-        <ol className="relative border-l border-border/60 ml-3 space-y-8">
-          {milestones.map((m) => (
-            <li key={m.year} className="pl-6">
-              <span className="absolute -left-2 h-4 w-4 rounded-full bg-primary ring-4 ring-background" />
-              <div className="text-xs font-semibold text-primary">{m.year}</div>
-              <h3 className="font-semibold font-display text-foreground mt-1">{m.title}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{m.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
       {/* Team */}
       <section className="container max-w-6xl py-20 md:py-28">
         <div className="text-center mb-12">
@@ -393,6 +376,24 @@ const About = () => {
         })()}
 
       </section>
+
+      {/* Timeline */}
+      <section className="container max-w-4xl py-20 md:py-28">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our journey</h2>
+        </div>
+        <ol className="relative border-l border-border/60 ml-3 space-y-8">
+          {milestones.map((m) => (
+            <li key={m.year} className="pl-6">
+              <span className="absolute -left-2 h-4 w-4 rounded-full bg-primary ring-4 ring-background" />
+              <div className="text-xs font-semibold text-primary">{m.year}</div>
+              <h3 className="font-semibold font-display text-foreground mt-1">{m.title}</h3>
+              <p className="text-sm text-muted-foreground mt-1">{m.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
 
       {/* Reviews */}
       <section className="container max-w-6xl py-20 md:py-28">
