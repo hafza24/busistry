@@ -79,45 +79,47 @@
   }
 
   .dark {
-    --background: 160 15% 6%;
-    --foreground: 40 15% 92%;
+    /* Neutral gray dark theme anchored on #6a6a6a */
+    --background: 0 0% 7%;         /* #121212 */
+    --foreground: 0 0% 93%;        /* #ededed */
 
-    --card: 160 15% 9%;
-    --card-foreground: 40 15% 92%;
+    --card: 0 0% 10%;              /* #1a1a1a */
+    --card-foreground: 0 0% 93%;
 
-    --popover: 160 15% 9%;
-    --popover-foreground: 40 15% 92%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 93%;
 
     --primary: 166 47% 52%;
-    --primary-foreground: 160 15% 6%;
+    --primary-foreground: 0 0% 10%;
     --primary-glow: 166 47% 62%;
 
-    --secondary: 160 10% 16%;
-    --secondary-foreground: 40 15% 92%;
+    --secondary: 0 0% 15%;         /* #262626 */
+    --secondary-foreground: 0 0% 93%;
 
-    --muted: 160 10% 16%;
-    --muted-foreground: 40 10% 65%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
 
     --accent: 166 47% 52%;
-    --accent-foreground: 160 15% 6%;
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 8 65% 55%;
-    --destructive-foreground: 40 15% 92%;
+    --destructive-foreground: 0 0% 93%;
 
-    --border: 160 10% 18%;
-    --input: 160 10% 18%;
+    --border: 0 0% 22%;            /* #383838 — subtle divider */
+    --input: 0 0% 22%;
     --ring: 166 47% 52%;
 
-    /* Neutral gray — light gray tone in dark theme */
-    --neutral: 0 0% 20%; /* #333333 */
-    --neutral-foreground: 40 15% 92%;
+    /* Neutral gray anchor — #6a6a6a */
+    --neutral: 0 0% 42%;
+    --neutral-foreground: 0 0% 93%;
 
-    --sidebar-background: 160 15% 9%;
-    --sidebar-foreground: 40 15% 92%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 93%;
     --sidebar-primary: 166 47% 52%;
-    --sidebar-primary-foreground: 160 15% 6%;
-    --sidebar-accent: 160 10% 14%;
-    --sidebar-accent-foreground: 40 15% 92%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 93%;
+
     --sidebar-border: 160 10% 18%;
     --sidebar-ring: 166 47% 52%;
 
