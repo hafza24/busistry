@@ -1,12 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star, ShoppingBag, Repeat, Flame } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
+import { TEMPLATE_CATEGORIES } from "@/lib/templateCategories";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
+type MegaKey = "templates" | "plans" | "sale" | "about";
 
 const leftLinks: NavLink[] = [
   { to: "/", label: "Home", showAt: "md" },
@@ -50,10 +54,41 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openMenu, setOpenMenu] = useState<"marketplace" | "about" | null>(null);
+  const [openMenu, setOpenMenu] = useState<MegaKey | null>(null);
   const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Fetch plans for the Plans mega (Buy vs Rent)
+  const { data: plans = [] } = useQuery({
+    queryKey: ["nav_plans"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("plans")
+        .select("id,name,price_pkr,type,duration_days")
+        .eq("is_active", true)
+        .order("price_pkr");
+      return data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Fetch sale templates for the Sale mega
+  const { data: saleTemplates = [] } = useQuery({
+    queryKey: ["nav_sale_templates"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("templates")
+        .select("id,name,price_pkr,sale_price_pkr,preview_image_url,category")
+        .eq("is_active", true)
+        .not("sale_price_pkr", "is", null)
+        .order("sale_price_pkr")
+        .limit(6);
+      return data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
 
   const cancelClose = () => {
     if (closeTimer.current) {
