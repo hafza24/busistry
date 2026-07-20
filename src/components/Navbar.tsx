@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
-import { TEMPLATE_CATEGORIES } from "@/lib/templateCategories";
+
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
 type MegaKey = "marketplace" | "about";
@@ -86,6 +86,27 @@ const Navbar = () => {
         .order("sale_price_pkr")
         .limit(6);
       return data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Fetch template categories/subcategories from DB for the Templates mega
+  const { data: templateCats = {} } = useQuery({
+    queryKey: ["nav_template_categories"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("templates")
+        .select("category,subcategory")
+        .eq("is_active", true);
+      const map: Record<string, string[]> = {};
+      (data ?? []).forEach((row: any) => {
+        const cat = (row.category || "").trim();
+        if (!cat) return;
+        if (!map[cat]) map[cat] = [];
+        const sub = (row.subcategory || "").trim();
+        if (sub && !map[cat].includes(sub)) map[cat].push(sub);
+      });
+      return map;
     },
     staleTime: 5 * 60 * 1000,
   });
@@ -324,30 +345,34 @@ const Navbar = () => {
                                   All templates <ArrowRight className="h-3 w-3" />
                                 </Link>
                               </div>
-                              {Object.entries(TEMPLATE_CATEGORIES).map(([cat, subs]) => (
-                                <div key={cat} className="min-w-0">
-                                  <Link
-                                    to={`/templates?category=${encodeURIComponent(cat)}`}
-                                    onClick={() => setOpenMenu(null)}
-                                    className="block text-sm font-semibold text-foreground hover:text-primary transition-colors mb-1.5"
-                                  >
-                                    {cat}
-                                  </Link>
-                                  <ul className="space-y-1 mb-3">
-                                    {subs.slice(0, 5).map((s) => (
-                                      <li key={s}>
-                                        <Link
-                                          to={`/templates?category=${encodeURIComponent(cat)}&subcategory=${encodeURIComponent(s)}`}
-                                          onClick={() => setOpenMenu(null)}
-                                          className="text-xs text-muted-foreground hover:text-neutral transition-colors"
-                                        >
-                                          {s}
-                                        </Link>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ))}
+                              {Object.keys(templateCats).length === 0 ? (
+                                <p className="col-span-3 text-sm text-muted-foreground py-6 text-center">No templates yet — check back soon.</p>
+                              ) : (
+                                Object.entries(templateCats).map(([cat, subs]) => (
+                                  <div key={cat} className="min-w-0">
+                                    <Link
+                                      to={`/templates?category=${encodeURIComponent(cat)}`}
+                                      onClick={() => setOpenMenu(null)}
+                                      className="block text-sm font-semibold text-foreground hover:text-primary transition-colors mb-1.5"
+                                    >
+                                      {cat}
+                                    </Link>
+                                    <ul className="space-y-1 mb-3">
+                                      {(subs as string[]).slice(0, 5).map((s) => (
+                                        <li key={s}>
+                                          <Link
+                                            to={`/templates?category=${encodeURIComponent(cat)}&subcategory=${encodeURIComponent(s)}`}
+                                            onClick={() => setOpenMenu(null)}
+                                            className="text-xs text-muted-foreground hover:text-neutral transition-colors"
+                                          >
+                                            {s}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))
+                              )}
                             </div>
                           )}
 
