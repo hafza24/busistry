@@ -595,7 +595,9 @@ const Pricing = () => {
 
 
       {/* Comparison matrix */}
-      <ComparisonMatrix plans={plans ?? []} />
+      {comparePlans.length > 0 && (
+        <ComparisonMatrix plans={comparePlans} onClear={clearCompare} />
+      )}
 
       {/* FAQ */}
       <FaqSection />
