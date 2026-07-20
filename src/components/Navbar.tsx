@@ -55,6 +55,7 @@ const Navbar = () => {
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<MegaKey | null>(null);
+  const [marketplaceTab, setMarketplaceTab] = useState<"templates" | "plans" | "sale">("templates");
   const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
