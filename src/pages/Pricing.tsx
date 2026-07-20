@@ -593,6 +593,10 @@ const Pricing = () => {
         </div>
       </section>
 
+      {/* Reassurance */}
+      <ReassuranceRow />
+
+
       {/* Comparison matrix */}
       <ComparisonMatrix plans={plans ?? []} />
 
