@@ -1171,36 +1171,63 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-14 md:py-20">
-        <div className="container">
+      {/* Final CTA — hesitation remover */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-foreground text-background">
+        {/* Distinct visual treatment: dashed grid on dark, offset accent band */}
+        <div
+          className="absolute inset-0 opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+        <div className="absolute -left-24 top-1/2 -translate-y-1/2 h-40 w-[70%] bg-primary/25 blur-3xl pointer-events-none" />
+        <div className="container relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
+            className="max-w-3xl"
           >
-            
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.05]">
-              Everything your business needs — in one hub.
+            <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-background/60 mb-5">
+              — No lock-in
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
+              You don't have to commit to everything on day one.
             </h2>
-            <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-              Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready.
+            <p className="mt-6 text-lg md:text-xl text-background/70 max-w-2xl font-sans">
+              Pick one thing — the plan, the website, the brand, or the first campaign. No annual contract, no retainer, no bundle you didn't ask for. If it works, we do the next piece. If it doesn't, you walk away owning what we built.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
-                <Link to="/marketplace">
-                  Explore the hub
+            <ul className="mt-8 space-y-2 text-sm text-background/70">
+              <li className="flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                Start with a single service, month to month
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                No long-term contract or setup fee
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                Everything we make is yours to keep
+              </li>
+            </ul>
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <Button size="lg" className="h-12 px-8 text-base group rounded-full bg-background text-foreground hover:bg-background/90" asChild>
+                <Link to="/onboarding">
+                  Start with one service
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
-                <Link to="/contact">Talk to us</Link>
+              <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-full bg-transparent border-background/30 text-background hover:bg-background/10 hover:text-background" asChild>
+                <Link to="/contact">Ask us first</Link>
               </Button>
             </div>
           </motion.div>
         </div>
       </section>
+
     </div>
   );
 };
