@@ -336,7 +336,10 @@ const About = () => {
                   <span className="italic font-light text-primary">it should be live by the weekend, and it should be free.</span>”
                 </h3>
                 <p className="mt-5 text-muted-foreground leading-relaxed max-w-xl">
-                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into launch-ready online businesses with clarity, care and craft.
+                  That belief became a mission: <span className="text-foreground font-semibold">100,000 free websites</span> for founders, freelancers and small businesses ready to start — no retainers, no six-week timelines, no gatekeeping. Just a launch-ready site in forty-eight hours so anyone can put their idea online and begin building.
+                </p>
+                <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
+                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into online businesses with clarity, care and craft.
                 </p>
                 <div className="flex items-center gap-2 mt-6">
                   {m.socials.linkedin && (
