@@ -209,22 +209,8 @@ const renderCell = (value: Cell) => {
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
-const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
-  if (!plans?.length) return null;
-
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(
-    () => new Set(plans.map((p) => p.id))
-  );
-  const toggleId = (id: string) =>
-    setSelectedIds((s) => {
-      const next = new Set(s);
-      if (next.has(id)) {
-        if (next.size > 1) next.delete(id); // keep at least one
-      } else next.add(id);
-      return next;
-    });
-
-  const visiblePlans = plans.filter((p) => selectedIds.has(p.id));
+const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => void }) => {
+  const visiblePlans = plans;
   const matrix = buildMatrix(visiblePlans);
   const colCount = visiblePlans.length + 1;
 
@@ -236,19 +222,26 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
   const setAll = (v: boolean) =>
     setOpenGroups(Object.fromEntries(matrix.map((g) => [g.group, v])));
 
-  const allSelected = selectedIds.size === plans.length;
+  if (!plans?.length) return null;
 
   return (
-    <section className="py-16" aria-labelledby="comparison-heading">
+    <section id="compare" className="py-16 scroll-mt-24" aria-labelledby="comparison-heading">
       <div className="container">
-        <div className="text-center mb-6">
-          <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
-            The website is free. Everything else, line by line.
-          </h2>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Compare plans side-by-side. Real limits, real inclusions — pulled straight from live data, not a marketing table.
-          </p>
+        <div className="flex items-start justify-between gap-4 mb-6 flex-wrap">
+          <div>
+            <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
+              Compare selected plans
+            </h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              {plans.length} plan{plans.length === 1 ? "" : "s"} in comparison. Add or remove from the cards above.
+            </p>
+          </div>
+          <Button variant="outline" size="sm" onClick={onClear}>
+            Clear comparison
+          </Button>
         </div>
+
+
 
         {/* Plan selector chips */}
         <div className="mb-4 rounded-xl border border-border bg-card p-3">
