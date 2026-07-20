@@ -397,7 +397,7 @@ const Index = () => {
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
+                <Button size="lg" className="h-12 px-6 text-base rounded-full group shadow-elev" asChild>
                   <Link to="/onboarding">
                     Start my business plan
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -406,7 +406,7 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 px-6 text-base rounded-lg"
+                  className="h-12 px-6 text-base rounded-full"
                   onClick={() => {
                     document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
@@ -501,7 +501,7 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-14 md:py-20 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -607,7 +607,7 @@ const Index = () => {
       </section>
 
       {/* What's included — four pillars, four different treatments */}
-      <section id="included-services" className="py-20 md:py-32 border-b border-border/60 relative overflow-hidden scroll-mt-24">
+      <section id="included-services" className="py-20 md:py-28 border-b border-border/60 relative overflow-hidden scroll-mt-24">
         <div className="container">
           <div className="max-w-2xl mb-14 md:mb-20">
             <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary mb-4">— What's included</div>
@@ -793,7 +793,7 @@ const Index = () => {
 
 
       {/* Pricing */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
+      <section className="py-14 md:py-20 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -891,7 +891,7 @@ const Index = () => {
 
 
       {/* Comparison */}
-      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section className="py-14 md:py-20 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -915,12 +915,12 @@ const Index = () => {
             className="max-w-4xl mx-auto relative group/table"
           >
             {/* Outer aurora glow */}
-            <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
+            <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
 
             {/* Card */}
-            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-[1.5rem] overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
+            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-3xl overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
               {/* Gradient border sheen */}
-              <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+              <div className="pointer-events-none absolute inset-0 rounded-3xl p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
 
               {/* Highlighted Busistree column */}
               <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.10] via-primary/[0.05] to-transparent border-x border-primary/20" />
@@ -1001,7 +1001,7 @@ const Index = () => {
 
 
       {/* Team */}
-      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section className="py-14 md:py-20 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
@@ -1026,7 +1026,7 @@ const Index = () => {
       <ReviewsSection />
 
       {/* Biztyle — Sister brand highlight */}
-      <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
+      <section className="relative py-14 md:py-20 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
         {/* Aurora glows */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
         {/* Floating orbs */}
@@ -1150,7 +1150,7 @@ const Index = () => {
 
 
       {/* FAQ */}
-      <section className="py-12 md:py-16 border-b border-border/60">
+      <section className="py-14 md:py-20 border-b border-border/60">
         <div className="container max-w-3xl">
           <div className="text-center mb-12">
             <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
