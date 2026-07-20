@@ -100,10 +100,11 @@ const Navbar = () => {
     cancelClose();
     closeTimer.current = setTimeout(() => setOpenMenu(null), 150);
   };
-  const openWith = (key: "marketplace" | "about") => {
+  const openWith = (key: MegaKey) => {
     cancelClose();
     setOpenMenu(key);
   };
+
 
   // Close mega menu on route change
   useEffect(() => {
