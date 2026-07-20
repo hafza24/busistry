@@ -80,8 +80,8 @@ const PriceCard = ({
               </li>
             ))}
           </ul>
-          <div className="flex gap-2">
-            <Button className="flex-1" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button className="flex-1 min-w-0" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
               <Link to={`/templates?plan=${id}`}>
                 Choose <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -94,7 +94,7 @@ const PriceCard = ({
                 aria-pressed={isComparing}
                 disabled={!isComparing && compareDisabled}
                 title={!isComparing && compareDisabled ? "You can compare up to 3 plans" : undefined}
-                className="shrink-0"
+                className="sm:shrink-0"
               >
                 {isComparing ? (
                   <>
