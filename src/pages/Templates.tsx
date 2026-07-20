@@ -1,5 +1,5 @@
 import SEO from "@/components/SEO";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Rocket, Loader2, Eye, Info, CheckCircle2 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
 import TemplateCustomizationNotice from "@/components/templates/TemplateCustomizationNotice";
@@ -18,10 +18,44 @@ import {
 
 const Templates = () => {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [activeSub, setActiveSub] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(searchParams.get("category") || "All");
+  const [activeSub, setActiveSub] = useState<string | null>(searchParams.get("subcategory"));
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
+
+  // Sync URL -> state when the user navigates from the mega menu or browser back/forward
+  useEffect(() => {
+    const cat = searchParams.get("category") || "All";
+    const sub = searchParams.get("subcategory");
+    setActiveCategory(cat);
+    setActiveSub(sub);
+    if (cat !== "All" || sub) {
+      // Scroll to filter area so users see the applied filter
+      setTimeout(() => {
+        document.getElementById("templates-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [searchParams]);
+
+  // Sync state -> URL when user clicks filter chips on the page
+  const updateCategory = (cat: string) => {
+    setActiveCategory(cat);
+    setActiveSub(null);
+    const next = new URLSearchParams(searchParams);
+    if (cat === "All") next.delete("category");
+    else next.set("category", cat);
+    next.delete("subcategory");
+    setSearchParams(next, { replace: true });
+  };
+
+  const updateSub = (sub: string | null) => {
+    setActiveSub(sub);
+    const next = new URLSearchParams(searchParams);
+    if (!sub) next.delete("subcategory");
+    else next.set("subcategory", sub);
+    setSearchParams(next, { replace: true });
+  };
 
   const openPreview = (id: string, url: string) => {
     setPreviewingId(id);
@@ -118,7 +152,7 @@ const Templates = () => {
         </section>
 
         {/* Category nav bar — horizontal editorial style */}
-        <nav className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm">
+        <nav id="templates-grid" className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm scroll-mt-24">
           <div className="flex items-center gap-1 overflow-x-auto px-2 py-2 scrollbar-none">
             {categories.map((n) => {
               const active = activeCategory === n;
@@ -126,7 +160,7 @@ const Templates = () => {
                 <button
                   key={n}
                   aria-pressed={active}
-                  onClick={() => { setActiveCategory(n); setActiveSub(null); }}
+                  onClick={() => updateCategory(n)}
                   className={`whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                     active
                       ? "bg-primary text-primary-foreground shadow"
@@ -147,7 +181,7 @@ const Templates = () => {
               variant={activeSub === null ? "secondary" : "ghost"}
               size="sm"
               aria-pressed={activeSub === null}
-              onClick={() => setActiveSub(null)}
+              onClick={() => updateSub(null)}
               className={activeSub === null ? "ring-1 ring-primary/40 font-semibold" : ""}
             >
               All {activeCategory !== "All" ? activeCategory : ""}
@@ -160,7 +194,7 @@ const Templates = () => {
                   variant={active ? "secondary" : "ghost"}
                   size="sm"
                   aria-pressed={active}
-                  onClick={() => setActiveSub(s)}
+                  onClick={() => updateSub(s)}
                   className={active ? "ring-1 ring-primary/40 font-semibold" : ""}
                 >
                   {s}
