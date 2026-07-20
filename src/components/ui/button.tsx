@@ -15,31 +15,31 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
+          "bg-primary text-primary-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         destructive:
-          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90 active:bg-destructive/95",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         outline:
-          "bg-background text-foreground hover:bg-primary/5 hover:text-primary hover:border-primary/40 active:bg-primary/10",
+          "bg-background text-foreground hover:bg-neutral/10 hover:text-neutral hover:border-neutral/40 active:bg-neutral/15",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/90",
+          "bg-secondary text-secondary-foreground hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         ghost:
-          "border-transparent shadow-none hover:bg-primary/5 hover:text-primary hover:translate-y-0 active:bg-primary/10",
+          "border-transparent shadow-none hover:bg-neutral/10 hover:text-neutral hover:translate-y-0 active:bg-neutral/15",
         link:
-          "border-transparent shadow-none text-primary underline-offset-4 hover:underline hover:translate-y-0",
+          "border-transparent shadow-none text-primary underline-offset-4 hover:underline hover:text-neutral hover:translate-y-0",
         glass:
-          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
+          "bg-primary text-primary-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         "glass-accent":
-          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
+          "bg-primary text-primary-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         "glass-brand":
-          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
+          "bg-primary text-primary-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
         "glass-success":
-          "bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))] border-transparent hover:bg-[hsl(var(--success)/0.9)]",
+          "bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))] border-transparent hover:bg-neutral hover:text-neutral-foreground",
         "glass-warning":
-          "bg-[hsl(var(--warning))] text-[hsl(var(--warning-foreground))] border-transparent hover:bg-[hsl(var(--warning)/0.9)]",
+          "bg-[hsl(var(--warning))] text-[hsl(var(--warning-foreground))] border-transparent hover:bg-neutral hover:text-neutral-foreground",
         "glass-info":
-          "bg-[hsl(var(--info))] text-[hsl(var(--info-foreground))] border-transparent hover:bg-[hsl(var(--info)/0.9)]",
+          "bg-[hsl(var(--info))] text-[hsl(var(--info-foreground))] border-transparent hover:bg-neutral hover:text-neutral-foreground",
         "glass-danger":
-          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90 active:bg-destructive/95",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-neutral hover:text-neutral-foreground active:bg-neutral/95",
       },
 
       size: {
