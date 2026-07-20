@@ -487,6 +487,15 @@ const Navbar = () => {
               >
                 <span className="relative z-10">Contact</span>
               </Link>
+
+              {/* How it works — at end */}
+              <Link
+                to="/how-it-works"
+                className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
+              >
+                <span className="relative z-10">How it works</span>
+              </Link>
+
             </div>
           </div>
 
