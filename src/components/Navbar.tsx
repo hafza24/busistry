@@ -374,6 +374,7 @@ const Navbar = () => {
               />
             </span>
           </button>
+          </div>
         </nav>
       </div>
 
