@@ -10,7 +10,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { TEMPLATE_CATEGORIES } from "@/lib/templateCategories";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
-type MegaKey = "templates" | "plans" | "sale" | "about";
+type MegaKey = "marketplace" | "about";
 
 const leftLinks: NavLink[] = [
   { to: "/", label: "Home", showAt: "md" },
