@@ -6,29 +6,42 @@ import step1 from "@/assets/how-step-1.jpg";
 import step2 from "@/assets/how-step-2.jpg";
 import step3 from "@/assets/how-step-3.jpg";
 import step4 from "@/assets/how-step-4.jpg";
+import step5 from "@/assets/how-step-5.jpg";
+import step6 from "@/assets/how-step-6.jpg";
 
 const steps = [
   {
-    image: step1,
-    title: "Share your brief",
-    desc: "Tell us the business, the audience and the ambition through a short onboarding form. We turn it into a positioning line, a page plan and a written direction — before anyone opens Figma.",
+    image: step2,
+    title: "Select a template",
+    desc: "Browse our catalog and pick a template that fits your industry, audience and ambition. Every template is production-ready and fully customisable.",
   },
   {
-    image: step2,
-    title: "Pick a template & plan",
-    desc: "Browse our catalog, choose a template that fits your industry and lock in a plan. Free-tier orders start immediately — no card, no commitment.",
+    image: step5,
+    title: "Choose your plan",
+    desc: "Compare plans side by side and pick the one that matches your scale — Free, Rent or Buy. Clear pricing, no hidden fees, cancel or upgrade anytime.",
+  },
+  {
+    image: step1,
+    title: "Fill the brief form",
+    desc: "Answer a short onboarding form about your business, audience, content and preferences. It's the only thing we need to start building.",
   },
   {
     image: step3,
-    title: "We build in 48 hours",
-    desc: "Designers, writers and engineers ship your website inside two working days. Real copy, real images, production hosting — delivered to a preview link for your review.",
+    title: "Place your order",
+    desc: "Review your template, plan and brief in one summary, then confirm. Free-tier orders start immediately — paid plans use manual mobile wallet checkout in PKR.",
+  },
+  {
+    image: step6,
+    title: "Get confirmation",
+    desc: "You'll receive an instant order confirmation with your tracking ID, project timeline and a direct line to the team building your site.",
   },
   {
     image: step4,
-    title: "Launch & grow",
-    desc: "Approve, go live, and layer in brand, packaging and always-on marketing whenever you're ready. Every next step is optional, modular, and priced clearly.",
+    title: "Site delivered in 48 hours",
+    desc: "Designers, writers and engineers ship your live site inside two working days. Real copy, real images, real production hosting — ready to launch.",
   },
 ];
+
 
 const HowItWorks = () => (
   <div className="py-16">
