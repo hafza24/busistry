@@ -147,6 +147,24 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
 
 
 
+      {/* Prev / Next arrows */}
+      <button
+        type="button"
+        onClick={() => goTo(activeIndex - 1)}
+        aria-label="Previous plan"
+        className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-background/90 backdrop-blur border border-border shadow-md hover:bg-background hover:border-primary/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => goTo(activeIndex + 1)}
+        aria-label="Next plan"
+        className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 items-center justify-center rounded-full bg-background/90 backdrop-blur border border-border shadow-md hover:bg-background hover:border-primary/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+
       <div
         ref={scrollerRef}
         tabIndex={0}
@@ -154,7 +172,7 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
         aria-roledescription="carousel track"
         aria-label="Use left and right arrow keys to navigate plans"
         onKeyDown={onKeyDown}
-        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-6 pb-6 px-4 md:px-6 -mx-4 md:-mx-6 items-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pt-6 pb-6 px-6 md:px-14 items-stretch focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-2xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {tiers.map((tier, idx) => {
           const priceStr = String(tier.price);
@@ -173,8 +191,7 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
               aria-roledescription="slide"
               aria-label={`${tier.name}, ${idx + 1} of ${tiers.length}`}
               aria-current={isActive ? "true" : undefined}
-              aria-hidden={!isActive ? "false" : undefined}
-              className={`group relative snap-center shrink-0 w-[240px] sm:w-[260px] rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:w-[300px] flex flex-col ${
+              className={`group relative snap-center shrink-0 w-[260px] sm:w-[280px] min-h-[440px] rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col ${
                 tier.highlighted
                   ? "bg-gradient-to-br from-card via-card to-primary/5 border-primary shadow-xl shadow-primary/10"
                   : "bg-card/80 backdrop-blur border-border hover:border-primary/40"
@@ -210,56 +227,55 @@ const PricingSlider = ({ tiers, autoPlayInterval = 5000 }: PricingSliderProps) =
                 </div>
               </div>
 
-              {/* Features + CTA revealed on hover/focus */}
-              <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
-                <div className="overflow-hidden">
-                  <ul className="mt-3 space-y-1.5">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-xs text-foreground">
-                        <div
-                          className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                            tier.highlighted
-                              ? "bg-gradient-to-br from-primary to-primary-glow"
-                              : "bg-primary/10"
-                          }`}
-                          aria-hidden="true"
-                        >
-                          <Check
-                            className={`h-2.5 w-2.5 ${
-                              tier.highlighted ? "text-primary-foreground" : "text-primary"
-                            }`}
-                            strokeWidth={3}
-                          />
-                        </div>
-                        <span className="leading-snug">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button
-                    className={`w-full mt-4 rounded-full h-9 text-xs font-semibold ${
-                      tier.highlighted
-                        ? "bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:opacity-95"
-                        : ""
-                    }`}
-                    variant={tier.highlighted ? "default" : "outline"}
-                    asChild
-                    tabIndex={isActive ? 0 : -1}
-                  >
-                    <Link
-                      to={tier.id ? `/onboarding?plan=${tier.id}` : "/pricing"}
-                      className="group/btn"
-                      aria-label={`Start with ${tier.name} plan`}
+              <ul className="mt-3 space-y-1.5 flex-1">
+                {tier.features.slice(0, 5).map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-xs text-foreground">
+                    <div
+                      className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                        tier.highlighted
+                          ? "bg-gradient-to-br from-primary to-primary-glow"
+                          : "bg-primary/10"
+                      }`}
+                      aria-hidden="true"
                     >
-                      Start with {tier.name}
-                      <ArrowRight
-                        className="h-3.5 w-3.5 ml-1 transition-transform group-hover/btn:translate-x-1"
-                        aria-hidden="true"
+                      <Check
+                        className={`h-2.5 w-2.5 ${
+                          tier.highlighted ? "text-primary-foreground" : "text-primary"
+                        }`}
+                        strokeWidth={3}
                       />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
+                    </div>
+                    <span className="leading-snug">{f}</span>
+                  </li>
+                ))}
+                {tier.features.length > 5 && (
+                  <li className="text-[11px] text-muted-foreground pl-6">
+                    +{tier.features.length - 5} more
+                  </li>
+                )}
+              </ul>
+
+              <Button
+                className={`w-full mt-4 rounded-full h-9 text-xs font-semibold ${
+                  tier.highlighted
+                    ? "bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:opacity-95"
+                    : ""
+                }`}
+                variant={tier.highlighted ? "default" : "outline"}
+                asChild
+              >
+                <Link
+                  to={tier.id ? `/onboarding?plan=${tier.id}` : "/pricing"}
+                  className="group/btn"
+                  aria-label={`Start with ${tier.name} plan`}
+                >
+                  Start with {tier.name}
+                  <ArrowRight
+                    className="h-3.5 w-3.5 ml-1 transition-transform group-hover/btn:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </Button>
             </motion.div>
           );
         })}
