@@ -194,7 +194,7 @@ const Templates = () => {
                   variant={active ? "secondary" : "ghost"}
                   size="sm"
                   aria-pressed={active}
-                  onClick={() => setActiveSub(s)}
+                  onClick={() => updateSub(s)}
                   className={active ? "ring-1 ring-primary/40 font-semibold" : ""}
                 >
                   {s}
