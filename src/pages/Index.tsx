@@ -955,14 +955,12 @@ const Index = () => {
       {/* FAQ */}
       <section className="py-12 md:py-16 border-b border-border/60">
         <div className="container max-w-3xl">
-          <div className="text-center mb-12">
-            <div className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">
-              FAQ
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-tight">
-              Questions, answered.
-            </h2>
-          </div>
+          <SectionHeading
+            className="mb-12"
+            align="center"
+            eyebrow="FAQ"
+            title="Questions, answered."
+          />
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
               <AccordionItem key={f.q} value={`faq-${i}`}>
