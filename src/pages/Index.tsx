@@ -813,20 +813,13 @@ const Index = () => {
       {/* Team */}
       <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Our Team</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              The team behind your{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                business hub
-              </span>
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-muted-foreground">
-              Strategists, designers, developers and marketers — all working on your business, together.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-14"
+            align="center"
+            eyebrow="Our Team"
+            title={<>The team behind your <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">business hub</span></>}
+            subtitle="Strategists, designers, developers and marketers — all working on your business, together."
+          />
 
           <TeamDeck />
 
