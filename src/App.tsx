@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import PublicLayout from "@/components/PublicLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GlassCursor from "@/components/GlassCursor";
+import ScrollReveal from "@/components/ScrollReveal";
 import ComingSoonGate from "@/components/ComingSoonGate";
 import { Loader2 } from "lucide-react";
 
@@ -73,6 +74,7 @@ const App = () => (
         <Sonner />
         <GlassCursor />
         <BrowserRouter>
+          <ScrollReveal />
           <AuthProvider>
             <ErrorBoundary>
               <Suspense fallback={<RouteFallback />}>
