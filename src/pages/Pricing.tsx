@@ -524,7 +524,36 @@ const Pricing = () => {
                 </div>
               )}
 
-              {rentWithPopular.length > 0 && (
+              <div className="flex justify-center mb-10">
+                <div className="inline-flex rounded-full border border-border bg-card p-1">
+                  <button
+                    type="button"
+                    onClick={() => setType("rent")}
+                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
+                      activeType === "rent"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    aria-pressed={activeType === "rent"}
+                  >
+                    Rent
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setType("buy")}
+                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
+                      activeType === "buy"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    aria-pressed={activeType === "buy"}
+                  >
+                    Buy
+                  </button>
+                </div>
+              </div>
+
+              {activeType === "rent" && rentWithPopular.length > 0 && (
                 <div className="mb-16">
                   <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Rent Plans</h2>
                   <p className="text-center text-muted-foreground mb-8 text-sm">
@@ -538,18 +567,25 @@ const Pricing = () => {
                 </div>
               )}
 
-              {buyPlans.length > 0 && (
+              {activeType === "buy" && buyWithPopular.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Buy Plans</h2>
                   <p className="text-center text-muted-foreground mb-8 text-sm">
                     One-time payment, own it forever
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                    {buyPlans.map((p) => (
+                    {buyWithPopular.map((p) => (
                       <PriceCard key={p.id} {...p} />
                     ))}
                   </div>
                 </div>
+              )}
+
+              {activeType === "rent" && rentWithPopular.length === 0 && (
+                <p className="text-center text-muted-foreground py-12">No rent plans available yet.</p>
+              )}
+              {activeType === "buy" && buyWithPopular.length === 0 && (
+                <p className="text-center text-muted-foreground py-12">No buy plans available yet.</p>
               )}
 
               {!plans?.length && (
