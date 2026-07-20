@@ -243,49 +243,6 @@ const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => voi
 
 
 
-        {/* Plan selector chips */}
-        <div className="mb-4 rounded-xl border border-border bg-card p-3">
-          <div className="flex items-center justify-between gap-3 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Plans in table ({selectedIds.size}/{plans.length})
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() =>
-                setSelectedIds(
-                  allSelected ? new Set([plans[0].id]) : new Set(plans.map((p) => p.id))
-                )
-              }
-            >
-              {allSelected ? "Clear" : "Select all"}
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {plans.map((p) => {
-              const active = selectedIds.has(p.id);
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => toggleId(p.id)}
-                  aria-pressed={active}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
-                    active
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background text-muted-foreground border-border hover:bg-muted"
-                  }`}
-                >
-                  {active && <Check className="h-3 w-3" />}
-                  {p.name}
-                  <span className="opacity-70">·</span>
-                  <span className="uppercase tracking-wider text-[9px] opacity-80">{p.type}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
           <table className="w-full min-w-[720px] text-sm">
             <thead className="sticky top-0 bg-card z-10">
