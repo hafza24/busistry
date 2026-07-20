@@ -121,6 +121,98 @@ const HowItWorks = () => (
         })}
       </div>
 
+      {/* How to place your order — detailed */}
+      <section className="mt-24 md:mt-32">
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-4">
+            <span className="h-px w-6 bg-primary" />
+            Placing your order
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground tracking-tight mb-3">
+            How to place your order
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            A quiet, guided flow — here's exactly what you'll need before you start, and what happens the moment you hit submit.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          {/* Requirements */}
+          <div className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-[0_20px_60px_-40px_hsl(var(--primary)/0.4)]">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="h-9 w-9 rounded-xl bg-primary/10 text-primary grid place-items-center font-display font-bold">1</span>
+              <h3 className="text-xl md:text-2xl font-bold font-display tracking-tight">Before you start — what to prepare</h3>
+            </div>
+            <ul className="space-y-4 text-muted-foreground">
+              {[
+                { t: "Business basics", d: "Business name, tagline, a short description and the industry you serve." },
+                { t: "Contact & location", d: "Public email, phone, WhatsApp, city and service area." },
+                { t: "Brand assets", d: "Logo (SVG or PNG), 1–2 brand colors, and any fonts you love. We'll fill the gaps." },
+                { t: "Content & imagery", d: "Rough copy for About, Services and Contact — plus product photos if you sell online." },
+                { t: "Preferred domain", d: "A domain you own, or a name you'd like us to register for you." },
+                { t: "Payment details", d: "For paid plans: JazzCash or Easypaisa handy for manual PKR checkout." },
+              ].map((r) => (
+                <li key={r.t} className="flex gap-3">
+                  <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                  <span>
+                    <span className="font-semibold text-foreground">{r.t}.</span>{" "}
+                    {r.d}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-muted-foreground/80 mt-6 leading-relaxed">
+              Missing something? Submit anyway — our team will follow up on the details after confirmation.
+            </p>
+          </div>
+
+          {/* After submission */}
+          <div className="rounded-3xl border border-primary/20 bg-primary/5 p-8 md:p-10 shadow-[0_20px_60px_-40px_hsl(var(--primary)/0.4)]">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="h-9 w-9 rounded-xl bg-primary text-primary-foreground grid place-items-center font-display font-bold">2</span>
+              <h3 className="text-xl md:text-2xl font-bold font-display tracking-tight">After you hit submit</h3>
+            </div>
+            <ol className="space-y-5">
+              {[
+                { t: "Instant confirmation", d: "You get an email with a tracking ID, your brief summary, and a link to the order dashboard.", time: "Within 1 minute" },
+                { t: "Payment verification", d: "For paid plans, our team confirms your JazzCash/Easypaisa transfer manually.", time: "Within 2 hours" },
+                { t: "Kickoff & brief review", d: "A project lead reviews your brief and reaches out on WhatsApp or email with any questions.", time: "Within 4 hours" },
+                { t: "Design & build", d: "Designers, writers and engineers build your site on the chosen template — real content, real images.", time: "Hours 4 – 40" },
+                { t: "Preview & feedback", d: "You get a staging link to review. One free revision round is included on every plan.", time: "Around hour 40" },
+                { t: "Launch", d: "We connect your domain, enable SSL, and push your site live to production hosting.", time: "By hour 48" },
+              ].map((s, idx) => (
+                <li key={s.t} className="relative pl-8">
+                  <span className="absolute left-0 top-0.5 h-6 w-6 rounded-full bg-primary/15 text-primary text-xs font-bold font-display grid place-items-center">
+                    {idx + 1}
+                  </span>
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
+                    <span className="font-semibold text-foreground">{s.t}</span>
+                    <span className="text-[11px] font-medium tracking-wide uppercase text-primary/80">{s.time}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+
+        {/* Small print / policies */}
+        <div className="grid sm:grid-cols-3 gap-4 mt-8">
+          {[
+            { t: "Free tier", d: "No card required. Start with a free starter site and upgrade whenever you're ready." },
+            { t: "Refunds", d: "Full refund inside 24 hours if we haven't started building yet. Just reply to your confirmation email." },
+            { t: "Ownership", d: "Buy plans transfer full ownership of code, content and domain to you on launch day." },
+          ].map((p) => (
+            <div key={p.t} className="rounded-2xl border border-border bg-card p-5">
+              <div className="text-sm font-semibold text-foreground mb-1">{p.t}</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
       <div className="mt-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground p-10 md:p-16 shadow-[0_30px_80px_-30px_hsl(var(--primary)/0.6)] relative overflow-hidden">
         <div aria-hidden="true" className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary-foreground/10 blur-3xl" />
         <div aria-hidden="true" className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-primary-foreground/10 blur-3xl" />
