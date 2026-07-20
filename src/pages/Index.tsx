@@ -103,11 +103,9 @@ const tiers = [
   },
 ];
 
-const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
-];
+// Testimonials intentionally removed — we don't invent quotes.
+// Real reviews render via <ReviewsSection /> using Supabase data.
+
 
 const comparison = [
   { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
