@@ -57,7 +57,7 @@ const HowItWorks = () => (
           How it works
         </div>
         <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">
-          Order a website in four quiet steps.
+          Order a website in six quiet steps.
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
           It's about you and your business — a comfortable brief, a real team, and a site live in two working days.
