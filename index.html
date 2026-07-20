@@ -31,6 +31,15 @@
   <meta name="twitter:description" content="Busistree is one hub for everything your business needs — planning, digital presence and packaging, design, and marketing. Strategy to launch to growth, in one place.">
   <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a460c377-db51-49e9-8c62-bf224cadcc1e/id-preview-f04291f1--edfc7908-91a4-4384-b8ba-8ccd6dc23ddb.lovable.app-1784565918602.png">
   <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a460c377-db51-49e9-8c62-bf224cadcc1e/id-preview-f04291f1--edfc7908-91a4-4384-b8ba-8ccd6dc23ddb.lovable.app-1784565918602.png">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('busistree-theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (t === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
   <body>
