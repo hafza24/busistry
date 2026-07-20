@@ -212,10 +212,11 @@ const renderCell = (value: Cell) => {
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
-const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => void }) => {
+const ComparisonMatrix = ({ plans, onClear, max = 3 }: { plans: any[]; onClear: () => void; max?: number }) => {
   const visiblePlans = plans;
+  const emptySlots = Math.max(0, max - visiblePlans.length);
   const matrix = buildMatrix(visiblePlans);
-  const colCount = visiblePlans.length + 1;
+  const colCount = visiblePlans.length + emptySlots + 1;
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(matrix.map((g) => [g.group, true]))
