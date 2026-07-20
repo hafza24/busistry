@@ -499,7 +499,7 @@ const Pricing = () => {
                   Start free
                 </p>
                 {freePlans.map((p) => (
-                  <PriceCard key={p.id} {...p} />
+                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                 ))}
               </div>
             )}
@@ -555,7 +555,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                     ))}
                   </div>
                 </div>
@@ -569,7 +569,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                     ))}
                   </div>
                 </div>
