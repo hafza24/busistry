@@ -110,12 +110,38 @@ const tiers = [
 // Real reviews render via <ReviewsSection /> using Supabase data.
 
 
-const comparison = [
-  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
-  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
-  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
-  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
-  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
+type Cell = { has: boolean; note: string };
+const comparison: { feature: string; busistry: Cell; diy: Cell; hire: Cell }[] = [
+  {
+    feature: "Planning & positioning included",
+    busistry: { has: true, note: "Comes with a validated plan and 90-day roadmap." },
+    diy: { has: false, note: "You have to figure out the plan alone before you build." },
+    hire: { has: false, note: "Most freelancers start at the build stage, not the plan." },
+  },
+  {
+    feature: "Website / store fully built for you",
+    busistry: { has: true, note: "Live site with your name on it, launched this week." },
+    diy: { has: false, note: "You assemble themes, apps and copy yourself." },
+    hire: { has: true, note: "Yes — but on their timeline, at their day rate." },
+  },
+  {
+    feature: "Brand, product & packaging design",
+    busistry: { has: true, note: "Logo, colors and packaging designed in-house." },
+    diy: { has: false, note: "Templates only — no real brand system." },
+    hire: { has: false, note: "Usually a separate hire from your developer." },
+  },
+  {
+    feature: "Marketing & launch campaigns",
+    busistry: { has: true, note: "A concrete plan for where your first 100 customers come from." },
+    diy: { has: false, note: "The store goes live and nobody knows it exists." },
+    hire: { has: false, note: "Devs build; marketing is a whole other retainer." },
+  },
+  {
+    feature: "One partner, one clear plan",
+    busistry: { has: true, note: "One team owns strategy, build, brand and launch." },
+    diy: { has: false, note: "You are the project manager of five disconnected tools." },
+    hire: { has: false, note: "Coordinating devs, designers and marketers is on you." },
+  },
 ];
 
 const faqs = [
@@ -965,50 +991,61 @@ const Index = () => {
                   </span>
                   <span className="absolute -bottom-px left-1/2 -translate-x-1/2 h-[2px] w-10 bg-gradient-to-r from-transparent via-primary to-transparent" />
                 </div>
-                <div className="p-2.5 sm:p-5 text-center">Shopify DIY</div>
-                <div className="p-2.5 sm:p-5 text-center">Hire dev</div>
+                <div className="p-2.5 sm:p-5 text-center">Doing it yourself</div>
+                <div className="p-2.5 sm:p-5 text-center">Hiring a freelancer<span className="hidden sm:inline"> or agency</span></div>
               </div>
 
               {/* Rows */}
-              {comparison.map((row, i) => (
-                <motion.div
-                  key={row.feature}
-                  initial={{ opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative grid grid-cols-4 items-center text-xs sm:text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
-                >
-                  <div className="p-3 sm:p-5 font-semibold text-foreground tracking-tight">
-                    <span className="relative inline-block">
-                      {row.feature}
-                      <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
-                    </span>
-                  </div>
-
-                  <div className="p-3 sm:p-5 flex justify-center">
-                    {row.busistry ? (
-                      <motion.div
-                        whileHover={{ scale: 1.18, rotate: 6 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                        className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30"
-                      >
-                        <span className="absolute inset-0 rounded-full bg-primary/40 blur-md opacity-0 group-hover/row:opacity-100 transition-opacity duration-500" />
-                        <Check className="relative h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" strokeWidth={3} />
-                      </motion.div>
+              {comparison.map((row, i) => {
+                const renderCell = (cell: Cell, highlight = false) => (
+                  <div className="p-3 sm:p-5 flex flex-col items-center text-center gap-1.5 sm:gap-2">
+                    {cell.has ? (
+                      highlight ? (
+                        <motion.div
+                          whileHover={{ scale: 1.12, rotate: 4 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 14 }}
+                          className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-primary via-primary-glow to-accent flex items-center justify-center shadow-lg shadow-primary/30 shrink-0"
+                        >
+                          <Check className="relative h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" strokeWidth={3} />
+                        </motion.div>
+                      ) : (
+                        <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center shrink-0">
+                          <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary/70" strokeWidth={2.5} />
+                        </div>
+                      )
                     ) : (
-                      <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/40" />
+                      <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-muted/60 border border-border flex items-center justify-center shrink-0">
+                        <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground/60" strokeWidth={2.5} />
+                      </div>
                     )}
+                    <p className={`hidden md:block text-[11px] leading-snug font-normal max-w-[22ch] ${highlight ? "text-foreground/80" : "text-muted-foreground"}`}>
+                      {cell.note}
+                    </p>
                   </div>
+                );
 
-                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
-                    {row.shopify ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
-                  </div>
-                  <div className="p-3 sm:p-5 flex justify-center opacity-70 group-hover/row:opacity-100 transition-opacity">
-                    {row.dev ? <Check className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/50" strokeWidth={2.5} /> : <X className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/30" />}
-                  </div>
-                </motion.div>
-              ))}
+                return (
+                  <motion.div
+                    key={row.feature}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className={`relative grid grid-cols-4 items-start text-xs sm:text-sm group/row hover:bg-primary/[0.04] transition-colors duration-300 ${i !== comparison.length - 1 ? "border-b border-border/50" : ""}`}
+                  >
+                    <div className="p-3 sm:p-5 font-serif text-base sm:text-lg font-semibold text-foreground tracking-tight self-center">
+                      <span className="relative inline-block">
+                        {row.feature}
+                        <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-primary to-accent group-hover/row:w-full transition-all duration-500" />
+                      </span>
+                    </div>
+
+                    {renderCell(row.busistry, true)}
+                    {renderCell(row.diy)}
+                    {renderCell(row.hire)}
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
