@@ -542,21 +542,24 @@ const Index = () => {
                   {/* Gradient sheen border on hover */}
                   <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
 
-                  <div className="aspect-[4/3] bg-gradient-to-br from-secondary via-background to-secondary/60 relative overflow-hidden">
-                    {t.preview_image_url ? (
-                      <img
-                        src={t.preview_image_url}
-                        alt={t.name}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative">
-                          <div className="absolute inset-0 blur-2xl bg-primary/20 rounded-full scale-150" />
-                          <Icon className="relative h-16 w-16 text-primary/40" />
+                  <div className={`aspect-[4/3] bg-gradient-to-br ${t.accent ?? "from-secondary via-background to-secondary/60"} relative overflow-hidden`}>
+                    {/* Branded fallback sits behind the image; shown if the image fails or is missing */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="relative flex items-center justify-center">
+                        <div className="absolute inset-0 blur-2xl bg-primary/25 rounded-full scale-150" />
+                        <div className="relative h-16 w-16 rounded-2xl bg-background/80 border border-border/60 shadow-sm flex items-center justify-center font-display text-xl font-bold text-primary">
+                          {t.initial ?? (t.name?.[0] ?? "•")}
                         </div>
                       </div>
+                    </div>
+                    {t.preview_image_url && (
+                      <img
+                        src={t.preview_image_url}
+                        alt={`${t.name} — ${t.niche} template preview`}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                      />
                     )}
 
                     {/* Image overlay gradient */}
