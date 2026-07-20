@@ -103,11 +103,9 @@ const tiers = [
   },
 ];
 
-const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
-];
+// Testimonials intentionally removed — we don't invent quotes.
+// Real reviews render via <ReviewsSection /> using Supabase data.
+
 
 const comparison = [
   { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
@@ -824,26 +822,72 @@ const Index = () => {
       </section>
 
 
-      {/* Social Proof */}
-      <section className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden">
-        {/* Ambient background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-          <div className="absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)",
-              backgroundSize: "24px 24px",
-            }}
-          />
-        </div>
+      {/* What you actually get — founder's note + specific checklist */}
+      <section className="relative py-20 md:py-28 border-b border-border/60 overflow-hidden">
+        <div className="container max-w-6xl">
+          <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
+            {/* Founder's note — first person */}
+            <div className="md:col-span-5">
+              <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary mb-4">— A note from the founder</div>
+              <blockquote className="space-y-5 text-lg md:text-xl leading-relaxed text-foreground font-display">
+                <p>
+                  I built Busistree because I watched too many good ideas die between the planning doc and the first customer.
+                </p>
+                <p className="text-muted-foreground text-base md:text-lg font-sans">
+                  You don't need five freelancers, three subscriptions, and a designer who ghosts you after the logo. You need
+                  someone to sit down with your idea, help you decide what to actually launch, and then ship it — the site, the
+                  brand, the first campaign — while you keep your momentum.
+                </p>
+                <p className="text-muted-foreground text-base md:text-lg font-sans">
+                  That's what we do here. If it's not right for you, we'll say so before you pay.
+                </p>
+              </blockquote>
+              <div className="mt-8 flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-secondary border border-border flex items-center justify-center font-display text-lg font-medium text-foreground">
+                  A
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-foreground">Asim Ali</div>
+                  <div className="text-xs text-muted-foreground">Founder, Busistree</div>
+                </div>
+              </div>
+            </div>
 
-        <div className="container">
-          <LiveStats />
+            {/* Specific checklist — what's in the box */}
+            <div className="md:col-span-7">
+              <div className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6">What's in the box</div>
+              <ul className="divide-y divide-border border-y border-border">
+                {[
+                  { g: "Planning", items: ["A one-page business plan you can actually read", "Pricing sanity-check and unit economics", "90-day roadmap with weekly milestones"] },
+                  { g: "Website", items: ["A working site on your domain, not a template link", "Mobile-tested, SEO basics, contact + WhatsApp wired", "Handover so you can edit without us"] },
+                  { g: "Brand", items: ["Logo, colour palette and type system", "Product and packaging design where it applies", "Ready-to-post launch creatives"] },
+                  { g: "Marketing", items: ["A written plan for your first 100 customers", "First campaign set up and launched with you", "What to track and what to ignore"] },
+                ].map((group) => (
+                  <li key={group.g} className="py-5 grid grid-cols-4 gap-6 items-start">
+                    <div className="col-span-1 pt-1">
+                      <div className="text-sm font-display font-medium text-foreground">{group.g}</div>
+                    </div>
+                    <div className="col-span-3 space-y-2.5">
+                      {group.items.map((t) => (
+                        <div key={t} className="flex items-start gap-3 text-[15px] text-foreground/85 leading-snug">
+                          <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" strokeWidth={2.5} />
+                          <span>{t}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-sm text-muted-foreground">
+                Not every plan includes every line. What you get is scoped in writing before we start — no surprises.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
+
+
+
 
 
       {/* Comparison */}
