@@ -625,6 +625,13 @@ const AdminTemplateManagement = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <TemplatePlansDialog
+        templateId={plansDialog?.id ?? null}
+        templateName={plansDialog?.name}
+        open={!!plansDialog}
+        onOpenChange={(v) => { if (!v) setPlansDialog(null); }}
+      />
     </div>
   );
 };
