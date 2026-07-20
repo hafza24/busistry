@@ -121,7 +121,7 @@ const Navbar = () => {
     `group/nav relative px-4 py-2 text-sm font-bold rounded-xl transition-all duration-300 ease-out overflow-hidden ${
       active
         ? "text-primary"
-        : "text-muted-foreground hover:text-primary hover:-translate-y-0.5"
+        : "text-muted-foreground hover:text-neutral hover:-translate-y-0.5"
     }`;
 
   return (
@@ -197,10 +197,10 @@ const Navbar = () => {
                   onMouseEnter={() => openWith("marketplace")}
                   onFocus={() => openWith("marketplace")}
                   onClick={() => setOpenMenu(null)}
-                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-primary/10 ${
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
                     openMenu === "marketplace" || marketplaceItems.some((i) => location.pathname === i.to) || location.pathname === "/marketplace"
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-primary"
+                      : "text-muted-foreground hover:text-neutral"
                   }`}
                 >
                   Marketplace
@@ -230,10 +230,10 @@ const Navbar = () => {
                   onClick={() =>
                     setOpenMenu((cur) => (cur === "about" ? null : "about"))
                   }
-                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-primary/10 ${
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
                     openMenu === "about" || aboutItems.some((i) => location.pathname === i.to)
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-primary"
+                      : "text-muted-foreground hover:text-neutral"
                   }`}
                 >
                   About
@@ -261,9 +261,9 @@ const Navbar = () => {
                               key={it.to}
                               to={it.to}
                               onClick={() => setOpenMenu(null)}
-                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
+                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-neutral/10 transition-colors"
                             >
-                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-neutral group-hover:text-neutral-foreground transition-colors">
                                 <it.icon className="h-4 w-4" />
                               </div>
                               <div className="min-w-0">
@@ -280,9 +280,9 @@ const Navbar = () => {
                               key={it.to}
                               to={it.to}
                               onClick={() => setOpenMenu(null)}
-                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-primary/5 transition-colors"
+                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-neutral/10 transition-colors"
                             >
-                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-neutral group-hover:text-neutral-foreground transition-colors">
                                 <it.icon className="h-4 w-4" />
                               </div>
                               <div className="min-w-0">
@@ -419,7 +419,7 @@ const Navbar = () => {
                       } ${
                         active
                           ? "text-primary bg-primary/10"
-                          : "text-foreground/80 hover:text-primary hover:bg-secondary hover:translate-x-1"
+                          : "text-foreground/80 hover:text-neutral hover:bg-secondary hover:translate-x-1"
                       }`}
                     >
                       <span
@@ -449,7 +449,7 @@ const Navbar = () => {
                           aria-label={`Toggle ${s.label} submenu`}
                           aria-expanded={isOpen}
                           onClick={() => setOpenMobileGroup(isOpen ? null : s.to)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 inline-flex items-center justify-center rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 inline-flex items-center justify-center rounded-xl text-muted-foreground hover:text-neutral hover:bg-neutral/10 transition-colors"
                         >
                           <ChevronDown
                             className={`h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isOpen ? "rotate-180 scale-110 text-primary" : "rotate-0 scale-100"}`}

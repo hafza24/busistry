@@ -34,7 +34,7 @@ const ThemeToggle = ({ className = "" }: { className?: string }) => {
       size="icon"
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className={`rounded-full text-muted-foreground hover:text-primary ${className}`}
+      className={`rounded-full text-muted-foreground hover:text-neutral ${className}`}
     >
       <Sun className={`h-5 w-5 transition-all ${isDark ? "rotate-90 scale-0" : "rotate-0 scale-100"}`} />
       <Moon className={`absolute h-5 w-5 transition-all ${isDark ? "rotate-0 scale-100" : "-rotate-90 scale-0"}`} />
