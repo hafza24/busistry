@@ -1328,96 +1328,52 @@ const TEAM: TeamMember[] = [
   },
 ];
 
-const WRAPPERS = [
-  "z-10 -translate-x-4 translate-y-3 -rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:-translate-x-[105%] lg:group-hover/deck:-translate-x-[115%]",
-  "z-30 translate-x-0 translate-y-0 rotate-0",
-  "z-20 translate-x-4 translate-y-3 rotate-3 group-hover/deck:translate-x-0 group-hover/deck:translate-y-0 group-hover/deck:rotate-0 sm:group-hover/deck:translate-x-[105%] lg:group-hover/deck:translate-x-[115%]",
-];
-
 const TeamDeck = () => {
   const [open, setOpen] = useState<TeamMember | null>(null);
-  const renderCard = (m: TeamMember, opts?: { hoverHint?: boolean }) => (
-    <button
-      type="button"
-      onClick={() => setOpen(m)}
-      aria-label={`View bio for ${m.name}`}
-      className="group relative w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-[2rem] cursor-pointer"
-    >
-      {/* Gradient card */}
-      <div className={`relative aspect-[3/4] rounded-[2rem] bg-gradient-to-b ${m.cardGradient} shadow-xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-1 group-hover:shadow-2xl`}>
-        {/* Vertical name */}
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
-          <span
-            className="font-display font-black text-white/85 tracking-tight leading-none whitespace-nowrap drop-shadow-sm"
-            style={{
-              writingMode: "vertical-rl",
-              transform: "rotate(180deg)",
-              fontSize: "clamp(1.75rem, 4.5vw, 3.25rem)",
-            }}
-          >
-            {m.name.split(" ")[0]}
-          </span>
-        </div>
-        {/* Character portrait */}
-        <img
-          src={m.image}
-          alt={m.name}
-          loading="lazy"
-          width={768}
-          height={1024}
-          className="absolute inset-x-0 bottom-0 mx-auto h-[108%] w-auto object-contain object-bottom -translate-x-2 sm:-translate-x-3 transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      </div>
-      {/* Role pill */}
-      <div className={`relative z-10 -mt-4 mx-auto w-[75%] rounded-full bg-gradient-to-r ${m.cardGradient} shadow-lg px-3 py-2 text-center`}>
-        <div className="text-white font-bold text-xs sm:text-sm tracking-wide">
-          {m.role}
-        </div>
-      </div>
-    </button>
-  );
-
 
   return (
     <>
-      {/* Mobile: horizontal snap scroll */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="sm:hidden"
+        className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 max-w-4xl mx-auto"
       >
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-[62%] max-w-[220px]">
-            {renderCard(TEAM[0])}
-          </div>
-          <div className="grid grid-cols-2 gap-3 w-full">
-            {TEAM.slice(1).map((m) => (
-              <div key={m.name}>
-                {renderCard(m)}
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Tablet/Desktop: hover deck */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="group/deck relative mx-auto hidden sm:flex items-center justify-center h-[520px] max-w-5xl"
-      >
-        {TEAM.map((m, i) => (
-          <div
+        {TEAM.map((m) => (
+          <button
             key={m.name}
-            className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${WRAPPERS[i]}`}
-            style={{ transitionDelay: `${i * 80}ms` }}
+            type="button"
+            onClick={() => setOpen(m)}
+            aria-label={`View bio for ${m.name}`}
+            className="group relative text-left rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-6 shadow-soft hover-lift transition-all duration-300 hover:border-primary/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            {renderCard(m, { hoverHint: true })}
-          </div>
+            <div className="flex items-center gap-4">
+              <div
+                className={`h-14 w-14 shrink-0 rounded-full bg-gradient-to-br ${m.gradient} flex items-center justify-center text-white font-bold text-lg shadow-md`}
+                aria-hidden
+              >
+                {m.initials}
+              </div>
+              <div className="min-w-0">
+                <div className="font-serif text-lg font-semibold text-foreground leading-tight truncate">
+                  {m.name}
+                </div>
+                <div className="mt-0.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-primary">
+                  {m.role}
+                </div>
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed line-clamp-3">
+              {m.bio}
+            </p>
+            <div className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary/80 group-hover:text-primary transition-colors">
+              Read bio
+              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+            </div>
+          </button>
         ))}
       </motion.div>
+
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent className="sm:max-w-md">
