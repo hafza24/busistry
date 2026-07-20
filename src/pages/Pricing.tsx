@@ -80,8 +80,8 @@ const PriceCard = ({
               </li>
             ))}
           </ul>
-          <div className="flex gap-2">
-            <Button className="flex-1" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button className="flex-1 min-w-0" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
               <Link to={`/templates?plan=${id}`}>
                 Choose <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -94,7 +94,7 @@ const PriceCard = ({
                 aria-pressed={isComparing}
                 disabled={!isComparing && compareDisabled}
                 title={!isComparing && compareDisabled ? "You can compare up to 3 plans" : undefined}
-                className="shrink-0"
+                className="sm:shrink-0"
               >
                 {isComparing ? (
                   <>
@@ -576,7 +576,7 @@ const Pricing = () => {
                   <p className="text-center text-muted-foreground mb-8 text-sm">
                     Pay monthly, cancel anytime
                   </p>
-                  <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
                       <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
@@ -590,7 +590,7 @@ const Pricing = () => {
                   <p className="text-center text-muted-foreground mb-8 text-sm">
                     One-time payment, own it forever
                   </p>
-                  <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
                       <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
