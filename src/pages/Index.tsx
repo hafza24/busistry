@@ -56,7 +56,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const trust = ["Strategy included", "In-house design", "End-to-end delivery"];
+const trust = ["Live in 48 hours", "Written, designed, shipped", "Yours to keep, forever"];
 
 const fallbackTemplates = [
   { name: "Fashion Store", niche: "Fashion", icon: ShoppingBag },
@@ -67,67 +67,67 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: LayoutTemplate, title: "Plan Your Business", desc: "We map your offer, audience and goals — a clear plan before anything gets built.", gradient: "from-sky-500 to-blue-600" },
-  { num: "02", icon: PencilRuler, title: "Build Your Presence", desc: "Website, store, packaging and product identity — a full digital presence, done for you.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Palette, title: "Design That Sells", desc: "Brand, visuals and content crafted to convert — not just to look pretty.", gradient: "from-violet-500 to-fuchsia-500" },
-  { num: "04", icon: Rocket, title: "Market & Grow", desc: "Launch campaigns, promos and always-on marketing to bring customers in.", gradient: "from-emerald-500 to-teal-600" },
+  { num: "01", icon: LayoutTemplate, title: "The plan, first.", desc: "Positioning, audience, offer. A written plan you can actually build on — before a single pixel is drawn.", gradient: "from-sky-500 to-blue-600" },
+  { num: "02", icon: PencilRuler, title: "Your website, in 48 hours.", desc: "A launch-ready site, store or landing page — designed, written and shipped to production, free.", gradient: "from-primary to-primary-glow" },
+  { num: "03", icon: Palette, title: "A brand people remember.", desc: "Identity, packaging and product design that earns a second look — crafted in-house at BizStyle.", gradient: "from-violet-500 to-fuchsia-500" },
+  { num: "04", icon: Rocket, title: "Marketing that keeps compounding.", desc: "Launch campaigns, always-on promos and content — engineered to turn visits into loyal customers.", gradient: "from-emerald-500 to-teal-600" },
 ];
 
 const includes = [
-  { icon: Globe, title: "Business plan & positioning" },
-  { icon: Smartphone, title: "Website / online store built" },
+  { icon: Globe, title: "Positioning & business plan" },
+  { icon: Smartphone, title: "Free 48-hour website" },
   { icon: LayoutDashboard, title: "Brand identity & guidelines" },
   { icon: CreditCard, title: "Product & packaging design" },
-  { icon: ShoppingBag, title: "Content & creatives ready" },
-  { icon: MessageCircle, title: "Launch & promo campaigns" },
+  { icon: ShoppingBag, title: "Editorial content & creatives" },
+  { icon: MessageCircle, title: "Launch & always-on promos" },
 ];
 
 const tiers = [
   {
-    name: "Starter",
-    blurb: "Get online with the essentials",
-    price: "PKR 9,999",
-    delivery: "5–7 days",
-    features: ["Up to 10 products / 5 pages", "Basic customization", "Mobile responsive", "Contact form"],
+    name: "The Free Site",
+    blurb: "A launch-ready website, on the house.",
+    price: "PKR 0",
+    delivery: "48 hours",
+    features: ["Designed & written for you", "Up to 10 pages / 10 products", "Mobile, fast, SEO-clean", "Yours to keep, forever"],
     highlighted: false,
   },
   {
-    name: "Growth",
-    blurb: "Most popular for scaling brands",
+    name: "The Studio",
+    blurb: "The website, dressed properly.",
     price: "PKR 24,999",
     delivery: "3–5 days",
-    features: ["Up to 50 products / 10 pages", "Advanced customization", "Payment gateway setup", "WhatsApp integration", "SEO basics"],
+    features: ["Everything in Free Site", "Brand identity + guidelines", "Product / packaging design", "Payment & WhatsApp set up"],
     highlighted: true,
   },
   {
-    name: "Premium",
-    blurb: "Full-stack build with priority delivery",
+    name: "The Whole Business",
+    blurb: "Plan, ship, brand, market — one studio.",
     price: "PKR 49,999",
-    delivery: "24–48 hours",
-    features: ["Unlimited products / pages", "Premium customization", "All integrations", "Priority delivery", "30 days support"],
+    delivery: "24–48 hours priority",
+    features: ["Everything in Studio", "Written business plan", "Launch campaign + creatives", "30-day marketing support"],
     highlighted: false,
   },
 ];
 
 const testimonials = [
-  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "They planned the brand, built the store, and ran our launch promos. One team for everything." },
-  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "It felt less like hiring an agency and more like getting an in-house business team." },
-  { name: "Sana M.", role: "Director, Helix Studio", quote: "From packaging to paid ads — every piece was on-brand and on time." },
+  { name: "Ayesha K.", role: "Founder, Lume Atelier", quote: "The site was live in a weekend. The brand followed the week after. It never felt rushed." },
+  { name: "Hamza R.", role: "Owner, Northwind Co.", quote: "I've hired three agencies. This is the first one that actually shipped — and it was the free part." },
+  { name: "Sana M.", role: "Director, Helix Studio", quote: "Packaging, paid ads, product pages. Same voice, same taste, same team. Rare." },
 ];
 
 const comparison = [
-  { feature: "Planning & positioning included", busistry: true, shopify: false, dev: false },
-  { feature: "Website / store fully built for you", busistry: true, shopify: false, dev: true },
-  { feature: "Brand, product & packaging design", busistry: true, shopify: false, dev: false },
-  { feature: "Marketing & launch campaigns", busistry: true, shopify: false, dev: false },
-  { feature: "One partner, one clear plan", busistry: true, shopify: false, dev: false },
+  { feature: "Launch-ready website in 48 hours", busistry: true, shopify: false, dev: false },
+  { feature: "Included at no cost", busistry: true, shopify: false, dev: false },
+  { feature: "Brand, product & packaging in-house", busistry: true, shopify: false, dev: false },
+  { feature: "Marketing that keeps running after launch", busistry: true, shopify: false, dev: false },
+  { feature: "One studio, one point of contact", busistry: true, shopify: false, dev: false },
 ];
 
 const faqs = [
-  { q: "What exactly does Busistree do?", a: "We're a business hub. We handle four things end-to-end: planning your business, building your digital presence (website, store, packaging), designing your brand and products, and running marketing and promos." },
-  { q: "Do I have to buy everything together?", a: "No. Start with a website, brand, or a marketing campaign — add the rest whenever you're ready. Everything is modular but built to work together." },
-  { q: "Do I need any technical or design skills?", a: "None. You share your goals, we do the strategy, design, build and launch. You always keep full ownership and access." },
-  { q: "How fast can we launch?", a: "Most websites and stores go live within 24–48 hours. Full brand + launch campaigns typically take 1–2 weeks depending on scope." },
+  { q: "The website is really free?", a: "Yes. A launch-ready site — designed, written and deployed — at no cost, delivered inside 48 hours. It's yours to keep whether or not you ever hire us for anything else." },
+  { q: "Where's the catch?", a: "There isn't one. We over-invest in the first 48 hours so the work speaks for itself. If it does, most founders continue with us for branding, packaging or marketing. If it doesn't, you walk away with a real website — free." },
+  { q: "Do I need any technical or design skills?", a: "None. Share the brief; we handle strategy, writing, design, build and launch. You keep every login, every asset and full ownership." },
+  { q: "How fast is 48 hours, really?", a: "Two working days from a completed brief. Most sites go live between Monday morning and Wednesday morning. Brand and marketing engagements take one to two weeks depending on scope." },
 ];
 
 const ROTATING_PHRASES = [
@@ -374,8 +374,8 @@ const Index = () => {
   return (
     <div>
       <SEO
-        title="Busistree — The complete hub for growing businesses"
-        description="Planning, digital presence and packaging, design, and marketing — one hub for everything your business needs, from strategy to launch to growth."
+        title="Busistree — A website, free. In 48 hours."
+        description="A launch-ready website designed, written and shipped in 48 hours — at no cost. Plus branding, packaging and marketing when you're ready to grow."
         path="/"
       />
       {/* Hero — left-aligned copy + product mock */}
@@ -391,23 +391,23 @@ const Index = () => {
             >
               <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
                 <span className="h-px w-6 bg-primary" />
-                Built for founders, not agencies
+                A website, free. In 48 hours.
               </div>
 
               <h1 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[16ch]">
-                Stop juggling five tools to launch one business.
+                Your business, live by the weekend.
               </h1>
 
               <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                Busistree replaces the planner, the designer and the marketer
-                you can't afford yet — so your idea gets a real plan, a real
-                brand, and a real audience before you run out of momentum.
+                Busistree designs, writes and ships your website in forty-eight
+                hours — at no cost. Then quietly stays on for the rest: the
+                brand, the packaging, the campaigns that keep customers arriving.
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
                   <Link to="/onboarding">
-                    Start my business plan
+                    Claim my free website
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
@@ -424,7 +424,7 @@ const Index = () => {
               </div>
 
               <p className="mt-5 text-sm text-muted-foreground">
-                No credit card needed · Built with early-stage founders
+                No card required · Live in 48 hours · Yours to keep
               </p>
             </motion.div>
 
@@ -514,9 +514,9 @@ const Index = () => {
           <SectionHeading
             className="mb-16"
             align="center"
-            eyebrow="Digital Presence"
-            title={<>A website, store or landing page — <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">built to convert</span></>}
-            subtitle="Conversion-focused designs, ready for your brand and products — part of your complete business hub."
+            eyebrow="The free website"
+            title={<>A site worth <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">paying for</span> — on the house.</>}
+            subtitle="Editorial layouts, considered typography, real copy. Choose a starting point; we finish it in forty-eight hours."
           />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
@@ -617,13 +617,13 @@ const Index = () => {
           <div className="max-w-4xl text-left mb-16">
             <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
               <span className="h-px w-6 bg-primary" />
-              The four pillars
+              What we do, exactly
             </div>
             <h2 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[18ch]">
-              From idea to launch to growth — one hub, four pillars.
+              The free website is the beginning — not the offer.
             </h2>
             <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Everything you'd hire a planner, designer and marketer for — in four clear steps, under one roof.
+              Four disciplines, one studio. A plan you can defend, a site that ships in two days, a brand people remember, and marketing that keeps working after the launch email.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
@@ -674,8 +674,8 @@ const Index = () => {
             className="mb-16"
             align="center"
             eyebrow="Pricing"
-            title={<>One partner. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One clear plan.</span></>}
-            subtitle="Bundle planning, presence, design and marketing — or start with just what you need today."
+            title={<>Free to launch. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Fair to grow.</span></>}
+            subtitle="Start with the free 48-hour website. Add branding, packaging or marketing whenever the business is ready — never before."
           />
 
           <PricingSlider tiers={displayTiers} />
@@ -714,8 +714,8 @@ const Index = () => {
           <SectionHeading
             className="mb-14"
             align="center"
-            eyebrow="Why Busistree"
-            title={<>More than a builder. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">A full business hub.</span></>}
+            eyebrow="The comparison"
+            title={<>Freelancers ghost. Agencies stall. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">We ship in two days.</span></>}
           />
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -816,9 +816,9 @@ const Index = () => {
           <SectionHeading
             className="mb-14"
             align="center"
-            eyebrow="Our Team"
-            title={<>The team behind your <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">business hub</span></>}
-            subtitle="Strategists, designers, developers and marketers — all working on your business, together."
+            eyebrow="The studio"
+            title={<>The people who <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">build it, on time.</span></>}
+            subtitle="A small, senior team — strategy, design, engineering and marketing — sitting in one room, working on your business together."
           />
 
           <TeamDeck />
@@ -958,8 +958,8 @@ const Index = () => {
           <SectionHeading
             className="mb-12"
             align="center"
-            eyebrow="FAQ"
-            title="Questions, answered."
+            eyebrow="Fine print, plainly"
+            title="The questions everyone asks."
           />
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
@@ -983,19 +983,19 @@ const Index = () => {
           >
             <SectionHeading
               align="center"
-              eyebrow="Ready when you are"
-              title="Everything your business needs — in one hub."
-              subtitle="Planning, digital presence, design and marketing. Start with what you need today, add the rest whenever you're ready."
+              eyebrow="One last thing"
+              title="Your website is free. The next forty-eight hours are on us."
+              subtitle="Send the brief today. Wake up Wednesday to a site that's live, written and ready to sell — nothing owed, nothing hidden."
             />
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
-                <Link to="/marketplace">
-                  Explore the hub
+                <Link to="/onboarding">
+                  Start the 48-hour build
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
               <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
-                <Link to="/contact">Talk to us</Link>
+                <Link to="/contact">Speak to the studio</Link>
               </Button>
             </div>
           </motion.div>

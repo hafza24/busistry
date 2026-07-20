@@ -59,8 +59,8 @@ const Templates = () => {
     <div className="py-16">
       <TemplateCustomizationNotice />
       <SEO
-        title="Website & Store Templates — Busistree"
-        description="Browse ecommerce, portfolio, blog, organization and event templates. Each one is fully customized with your brand and launched in 24–48 hours."
+        title="Templates — Starting points for your free 48-hour website | Busistree"
+        description="Editorial, launch-ready starting points. Pick one; we tailor it to your brand, write the copy, and ship it live in forty-eight hours — free."
         path="/templates"
       />
       <div className="container">
@@ -70,16 +70,16 @@ const Templates = () => {
           <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent/20 blur-3xl" aria-hidden />
           <div className="relative grid md:grid-cols-2 gap-8 items-center px-6 md:px-12 py-14 md:py-20">
             <div className="text-center md:text-left">
-              <Badge variant="secondary" className="mb-4">Template Marketplace</Badge>
+              <Badge variant="secondary" className="mb-4">— The 48-hour library</Badge>
               <h1 className="text-4xl md:text-6xl font-bold font-display text-foreground leading-tight">
-                Exclusive and Premium <span className="text-primary">Quality Templates</span>
+                Pick a starting point. <span className="text-primary">We finish it in two days.</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground mt-5 max-w-lg mx-auto md:mx-0">
-                Pick a starting point. We'll customize it with your brand and launch it in 24–48 hours.
+                Every template is a real, editorial layout — not a wizard-generated shell. Choose one and we tailor the copy, imagery and product logic to your brand, then ship it live. Free.
               </p>
               <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-                <Button size="lg" asChild><a href="#templates-grid">Browse Templates</a></Button>
-                <Button size="lg" variant="outline" asChild><Link to="/how-it-works">How it works</Link></Button>
+                <Button size="lg" asChild><a href="#templates-grid">Browse the library</a></Button>
+                <Button size="lg" variant="outline" asChild><Link to="/how-it-works">How the 48 hours work</Link></Button>
               </div>
             </div>
             <div className="relative hidden md:flex justify-center items-center">
