@@ -111,11 +111,13 @@ const StepPlan = ({ data, update }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans, templatePlatform]);
 
-  const subtitle = templatePlatform === "custom"
-    ? "This template is a custom-coded build, so WordPress plans aren't available for it."
-    : templatePlatform === "wordpress"
-      ? "This template runs on WordPress. Pick a WordPress-compatible plan below."
-      : "Includes hosting, limits, and support. The Free plan is fine to start — you can upgrade anytime.";
+  const subtitle = compatibleIds.size > 0
+    ? "The plans below are approved by our team for this template."
+    : templatePlatform === "custom"
+      ? "This template is a custom-coded build, so WordPress plans aren't available for it."
+      : templatePlatform === "wordpress"
+        ? "This template runs on WordPress. Pick a WordPress-compatible plan below."
+        : "Includes hosting, limits, and support. The Free plan is fine to start — you can upgrade anytime.";
 
   const renderCard = (p: any, disabled = false) => {
     const selected = data.plan_id === p.id;
