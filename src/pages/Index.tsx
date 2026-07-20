@@ -405,8 +405,15 @@ const Index = () => {
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="h-12 px-6 text-base rounded-lg" asChild>
-                  <Link to="/how-it-works">See what's included</Link>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-12 px-6 text-base rounded-lg"
+                  onClick={() => {
+                    document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  See what's included
                 </Button>
               </div>
 
@@ -602,7 +609,8 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section id="included-services" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
+
         <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
