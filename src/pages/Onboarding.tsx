@@ -34,7 +34,6 @@ import TemplateSummaryCard from "@/components/onboarding/TemplateSummaryCard";
 const STEP_LABELS = [
   "Site",
   "Plan",
-  "Add-ons",
   "Integrations",
   "Business",
   "Branding",
@@ -43,6 +42,7 @@ const STEP_LABELS = [
   "Contact",
   "Payment",
 ];
+
 const TOTAL_STEPS = STEP_LABELS.length;
 
 const Onboarding = () => {
