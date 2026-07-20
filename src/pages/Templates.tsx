@@ -160,7 +160,7 @@ const Templates = () => {
                 <button
                   key={n}
                   aria-pressed={active}
-                  onClick={() => { setActiveCategory(n); setActiveSub(null); }}
+                  onClick={() => updateCategory(n)}
                   className={`whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                     active
                       ? "bg-primary text-primary-foreground shadow"
