@@ -341,7 +341,7 @@ const Navbar = () => {
                           </div>
 
                           {marketplaceTab === "templates" && (
-                            <div className="p-5 grid grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
+                            <div className="p-5 grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
                               {Object.keys(templateCats).length === 0 ? (
                                 <p className="col-span-3 text-sm text-muted-foreground py-6 text-center">No templates yet — check back soon.</p>
                               ) : (
