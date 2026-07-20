@@ -10,37 +10,38 @@ import { cn } from "@/lib/utils";
 // - Very subtle shadow
 // - Generous horizontal padding for whitespace
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[12px] text-sm font-semibold border border-border/70 shadow-[0_1px_2px_hsl(160_20%_10%/0.04)] ring-offset-background transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[12px] text-sm font-semibold border border-border/70 shadow-[0_1px_2px_hsl(160_20%_10%/0.04)] ring-offset-background transition-[transform,background-color,box-shadow,color,border-color] duration-200 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground disabled:border-border disabled:shadow-none disabled:hover:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[#00A3A3] text-white border-transparent hover:bg-[#00A3A3]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
         destructive:
-          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90 active:bg-destructive/95",
         outline:
-          "bg-background text-foreground hover:bg-muted/60",
+          "bg-background text-foreground hover:bg-primary/5 hover:text-primary hover:border-primary/40 active:bg-primary/10",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/90",
         ghost:
-          "border-transparent shadow-none hover:bg-muted/60 hover:text-foreground hover:translate-y-0",
+          "border-transparent shadow-none hover:bg-primary/5 hover:text-primary hover:translate-y-0 active:bg-primary/10",
         link:
           "border-transparent shadow-none text-primary underline-offset-4 hover:underline hover:translate-y-0",
         glass:
-          "bg-[#00A3A3] text-white border-transparent hover:bg-[#00A3A3]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
         "glass-accent":
-          "bg-[#00A3A3] text-white border-transparent hover:bg-[#00A3A3]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
         "glass-brand":
-          "bg-[#00A3A3] text-white border-transparent hover:bg-[#00A3A3]",
+          "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 active:bg-primary/95",
         "glass-success":
-          "bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))] border-transparent",
+          "bg-[hsl(var(--success))] text-[hsl(var(--success-foreground))] border-transparent hover:bg-[hsl(var(--success)/0.9)]",
         "glass-warning":
-          "bg-[hsl(var(--warning))] text-[hsl(var(--warning-foreground))] border-transparent",
+          "bg-[hsl(var(--warning))] text-[hsl(var(--warning-foreground))] border-transparent hover:bg-[hsl(var(--warning)/0.9)]",
         "glass-info":
-          "bg-[hsl(var(--info))] text-[hsl(var(--info-foreground))] border-transparent",
+          "bg-[hsl(var(--info))] text-[hsl(var(--info-foreground))] border-transparent hover:bg-[hsl(var(--info)/0.9)]",
         "glass-danger":
-          "bg-destructive text-destructive-foreground border-transparent",
+          "bg-destructive text-destructive-foreground border-transparent hover:bg-destructive/90 active:bg-destructive/95",
       },
+
       size: {
         default: "h-[52px] px-6 py-2",
         sm: "h-10 px-4",
