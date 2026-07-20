@@ -11,6 +11,7 @@ import step03Asset from "@/assets/step-03.jpg.asset.json";
 import step04Asset from "@/assets/step-04.jpg.asset.json";
 const stepImages = [step01Asset.url, step02Asset.url, step03Asset.url, step04Asset.url];
 import TrustBadges from "@/components/TrustBadges";
+import SectionHeading from "@/components/SectionHeading";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
