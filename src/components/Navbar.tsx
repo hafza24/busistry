@@ -289,14 +289,8 @@ const Navbar = () => {
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "about" ? "rotate-180" : ""}`} />
                 </button>
 
-                {/* How it works */}
-                <Link
-                  to="/how-it-works"
-                  onMouseEnter={scheduleClose}
-                  className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
-                >
-                  <span className="relative z-10">How it works</span>
-                </Link>
+
+
 
                 {/* Dropdown panel */}
                 {openMenu && (
@@ -493,6 +487,15 @@ const Navbar = () => {
               >
                 <span className="relative z-10">Contact</span>
               </Link>
+
+              {/* How it works — at end */}
+              <Link
+                to="/how-it-works"
+                className={`hidden lg:inline-flex ${linkClass(location.pathname === "/how-it-works")}`}
+              >
+                <span className="relative z-10">How it works</span>
+              </Link>
+
             </div>
           </div>
 
