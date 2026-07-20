@@ -5,24 +5,28 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const steps = [
-  { icon: Search, title: "1. Plan your business", desc: "We start with strategy — offer, audience, positioning and goals — so every next step ladders up to real business outcomes." },
-  { icon: CreditCard, title: "2. Build your digital presence", desc: "Website, online store, packaging and product pages — a complete, on-brand digital presence, fully done for you." },
-  { icon: CheckCircle, title: "3. Design that sells", desc: "Brand identity, visuals, copy and content — all crafted in-house at BizStyle to look great and convert." },
-  { icon: Rocket, title: "4. Market & grow", desc: "Launch campaigns, ongoing promos, social content and paid ads — we bring the customers, you focus on running the business." },
+  { icon: Search, title: "1. The brief", desc: "You tell us the business, the audience, the ambition. We turn it into a positioning line, a page plan and a written direction — before anyone opens Figma." },
+  { icon: CreditCard, title: "2. The free 48-hour build", desc: "Designers, writers and engineers ship your website inside two working days. Real copy, real images, real production hosting — at no cost." },
+  { icon: CheckCircle, title: "3. The brand, dressed properly", desc: "Once the site is live, we layer in identity, product and packaging design at BizStyle — so the physical and digital tell one story." },
+  { icon: Rocket, title: "4. The marketing, always on", desc: "Launch campaigns, monthly promos, content and paid — engineered to keep customers arriving long after the launch email fades." },
 ];
 
 const HowItWorks = () => (
   <div className="py-16">
     <SEO
-      title="How It Works — Busistree"
-      description="Four pillars, one hub. Planning, digital presence and packaging, design, and marketing — everything your business needs, delivered end to end."
+      title="How It Works — A free website in 48 hours | Busistree"
+      description="Four stages: the brief, the free 48-hour build, the brand, and the marketing that keeps working. This is how Busistree ships a business."
       path="/how-it-works"
     />
     <div className="container max-w-3xl">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">How It Works</h1>
+        <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-6">
+          <span className="h-px w-6 bg-primary" />
+          The process
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">A website in 48 hours. A business, over time.</h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-          One hub, four pillars. From planning your business to running your promos — here's how we work with you, end to end.
+          The first two days are on us. Everything after — brand, packaging, marketing — is optional, modular, and only if the free work has earned it.
         </p>
       </div>
 
