@@ -3,13 +3,62 @@ import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Target, Heart, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare, ShoppingBag, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Sparkles, Target, Heart, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare, ShoppingBag, TrendingUp, CheckCircle2, Linkedin, Mail, Instagram } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
 import storyIllustration from "@/assets/about-story-illustration.png";
+import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
+import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
+import teamAsimAsset from "@/assets/team-asim.png.asset.json";
+import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
+import teamRohaAsset from "@/assets/team-roha.png.asset.json";
+
+const team = [
+  {
+    name: "Hafza Azam",
+    role: "CEO",
+    image: teamHafzaAsset.url,
+    cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
+    bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
+    socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
+  },
+  {
+    name: "Rohma Shahid",
+    role: "CMO",
+    image: teamRohmaAsset.url,
+    cardGradient: "from-[#389c84] to-[#6ec4a8]",
+    bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
+    socials: { linkedin: "#", instagram: "#", email: "rohma@busistree.com" },
+  },
+  {
+    name: "Asim Azeemi",
+    role: "CCO",
+    image: teamAsimAsset.url,
+    cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
+    bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
+    socials: { linkedin: "#", instagram: "#", email: "asim@busistree.com" },
+  },
+  {
+    name: "Kiran Masood",
+    role: "HR Manager",
+    image: teamKiranAsset.url,
+    cardGradient: "from-[#7c5fb8] to-[#b89ad9]",
+    bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
+    socials: { linkedin: "#", instagram: "#", email: "kiran@busistree.com" },
+  },
+  {
+    name: "Roha Shahid",
+    role: "Senior Fullstack Developer",
+    image: teamRohaAsset.url,
+    cardGradient: "from-[#4a7c6f] to-[#8ab8a8]",
+    bio: "Roha architects and builds Busistree end-to-end. From database schemas to pixel-perfect interfaces, she ships the platform that Pakistani founders rely on every day.",
+    socials: { linkedin: "#", instagram: "#", email: "roha@busistree.com" },
+  },
+];
+
 
 
 const values = [
