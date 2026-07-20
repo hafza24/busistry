@@ -19,8 +19,8 @@ import AutoSaveIndicator from "@/components/onboarding/AutoSaveIndicator";
 
 import StepTemplate from "@/components/onboarding/StepTemplate";
 import StepPlan from "@/components/onboarding/StepPlan";
-import StepAddons from "@/components/onboarding/StepAddons";
 import StepIntegrations from "@/components/onboarding/StepIntegrations";
+
 import StepBusiness from "@/components/onboarding/Step1Business";
 import StepBranding from "@/components/onboarding/Step2Branding";
 import StepTeam from "@/components/onboarding/Step3Team";
@@ -34,7 +34,6 @@ import TemplateSummaryCard from "@/components/onboarding/TemplateSummaryCard";
 const STEP_LABELS = [
   "Site",
   "Plan",
-  "Add-ons",
   "Integrations",
   "Business",
   "Branding",
@@ -43,6 +42,7 @@ const STEP_LABELS = [
   "Contact",
   "Payment",
 ];
+
 const TOTAL_STEPS = STEP_LABELS.length;
 
 const Onboarding = () => {
@@ -93,17 +93,17 @@ const Onboarding = () => {
     switch (s) {
       case 1: return !!data.template_id;
       case 2: return !!data.plan_id;
-      case 3: return true; // Add-ons optional
-      case 4: return true; // Integrations optional
-      case 5: return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
-      case 6: return !!data.font_style;
-      case 7: return true;
-      case 8: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
-      case 9: return !!data.full_name && !!data.email && !!data.phone;
-      case 10: return !!data.terms_accepted;
+      case 3: return true; // Integrations optional
+      case 4: return !!data.business_name && !!data.business_type && !!data.business_description && !!data.country;
+      case 5: return !!data.font_style;
+      case 6: return true;
+      case 7: return !!data.store_type && data.product_count_estimate !== undefined && !!data.payment_gateway;
+      case 8: return !!data.full_name && !!data.email && !!data.phone;
+      case 9: return !!data.terms_accepted;
       default: return false;
     }
   };
+
 
   const goNext = () => {
     if (!canProceed(step)) {
@@ -219,14 +219,13 @@ const Onboarding = () => {
           >
             {step === 1 && <StepTemplate data={data} update={update} />}
             {step === 2 && <StepPlan data={data} update={update} />}
-            {step === 3 && <StepAddons data={data} update={update} />}
-            {step === 4 && <StepIntegrations data={data} update={update} />}
-            {step === 5 && <StepBusiness data={data} update={update} />}
-            {step === 6 && <StepBranding data={data} update={update} />}
-            {step === 7 && <StepTeam data={data} update={update} />}
-            {step === 8 && <StepStore data={data} update={update} />}
-            {step === 9 && <StepContact data={data} update={update} />}
-            {step === 10 && (
+            {step === 3 && <StepIntegrations data={data} update={update} />}
+            {step === 4 && <StepBusiness data={data} update={update} />}
+            {step === 5 && <StepBranding data={data} update={update} />}
+            {step === 6 && <StepTeam data={data} update={update} />}
+            {step === 7 && <StepStore data={data} update={update} />}
+            {step === 8 && <StepContact data={data} update={update} />}
+            {step === 9 && (
               <StepPayment
                 data={data}
                 update={update}
@@ -236,6 +235,7 @@ const Onboarding = () => {
                 }}
               />
             )}
+
           </motion.div>
         </AnimatePresence>
 
