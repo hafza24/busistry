@@ -16,41 +16,46 @@
      White  #e4e4e4  -> 0 0% 89%
   */
   :root {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 5%;
+    /* Neutrals — near-white background, near-black foreground */
+    --background: 40 20% 98%;
+    --foreground: 160 15% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
+    --card-foreground: 160 15% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
+    --popover-foreground: 160 15% 8%;
 
-    --primary: 166 47% 42%;
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 205 52% 46%;
+    /* One confident accent — Busistree deep emerald */
+    --primary: 166 55% 32%;
+    --primary-foreground: 40 20% 98%;
+    --primary-glow: 166 55% 42%;
 
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 20%;
+    --secondary: 40 15% 94%;
+    --secondary-foreground: 160 15% 12%;
 
-    --muted: 0 0% 93%;
-    --muted-foreground: 0 0% 42%;
+    --muted: 40 15% 94%;
+    --muted-foreground: 160 8% 42%;
 
-    --accent: 260 28% 49%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 166 55% 32%;
+    --accent-foreground: 40 20% 98%;
 
-    --destructive: 308 40% 49%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 8 65% 48%;
+    --destructive-foreground: 40 20% 98%;
 
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 166 47% 42%;
+    --border: 160 10% 88%;
+    --input: 160 10% 88%;
+    --ring: 166 55% 32%;
 
-    --radius: 0.75rem;
+    /* One consistent radius */
+    --radius: 0.5rem;
 
-    --gradient-brand: linear-gradient(135deg, hsl(166 47% 42%), hsl(166 60% 20%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 98%), hsl(0 0% 93%));
-    --shadow-brand: 0 10px 40px -10px hsl(205 52% 46% / 0.35);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 5% / 0.08);
+    /* One shadow style */
+    --shadow-elev: 0 2px 4px -1px hsl(160 20% 10% / 0.06), 0 8px 24px -8px hsl(160 20% 10% / 0.10);
+    --gradient-brand: linear-gradient(135deg, hsl(166 55% 32%), hsl(166 60% 22%));
+    --gradient-subtle: linear-gradient(180deg, hsl(40 20% 98%), hsl(40 15% 94%));
+    --shadow-brand: var(--shadow-elev);
+    --shadow-soft: var(--shadow-elev);
 
     --sidebar-background: 0 0% 96%;
     --sidebar-foreground: 0 0% 20%;
