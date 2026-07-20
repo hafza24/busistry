@@ -90,6 +90,27 @@ const Navbar = () => {
     staleTime: 5 * 60 * 1000,
   });
 
+  // Fetch template categories/subcategories from DB for the Templates mega
+  const { data: templateCats = {} } = useQuery({
+    queryKey: ["nav_template_categories"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("templates")
+        .select("category,subcategory")
+        .eq("is_active", true);
+      const map: Record<string, string[]> = {};
+      (data ?? []).forEach((row: any) => {
+        const cat = (row.category || "").trim();
+        if (!cat) return;
+        if (!map[cat]) map[cat] = [];
+        const sub = (row.subcategory || "").trim();
+        if (sub && !map[cat].includes(sub)) map[cat].push(sub);
+      });
+      return map;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
 
   const cancelClose = () => {
     if (closeTimer.current) {
