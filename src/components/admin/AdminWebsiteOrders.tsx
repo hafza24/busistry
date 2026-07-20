@@ -17,8 +17,8 @@ import { toast } from "sonner";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800",
-  in_progress: "bg-blue-100 text-blue-800",
-  completed: "bg-green-100 text-green-800",
+  in_progress: "bg-primary/10 text-primary",
+  completed: "bg-primary/10 text-primary",
   cancelled: "bg-red-100 text-red-800",
 };
 
@@ -139,8 +139,8 @@ const AdminWebsiteOrders = () => {
       <div className="grid gap-4 md:grid-cols-4">
         <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold">{counts.total}</p><p className="text-sm text-muted-foreground">Total Orders</p></CardContent></Card>
         <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold text-yellow-600">{counts.pending}</p><p className="text-sm text-muted-foreground">Pending</p></CardContent></Card>
-        <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold text-blue-600">{counts.in_progress}</p><p className="text-sm text-muted-foreground">In Progress</p></CardContent></Card>
-        <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold text-green-600">{counts.completed}</p><p className="text-sm text-muted-foreground">Completed</p></CardContent></Card>
+        <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold text-primary">{counts.in_progress}</p><p className="text-sm text-muted-foreground">In Progress</p></CardContent></Card>
+        <Card><CardContent className="pt-4 text-center"><p className="text-2xl font-bold text-primary">{counts.completed}</p><p className="text-sm text-muted-foreground">Completed</p></CardContent></Card>
       </div>
 
       <div className="flex items-center gap-3">

@@ -58,7 +58,7 @@ const TemplateSummaryCard = ({ templateId }: Props) => {
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold text-foreground">{template.name}</h3>
                 <Badge variant="secondary" className="text-[10px] uppercase tracking-wider">Site</Badge>
-                <Badge className={`text-[10px] ${(template as any).price_pkr > 0 ? "bg-primary" : "bg-emerald-600 hover:bg-emerald-600"}`}>
+                <Badge className={`text-[10px] ${(template as any).price_pkr > 0 ? "bg-primary" : "bg-primary hover:bg-primary"}`}>
                   {(template as any).price_pkr > 0 ? `PKR ${(template as any).price_pkr.toLocaleString()}` : "Free"}
                 </Badge>
               </div>

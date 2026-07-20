@@ -163,7 +163,7 @@ export default function MySubscriptions() {
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-3">
                   <CardTitle className="text-base flex items-center gap-2">
-                    {expired ? <AlertTriangle className="h-4 w-4 text-destructive" /> : <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
+                    {expired ? <AlertTriangle className="h-4 w-4 text-destructive" /> : <CheckCircle2 className="h-4 w-4 text-primary" />}
                     {s.label}
                   </CardTitle>
                   <Badge variant={expired ? "destructive" : urgent ? "secondary" : "outline"}>

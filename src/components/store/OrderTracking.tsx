@@ -21,13 +21,13 @@ const bucketMeta: Record<Bucket, { label: string; badge: string; icon: any; desc
   },
   approved: {
     label: "Approved · Installing",
-    badge: "bg-blue-100 text-blue-800 border-blue-200",
+    badge: "bg-primary/10 text-primary border-primary/30",
     icon: Wrench,
     description: "Our team is installing this on your website.",
   },
   active: {
     label: "Active",
-    badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    badge: "bg-primary/10 text-primary border-primary/30",
     icon: CheckCircle2,
     description: "Installed and live on your website.",
   },
@@ -93,7 +93,7 @@ function InstallTimeline({ bucket, createdAt, updatedAt }: { bucket: Bucket; cre
                   reached
                     ? current
                       ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-emerald-500 text-white border-emerald-500"
+                      : "bg-primary text-white border-primary"
                     : "bg-muted text-muted-foreground border-border"
                 )}
                 aria-current={current ? "step" : undefined}
@@ -101,7 +101,7 @@ function InstallTimeline({ bucket, createdAt, updatedAt }: { bucket: Bucket; cre
                 <Icon className={cn("h-3.5 w-3.5", current && "animate-pulse")} />
               </div>
               {i < timelineSteps.length - 1 && (
-                <div className={cn("w-px flex-1 mt-1 min-h-6", i < activeIdx ? "bg-emerald-400" : "bg-border")} aria-hidden />
+                <div className={cn("w-px flex-1 mt-1 min-h-6", i < activeIdx ? "bg-primary" : "bg-border")} aria-hidden />
               )}
             </div>
             <div className="pb-4 min-w-0">

@@ -20,7 +20,7 @@ interface ContactMessage {
 const statusColor: Record<string, string> = {
   new: "bg-primary/10 text-primary border-primary/20",
   read: "bg-muted text-muted-foreground border-border",
-  replied: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+  replied: "bg-primary/10 text-primary border-primary/20",
 };
 
 const AdminContactMessages = () => {

@@ -290,7 +290,7 @@ export default function Marketplace() {
                       ) : (
                         <div className="h-40 bg-gradient-to-br from-primary/10 to-accent/10" />
                       )}
-                      <Badge className={`absolute top-2 right-2 ${isFree ? "bg-emerald-600 hover:bg-emerald-600" : "bg-primary"}`}>
+                      <Badge className={`absolute top-2 right-2 ${isFree ? "bg-primary hover:bg-primary" : "bg-primary"}`}>
                         {isFree ? "Free" : `PKR ${t.price_pkr.toLocaleString()}`}
                       </Badge>
                     </div>
@@ -346,7 +346,7 @@ export default function Marketplace() {
               description: "Printing ideas into powerful brands — packaging, branding, graphic design, and marketing visuals from concept to delivery.",
               icon: Sparkles,
               href: "https://style.busistree.com",
-              gradient: "from-violet-500/20 to-fuchsia-500/10",
+              gradient: "from-primary/20 to-primary/10",
               theme: "biztyle",
             },
             {
@@ -367,7 +367,7 @@ export default function Marketplace() {
               rel="noopener noreferrer"
               className={`group relative overflow-hidden rounded-3xl border transition-all hover:shadow-xl ${
                 isBiztyle
-                  ? "border-violet-500/30 bg-[#0b0616] hover:border-violet-400/60 hover:shadow-violet-500/20"
+                  ? "border-primary/30 bg-[#0b0616] hover:border-primary/60 hover:shadow-violet-500/20"
                   : "border-border/60 bg-card hover:border-primary/40"
               }`}
             >
@@ -391,7 +391,7 @@ export default function Marketplace() {
                   <div
                     className={`h-12 w-12 rounded-2xl flex items-center justify-center shadow-lg ${
                       isBiztyle
-                        ? "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white border border-white/10 shadow-violet-500/40"
+                        ? "bg-gradient-to-br from-primary to-primary text-white border border-white/10 shadow-violet-500/40"
                         : "bg-background/80 backdrop-blur-sm border border-border/60 text-primary"
                     }`}
                   >
@@ -400,7 +400,7 @@ export default function Marketplace() {
                   <Badge
                     variant="secondary"
                     className={`text-[10px] gap-1 ${
-                      isBiztyle ? "bg-white/10 text-violet-100 border border-white/10 hover:bg-white/15" : ""
+                      isBiztyle ? "bg-white/10 text-primary/70 border border-white/10 hover:bg-white/15" : ""
                     }`}
                   >
                     <ExternalLink className="h-3 w-3" /> External
@@ -409,7 +409,7 @@ export default function Marketplace() {
                 <div>
                   <p
                     className={`text-xs font-semibold uppercase tracking-wider mb-1 ${
-                      isBiztyle ? "text-violet-300" : "text-primary"
+                      isBiztyle ? "text-primary/70" : "text-primary"
                     }`}
                   >
                     {svc.tagline}
@@ -417,19 +417,19 @@ export default function Marketplace() {
                   <h3
                     className={`font-display text-2xl font-bold ${
                       isBiztyle
-                        ? "bg-gradient-to-r from-violet-200 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent"
+                        ? "bg-gradient-to-r from-primary/20 via-primary/20 to-primary bg-clip-text text-transparent"
                         : ""
                     }`}
                   >
                     {svc.name}
                   </h3>
                 </div>
-                <p className={`text-sm ${isBiztyle ? "text-violet-100/70" : "text-muted-foreground"}`}>
+                <p className={`text-sm ${isBiztyle ? "text-primary/70/70" : "text-muted-foreground"}`}>
                   {svc.description}
                 </p>
                 <div
                   className={`flex items-center gap-2 text-sm font-semibold pt-2 ${
-                    isBiztyle ? "text-violet-300" : "text-primary"
+                    isBiztyle ? "text-primary/70" : "text-primary"
                   }`}
                 >
                   Visit site
