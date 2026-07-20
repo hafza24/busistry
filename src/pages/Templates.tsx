@@ -181,7 +181,7 @@ const Templates = () => {
               variant={activeSub === null ? "secondary" : "ghost"}
               size="sm"
               aria-pressed={activeSub === null}
-              onClick={() => setActiveSub(null)}
+              onClick={() => updateSub(null)}
               className={activeSub === null ? "ring-1 ring-primary/40 font-semibold" : ""}
             >
               All {activeCategory !== "All" ? activeCategory : ""}
