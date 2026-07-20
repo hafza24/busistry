@@ -60,16 +60,41 @@ const StepPlan = ({ data, update }: Props) => {
     },
   });
 
+  // Admin-managed compatibility mapping (takes precedence over tech-stack inference)
+  const { data: mapping = [] } = useQuery({
+    queryKey: ["template_plans", data.template_id],
+    enabled: !!data.template_id,
+    queryFn: async () => {
+      const { data: rows, error } = await (supabase as any)
+        .from("template_plans")
+        .select("plan_id, is_recommended")
+        .eq("template_id", data.template_id as string);
+      if (error) throw error;
+      return rows ?? [];
+    },
+  });
+
+  const compatibleIds = useMemo(
+    () => new Set((mapping as any[]).map((m) => m.plan_id as string)),
+    [mapping],
+  );
+  const recommendedIds = useMemo(
+    () => new Set((mapping as any[]).filter((m) => m.is_recommended).map((m) => m.plan_id as string)),
+    [mapping],
+  );
+
   const templatePlatform = useMemo(
     () => inferTemplatePlatform(template?.tech_stack as string[] | null),
     [template],
   );
 
   const isPlanCompatible = (plan: any) => {
+    // If admin has defined an explicit mapping for this template, honour it.
+    if (compatibleIds.size > 0) return compatibleIds.has(plan.id);
+    // Otherwise fall back to tech-stack inference
     if (!templatePlatform) return true;
     const planPlatform = (plan.platform_type ?? "wordpress").toLowerCase();
     if (templatePlatform === "wordpress") return planPlatform === "wordpress";
-    // template is custom / coded → wordpress plans cannot host it
     return planPlatform !== "wordpress";
   };
 
