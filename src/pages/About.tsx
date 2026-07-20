@@ -331,10 +331,10 @@ const About = () => {
       {/* Team */}
       <section className="container max-w-6xl py-20 md:py-28">
         <div className="text-center mb-12">
-          <div className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">— Meet the team</div>
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The people behind Busistree</h2>
+          <div className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">— Meet the founder</div>
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The person behind Busistree</h2>
           <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            A small senior crew — strategy, design, engineering, marketing — shipping launch-ready websites in forty-eight hours.
+            A product-minded builder shipping launch-ready websites in forty-eight hours.
           </p>
         </div>
 
