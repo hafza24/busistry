@@ -492,14 +492,28 @@ const Pricing = () => {
 
       {/* Hero */}
       <section className="pt-16 pb-10">
-        <div className="container text-center max-w-2xl">
-          <Badge variant="outline" className="mb-4">7-day money-back guarantee</Badge>
-          <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
-            Simple, transparent pricing
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            All prices in PKR. No hidden fees. Pay after we verify your details.
-          </p>
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
+            <div className="text-center lg:text-left max-w-2xl">
+              <Badge variant="outline" className="mb-4">7-day money-back guarantee</Badge>
+              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
+                Simple, transparent pricing
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                All prices in PKR. No hidden fees. Pay after we verify your details.
+              </p>
+            </div>
+            {freePlans.length > 0 && (
+              <div className="max-w-sm w-full mx-auto lg:mx-0 lg:ml-auto">
+                <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3 text-center lg:text-left">
+                  Start free
+                </p>
+                {freePlans.map((p) => (
+                  <PriceCard key={p.id} {...p} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -512,14 +526,7 @@ const Pricing = () => {
             </div>
           ) : (
             <>
-              {freePlans.length > 0 && (
-                <div className="max-w-sm mx-auto mb-16">
-                  <h2 className="text-2xl font-bold font-display text-center mb-6 text-foreground">Free Plan</h2>
-                  {freePlans.map((p) => (
-                    <PriceCard key={p.id} {...p} />
-                  ))}
-                </div>
-              )}
+
 
               <div className="flex justify-center mb-10">
                 <div className="inline-flex rounded-full border border-border bg-card p-1">
