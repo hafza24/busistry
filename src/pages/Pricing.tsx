@@ -38,6 +38,7 @@ const PriceCard = ({
   popular,
   onCompare,
   isComparing,
+  compareDisabled,
 }: any) => {
   const featureList = Array.isArray(features) ? (features as string[]) : [];
   const duration =
