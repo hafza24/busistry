@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
-import { TEMPLATE_CATEGORIES } from "@/lib/templateCategories";
+
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
 type MegaKey = "marketplace" | "about";
