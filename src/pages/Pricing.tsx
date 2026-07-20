@@ -460,7 +460,7 @@ const Pricing = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const rawType = searchParams.get("type");
-  const activeType: "buy" | "rent" = rawType === "buy" ? "buy" : "rent";
+  const activeType: "buy" | "rent" | "all" = rawType === "buy" ? "buy" : rawType === "all" ? "all" : "rent";
 
   const freePlans = plans?.filter((p) => p.type === "free") ?? [];
   const rentPlans = plans?.filter((p) => p.type === "rent") ?? [];
