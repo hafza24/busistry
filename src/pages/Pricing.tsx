@@ -504,7 +504,7 @@ const Pricing = () => {
                   Start free
                 </p>
                 {freePlans.map((p) => (
-                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                 ))}
               </div>
             )}
@@ -560,7 +560,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
                   </div>
                 </div>
@@ -574,7 +574,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
                   </div>
                 </div>
