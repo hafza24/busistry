@@ -312,7 +312,7 @@ const About = () => {
       </section>
 
       {/* Team */}
-      <section className="container max-w-6xl py-20 md:py-28">
+      <section className="container max-w-6xl pt-20 md:pt-28 pb-8 md:pb-10">
         <div className="text-center mb-12">
           <div className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">— Meet the founder</div>
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The person behind Busistree</h2>
