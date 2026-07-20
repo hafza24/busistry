@@ -108,12 +108,29 @@ const HowItWorks = () => (
         })}
       </div>
 
-      <div className="text-center mt-24">
-        <Button size="lg" asChild className="shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
-          <Link to="/onboarding">Place my order</Link>
-        </Button>
-        <p className="text-sm text-muted-foreground mt-4">Free tier available — no card required.</p>
+      <div className="mt-24 rounded-3xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground p-10 md:p-16 shadow-[0_30px_80px_-30px_hsl(var(--primary)/0.6)] relative overflow-hidden">
+        <div aria-hidden="true" className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary-foreground/10 blur-3xl" />
+        <div aria-hidden="true" className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-primary-foreground/10 blur-3xl" />
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="max-w-xl">
+            <h2 className="text-3xl md:text-4xl font-bold font-display tracking-tight mb-3">
+              Ready to place your order?
+            </h2>
+            <p className="text-primary-foreground/85 text-lg leading-relaxed">
+              Start the request flow now — share your brief, pick a template, and we'll have your site live in 48 hours.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Button size="lg" variant="secondary" asChild className="shadow-lg hover:scale-[1.02] transition-all duration-300">
+              <Link to="/onboarding">Place an order</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="bg-transparent border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+              <Link to="/track">Track an order</Link>
+            </Button>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 );
