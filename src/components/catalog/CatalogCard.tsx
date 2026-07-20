@@ -30,7 +30,7 @@ export default function CatalogCard({ item }: { item: CatalogItem }) {
               {item.is_recommended && <Badge className="text-[10px]">Recommended</Badge>}
             </div>
           </div>
-          <p className="font-semibold group-hover:text-primary transition-colors line-clamp-1">{item.name}</p>
+          <p className="font-semibold group-hover:text-neutral transition-colors line-clamp-1">{item.name}</p>
           {item.short_description && (
             <p className="text-xs text-muted-foreground line-clamp-2">{item.short_description}</p>
           )}

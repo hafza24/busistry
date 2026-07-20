@@ -220,7 +220,7 @@ const Footer = () => {
               </div>
               <p className="text-[11px] text-primary-foreground/60 mt-3 px-1 leading-relaxed">
                 By subscribing you agree to our{" "}
-                <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-primary-foreground">
+                <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-neutral-foreground">
                   Privacy Policy
                 </Link>
                 . We never share your email.
@@ -239,7 +239,7 @@ const Footer = () => {
               key={label}
               className={`group relative flex items-center gap-3 rounded-2xl border border-border/60 bg-gradient-to-br ${tint} bg-card/60 backdrop-blur p-3.5 md:p-4 hover:border-primary/40 hover:shadow-[0_12px_30px_-15px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5 transition-all duration-300`}
             >
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-background/80 text-primary ring-1 ring-border/60 group-hover:bg-primary group-hover:text-primary-foreground group-hover:ring-primary transition-colors">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-background/80 text-primary ring-1 ring-border/60 group-hover:bg-neutral group-hover:text-neutral-foreground group-hover:ring-neutral transition-colors">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </div>
               <div className="min-w-0">
@@ -286,7 +286,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card/60 text-muted-foreground hover:text-primary-foreground hover:bg-primary hover:border-primary hover:-translate-y-0.5 hover:shadow-[0_10px_20px_-10px_hsl(var(--primary)/0.6)] transition-all"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card/60 text-muted-foreground hover:text-neutral-foreground hover:bg-neutral hover:border-neutral hover:-translate-y-0.5 hover:shadow-[0_10px_20px_-10px_hsl(var(--neutral)/0.4)] transition-all"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -305,7 +305,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
                   >
                     <span>{label}</span>
                     <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
@@ -327,7 +327,7 @@ const Footer = () => {
                   {external ? (
                     <a
                       href={to}
-                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
                     >
                       <span>{label}</span>
                       <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
@@ -335,7 +335,7 @@ const Footer = () => {
                   ) : (
                     <Link
                       to={to}
-                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
                     >
                       <span>{label}</span>
                       <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
@@ -357,7 +357,7 @@ const Footer = () => {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
                   >
                     <span>{label}</span>
                     <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
@@ -398,7 +398,7 @@ const Footer = () => {
               type="button"
               onClick={scrollTop}
               aria-label="Back to top"
-              className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card/70 text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all"
+              className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card/70 text-foreground hover:bg-neutral hover:text-neutral-foreground hover:border-neutral transition-all"
             >
               <ArrowUp className="h-3.5 w-3.5" />
             </button>

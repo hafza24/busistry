@@ -91,7 +91,7 @@ const StepTemplate = ({ data, update }: Props) => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="text-muted-foreground hover:text-primary"
+                        className="text-muted-foreground hover:text-neutral"
                         aria-label="Preview demo"
                       >
                         <Eye className="h-3.5 w-3.5" />
