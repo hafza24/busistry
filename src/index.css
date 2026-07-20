@@ -89,9 +89,9 @@
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 166 47% 52%;
-    --primary-foreground: 0 0% 10%;
-    --primary-glow: 166 47% 62%;
+    --primary: 0 0% 42%;           /* #6a6a6a — neutral gray */
+    --primary-foreground: 0 0% 96%;
+    --primary-glow: 0 0% 55%;      /* #8c8c8c */
 
     --secondary: 0 0% 15%;         /* #262626 */
     --secondary-foreground: 0 0% 93%;
@@ -99,15 +99,15 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
 
-    --accent: 166 47% 52%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 0 0% 42%;
+    --accent-foreground: 0 0% 96%;
 
     --destructive: 8 65% 55%;
     --destructive-foreground: 0 0% 93%;
 
     --border: 0 0% 22%;            /* #383838 — subtle divider */
     --input: 0 0% 22%;
-    --ring: 166 47% 52%;
+    --ring: 0 0% 55%;
 
     /* Neutral gray anchor — #6a6a6a */
     --neutral: 0 0% 42%;
@@ -115,20 +115,24 @@
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 166 47% 52%;
-    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-primary: 0 0% 42%;
+    --sidebar-primary-foreground: 0 0% 96%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 93%;
 
-    --sidebar-border: 160 10% 18%;
-    --sidebar-ring: 166 47% 52%;
+    --sidebar-border: 0 0% 22%;
+    --sidebar-ring: 0 0% 55%;
 
-    --success: 166 47% 52%;
-    --success-foreground: 160 15% 6%;
+    --success: 0 0% 55%;
+    --success-foreground: 0 0% 10%;
     --warning: 32 90% 55%;
-    --warning-foreground: 160 15% 6%;
-    --info: 205 60% 55%;
-    --info-foreground: 160 15% 6%;
+    --warning-foreground: 0 0% 10%;
+    --info: 0 0% 55%;
+    --info-foreground: 0 0% 10%;
+
+    /* Neutral gray gradient replaces green in dark mode */
+    --gradient-brand: linear-gradient(135deg, hsl(0 0% 42%), hsl(0 0% 22%));
+
   }
 }
 
