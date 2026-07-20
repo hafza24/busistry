@@ -133,7 +133,7 @@ const AccountRow = ({ method, account, name }: { method: string; account: string
       <button
         type="button"
         onClick={copy}
-        className="mt-0.5 flex items-center gap-1.5 text-sm font-mono font-medium text-foreground hover:text-primary transition-colors"
+        className="mt-0.5 flex items-center gap-1.5 text-sm font-mono font-medium text-foreground hover:text-neutral transition-colors"
         aria-label={`Copy ${method} account ${account}`}
       >
         <span className="break-all text-left">{account}</span>

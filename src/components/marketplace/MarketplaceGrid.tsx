@@ -187,7 +187,7 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <Badge variant="outline" className="mb-1 capitalize text-xs"><Icon className="h-3 w-3 mr-1" />{p.type}</Badge>
-                        <Link to={`/addons/product/${p.slug}`} className="hover:text-primary transition-colors">
+                        <Link to={`/addons/product/${p.slug}`} className="hover:text-neutral transition-colors">
                           <h4 className="font-semibold text-foreground">{p.name}</h4>
                         </Link>
                       </div>
@@ -232,7 +232,7 @@ export default function MarketplaceGrid({ storeId }: Props) {
                     <div className="flex items-center gap-3">
                       {i.icon ? <img src={i.icon} alt="" className="w-10 h-10 rounded" /> : <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center"><Plug className="h-5 w-5 text-primary" /></div>}
                       <div>
-                        <Link to={`/addons/integration/${i.slug}`} className="hover:text-primary transition-colors">
+                        <Link to={`/addons/integration/${i.slug}`} className="hover:text-neutral transition-colors">
                           <h4 className="font-semibold text-foreground">{i.name}</h4>
                         </Link>
                         {i.is_popular && <Badge variant="secondary" className="text-xs">Popular</Badge>}
