@@ -372,86 +372,125 @@ const Index = () => {
         description="Planning, digital presence and packaging, design, and marketing — one hub for everything your business needs, from strategy to launch to growth."
         path="/"
       />
-      {/* Hero — busistree split layout */}
+      {/* Hero — left-aligned copy + product mock */}
       <section className="relative border-b border-border/60">
-
-
-
-
-        <div className="container py-8 md:py-12 lg:py-14">
-          <div className="grid md:grid-cols-12 gap-10 items-center">
-            {/* Left: copy */}
+        <div className="container pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-24">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left: copy (left-aligned, no centering) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="md:col-span-7 relative"
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-7 text-left"
             >
-
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase text-foreground/80 shadow-soft mb-7">
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">One hub · Everything your business needs</span>
+              <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
+                <span className="h-px w-6 bg-primary" />
+                Built for founders, not agencies
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.02]">
-                The complete hub for{" "}
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  growing businesses
-                </span>
-                .
+              <h1 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[16ch]">
+                Stop juggling five tools to launch one business.
               </h1>
 
-              <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                <RotatingWords />{" "}
-                Planning, digital presence and packaging, design, and marketing —
-                one team, one plan, everything your business needs under one roof.
+              <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                Busistree replaces the planner, the designer and the marketer
+                you can't afford yet — so your idea gets a real plan, a real
+                brand, and a real audience before you run out of momentum.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <Button variant="glass-brand" size="lg" className="h-12 px-7 text-base rounded-full group" asChild>
-                  <Link to="/marketplace">
-                    Explore the hub
-                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="mt-10 flex flex-col sm:flex-row gap-3">
+                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
+                  <Link to="/onboarding">
+                    Start my business plan
+                    <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="default" size="lg" className="h-12 px-7 text-base rounded-full" asChild>
-                  <Link to="/how-it-works">How it works</Link>
+                <Button variant="outline" size="lg" className="h-12 px-6 text-base rounded-lg" asChild>
+                  <Link to="/how-it-works">See what's included</Link>
                 </Button>
               </div>
 
+              <p className="mt-5 text-sm text-muted-foreground">
+                No credit card needed · Built with early-stage founders
+              </p>
             </motion.div>
 
-            {/* Right: mockup with floating cards */}
+            {/* Right: product mock (dashboard screenshot-style) */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="md:col-span-5 relative"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="lg:col-span-5"
             >
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-card via-secondary to-card border border-border shadow-brand">
-                <img
-                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=80"
-                  alt="Modern ecommerce store preview"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  loading="eager"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-              </div>
+              <div className="relative rounded-lg border border-border bg-card shadow-elev overflow-hidden">
+                {/* Browser chrome */}
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/60">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[hsl(8_65%_60%)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[hsl(40_90%_60%)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[hsl(140_50%_50%)]" />
+                  <div className="ml-3 flex-1 h-6 rounded bg-background border border-border flex items-center px-2.5">
+                    <span className="text-[11px] text-muted-foreground font-mono">app.busistree.com/plan</span>
+                  </div>
+                </div>
 
-              {/* Floating badges */}
-              <div className="absolute -top-3 right-4 md:right-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border shadow-soft text-xs font-medium">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> Stores going live now
-              </div>
+                {/* Dashboard body */}
+                <div className="p-5 md:p-6 space-y-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-muted-foreground">Your plan</div>
+                      <div className="font-display text-lg text-foreground mt-0.5">Northwind Coffee Co.</div>
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-medium">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary" /> In progress
+                    </div>
+                  </div>
 
-              <HeroFloatingRating />
-              <HeroFloatingReviewsCard />
+                  {/* Progress stages */}
+                  <div className="space-y-2.5">
+                    {[
+                      { label: "Business plan", status: "Done", pct: 100 },
+                      { label: "Brand identity", status: "Done", pct: 100 },
+                      { label: "Storefront build", status: "72%", pct: 72 },
+                      { label: "Launch campaign", status: "Queued", pct: 18 },
+                    ].map((s) => (
+                      <div key={s.label} className="flex items-center gap-3">
+                        <div className="w-28 text-xs text-foreground/80">{s.label}</div>
+                        <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+                          <div
+                            className="h-full bg-primary rounded-full"
+                            style={{ width: `${s.pct}%` }}
+                          />
+                        </div>
+                        <div className="w-14 text-right text-[11px] text-muted-foreground tabular-nums">{s.status}</div>
+                      </div>
+                    ))}
+                  </div>
 
-              <div className="absolute bottom-8 -left-3 md:-left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200/60 shadow-soft text-xs font-medium">
-                <ShoppingBag className="h-3 w-3" /> Store ready
+                  {/* Stat tiles */}
+                  <div className="grid grid-cols-3 gap-2.5 pt-1">
+                    <div className="rounded-md border border-border p-3">
+                      <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Audience</div>
+                      <div className="mt-1 font-display text-xl text-foreground">1,284</div>
+                      <div className="text-[10px] text-primary mt-0.5">+312 this week</div>
+                    </div>
+                    <div className="rounded-md border border-border p-3">
+                      <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Assets</div>
+                      <div className="mt-1 font-display text-xl text-foreground">27</div>
+                      <div className="text-[10px] text-muted-foreground mt-0.5">Delivered</div>
+                    </div>
+                    <div className="rounded-md border border-border p-3">
+                      <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Launch</div>
+                      <div className="mt-1 font-display text-xl text-foreground">6d</div>
+                      <div className="text-[10px] text-muted-foreground mt-0.5">Estimated</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
+
 
 
       <TrustBadges />
