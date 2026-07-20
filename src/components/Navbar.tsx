@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import logo from "@/assets/logo.png";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
 
