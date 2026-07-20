@@ -397,7 +397,7 @@ const Index = () => {
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
+                <Button size="lg" className="h-12 px-6 text-base rounded-full group shadow-elev" asChild>
                   <Link to="/onboarding">
                     Start my business plan
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -406,7 +406,7 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 px-6 text-base rounded-lg"
+                  className="h-12 px-6 text-base rounded-full"
                   onClick={() => {
                     document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
