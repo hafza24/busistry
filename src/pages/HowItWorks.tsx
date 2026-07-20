@@ -46,10 +46,20 @@ const HowItWorks = () => (
         <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4 tracking-tight">
           Order a website in four quiet steps.
         </h1>
-        <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
           It's about you and your business — a comfortable brief, a real team, and a site live in two working days.
         </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <Button size="lg" asChild className="shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
+            <Link to="/onboarding">Place an order</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link to="/templates">Browse templates</Link>
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground mt-3">Free tier available — no card required.</p>
       </div>
+
 
       <div className="space-y-24 md:space-y-32">
         {steps.map((s, i) => {
