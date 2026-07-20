@@ -609,7 +609,8 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section id="included-services" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
+
         <div className="absolute inset-0 -z-10 opacity-[0.25]" style={{
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
