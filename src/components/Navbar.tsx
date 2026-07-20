@@ -225,59 +225,28 @@ const Navbar = () => {
                 className="relative flex items-center gap-1"
                 onMouseLeave={scheduleClose}
               >
-                {/* Templates */}
-                <Link
-                  to="/templates"
+                {/* Marketplace */}
+                <button
+                  type="button"
                   aria-haspopup="true"
-                  aria-expanded={openMenu === "templates"}
-                  onMouseEnter={() => openWith("templates")}
-                  onFocus={() => openWith("templates")}
-                  onClick={() => setOpenMenu(null)}
+                  aria-expanded={openMenu === "marketplace"}
+                  onMouseEnter={() => openWith("marketplace")}
+                  onFocus={() => openWith("marketplace")}
+                  onClick={() => setOpenMenu((cur) => (cur === "marketplace" ? null : "marketplace"))}
                   className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
-                    openMenu === "templates" || location.pathname.startsWith("/templates")
+                    openMenu === "marketplace" ||
+                    location.pathname.startsWith("/templates") ||
+                    location.pathname === "/pricing" ||
+                    location.pathname === "/templates-on-sale" ||
+                    location.pathname === "/addons" ||
+                    location.pathname === "/marketplace"
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-neutral"
                   }`}
                 >
-                  Templates
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "templates" ? "rotate-180" : ""}`} />
-                </Link>
-
-                {/* Plans */}
-                <Link
-                  to="/pricing"
-                  aria-haspopup="true"
-                  aria-expanded={openMenu === "plans"}
-                  onMouseEnter={() => openWith("plans")}
-                  onFocus={() => openWith("plans")}
-                  onClick={() => setOpenMenu(null)}
-                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
-                    openMenu === "plans" || location.pathname === "/pricing"
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-neutral"
-                  }`}
-                >
-                  Plans
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "plans" ? "rotate-180" : ""}`} />
-                </Link>
-
-                {/* Sale */}
-                <Link
-                  to="/templates-on-sale"
-                  aria-haspopup="true"
-                  aria-expanded={openMenu === "sale"}
-                  onMouseEnter={() => openWith("sale")}
-                  onFocus={() => openWith("sale")}
-                  onClick={() => setOpenMenu(null)}
-                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
-                    openMenu === "sale" || location.pathname === "/templates-on-sale"
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-neutral"
-                  }`}
-                >
-                  Sale
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "sale" ? "rotate-180" : ""}`} />
-                </Link>
+                  Marketplace
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "marketplace" ? "rotate-180" : ""}`} />
+                </button>
 
                 {/* How it works */}
                 <Link
