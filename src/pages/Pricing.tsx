@@ -330,6 +330,11 @@ const ComparisonMatrix = ({ plans, onClear, max = 3 }: { plans: any[]; onClear: 
                               {renderCell(v)}
                             </td>
                           ))}
+                          {Array.from({ length: emptySlots }).map((_, i) => (
+                            <td key={`empty-cell-${i}`} className="px-4 py-3 text-center text-muted-foreground/50">
+                              —
+                            </td>
+                          ))}
                         </tr>
                       ))}
                   </Fragment>
