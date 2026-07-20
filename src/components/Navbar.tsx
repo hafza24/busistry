@@ -1,12 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star } from "lucide-react";
+import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star, ShoppingBag, Repeat, Flame } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
+import { TEMPLATE_CATEGORIES } from "@/lib/templateCategories";
 
 type NavLink = { to: string; label: string; showAt?: "md" | "lg" | "xl" };
+type MegaKey = "templates" | "plans" | "sale" | "about";
 
 const leftLinks: NavLink[] = [
   { to: "/", label: "Home", showAt: "md" },
@@ -50,10 +54,41 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openMenu, setOpenMenu] = useState<"marketplace" | "about" | null>(null);
+  const [openMenu, setOpenMenu] = useState<MegaKey | null>(null);
   const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // Fetch plans for the Plans mega (Buy vs Rent)
+  const { data: plans = [] } = useQuery({
+    queryKey: ["nav_plans"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("plans")
+        .select("id,name,price_pkr,type,duration_days")
+        .eq("is_active", true)
+        .order("price_pkr");
+      return data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Fetch sale templates for the Sale mega
+  const { data: saleTemplates = [] } = useQuery({
+    queryKey: ["nav_sale_templates"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("templates")
+        .select("id,name,price_pkr,sale_price_pkr,preview_image_url,category")
+        .eq("is_active", true)
+        .not("sale_price_pkr", "is", null)
+        .order("sale_price_pkr")
+        .limit(6);
+      return data ?? [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
 
   const cancelClose = () => {
     if (closeTimer.current) {
@@ -65,10 +100,11 @@ const Navbar = () => {
     cancelClose();
     closeTimer.current = setTimeout(() => setOpenMenu(null), 150);
   };
-  const openWith = (key: "marketplace" | "about") => {
+  const openWith = (key: MegaKey) => {
     cancelClose();
     setOpenMenu(key);
   };
+
 
   // Close mega menu on route change
   useEffect(() => {
@@ -189,26 +225,58 @@ const Navbar = () => {
                 className="relative flex items-center gap-1"
                 onMouseLeave={scheduleClose}
               >
-                {/* Marketplace */}
+                {/* Templates */}
                 <Link
-                  to="/marketplace"
+                  to="/templates"
                   aria-haspopup="true"
-                  aria-expanded={openMenu === "marketplace"}
-                  onMouseEnter={() => openWith("marketplace")}
-                  onFocus={() => openWith("marketplace")}
+                  aria-expanded={openMenu === "templates"}
+                  onMouseEnter={() => openWith("templates")}
+                  onFocus={() => openWith("templates")}
                   onClick={() => setOpenMenu(null)}
                   className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
-                    openMenu === "marketplace" || marketplaceItems.some((i) => location.pathname === i.to) || location.pathname === "/marketplace"
+                    openMenu === "templates" || location.pathname.startsWith("/templates")
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-neutral"
                   }`}
                 >
-                  Marketplace
-                  <ChevronDown
-                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                      openMenu === "marketplace" ? "rotate-180" : ""
-                    }`}
-                  />
+                  Templates
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "templates" ? "rotate-180" : ""}`} />
+                </Link>
+
+                {/* Plans */}
+                <Link
+                  to="/pricing"
+                  aria-haspopup="true"
+                  aria-expanded={openMenu === "plans"}
+                  onMouseEnter={() => openWith("plans")}
+                  onFocus={() => openWith("plans")}
+                  onClick={() => setOpenMenu(null)}
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
+                    openMenu === "plans" || location.pathname === "/pricing"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-neutral"
+                  }`}
+                >
+                  Plans
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "plans" ? "rotate-180" : ""}`} />
+                </Link>
+
+                {/* Sale */}
+                <Link
+                  to="/templates-on-sale"
+                  aria-haspopup="true"
+                  aria-expanded={openMenu === "sale"}
+                  onMouseEnter={() => openWith("sale")}
+                  onFocus={() => openWith("sale")}
+                  onClick={() => setOpenMenu(null)}
+                  className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
+                    openMenu === "sale" || location.pathname === "/templates-on-sale"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-neutral"
+                  }`}
+                >
+                  Sale
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "sale" ? "rotate-180" : ""}`} />
                 </Link>
 
                 {/* How it works */}
@@ -227,9 +295,7 @@ const Navbar = () => {
                   aria-expanded={openMenu === "about"}
                   onMouseEnter={() => openWith("about")}
                   onFocus={() => openWith("about")}
-                  onClick={() =>
-                    setOpenMenu((cur) => (cur === "about" ? null : "about"))
-                  }
+                  onClick={() => setOpenMenu((cur) => (cur === "about" ? null : "about"))}
                   className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
                     openMenu === "about" || aboutItems.some((i) => location.pathname === i.to)
                       ? "text-primary bg-primary/10"
@@ -237,11 +303,7 @@ const Navbar = () => {
                   }`}
                 >
                   About
-                  <ChevronDown
-                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                      openMenu === "about" ? "rotate-180" : ""
-                    }`}
-                  />
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openMenu === "about" ? "rotate-180" : ""}`} />
                 </button>
 
                 {/* Dropdown panel */}
@@ -249,31 +311,134 @@ const Navbar = () => {
                   <div
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
-                    className={`absolute top-full ${
-                      openMenu === "marketplace" ? "left-0" : "left-auto right-0"
-                    } mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200`}
+                    className={`absolute top-full ${openMenu === "about" ? "right-0" : "left-0"} mt-2 z-50 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200`}
                   >
                     <div className="rounded-2xl border border-border/60 bg-popover shadow-[0_20px_60px_-20px_hsl(var(--foreground)/0.25)] ring-1 ring-foreground/5 overflow-hidden">
-                      {openMenu === "marketplace" ? (
-                        <div className="p-4 w-[360px] grid gap-2">
-                          {marketplaceItems.map((it) => (
-                            <Link
-                              key={it.to}
-                              to={it.to}
-                              onClick={() => setOpenMenu(null)}
-                              className="group flex items-start gap-3 rounded-xl p-3 hover:bg-neutral/10 transition-colors"
-                            >
-                              <div className="h-9 w-9 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-neutral group-hover:text-neutral-foreground transition-colors">
-                                <it.icon className="h-4 w-4" />
-                              </div>
-                              <div className="min-w-0">
-                                <div className="text-sm font-semibold text-foreground">{it.label}</div>
-                                <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
-                              </div>
+                      {openMenu === "templates" && (
+                        <div className="p-5 w-[720px] grid grid-cols-3 gap-x-6 gap-y-1 max-h-[70vh] overflow-y-auto">
+                          <div className="col-span-3 flex items-center justify-between pb-3 mb-2 border-b border-border/50">
+                            <div>
+                              <div className="text-xs uppercase tracking-wider text-muted-foreground">Browse by category</div>
+                              <div className="text-sm font-semibold text-foreground">Templates for every kind of website</div>
+                            </div>
+                            <Link to="/templates" onClick={() => setOpenMenu(null)} className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1">
+                              All templates <ArrowRight className="h-3 w-3" />
                             </Link>
+                          </div>
+                          {Object.entries(TEMPLATE_CATEGORIES).map(([cat, subs]) => (
+                            <div key={cat} className="min-w-0">
+                              <Link
+                                to={`/templates?category=${encodeURIComponent(cat)}`}
+                                onClick={() => setOpenMenu(null)}
+                                className="block text-sm font-semibold text-foreground hover:text-primary transition-colors mb-1.5"
+                              >
+                                {cat}
+                              </Link>
+                              <ul className="space-y-1 mb-3">
+                                {subs.slice(0, 5).map((s) => (
+                                  <li key={s}>
+                                    <Link
+                                      to={`/templates?category=${encodeURIComponent(cat)}&subcategory=${encodeURIComponent(s)}`}
+                                      onClick={() => setOpenMenu(null)}
+                                      className="text-xs text-muted-foreground hover:text-neutral transition-colors"
+                                    >
+                                      {s}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           ))}
                         </div>
-                      ) : (
+                      )}
+
+                      {openMenu === "plans" && (
+                        <div className="p-5 w-[560px] grid grid-cols-2 gap-4">
+                          <div className="col-span-2 flex items-center justify-between pb-3 border-b border-border/50">
+                            <div className="text-sm font-semibold text-foreground">Choose how you want to pay</div>
+                            <Link to="/pricing" onClick={() => setOpenMenu(null)} className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1">
+                              Compare plans <ArrowRight className="h-3 w-3" />
+                            </Link>
+                          </div>
+                          {[
+                            { key: "buy", to: "/pricing?type=buy", label: "Buy", icon: ShoppingBag, desc: "One-time payment, own it for life. No renewals.", filter: (p: any) => p.type === "buy" || p.type === "lifetime" || !p.duration_days },
+                            { key: "rent", to: "/pricing?type=rent", label: "Rent", icon: Repeat, desc: "Pay monthly or yearly. Cancel anytime.", filter: (p: any) => p.type === "rent" || (p.duration_days && p.duration_days > 0) },
+                          ].map((group) => {
+                            const list = plans.filter(group.filter).slice(0, 4);
+                            return (
+                              <Link
+                                key={group.key}
+                                to={group.to}
+                                onClick={() => setOpenMenu(null)}
+                                className="group rounded-xl border border-border/60 p-4 hover:border-primary/50 hover:bg-primary/5 transition-all"
+                              >
+                                <div className="flex items-center gap-2 mb-1.5">
+                                  <div className="h-8 w-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                    <group.icon className="h-4 w-4" />
+                                  </div>
+                                  <div className="text-sm font-bold text-foreground">{group.label}</div>
+                                </div>
+                                <p className="text-xs text-muted-foreground mb-3">{group.desc}</p>
+                                <ul className="space-y-1">
+                                  {(list.length ? list : [{ id: "x", name: "See plans", price_pkr: 0 }]).map((p: any) => (
+                                    <li key={p.id} className="flex items-center justify-between text-xs">
+                                      <span className="text-foreground/80 truncate">{p.name}</span>
+                                      {p.price_pkr > 0 && (
+                                        <span className="text-primary font-semibold shrink-0 ml-2">PKR {p.price_pkr.toLocaleString()}</span>
+                                      )}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {openMenu === "sale" && (
+                        <div className="p-5 w-[640px]">
+                          <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/50">
+                            <div className="flex items-center gap-2">
+                              <Flame className="h-4 w-4 text-primary" />
+                              <div className="text-sm font-semibold text-foreground">On sale right now</div>
+                            </div>
+                            <Link to="/templates-on-sale" onClick={() => setOpenMenu(null)} className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1">
+                              View all deals <ArrowRight className="h-3 w-3" />
+                            </Link>
+                          </div>
+                          {saleTemplates.length === 0 ? (
+                            <p className="text-sm text-muted-foreground py-6 text-center">No active sales — check back soon.</p>
+                          ) : (
+                            <div className="grid grid-cols-3 gap-3">
+                              {saleTemplates.map((t: any) => (
+                                <Link
+                                  key={t.id}
+                                  to={`/templates/${t.id}`}
+                                  onClick={() => setOpenMenu(null)}
+                                  className="group rounded-xl overflow-hidden border border-border/60 hover:border-primary/50 hover:shadow-md transition-all"
+                                >
+                                  <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden">
+                                    {t.preview_image_url && (
+                                      <img src={t.preview_image_url} alt={t.name} loading="lazy" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    )}
+                                  </div>
+                                  <div className="p-2.5">
+                                    <div className="text-xs font-semibold text-foreground truncate">{t.name}</div>
+                                    <div className="flex items-baseline gap-1.5 mt-0.5">
+                                      <span className="text-xs font-bold text-primary">PKR {(t.sale_price_pkr ?? t.price_pkr).toLocaleString()}</span>
+                                      {t.sale_price_pkr && t.price_pkr > t.sale_price_pkr && (
+                                        <span className="text-[10px] text-muted-foreground line-through">PKR {t.price_pkr.toLocaleString()}</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {openMenu === "about" && (
                         <div className="p-4 w-[360px] grid gap-2">
                           {aboutItems.map((it) => (
                             <Link
@@ -297,6 +462,7 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+
 
 
               {/* Contact */}
