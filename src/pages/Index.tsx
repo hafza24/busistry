@@ -405,8 +405,15 @@ const Index = () => {
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="h-12 px-6 text-base rounded-lg" asChild>
-                  <Link to="/how-it-works">See what's included</Link>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-12 px-6 text-base rounded-lg"
+                  onClick={() => {
+                    document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  See what's included
                 </Button>
               </div>
 
