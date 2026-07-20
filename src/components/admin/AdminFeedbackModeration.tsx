@@ -227,7 +227,7 @@ const AdminFeedbackModeration = () => {
                       {r.status === "rejected" ? (
                         <Badge variant="destructive">Rejected</Badge>
                       ) : r.approved ? (
-                        <Badge className="bg-emerald-600 hover:bg-emerald-600">Approved</Badge>
+                        <Badge className="bg-primary hover:bg-primary">Approved</Badge>
                       ) : (
                         <Badge variant="secondary">Pending</Badge>
                       )}

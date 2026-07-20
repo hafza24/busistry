@@ -21,7 +21,7 @@ const TYPE_LABEL: Record<string, string> = {
 const STATE_STYLE: Record<string, string> = {
   never: "bg-destructive/15 text-destructive border-destructive/30",
   later: "bg-orange-500/15 text-orange-700 border-orange-500/30 dark:text-orange-400",
-  reviewed: "bg-emerald-500/15 text-emerald-700 border-emerald-500/30 dark:text-emerald-400",
+  reviewed: "bg-primary/15 text-primary border-primary/30 dark:text-primary",
   pending: "bg-muted text-muted-foreground",
 };
 

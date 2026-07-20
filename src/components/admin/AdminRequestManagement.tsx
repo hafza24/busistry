@@ -16,10 +16,10 @@ import { ErrorState } from "@/components/ui/error-state";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-300",
-  under_review: "bg-blue-100 text-blue-800 border-blue-300",
-  approved: "bg-green-100 text-green-800 border-green-300",
+  under_review: "bg-primary/10 text-primary border-primary/30",
+  approved: "bg-primary/10 text-primary border-primary/30",
   rejected: "bg-red-100 text-red-800 border-red-300",
-  activated: "bg-emerald-100 text-emerald-800 border-emerald-300",
+  activated: "bg-primary/10 text-primary border-primary/30",
   suspended: "bg-orange-100 text-orange-800 border-orange-300",
   expired: "bg-gray-100 text-gray-800 border-gray-300",
 };

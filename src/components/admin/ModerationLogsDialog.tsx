@@ -14,7 +14,7 @@ interface Props {
 
 const StatusPill = ({ status, error }: { status: string; error?: string | null }) => {
   const map: Record<string, { icon: any; cls: string; label: string }> = {
-    sent: { icon: CheckCircle2, cls: "bg-emerald-500/15 text-emerald-700", label: "Sent" },
+    sent: { icon: CheckCircle2, cls: "bg-primary/15 text-primary", label: "Sent" },
     failed: { icon: XCircle, cls: "bg-destructive/15 text-destructive", label: "Failed" },
     queued: { icon: Clock, cls: "bg-amber-500/15 text-amber-700", label: "Queued" },
     skipped: { icon: MinusCircle, cls: "bg-muted text-muted-foreground", label: "Skipped" },

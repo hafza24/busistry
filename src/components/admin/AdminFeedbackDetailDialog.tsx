@@ -32,7 +32,7 @@ interface Props {
 
 const StatusBadge = ({ status, approved }: { status: string; approved: boolean }) => {
   if (status === "rejected") return <Badge variant="destructive">Rejected</Badge>;
-  if (approved) return <Badge className="bg-emerald-600 hover:bg-emerald-600">Approved</Badge>;
+  if (approved) return <Badge className="bg-primary hover:bg-primary">Approved</Badge>;
   return <Badge variant="secondary">Pending</Badge>;
 };
 
@@ -211,7 +211,7 @@ const AdminFeedbackDetailDialog = ({ submissionId, open, onOpenChange }: Props) 
               </div>
 
               {submission.allow_contact && (
-                <p className="text-xs text-emerald-700 dark:text-emerald-400">
+                <p className="text-xs text-primary dark:text-primary">
                   ✓ User allows follow-up contact
                 </p>
               )}

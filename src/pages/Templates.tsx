@@ -97,7 +97,7 @@ const Templates = () => {
                       <div className="absolute top-0 inset-x-0 h-4 bg-muted/80 border-b border-border/60 flex items-center gap-1 px-1.5 z-10">
                         <span className="h-1.5 w-1.5 rounded-full bg-red-400/70" />
                         <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/70" />
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400/70" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary/70" />
                       </div>
                       {t?.preview_image_url ? (
                         <img

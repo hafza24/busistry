@@ -10,8 +10,8 @@ import { CardGridSkeleton } from "@/components/ui/loading-skeletons";
 
 const statusColors: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  approved: "bg-blue-100 text-blue-800 border-blue-200",
-  active: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  approved: "bg-primary/10 text-primary border-primary/30",
+  active: "bg-primary/10 text-primary border-primary/30",
   rejected: "bg-destructive/10 text-destructive border-destructive/20",
 };
 

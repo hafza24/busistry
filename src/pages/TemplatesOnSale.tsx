@@ -88,7 +88,7 @@ const TemplatesOnSale = () => {
                       </div>
                     )}
                     {hasDiscount && (
-                      <Badge className="absolute top-3 right-3 bg-emerald-600 text-white">
+                      <Badge className="absolute top-3 right-3 bg-primary text-white">
                         Sale
                       </Badge>
                     )}

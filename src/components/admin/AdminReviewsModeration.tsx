@@ -164,7 +164,7 @@ export default function AdminReviewsModeration() {
                       <Badge variant="outline" className="text-[10px]">{TYPE_LABEL[r.target_type] ?? r.target_type}</Badge>
                       <p className="text-sm font-semibold truncate">{r.item_label}</p>
                       {r.is_approved ? (
-                        <Badge className="text-[10px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border-emerald-500/30" variant="outline">Approved</Badge>
+                        <Badge className="text-[10px] bg-primary/20 text-primary dark:text-primary border-primary/30" variant="outline">Approved</Badge>
                       ) : (
                         <Badge className="text-[10px] bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-500/30" variant="outline">Hidden</Badge>
                       )}

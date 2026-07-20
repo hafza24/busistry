@@ -530,7 +530,7 @@ const AdminTemplateManagement = () => {
                 <div className="text-xs text-muted-foreground truncate">
                   busistry.lovable.app › templates › {form.slug || slugify(form.name) || "slug"}
                 </div>
-                <div className="text-[#1a0dab] dark:text-blue-400 text-base leading-snug line-clamp-1 mt-0.5">
+                <div className="text-[#1a0dab] dark:text-primary text-base leading-snug line-clamp-1 mt-0.5">
                   {form.meta_title || form.name || "Meta title preview"}
                 </div>
                 <div className="text-xs text-muted-foreground line-clamp-2 mt-1">

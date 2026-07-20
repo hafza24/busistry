@@ -73,7 +73,7 @@ const StepTemplate = ({ data, update }: Props) => {
                   ) : (
                     <div className="h-32 bg-gradient-to-br from-primary/10 to-accent/10" />
                   )}
-                  <Badge className={`absolute top-2 right-2 ${isFree ? "bg-emerald-600 hover:bg-emerald-600" : "bg-primary"}`}>
+                  <Badge className={`absolute top-2 right-2 ${isFree ? "bg-primary hover:bg-primary" : "bg-primary"}`}>
                     {isFree ? "Free" : `PKR ${t.price_pkr.toLocaleString()}`}
                   </Badge>
                   {selected && (

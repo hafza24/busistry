@@ -29,19 +29,19 @@ const trustRow = [
     icon: ShieldCheck,
     label: "Secure Payments",
     sub: "SSL & PCI aligned",
-    tint: "from-emerald-500/15 to-emerald-500/5",
+    tint: "from-primary/15 to-primary/5",
   },
   {
     icon: RefreshCw,
     label: "7-Day Refund",
     sub: "No questions asked",
-    tint: "from-sky-500/15 to-sky-500/5",
+    tint: "from-primary/15 to-primary/5",
   },
   {
     icon: Lock,
     label: "Data Protected",
     sub: "End-to-end encrypted",
-    tint: "from-violet-500/15 to-violet-500/5",
+    tint: "from-primary/15 to-primary/5",
   },
   {
     icon: Headphones,
@@ -79,10 +79,10 @@ const socialLinks = [
 ];
 
 const paymentMethods = [
-  { name: "Easypaisa", dot: "bg-emerald-500" },
+  { name: "Easypaisa", dot: "bg-primary" },
   { name: "JazzCash", dot: "bg-rose-500" },
-  { name: "NayaPay", dot: "bg-violet-500" },
-  { name: "Raast", dot: "bg-sky-500" },
+  { name: "NayaPay", dot: "bg-primary" },
+  { name: "Raast", dot: "bg-primary" },
   { name: "Bank", dot: "bg-amber-500" },
 ];
 

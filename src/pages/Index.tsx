@@ -67,10 +67,10 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: LayoutTemplate, title: "The plan, first.", desc: "Positioning, audience, offer. A written plan you can actually build on — before a single pixel is drawn.", gradient: "from-sky-500 to-blue-600" },
+  { num: "01", icon: LayoutTemplate, title: "The plan, first.", desc: "Positioning, audience, offer. A written plan you can actually build on — before a single pixel is drawn.", gradient: "from-primary to-primary" },
   { num: "02", icon: PencilRuler, title: "Your website, in 48 hours.", desc: "A launch-ready site, store or landing page — designed, written and shipped to production, free.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Palette, title: "A brand people remember.", desc: "Identity, packaging and product design that earns a second look — crafted in-house at BizStyle.", gradient: "from-violet-500 to-fuchsia-500" },
-  { num: "04", icon: Rocket, title: "Marketing that keeps compounding.", desc: "Launch campaigns, always-on promos and content — engineered to turn visits into loyal customers.", gradient: "from-emerald-500 to-teal-600" },
+  { num: "03", icon: Palette, title: "A brand people remember.", desc: "Identity, packaging and product design that earns a second look — crafted in-house at BizStyle.", gradient: "from-primary to-primary" },
+  { num: "04", icon: Rocket, title: "Marketing that keeps compounding.", desc: "Launch campaigns, always-on promos and content — engineered to turn visits into loyal customers.", gradient: "from-primary to-primary" },
 ];
 
 const includes = [
@@ -829,12 +829,12 @@ const Index = () => {
       <ReviewsSection />
 
       {/* Biztyle — Sister brand highlight */}
-      <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-violet-500/20">
+      <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-primary/20">
         {/* Aurora glows */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
         {/* Floating orbs */}
-        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-violet-500/30 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" />
+        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
 
         <div className="container relative">
           <div className="grid md:grid-cols-12 gap-10 items-center">
@@ -846,14 +846,14 @@ const Index = () => {
               className="md:col-span-7"
             >
               <div className="inline-flex items-center gap-3 mb-6">
-                <span aria-hidden className="h-px w-8 bg-violet-300/60" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-200">
+                <span aria-hidden className="h-px w-8 bg-primary/30/60" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/70">
                   Design & Packaging pillar
                 </span>
               </div>
 
               <h2 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
-                <span className="bg-gradient-to-r from-violet-200 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary/20 via-primary/20 to-primary bg-clip-text text-transparent">
                   BizStyle
                 </span>
                 <span className="block text-white/90 mt-2 text-3xl md:text-5xl">
@@ -861,7 +861,7 @@ const Index = () => {
                 </span>
               </h2>
 
-              <p className="mt-6 text-lg text-violet-100/70 max-w-xl leading-relaxed">
+              <p className="mt-6 text-lg text-primary/70/70 max-w-xl leading-relaxed">
                 The design studio inside Busistree. Logos, brand systems, product packaging and print —
                 so what customers see, hold and share always feels intentional.
               </p>
@@ -870,7 +870,7 @@ const Index = () => {
                 {["Packaging", "Branding", "Print", "Creative"].map((t) => (
                   <div
                     key={t}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm px-3 py-2.5 text-center text-xs font-semibold text-violet-100 uppercase tracking-wider"
+                    className="rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm px-3 py-2.5 text-center text-xs font-semibold text-primary/70 uppercase tracking-wider"
                   >
                     {t}
                   </div>
@@ -882,14 +882,14 @@ const Index = () => {
                   href="https://style.busistree.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold shadow-lg shadow-violet-500/40 hover:shadow-fuchsia-500/50 transition-shadow"
+                  className="group inline-flex items-center gap-2 h-12 px-6 rounded-full bg-gradient-to-r from-primary to-primary text-white font-semibold shadow-lg shadow-violet-500/40 hover:shadow-fuchsia-500/50 transition-shadow"
                 >
                   Visit BizStyle
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
                 <Link
                   to="/marketplace"
-                  className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-white/15 bg-white/5 text-violet-100 font-semibold hover:bg-white/10 transition-colors"
+                  className="inline-flex items-center gap-2 h-12 px-6 rounded-full border border-white/15 bg-white/5 text-primary/70 font-semibold hover:bg-white/10 transition-colors"
                 >
                   Explore family
                 </Link>
@@ -906,11 +906,11 @@ const Index = () => {
             >
               <div className="relative aspect-[4/5] max-w-md mx-auto">
                 {/* Back card */}
-                <div className="absolute inset-x-4 top-8 bottom-0 rounded-3xl bg-gradient-to-br from-violet-500/40 to-fuchsia-500/30 border border-white/10 blur-[1px]" />
+                <div className="absolute inset-x-4 top-8 bottom-0 rounded-3xl bg-gradient-to-br from-primary/40 to-primary/30 border border-white/10 blur-[1px]" />
                 {/* Middle card */}
-                <div className="absolute inset-x-2 top-4 bottom-2 rounded-3xl bg-gradient-to-br from-fuchsia-600/50 to-violet-700/40 border border-white/15" />
+                <div className="absolute inset-x-2 top-4 bottom-2 rounded-3xl bg-gradient-to-br from-primary/50 to-primary/40 border border-white/15" />
                 {/* Front card */}
-                <div className="absolute inset-0 rounded-3xl overflow-hidden bg-gradient-to-br from-violet-600 via-fuchsia-600 to-violet-800 border border-white/20 shadow-2xl shadow-fuchsia-500/30">
+                <div className="absolute inset-0 rounded-3xl overflow-hidden bg-gradient-to-br from-primary via-primary to-primary border border-white/20 shadow-2xl shadow-fuchsia-500/30">
                   <div
                     className="absolute inset-0 opacity-20"
                     style={{
@@ -1031,7 +1031,7 @@ const TEAM: TeamMember[] = [
     name: "Rohma Shahid",
     role: "CMO",
     initials: "RS",
-    gradient: "from-violet-500 to-fuchsia-500",
+    gradient: "from-primary to-primary",
     cardGradient: "from-[#389c84] to-[#6ec4a8]",
     image: teamRohma,
     bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
@@ -1041,7 +1041,7 @@ const TEAM: TeamMember[] = [
     name: "Asim Azeemi",
     role: "CCO",
     initials: "AA",
-    gradient: "from-emerald-500 to-teal-600",
+    gradient: "from-primary to-primary",
     cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
     image: teamAsim,
     bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",

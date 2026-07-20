@@ -58,9 +58,9 @@ const statusConfig: Record<
   },
   completed: {
     label: "Completed",
-    badge: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
-    dot: "bg-emerald-500",
-    accent: "from-emerald-500/60 to-emerald-500/0",
+    badge: "bg-primary/10 text-primary dark:text-primary border-primary/20",
+    dot: "bg-primary",
+    accent: "from-primary/60 to-primary/0",
     icon: CheckCircle2,
   },
   cancelled: {

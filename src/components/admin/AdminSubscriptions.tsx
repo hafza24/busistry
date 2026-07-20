@@ -37,7 +37,7 @@ export default function AdminSubscriptions() {
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Card><CardContent className="p-4"><div className="text-2xl font-bold">{stats.total}</div><div className="text-xs text-muted-foreground">Total</div></CardContent></Card>
-        <Card><CardContent className="p-4"><div className="text-2xl font-bold text-emerald-600">{stats.active}</div><div className="text-xs text-muted-foreground">Active</div></CardContent></Card>
+        <Card><CardContent className="p-4"><div className="text-2xl font-bold text-primary">{stats.active}</div><div className="text-xs text-muted-foreground">Active</div></CardContent></Card>
         <Card><CardContent className="p-4"><div className="text-2xl font-bold text-amber-600">{stats.dueSoon}</div><div className="text-xs text-muted-foreground">Due in 7 days</div></CardContent></Card>
         <Card><CardContent className="p-4"><div className="text-2xl font-bold text-destructive">{stats.pastDue}</div><div className="text-xs text-muted-foreground">Past due</div></CardContent></Card>
         <Card><CardContent className="p-4"><div className="text-2xl font-bold text-slate-600">{stats.paused}</div><div className="text-xs text-muted-foreground">Paused</div></CardContent></Card>
