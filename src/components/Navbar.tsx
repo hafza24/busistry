@@ -463,7 +463,7 @@ const Navbar = () => {
 
 
                       {openMenu === "about" && (
-                        <div className="p-2 w-[200px] grid gap-1">
+                        <div className="p-2 w-56 sm:w-60 grid gap-1">
                           {aboutItems.map((it) => (
                             <Link
                               key={it.to}
