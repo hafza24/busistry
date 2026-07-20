@@ -472,7 +472,7 @@ const Navbar = () => {
                             >
                               <div className="min-w-0">
                                 <div className="text-sm font-semibold text-foreground">{it.label}</div>
-                                <div className="text-xs text-muted-foreground mt-0.5">{it.desc}</div>
+
                               </div>
                             </Link>
                           ))}
