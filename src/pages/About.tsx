@@ -10,7 +10,7 @@ import heroFounder from "@/assets/about-hero-founder.jpg";
 import badgeStore from "@/assets/about-badge-store.png";
 import badgeAnalytics from "@/assets/about-badge-analytics.png";
 import storyIllustration from "@/assets/about-story-illustration.png";
-import teamHafzaAsset from "@/assets/team-hafza.png.asset.json";
+import founderHafza from "@/assets/founder-hafza.png";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
@@ -20,7 +20,7 @@ const team = [
   {
     name: "Hafza Azam",
     role: "CEO",
-    image: teamHafzaAsset.url,
+    image: founderHafza,
     cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
     bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
     socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
@@ -359,17 +359,8 @@ const About = () => {
                   )}
                 </div>
               </div>
-              <div className="relative order-1 md:order-2">
-                <div aria-hidden className={`absolute -inset-4 rounded-[2rem] bg-gradient-to-br ${m.cardGradient} opacity-40 blur-2xl`} />
-                <div className={`relative flex items-end justify-center rounded-[2rem] overflow-hidden bg-gradient-to-br ${m.cardGradient} min-h-[380px] md:min-h-[460px] shadow-2xl ring-1 ring-white/20`}>
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.35),transparent_60%)] pointer-events-none" />
-                  <img src={m.image} alt={m.name} className="relative max-h-[380px] md:max-h-[460px] w-auto object-contain drop-shadow-2xl" />
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/95 backdrop-blur px-5 py-2 shadow-xl ring-1 ring-black/5">
-                    <div className="text-foreground font-bold text-sm tracking-wide whitespace-nowrap">
-                      {m.name}<span className="text-muted-foreground font-medium"> · {m.role}</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="relative order-1 md:order-2 flex items-end justify-center min-h-[380px] md:min-h-[460px]">
+                <img src={m.image} alt={m.name} className="relative max-h-[380px] md:max-h-[520px] w-auto object-contain drop-shadow-2xl" />
               </div>
             </div>
           );
