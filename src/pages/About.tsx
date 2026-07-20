@@ -271,22 +271,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="border-y border-border/50 bg-muted/30">
-        <div className="container max-w-5xl py-14 md:py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { k: "Plan", v: "Strategy & positioning" },
-            { k: "Presence", v: "Websites, stores, packaging" },
-            { k: "Design", v: "Brand & product design" },
-            { k: "Promote", v: "Marketing & launch promos" },
-          ].map((s) => (
-            <div key={s.v}>
-              <div className="text-2xl md:text-3xl font-bold font-display text-primary">{s.k}</div>
-              <div className="text-sm text-muted-foreground mt-1">{s.v}</div>
-            </div>
-          ))}
-        </div>
-      </section>
 
 
       {/* Values */}
