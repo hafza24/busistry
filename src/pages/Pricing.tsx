@@ -38,6 +38,7 @@ const PriceCard = ({
   popular,
   onCompare,
   isComparing,
+  compareDisabled,
 }: any) => {
   const featureList = Array.isArray(features) ? (features as string[]) : [];
   const duration =
@@ -91,6 +92,8 @@ const PriceCard = ({
                 variant={isComparing ? "default" : "outline"}
                 onClick={() => onCompare(id)}
                 aria-pressed={isComparing}
+                disabled={!isComparing && compareDisabled}
+                title={!isComparing && compareDisabled ? "You can compare up to 3 plans" : undefined}
                 className="shrink-0"
               >
                 {isComparing ? (
@@ -209,10 +212,11 @@ const renderCell = (value: Cell) => {
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
-const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => void }) => {
+const ComparisonMatrix = ({ plans, onClear, max = 3 }: { plans: any[]; onClear: () => void; max?: number }) => {
   const visiblePlans = plans;
+  const emptySlots = Math.max(0, max - visiblePlans.length);
   const matrix = buildMatrix(visiblePlans);
-  const colCount = visiblePlans.length + 1;
+  const colCount = visiblePlans.length + emptySlots + 1;
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(matrix.map((g) => [g.group, true]))
@@ -272,6 +276,17 @@ const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => voi
                     </div>
                   </th>
                 ))}
+                {Array.from({ length: emptySlots }).map((_, i) => (
+                  <th key={`empty-${i}`} className="px-4 py-3 text-center whitespace-nowrap">
+                    <a
+                      href="#plans"
+                      className="inline-flex flex-col items-center gap-1 text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <span className="h-7 w-7 rounded-full border border-dashed border-border flex items-center justify-center text-base leading-none">+</span>
+                      Add a plan
+                    </a>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -313,6 +328,11 @@ const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => voi
                           {row.values.map((v, i) => (
                             <td key={i} className="px-4 py-3 text-center">
                               {renderCell(v)}
+                            </td>
+                          ))}
+                          {Array.from({ length: emptySlots }).map((_, i) => (
+                            <td key={`empty-cell-${i}`} className="px-4 py-3 text-center text-muted-foreground/50">
+                              —
                             </td>
                           ))}
                         </tr>
@@ -461,16 +481,18 @@ const Pricing = () => {
     setSearchParams(next, { replace: true });
   };
 
+  const MAX_COMPARE = 3;
   const [compareIds, setCompareIds] = useState<Set<string>>(new Set());
   const toggleCompare = (id: string) =>
     setCompareIds((s) => {
       const next = new Set(s);
       if (next.has(id)) next.delete(id);
-      else next.add(id);
+      else if (next.size < MAX_COMPARE) next.add(id);
       return next;
     });
   const clearCompare = () => setCompareIds(new Set());
   const comparePlans = (plans ?? []).filter((p) => compareIds.has(p.id));
+  const compareDisabled = comparePlans.length >= MAX_COMPARE;
 
   return (
     <div className="pb-24 md:pb-0">
@@ -499,7 +521,7 @@ const Pricing = () => {
                   Start free
                 </p>
                 {freePlans.map((p) => (
-                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                 ))}
               </div>
             )}
@@ -508,8 +530,9 @@ const Pricing = () => {
       </section>
 
       {/* Plan cards */}
-      <section className="py-16">
+      <section id="plans" className="py-16 scroll-mt-24">
         <div className="container">
+
           {isLoading ? (
             <div className="py-16 flex justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -555,7 +578,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
                   </div>
                 </div>
@@ -569,7 +592,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
                     ))}
                   </div>
                 </div>
@@ -623,9 +646,13 @@ const Pricing = () => {
         <div className="fixed bottom-20 md:bottom-6 right-4 z-40">
           <a
             href="#compare"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("compare")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
             className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2.5 text-sm font-medium shadow-lg hover:opacity-90 transition"
           >
-            Compare ({comparePlans.length}) <ArrowRight className="h-4 w-4" />
+            Compare ({comparePlans.length}/{3}) <ArrowRight className="h-4 w-4" />
           </a>
         </div>
       )}
