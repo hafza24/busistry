@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Menu, X, ArrowRight, Rocket, LogIn, LogOut, LayoutTemplate, Sparkles, Tag, CreditCard, Info, Users, ChevronDown, Star, ShoppingBag, Repeat, Flame } from "lucide-react";
@@ -51,6 +51,7 @@ const allLinks = mobileLinks;
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileRender, setMobileRender] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -310,16 +311,19 @@ const Navbar = () => {
                           {/* Tabs */}
                           <div className="flex items-center gap-1 px-4 pt-3 border-b border-border/50">
                             {([
-                              { key: "templates", label: "Templates" },
-                              { key: "plans", label: "Plans" },
-                              { key: "sale", label: "Sale" },
+                              { key: "templates", label: "Templates", to: "/templates" },
+                              { key: "plans", label: "Plans", to: "/pricing" },
+                              { key: "sale", label: "Sale", to: "/sale" },
                             ] as const).map((t) => (
                               <button
                                 key={t.key}
                                 type="button"
                                 onMouseEnter={() => setMarketplaceTab(t.key)}
                                 onFocus={() => setMarketplaceTab(t.key)}
-                                onClick={() => setMarketplaceTab(t.key)}
+                                onClick={() => {
+                                  setOpenMenu(null);
+                                  navigate(t.to);
+                                }}
                                 className={`relative px-3 py-2 text-sm font-semibold transition-colors ${
                                   marketplaceTab === t.key
                                     ? "text-primary"
@@ -332,6 +336,7 @@ const Navbar = () => {
                                 )}
                               </button>
                             ))}
+
                           </div>
 
                           {marketplaceTab === "templates" && (
