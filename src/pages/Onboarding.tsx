@@ -19,8 +19,8 @@ import AutoSaveIndicator from "@/components/onboarding/AutoSaveIndicator";
 
 import StepTemplate from "@/components/onboarding/StepTemplate";
 import StepPlan from "@/components/onboarding/StepPlan";
-import StepAddons from "@/components/onboarding/StepAddons";
 import StepIntegrations from "@/components/onboarding/StepIntegrations";
+
 import StepBusiness from "@/components/onboarding/Step1Business";
 import StepBranding from "@/components/onboarding/Step2Branding";
 import StepTeam from "@/components/onboarding/Step3Team";
