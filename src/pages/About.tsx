@@ -335,7 +335,7 @@ const About = () => {
                   “We're giving away a <span className="italic font-light text-primary">100k-worth website for free</span> — because starting a business shouldn't wait six weeks or cost a retainer.”
                 </h3>
                 <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
-                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — turning founders' ideas into online businesses with clarity, care and craft.
+                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lakhs, so founders can launch, sell and grow without the six-week wait or the agency retainer.
                 </p>
                 <div className="flex items-center gap-2 mt-6">
                   {m.socials.linkedin && (
