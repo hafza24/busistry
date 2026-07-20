@@ -511,20 +511,13 @@ const Index = () => {
       {/* Template Showcase */}
       <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-background/60 backdrop-blur-sm border border-primary/25 text-[11px] font-medium tracking-[0.2em] uppercase shadow-soft mb-5">
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Digital Presence</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.05]">
-              A website, store or landing page —{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                built to convert
-              </span>
-            </h2>
-            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-              Conversion-focused designs, ready for your brand and products — part of your complete business hub.
-            </p>
-          </div>
+          <SectionHeading
+            className="mb-16"
+            align="center"
+            eyebrow="Digital Presence"
+            title={<>A website, store or landing page — <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">built to convert</span></>}
+            subtitle="Conversion-focused designs, ready for your brand and products — part of your complete business hub."
+          />
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {showcase.slice(0, 4).map((t: any, i: number) => {
