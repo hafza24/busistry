@@ -430,7 +430,7 @@ const Navbar = () => {
                               {saleTemplates.length === 0 ? (
                                 <p className="text-sm text-muted-foreground py-6 text-center">No active sales — check back soon.</p>
                               ) : (
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                   {saleTemplates.map((t: any) => (
                                     <Link
                                       key={t.id}
