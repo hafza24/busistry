@@ -28,7 +28,17 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /* ------------------------------- Pricing card ------------------------------ */
-const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular }: any) => {
+const PriceCard = ({
+  id,
+  name,
+  price_pkr,
+  duration_days,
+  features,
+  type,
+  popular,
+  onCompare,
+  isComparing,
+}: any) => {
   const featureList = Array.isArray(features) ? (features as string[]) : [];
   const duration =
     type === "rent" && duration_days
@@ -69,17 +79,36 @@ const PriceCard = ({ id, name, price_pkr, duration_days, features, type, popular
               </li>
             ))}
           </ul>
-          <Button className="w-full" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
-            <Link to={`/templates?plan=${id}`}>
-              Choose a Site <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-
+          <div className="flex gap-2">
+            <Button className="flex-1" variant={popular ? "default" : "outline"} asChild onClick={handleSelect}>
+              <Link to={`/templates?plan=${id}`}>
+                Choose <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            {onCompare && (
+              <Button
+                type="button"
+                variant={isComparing ? "default" : "outline"}
+                onClick={() => onCompare(id)}
+                aria-pressed={isComparing}
+                className="shrink-0"
+              >
+                {isComparing ? (
+                  <>
+                    <Check className="h-4 w-4 mr-1" /> Added
+                  </>
+                ) : (
+                  "Compare"
+                )}
+              </Button>
+            )}
+          </div>
         </CardContent>
       </Card>
     </motion.div>
   );
 };
+
 
 /* ---------------------------- Reassurance strip --------------------------- */
 const REASSURE = [
@@ -180,22 +209,8 @@ const renderCell = (value: Cell) => {
   return <span className="text-xs md:text-sm text-foreground">{value}</span>;
 };
 
-const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
-  if (!plans?.length) return null;
-
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(
-    () => new Set(plans.map((p) => p.id))
-  );
-  const toggleId = (id: string) =>
-    setSelectedIds((s) => {
-      const next = new Set(s);
-      if (next.has(id)) {
-        if (next.size > 1) next.delete(id); // keep at least one
-      } else next.add(id);
-      return next;
-    });
-
-  const visiblePlans = plans.filter((p) => selectedIds.has(p.id));
+const ComparisonMatrix = ({ plans, onClear }: { plans: any[]; onClear: () => void }) => {
+  const visiblePlans = plans;
   const matrix = buildMatrix(visiblePlans);
   const colCount = visiblePlans.length + 1;
 
@@ -207,62 +222,26 @@ const ComparisonMatrix = ({ plans }: { plans: any[] }) => {
   const setAll = (v: boolean) =>
     setOpenGroups(Object.fromEntries(matrix.map((g) => [g.group, v])));
 
-  const allSelected = selectedIds.size === plans.length;
+  if (!plans?.length) return null;
 
   return (
-    <section className="py-16" aria-labelledby="comparison-heading">
+    <section id="compare" className="py-16 scroll-mt-24" aria-labelledby="comparison-heading">
       <div className="container">
-        <div className="text-center mb-6">
-          <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
-            The website is free. Everything else, line by line.
-          </h2>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Compare plans side-by-side. Real limits, real inclusions — pulled straight from live data, not a marketing table.
-          </p>
+        <div className="flex items-start justify-between gap-4 mb-6 flex-wrap">
+          <div>
+            <h2 id="comparison-heading" className="text-3xl font-bold font-display text-foreground">
+              Compare selected plans
+            </h2>
+            <p className="text-muted-foreground mt-2 text-sm">
+              {plans.length} plan{plans.length === 1 ? "" : "s"} in comparison. Add or remove from the cards above.
+            </p>
+          </div>
+          <Button variant="outline" size="sm" onClick={onClear}>
+            Clear comparison
+          </Button>
         </div>
 
-        {/* Plan selector chips */}
-        <div className="mb-4 rounded-xl border border-border bg-card p-3">
-          <div className="flex items-center justify-between gap-3 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Plans in table ({selectedIds.size}/{plans.length})
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() =>
-                setSelectedIds(
-                  allSelected ? new Set([plans[0].id]) : new Set(plans.map((p) => p.id))
-                )
-              }
-            >
-              {allSelected ? "Clear" : "Select all"}
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {plans.map((p) => {
-              const active = selectedIds.has(p.id);
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => toggleId(p.id)}
-                  aria-pressed={active}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
-                    active
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background text-muted-foreground border-border hover:bg-muted"
-                  }`}
-                >
-                  {active && <Check className="h-3 w-3" />}
-                  {p.name}
-                  <span className="opacity-70">·</span>
-                  <span className="uppercase tracking-wider text-[9px] opacity-80">{p.type}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+
 
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
           <table className="w-full min-w-[720px] text-sm">
@@ -482,6 +461,17 @@ const Pricing = () => {
     setSearchParams(next, { replace: true });
   };
 
+  const [compareIds, setCompareIds] = useState<Set<string>>(new Set());
+  const toggleCompare = (id: string) =>
+    setCompareIds((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const clearCompare = () => setCompareIds(new Set());
+  const comparePlans = (plans ?? []).filter((p) => compareIds.has(p.id));
+
   return (
     <div className="pb-24 md:pb-0">
       <SEO
@@ -509,7 +499,7 @@ const Pricing = () => {
                   Start free
                 </p>
                 {freePlans.map((p) => (
-                  <PriceCard key={p.id} {...p} />
+                  <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                 ))}
               </div>
             )}
@@ -565,7 +555,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                     ))}
                   </div>
                 </div>
@@ -579,7 +569,7 @@ const Pricing = () => {
                   </p>
                   <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                     {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} />
+                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} />
                     ))}
                   </div>
                 </div>
@@ -605,7 +595,9 @@ const Pricing = () => {
 
 
       {/* Comparison matrix */}
-      <ComparisonMatrix plans={plans ?? []} />
+      {comparePlans.length > 0 && (
+        <ComparisonMatrix plans={comparePlans} onClear={clearCompare} />
+      )}
 
       {/* FAQ */}
       <FaqSection />
@@ -626,6 +618,17 @@ const Pricing = () => {
           </Button>
         </div>
       </section>
+
+      {comparePlans.length > 0 && (
+        <div className="fixed bottom-20 md:bottom-6 right-4 z-40">
+          <a
+            href="#compare"
+            className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2.5 text-sm font-medium shadow-lg hover:opacity-90 transition"
+          >
+            Compare ({comparePlans.length}) <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      )}
 
       <StickyCta />
     </div>
