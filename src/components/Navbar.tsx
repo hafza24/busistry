@@ -350,9 +350,12 @@ const Navbar = () => {
           </div>
 
           {/* Mobile toggle */}
+          {/* Mobile: theme toggle + hamburger */}
+          <div className="lg:hidden ml-auto flex items-center gap-1">
+            <ThemeToggle />
           <button
             type="button"
-            className="lg:hidden ml-auto p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="p-2 min-h-11 min-w-11 inline-flex items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
