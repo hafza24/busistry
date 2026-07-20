@@ -22,7 +22,7 @@ const team = [
     role: "CEO",
     image: founderHafza,
     cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
-    bio: "Hafza leads Busistree's vision and strategy. She's passionate about empowering Pakistani founders with tools that make launching a beautiful online store simple, fast and affordable.",
+    bio: "Hafza leads Busistree's vision and strategy. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lacs, so people can have portfolios, stores, management systems and invites.",
     socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
   },
   {
@@ -335,7 +335,7 @@ const About = () => {
                   “We're giving away a <span className="italic font-light text-primary">100k-worth website for free</span> — because launching online shouldn't wait six weeks or cost a retainer.”
                 </h3>
                 <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
-                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lakhs, so founders can launch, sell and grow without the six-week wait or the agency retainer.
+                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lacs, so people can have portfolios, stores, management systems and invites.
                 </p>
                 <div className="flex items-center gap-2 mt-6">
                   {m.socials.linkedin && (
