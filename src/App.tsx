@@ -74,6 +74,7 @@ const App = () => (
         <Sonner />
         <GlassCursor />
         <BrowserRouter>
+          <ScrollReveal />
           <AuthProvider>
             <ErrorBoundary>
               <Suspense fallback={<RouteFallback />}>
