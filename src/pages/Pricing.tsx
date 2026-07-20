@@ -475,7 +475,7 @@ const Pricing = () => {
     popular: buyPlans.length >= 3 ? i === Math.floor(buyPlans.length / 2) : false,
   }));
 
-  const setType = (t: "buy" | "rent") => {
+  const setType = (t: "buy" | "rent" | "all") => {
     const next = new URLSearchParams(searchParams);
     next.set("type", t);
     setSearchParams(next, { replace: true });
