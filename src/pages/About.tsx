@@ -325,7 +325,7 @@ const About = () => {
         {(() => {
           const m = team[0];
           return (
-            <div className="grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-10 md:gap-16 items-center mb-16">
+            <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center mb-16">
               <div className="order-2 md:order-1">
                 <div className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-4">
                   <span className="h-px w-10 bg-primary/60" />
@@ -359,8 +359,8 @@ const About = () => {
                   )}
                 </div>
               </div>
-              <div className="relative order-1 md:order-2 flex items-end justify-center min-h-[380px] md:min-h-[460px]">
-                <img src={m.image} alt={m.name} className="relative max-h-[380px] md:max-h-[520px] w-auto object-contain drop-shadow-2xl" />
+              <div className="order-1 md:order-2 flex items-center justify-center">
+                <img src={m.image} alt={m.name} className="w-full h-auto object-contain drop-shadow-2xl" />
               </div>
             </div>
           );
