@@ -844,10 +844,10 @@ const Index = () => {
               </blockquote>
               <div className="mt-8 flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-secondary border border-border flex items-center justify-center font-display text-lg font-medium text-foreground">
-                  A
+                  H
                 </div>
                 <div>
-                  <div className="text-sm font-medium text-foreground">Asim Ali</div>
+                  <div className="text-sm font-medium text-foreground">Hafza Azam</div>
                   <div className="text-xs text-muted-foreground">Founder, Busistree</div>
                 </div>
               </div>
