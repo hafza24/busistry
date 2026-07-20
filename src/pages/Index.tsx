@@ -827,6 +827,9 @@ const Index = () => {
             <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
               Bundle planning, presence, design and marketing — or start with just what you need today.
             </p>
+            <p className="mt-3 text-sm md:text-base text-foreground/70 max-w-xl mx-auto">
+              <span className="font-semibold text-foreground">Rent monthly</span> for a hosted site we maintain, or <span className="font-semibold text-foreground">buy outright</span> and own it forever.
+            </p>
           </div>
 
           <PricingSlider tiers={displayTiers} />
