@@ -90,13 +90,32 @@ const Templates = () => {
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
   const bySub = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
   const q = search.trim().toLowerCase();
-  const filtered = q
+  const searched = q
     ? bySub.filter((t) =>
         [t.name, t.description, t.category, t.subcategory]
           .filter(Boolean)
           .some((v) => String(v).toLowerCase().includes(q))
       )
     : bySub;
+
+  const filtered = [...searched].sort((a, b) => {
+    switch (sortBy) {
+      case "newest":
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case "price_asc":
+        return (a.price_pkr ?? 0) - (b.price_pkr ?? 0);
+      case "price_desc":
+        return (b.price_pkr ?? 0) - (a.price_pkr ?? 0);
+      case "rating": {
+        const ra = statMap.get(a.id)?.avg_rating ?? 0;
+        const rb = statMap.get(b.id)?.avg_rating ?? 0;
+        return rb - ra;
+      }
+      case "recommended":
+      default:
+        return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    }
+  });
 
 
 
