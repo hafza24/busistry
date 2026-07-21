@@ -736,12 +736,12 @@ const Index = () => {
             className="lg:col-span-7 relative group/table"
           >
             {/* Outer aurora glow */}
-            <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
+            <div className="pointer-events-none absolute -inset-px rounded-lg bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
 
             {/* Card */}
-            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-[1.5rem] overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
+            <div className="relative bg-card/80 backdrop-blur-xl border border-border/70 rounded-lg overflow-hidden shadow-[0_20px_60px_-20px_hsl(var(--primary)/0.25)]">
               {/* Gradient border sheen */}
-              <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+              <div className="pointer-events-none absolute inset-0 rounded-lg p-px bg-gradient-to-br from-white/60 via-transparent to-white/10 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
 
               {/* Highlighted Busistree column */}
               <div className="pointer-events-none absolute top-0 bottom-0 left-1/4 w-1/4 bg-gradient-to-b from-primary/[0.10] via-primary/[0.05] to-transparent border-x border-primary/20" />
