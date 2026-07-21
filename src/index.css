@@ -52,7 +52,7 @@
     --neutral-foreground: 40 20% 98%;
 
     /* One consistent radius — reduced site-wide */
-    --radius: 0.25rem;
+    --radius: 0.125rem;
 
     /* One shadow style */
     --shadow-elev: 0 2px 4px -1px hsl(160 20% 10% / 0.06), 0 8px 24px -8px hsl(160 20% 10% / 0.10);
@@ -202,7 +202,7 @@
   /* ---------- Glassmorphism (site theme) ---------- */
   .glass-frame {
     position: relative;
-    border-radius: 1.25rem;
+    border-radius: var(--radius);
     padding: 0.75rem;
     background: linear-gradient(
       135deg,
@@ -241,7 +241,7 @@
   .glass-surface {
     position: relative;
     overflow: hidden;
-    border-radius: 0.9rem;
+    border-radius: var(--radius);
     color: hsl(0 0% 100%);
     box-shadow:
       inset 0 1px 0 hsl(0 0% 100% / 0.6),
