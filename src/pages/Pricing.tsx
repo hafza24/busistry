@@ -548,8 +548,8 @@ const Pricing = () => {
     return true;
   };
 
-  const rentPlans = rentPlansAll.filter(filterPlan);
-  const buyPlans = buyPlansAll.filter(filterPlan);
+  const rentPlans = sortPlans(rentPlansAll.filter(filterPlan));
+  const buyPlans = sortPlans(buyPlansAll.filter(filterPlan));
 
   const rentWithPopular = rentPlans.map((p, i) => ({
     ...p,
