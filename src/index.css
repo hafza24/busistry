@@ -127,11 +127,11 @@
     --success-foreground: 0 0% 8%;
     --warning: 32 90% 55%;
     --warning-foreground: 0 0% 10%;
-    --info: 0 0% 55%;
-    --info-foreground: 0 0% 10%;
+    --info: 166 55% 52%;
+    --info-foreground: 0 0% 8%;
 
-    /* Neutral gray gradient replaces green in dark mode */
-    --gradient-brand: linear-gradient(135deg, hsl(0 0% 42%), hsl(0 0% 22%));
+    /* Emerald gradient in dark mode */
+    --gradient-brand: linear-gradient(135deg, hsl(166 55% 52%), hsl(166 60% 32%));
 
   }
 }
