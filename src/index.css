@@ -16,67 +16,69 @@
      White  #e4e4e4  -> 0 0% 89%
   */
   :root {
-    /* Neutrals — near-white background, near-black foreground */
-    --background: 40 20% 98%;
-    --foreground: 160 15% 8%;
+    /* Emerald Prestige palette
+       Deep emerald #064e3b -> 160 85% 16%
+       Emerald      #0d7a5f -> 162 80% 26%
+       Gold         #c9a84c -> 44 55% 54%
+       Cream        #f5f0e0 -> 46 55% 92%
+    */
+    --background: 46 55% 96%;
+    --foreground: 160 85% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 160 15% 8%;
+    --card-foreground: 160 85% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 15% 8%;
+    --popover-foreground: 160 85% 10%;
 
-    /* One confident accent — Busistree deep emerald */
-    --primary: 166 47% 42%;
-    --primary-foreground: 40 20% 98%;
-    --primary-glow: 166 47% 52%;
+    --primary: 160 85% 16%;
+    --primary-foreground: 46 55% 96%;
+    --primary-glow: 162 80% 26%;
 
-    --secondary: 40 15% 94%;
-    --secondary-foreground: 160 15% 12%;
+    --secondary: 46 55% 92%;
+    --secondary-foreground: 160 85% 14%;
 
-    --muted: 40 15% 94%;
-    --muted-foreground: 160 8% 42%;
+    --muted: 46 40% 90%;
+    --muted-foreground: 160 15% 35%;
 
-    --accent: 166 47% 42%;
-    --accent-foreground: 40 20% 98%;
+    --accent: 44 55% 54%;
+    --accent-foreground: 160 85% 10%;
 
     --destructive: 8 65% 48%;
-    --destructive-foreground: 40 20% 98%;
+    --destructive-foreground: 46 55% 96%;
 
-    --border: 160 10% 88%;
-    --input: 160 10% 88%;
-    --ring: 166 47% 42%;
+    --border: 160 20% 84%;
+    --input: 160 20% 84%;
+    --ring: 160 85% 16%;
 
-    /* Neutral gray — dark gray in light theme */
-    --neutral: 0 0% 42%; /* #6a6a6a */
-    --neutral-foreground: 40 20% 98%;
+    --neutral: 0 0% 42%;
+    --neutral-foreground: 46 55% 96%;
 
-    /* One consistent radius — reduced site-wide */
     --radius: 0.625rem;
 
-    /* One shadow style */
-    --shadow-elev: 0 2px 4px -1px hsl(160 20% 10% / 0.06), 0 8px 24px -8px hsl(160 20% 10% / 0.10);
-    --gradient-brand: linear-gradient(135deg, hsl(166 47% 42%), hsl(166 47% 32%));
-    --gradient-subtle: linear-gradient(180deg, hsl(40 20% 98%), hsl(40 15% 94%));
+    --shadow-elev: 0 2px 4px -1px hsl(160 40% 10% / 0.08), 0 8px 24px -8px hsl(160 40% 10% / 0.14);
+    --gradient-brand: linear-gradient(135deg, hsl(160 85% 16%), hsl(162 80% 26%) 55%, hsl(44 55% 54%));
+    --gradient-subtle: linear-gradient(180deg, hsl(46 55% 96%), hsl(46 55% 92%));
     --shadow-brand: var(--shadow-elev);
     --shadow-soft: var(--shadow-elev);
 
-    --sidebar-background: 40 15% 96%;
-    --sidebar-foreground: 160 15% 20%;
-    --sidebar-primary: 166 47% 42%;
-    --sidebar-primary-foreground: 40 20% 98%;
-    --sidebar-accent: 40 15% 92%;
-    --sidebar-accent-foreground: 160 15% 20%;
-    --sidebar-border: 160 10% 88%;
-    --sidebar-ring: 166 47% 42%;
+    --sidebar-background: 46 55% 94%;
+    --sidebar-foreground: 160 85% 14%;
+    --sidebar-primary: 160 85% 16%;
+    --sidebar-primary-foreground: 46 55% 96%;
+    --sidebar-accent: 46 50% 90%;
+    --sidebar-accent-foreground: 160 85% 14%;
+    --sidebar-border: 160 20% 84%;
+    --sidebar-ring: 160 85% 16%;
 
-    --success: 166 47% 42%;
-    --success-foreground: 40 20% 98%;
-    --warning: 32 90% 45%;
-    --warning-foreground: 40 20% 98%;
-    --info: 205 52% 40%;
-    --info-foreground: 40 20% 98%;
+    --success: 162 80% 26%;
+    --success-foreground: 46 55% 96%;
+    --warning: 44 65% 45%;
+    --warning-foreground: 46 55% 96%;
+    --info: 162 80% 26%;
+    --info-foreground: 46 55% 96%;
   }
+
 
   .dark {
     /* Neutral gray dark theme anchored on #6a6a6a */
