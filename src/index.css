@@ -52,7 +52,7 @@
     --neutral-foreground: 40 20% 98%;
 
     /* One consistent radius — reduced site-wide */
-    --radius: 0.375rem;
+    --radius: 0.25rem;
 
     /* One shadow style */
     --shadow-elev: 0 2px 4px -1px hsl(160 20% 10% / 0.06), 0 8px 24px -8px hsl(160 20% 10% / 0.10);
