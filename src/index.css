@@ -79,57 +79,59 @@
   }
 
   .dark {
-    /* Dark theme with green accents */
-    --background: 0 0% 7%;
-    --foreground: 0 0% 93%;
+    /* Neutral gray dark theme anchored on #6a6a6a */
+    --background: 0 0% 7%;         /* #121212 */
+    --foreground: 0 0% 93%;        /* #ededed */
 
-    --card: 0 0% 10%;
+    --card: 0 0% 10%;              /* #1a1a1a */
     --card-foreground: 0 0% 93%;
 
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 166 47% 45%;
+    --primary: 0 0% 42%;           /* #6a6a6a — neutral gray */
     --primary-foreground: 0 0% 96%;
-    --primary-glow: 166 47% 58%;
+    --primary-glow: 0 0% 55%;      /* #8c8c8c */
 
-    --secondary: 0 0% 15%;
+    --secondary: 0 0% 15%;         /* #262626 */
     --secondary-foreground: 0 0% 93%;
 
     --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 63%;
+    --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
 
-    --accent: 166 47% 45%;
+    --accent: 0 0% 42%;
     --accent-foreground: 0 0% 96%;
 
     --destructive: 8 65% 55%;
     --destructive-foreground: 0 0% 93%;
 
-    --border: 0 0% 22%;
+    --border: 0 0% 22%;            /* #383838 — subtle divider */
     --input: 0 0% 22%;
-    --ring: 166 47% 45%;
+    --ring: 0 0% 55%;
 
+    /* Neutral gray anchor — #6a6a6a */
     --neutral: 0 0% 42%;
     --neutral-foreground: 0 0% 93%;
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 166 47% 45%;
+    --sidebar-primary: 0 0% 42%;
     --sidebar-primary-foreground: 0 0% 96%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 93%;
 
     --sidebar-border: 0 0% 22%;
-    --sidebar-ring: 166 47% 45%;
+    --sidebar-ring: 0 0% 55%;
 
-    --success: 166 47% 45%;
+    --success: 0 0% 55%;
     --success-foreground: 0 0% 10%;
     --warning: 32 90% 55%;
     --warning-foreground: 0 0% 10%;
-    --info: 205 52% 55%;
+    --info: 0 0% 55%;
     --info-foreground: 0 0% 10%;
 
-    --gradient-brand: linear-gradient(135deg, hsl(166 47% 45%), hsl(166 47% 25%));
+    /* Neutral gray gradient replaces green in dark mode */
+    --gradient-brand: linear-gradient(135deg, hsl(0 0% 42%), hsl(0 0% 22%));
 
   }
 }
