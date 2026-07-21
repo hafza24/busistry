@@ -726,98 +726,94 @@ const Pricing = () => {
       {/* Plan cards */}
       <section id="plans" className="py-16 scroll-mt-24">
         <div className="container">
-
           {isLoading ? (
             <div className="py-16 flex justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <>
-
-
-              <div className="flex justify-center mb-10">
-                <div className="inline-flex rounded-full border border-border bg-card p-1">
-                  <button
-                    type="button"
-                    onClick={() => setType("all")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "all"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "all"}
-                  >
-                    All
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setType("rent")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "rent"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "rent"}
-                  >
-                    Rent
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setType("buy")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "buy"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "buy"}
-                  >
-                    Buy
-                  </button>
+            <div className="grid lg:grid-cols-[16rem_1fr] gap-8 lg:gap-10">
+              {/* Desktop sidebar */}
+              <aside className="hidden lg:block">
+                <div className="sticky top-24 rounded-lg border border-border bg-card/50 p-5">
+                  <FiltersPanel />
                 </div>
+              </aside>
+
+              {/* Mobile filter toggle */}
+              <div className="lg:hidden mb-2 flex items-center justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setMobileFiltersOpen((v) => !v)}
+                >
+                  <SlidersHorizontal className="h-4 w-4 mr-2" />
+                  Filters
+                  {activeFilterCount > 0 && (
+                    <Badge className="ml-2" variant="secondary">{activeFilterCount}</Badge>
+                  )}
+                </Button>
+                <span className="text-xs text-muted-foreground capitalize">
+                  {activeType === "all" ? "All plans" : `${activeType} plans`}
+                </span>
               </div>
-
-              {(activeType === "rent" || activeType === "all") && rentWithPopular.length > 0 && (
-                <div className="mb-16">
-                  <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Rent Plans</h2>
-                  <p className="text-center text-muted-foreground mb-8 text-sm">
-                    Pay monthly, cancel anytime
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-                    {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
-                    ))}
-                  </div>
+              {mobileFiltersOpen && (
+                <div className="lg:hidden rounded-lg border border-border bg-card/50 p-5 -mt-2 mb-4">
+                  <FiltersPanel />
                 </div>
               )}
 
-              {(activeType === "buy" || activeType === "all") && buyWithPopular.length > 0 && (
-                <div>
-                  <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Buy Plans</h2>
-                  <p className="text-center text-muted-foreground mb-8 text-sm">
-                    One-time payment, own it forever
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-                    {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
-                    ))}
+              <div className="min-w-0">
+                {(activeType === "rent" || activeType === "all") && rentWithPopular.length > 0 && (
+                  <div className="mb-14">
+                    <h2 className="text-2xl font-bold font-display mb-1 text-foreground">Rent Plans</h2>
+                    <p className="text-muted-foreground mb-6 text-sm">
+                      Pay monthly, cancel anytime
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                      {rentWithPopular.map((p) => (
+                        <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {activeType === "rent" && rentWithPopular.length === 0 && (
-                <p className="text-center text-muted-foreground py-12">No rent plans available yet.</p>
-              )}
-              {activeType === "buy" && buyWithPopular.length === 0 && (
-                <p className="text-center text-muted-foreground py-12">No buy plans available yet.</p>
-              )}
+                {(activeType === "buy" || activeType === "all") && buyWithPopular.length > 0 && (
+                  <div>
+                    <h2 className="text-2xl font-bold font-display mb-1 text-foreground">Buy Plans</h2>
+                    <p className="text-muted-foreground mb-6 text-sm">
+                      One-time payment, own it forever
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                      {buyWithPopular.map((p) => (
+                        <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {!plans?.length && (
-                <p className="text-center text-muted-foreground py-12">No plans available yet.</p>
-              )}
-            </>
+                {((activeType === "rent" && rentWithPopular.length === 0) ||
+                  (activeType === "buy" && buyWithPopular.length === 0) ||
+                  (activeType === "all" && rentWithPopular.length === 0 && buyWithPopular.length === 0)) && (
+                  <div className="py-16 text-center border border-dashed border-border rounded-lg">
+                    <p className="text-muted-foreground mb-3">No plans match your filters.</p>
+                    {activeFilterCount > 0 && (
+                      <Button variant="outline" size="sm" onClick={clearFilters}>
+                        <X className="h-4 w-4 mr-1.5" /> Clear filters
+                      </Button>
+                    )}
+                  </div>
+                )}
+
+                {!plans?.length && (
+                  <p className="text-center text-muted-foreground py-12">No plans available yet.</p>
+                )}
+              </div>
+            </div>
           )}
         </div>
       </section>
+
 
       {/* Reassurance */}
       <ReassuranceRow />
