@@ -24,6 +24,7 @@ const Templates = () => {
   const [activeSub, setActiveSub] = useState<string | null>(searchParams.get("subcategory"));
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
+  const [search, setSearch] = useState("");
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
