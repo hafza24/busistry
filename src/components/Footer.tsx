@@ -398,24 +398,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Payments */}
-          <div className="col-span-2 md:col-span-6 lg:col-span-2">
-            <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-primary" />
-              We Accept
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {paymentMethods.map(({ name, dot }) => (
-                <span
-                  key={name}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-border/60 bg-card/70 backdrop-blur px-2.5 py-1.5 text-xs font-semibold text-foreground shadow-sm hover:border-primary/40 hover:-translate-y-0.5 transition-all"
-                >
-                  <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
-                  {name}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Bottom bar */}
