@@ -713,18 +713,20 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
         <div className="container">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <SectionHeading
-            className="mb-14"
-            align="center"
+            className="lg:col-span-5 lg:sticky lg:top-28"
+            align="left"
             eyebrow="The comparison"
-            title={<>Freelancers ghost. Agencies stall. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">We ship in two days.</span></>}
+            title={<>Freelancers ghost. Agencies stall. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">We ship your site in two days.</span></>}
+            subtitle="How Busistree stacks up against DIY builders and hiring a dev — for launching a real business website."
           />
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-4xl mx-auto relative group/table"
+            className="lg:col-span-7 relative group/table"
           >
             {/* Outer aurora glow */}
             <div className="pointer-events-none absolute -inset-px rounded-[1.5rem] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-accent/40 opacity-60 blur-2xl group-hover/table:opacity-90 transition-opacity duration-700" />
@@ -808,8 +810,10 @@ const Index = () => {
               ))}
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
+
 
 
 
