@@ -655,8 +655,8 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
         <div className="container">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            <div className="lg:col-span-5 lg:sticky lg:top-28">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+            <div className="lg:col-span-5 flex flex-col justify-center">
               <SectionHeading
                 align="left"
                 eyebrow="What we do, exactly"
@@ -668,7 +668,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5 items-start max-w-md sm:max-w-none mx-auto w-full">
+            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-2 lg:grid-rows-2 gap-3 sm:gap-4 lg:gap-5 max-w-md sm:max-w-none mx-auto w-full lg:h-full auto-rows-fr">
               {steps.map((s, i) => (
                 <motion.div
                   key={s.num}
@@ -676,9 +676,9 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className={cn("group", i % 2 === 1 && "mt-3 sm:mt-5 lg:mt-6")}
+                  className="group h-full"
                 >
-                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] w-full">
+                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[4/5] sm:aspect-[5/6] lg:aspect-auto lg:h-full w-full">
                     <img
                       src={stepImages[i]}
                       alt={s.title}
