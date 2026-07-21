@@ -514,7 +514,7 @@ const Index = () => {
         <div className="container">
           <SectionHeading
             className="mb-16"
-            align="center"
+            align="left"
             eyebrow="The free website"
             title={<>A site worth <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">paying for</span> — on the house.</>}
             subtitle="Editorial layouts, considered typography, real copy. Choose a starting point; we finish it in forty-eight hours."
