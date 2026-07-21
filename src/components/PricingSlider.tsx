@@ -31,61 +31,67 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
       role="group"
       aria-roledescription="slide"
       aria-label={`${tier.name}, ${idx + 1} of ${tiersLength}`}
-      className={`group relative shrink-0 w-[280px] sm:w-[300px] rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col ${
+      className={`group relative shrink-0 w-[280px] sm:w-[300px] rounded-lg p-6 border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 flex flex-col ${
         tier.highlighted
-          ? "bg-gradient-to-br from-card via-card to-primary/5 border-primary shadow-xl shadow-primary/10"
-          : "bg-card/80 backdrop-blur border-border hover:border-primary/40"
+          ? "bg-card border-primary/40 shadow-elev hover:shadow-brand"
+          : "bg-card/70 backdrop-blur-sm border-border/70 shadow-soft hover:border-primary/30 hover:shadow-elev"
       }`}
     >
       {tier.highlighted && (
         <>
-          <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-          <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] rounded-full bg-gradient-to-r from-primary to-primary-glow text-primary-foreground shadow-brand border-0">
-            <Sparkles className="h-3 w-3 mr-1" aria-hidden="true" /> Popular
-          </Badge>
+          <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.06]" />
+          <div className="absolute -top-2.5 left-6 inline-flex items-center gap-1 rounded-sm bg-primary px-2 py-0.5 text-[9px] font-mono font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-brand">
+            <Sparkles className="h-2.5 w-2.5" aria-hidden="true" /> Popular
+          </div>
         </>
       )}
 
-      <h3 className="text-base font-bold text-foreground">{tier.name}</h3>
-      <p className="text-xs text-muted-foreground mb-3">{tier.blurb}</p>
+      {/* Eyebrow */}
+      <div className="flex items-center gap-1.5 text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="h-px w-4 bg-primary" aria-hidden="true" />
+        {isFree ? "Free plan" : /rent/i.test(tier.name) ? "Rent" : /buy/i.test(tier.name) ? "Buy" : "Plan"}
+      </div>
 
-      <div className="pb-3 border-b border-border/60">
+      <h3 className="mt-2 font-display text-xl font-semibold tracking-tight text-foreground">
+        {tier.name}
+      </h3>
+      <p className="text-xs text-muted-foreground leading-relaxed mb-4 line-clamp-2">
+        {tier.blurb}
+      </p>
+
+      <div className="pb-4 border-b border-border/60">
         {isFree ? (
-          <div className="text-3xl font-extrabold bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+          <div className="font-display text-4xl font-semibold tracking-tight bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
             Free
           </div>
         ) : (
-          <div className="flex items-baseline gap-1">
-            <span className="text-xs font-semibold text-muted-foreground">PKR</span>
-            <span className="text-3xl font-extrabold text-foreground tracking-tight">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[11px] font-mono font-semibold text-muted-foreground tracking-wider">PKR</span>
+            <span className="font-display text-4xl font-semibold text-foreground tracking-tight tabular-nums">
               {numericPart}
             </span>
           </div>
         )}
-        <div className="text-[11px] text-muted-foreground mt-1">
+        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted/60 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+          <span className="h-1 w-1 rounded-full bg-primary" aria-hidden="true" />
           Delivered in {tier.delivery}
         </div>
       </div>
 
-      <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+      <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
         <div className="overflow-hidden">
-          <ul className="mt-3 space-y-1.5">
+          <ul className="mt-4 space-y-2">
             {tier.features.map((f) => (
-              <li key={f} className="flex items-start gap-2 text-xs text-foreground">
+              <li key={f} className="flex items-start gap-2.5 text-xs text-foreground/90">
                 <div
                   className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                     tier.highlighted
-                      ? "bg-gradient-to-br from-primary to-primary-glow"
-                      : "bg-primary/10"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-primary/10 text-primary"
                   }`}
                   aria-hidden="true"
                 >
-                  <Check
-                    className={`h-2.5 w-2.5 ${
-                      tier.highlighted ? "text-primary-foreground" : "text-primary"
-                    }`}
-                    strokeWidth={3}
-                  />
+                  <Check className="h-2.5 w-2.5" strokeWidth={3} />
                 </div>
                 <span className="leading-snug">{f}</span>
               </li>
@@ -93,11 +99,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
           </ul>
 
           <Button
-            className={`w-full mt-4 rounded-full h-9 text-xs font-semibold ${
-              tier.highlighted
-                ? "bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:opacity-95"
-                : ""
-            }`}
+            className="w-full mt-5 h-10 text-xs font-semibold"
             variant={tier.highlighted ? "default" : "outline"}
             asChild
           >
@@ -108,7 +110,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
             >
               Start with {tier.name}
               <ArrowRight
-                className="h-3.5 w-3.5 ml-1 transition-transform group-hover/btn:translate-x-1"
+                className="h-3.5 w-3.5 ml-1.5 transition-transform group-hover/btn:translate-x-1"
                 aria-hidden="true"
               />
             </Link>
