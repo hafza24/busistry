@@ -26,6 +26,10 @@ const Templates = () => {
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"recommended" | "newest" | "price_asc" | "price_desc" | "rating">("recommended");
+  const [priceBand, setPriceBand] = useState<"any" | "free" | "0_5k" | "5k_15k" | "15k_plus">("any");
+  const [minRating, setMinRating] = useState<0 | 3 | 4 | 45>(0);
+  const [hasDemoOnly, setHasDemoOnly] = useState(false);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
