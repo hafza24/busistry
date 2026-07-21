@@ -60,8 +60,6 @@ const platformLinks = [
 
 const supportLinks = [
   { to: "/contact", label: "Contact Us", external: false },
-  { to: "/sitemap.xml", label: "Sitemap", external: true },
-  { to: "/robots.txt", label: "Robots", external: true },
 ];
 
 const legalLinks = [
