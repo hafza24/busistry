@@ -106,7 +106,7 @@ const Templates = () => {
             <div className="text-center md:text-left">
               <Badge variant="secondary" className="mb-4">— The 48-hour library</Badge>
               <h1 className="text-4xl md:text-6xl font-bold font-display text-foreground leading-tight">
-                Pick a starting point. <span className="text-primary">We finish it in two days.</span>
+                Pick a starting point. <span className="text-primary bg-primary/10 px-2 rounded-lg">We finish it in two days.</span>
               </h1>
               <p className="text-base md:text-lg text-muted-foreground mt-5 max-w-lg mx-auto md:mx-0">
                 Every template is a real, editorial layout — not a wizard-generated shell. Choose one and we tailor the copy, imagery and product logic to your brand, then ship it live. Free.
