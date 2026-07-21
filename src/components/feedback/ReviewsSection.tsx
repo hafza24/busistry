@@ -132,7 +132,7 @@ const ReviewsSection = () => {
 
             <div className="mt-7">
               <FeedbackDialog trigger={
-                <Button size="lg" variant="outline" className="rounded-full h-12 px-7">
+                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev">
                   Leave a review
                 </Button>
               } />
