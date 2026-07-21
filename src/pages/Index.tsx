@@ -702,6 +702,13 @@ const Index = () => {
         </div>
 
         <div className="container">
+          <SectionHeading
+            className="mb-10 md:mb-14"
+            align="left"
+            eyebrow="Trusted by founders"
+            title={<>Numbers that <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">speak for themselves</span>.</>}
+            subtitle="Real sites shipped, real orders placed, real reviews from the businesses we've launched."
+          />
           <LiveStats />
         </div>
       </section>
