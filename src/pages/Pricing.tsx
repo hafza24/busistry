@@ -390,28 +390,30 @@ const FAQS = [
 ];
 
 const FaqSection = () => (
-  <section className="py-16 bg-muted/30" aria-labelledby="faq-heading">
-    <div className="container max-w-3xl">
-      <div className="text-center mb-8">
-        <h2 id="faq-heading" className="text-3xl font-bold font-display text-foreground">
-          Frequently asked questions
+  <section className="py-12 md:py-16 border-b border-border/60" aria-labelledby="faq-heading">
+    <div className="container grid gap-10 lg:grid-cols-12">
+      <div className="lg:col-span-5">
+        <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
+          <span className="h-px w-6 bg-primary" />
+          Fine print, plainly
+        </div>
+        <h2 id="faq-heading" className="mt-3 font-display text-3xl md:text-4xl text-foreground">
+          The questions everyone asks.
         </h2>
-        <p className="text-muted-foreground mt-2 text-sm">
+        <p className="text-muted-foreground mt-3 text-sm">
           Still unsure? <Link to="/contact" className="text-primary underline-offset-4 hover:underline">Talk to us on WhatsApp</Link>.
         </p>
       </div>
-      <Accordion type="single" collapsible className="bg-card rounded-xl border border-border">
-        {FAQS.map((item, i) => (
-          <AccordionItem key={i} value={`q-${i}`} className="px-4">
-            <AccordionTrigger className="text-left text-foreground hover:no-underline">
-              {item.q}
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
-              {item.a}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+      <div className="lg:col-span-7">
+        <Accordion type="single" collapsible className="w-full">
+          {FAQS.map((item, i) => (
+            <AccordionItem key={i} value={`q-${i}`}>
+              <AccordionTrigger className="text-left text-base font-semibold">{item.q}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">{item.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
     </div>
   </section>
 );
