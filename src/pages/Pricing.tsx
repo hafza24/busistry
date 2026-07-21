@@ -493,12 +493,17 @@ const Pricing = () => {
   const platformOptions = useMemo(() => {
     const set = new Set<string>();
     (plans ?? []).forEach((p) => p.platform_type && set.add(p.platform_type));
-    return Array.from(set);
+    return Array.from(set).sort();
   }, [plans]);
   const domainOptions = useMemo(() => {
     const set = new Set<string>();
     (plans ?? []).forEach((p) => p.domain_type && set.add(p.domain_type));
-    return Array.from(set);
+    return Array.from(set).sort();
+  }, [plans]);
+  const typeOptions = useMemo(() => {
+    const set = new Set<string>();
+    (plans ?? []).forEach((p) => p.type && p.type !== "free" && set.add(p.type));
+    return ["all", ...Array.from(set).sort()];
   }, [plans]);
 
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set());
