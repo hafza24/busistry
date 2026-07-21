@@ -89,9 +89,9 @@
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 0 0% 42%;           /* #6a6a6a — neutral gray */
-    --primary-foreground: 0 0% 96%;
-    --primary-glow: 0 0% 55%;      /* #8c8c8c */
+    --primary: 166 55% 52%;        /* brighter emerald for dark bg */
+    --primary-foreground: 0 0% 8%;
+    --primary-glow: 166 60% 62%;
 
     --secondary: 0 0% 15%;         /* #262626 */
     --secondary-foreground: 0 0% 93%;
@@ -99,15 +99,15 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
 
-    --accent: 0 0% 42%;
-    --accent-foreground: 0 0% 96%;
+    --accent: 166 55% 52%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 8 65% 55%;
     --destructive-foreground: 0 0% 93%;
 
     --border: 0 0% 22%;            /* #383838 — subtle divider */
     --input: 0 0% 22%;
-    --ring: 0 0% 55%;
+    --ring: 166 55% 52%;
 
     /* Neutral gray anchor — #6a6a6a */
     --neutral: 0 0% 42%;
@@ -115,23 +115,23 @@
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 0 0% 42%;
-    --sidebar-primary-foreground: 0 0% 96%;
+    --sidebar-primary: 166 55% 52%;
+    --sidebar-primary-foreground: 0 0% 8%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 93%;
 
     --sidebar-border: 0 0% 22%;
-    --sidebar-ring: 0 0% 55%;
+    --sidebar-ring: 166 55% 52%;
 
-    --success: 0 0% 55%;
-    --success-foreground: 0 0% 10%;
+    --success: 166 55% 52%;
+    --success-foreground: 0 0% 8%;
     --warning: 32 90% 55%;
     --warning-foreground: 0 0% 10%;
-    --info: 0 0% 55%;
-    --info-foreground: 0 0% 10%;
+    --info: 166 55% 52%;
+    --info-foreground: 0 0% 8%;
 
-    /* Neutral gray gradient replaces green in dark mode */
-    --gradient-brand: linear-gradient(135deg, hsl(0 0% 42%), hsl(0 0% 22%));
+    /* Emerald gradient in dark mode */
+    --gradient-brand: linear-gradient(135deg, hsl(166 55% 52%), hsl(166 60% 32%));
 
   }
 }
