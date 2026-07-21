@@ -349,7 +349,6 @@ const Footer = () => {
           {/* Support */}
           <div className="col-span-1 md:col-span-2 lg:col-span-2">
             <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-primary" />
               Support
             </h4>
             <ul className="space-y-2.5 text-sm">
