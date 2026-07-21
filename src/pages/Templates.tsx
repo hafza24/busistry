@@ -87,7 +87,15 @@ const Templates = () => {
   const categories = ["All", ...Array.from(new Set(templates.map((t) => t.category).filter(Boolean) as string[]))];
   const inCategory = activeCategory === "All" ? templates : templates.filter((t) => t.category === activeCategory);
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
-  const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
+  const bySub = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? bySub.filter((t) =>
+        [t.name, t.description, t.category, t.subcategory]
+          .filter(Boolean)
+          .some((v) => String(v).toLowerCase().includes(q))
+      )
+    : bySub;
 
 
 
