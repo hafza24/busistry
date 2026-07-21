@@ -637,6 +637,13 @@ const AdminTemplateManagement = () => {
         open={!!plansDialog}
         onOpenChange={(v) => { if (!v) setPlansDialog(null); }}
       />
+
+      <TemplateIntegrationsDialog
+        templateId={integrationsDialog?.id ?? null}
+        templateName={integrationsDialog?.name}
+        open={!!integrationsDialog}
+        onOpenChange={(v) => { if (!v) setIntegrationsDialog(null); }}
+      />
     </div>
   );
 };
