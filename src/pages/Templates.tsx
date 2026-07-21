@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { Rocket, Loader2, Eye, Info, CheckCircle2 } from "lucide-react";
+import { Rocket, Loader2, Eye, Info, CheckCircle2, Search, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useItemReviewStats, ItemReviewStats } from "@/hooks/useReviews";
 import { ItemBadges, RatingStars } from "@/components/reviews/ItemBadges";
@@ -23,6 +24,7 @@ const Templates = () => {
   const [activeSub, setActiveSub] = useState<string | null>(searchParams.get("subcategory"));
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
+  const [search, setSearch] = useState("");
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
@@ -85,7 +87,15 @@ const Templates = () => {
   const categories = ["All", ...Array.from(new Set(templates.map((t) => t.category).filter(Boolean) as string[]))];
   const inCategory = activeCategory === "All" ? templates : templates.filter((t) => t.category === activeCategory);
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
-  const filtered = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
+  const bySub = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
+  const q = search.trim().toLowerCase();
+  const filtered = q
+    ? bySub.filter((t) =>
+        [t.name, t.description, t.category, t.subcategory]
+          .filter(Boolean)
+          .some((v) => String(v).toLowerCase().includes(q))
+      )
+    : bySub;
 
 
 
@@ -161,6 +171,27 @@ const Templates = () => {
           {/* Sidebar filters */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm p-3">
+              <div className="relative mb-3">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search templates…"
+                  aria-label="Search templates"
+                  className="pl-9 pr-9 h-10"
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch("")}
+                    aria-label="Clear search"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
               <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Categories</p>
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible scrollbar-none">
                 {categories.map((n) => {
