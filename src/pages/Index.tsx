@@ -891,35 +891,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-14 md:py-20">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
-          >
-            <SectionHeading
-              align="center"
-              eyebrow="One last thing"
-              title="Your website is free. The next forty-eight hours are on us."
-              subtitle="Send the brief today. Wake up Wednesday to a site that's live, written and ready to sell — nothing owed, nothing hidden."
-            />
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
-                <Link to="/onboarding">
-                  Start the 48-hour build
-                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" className="h-12 px-6 text-base rounded-lg" asChild>
-                <Link to="/contact">Speak to the studio</Link>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 };
