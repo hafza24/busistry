@@ -583,9 +583,6 @@ const Pricing = () => {
       <div>
         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
         <div className="mt-3 space-y-2">
-      <div>
-        <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
-        <div className="mt-3 space-y-2">
           {typeOptions.map((t) => (
             <button
               key={t}
