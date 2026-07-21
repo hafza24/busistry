@@ -486,7 +486,9 @@ const Pricing = () => {
     return Math.max(1000, Math.ceil(max / 500) * 500);
   }, [rentPlansAll, buyPlansAll]);
   const [priceMax, setPriceMax] = useState<number | null>(null);
+  const [priceMin, setPriceMin] = useState<number | null>(null);
   const effectivePriceMax = priceMax ?? priceCeiling;
+  const effectivePriceMin = priceMin ?? 0;
 
   const platformOptions = useMemo(() => {
     const set = new Set<string>();
@@ -512,7 +514,9 @@ const Pricing = () => {
     });
 
   const filterPlan = (p: any) => {
-    if (Number(p.price_pkr) > effectivePriceMax) return false;
+    const price = Number(p.price_pkr) || 0;
+    if (price > effectivePriceMax) return false;
+    if (price < effectivePriceMin) return false;
     if (selectedPlatforms.size > 0 && !selectedPlatforms.has(p.platform_type)) return false;
     if (selectedDomains.size > 0 && !selectedDomains.has(p.domain_type)) return false;
     return true;
@@ -532,11 +536,13 @@ const Pricing = () => {
 
   const activeFilterCount =
     (priceMax !== null && priceMax !== priceCeiling ? 1 : 0) +
+    (priceMin !== null && priceMin !== 0 ? 1 : 0) +
     selectedPlatforms.size +
     selectedDomains.size;
 
   const clearFilters = () => {
     setPriceMax(null);
+    setPriceMin(null);
     setSelectedPlatforms(new Set());
     setSelectedDomains(new Set());
   };
@@ -594,23 +600,28 @@ const Pricing = () => {
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">Max price</Label>
+          <Label className="text-xs uppercase tracking-wider text-muted-foreground">Price range</Label>
           <span className="text-xs font-medium text-foreground">
-            PKR {effectivePriceMax.toLocaleString()}
+            PKR {effectivePriceMin.toLocaleString()} – {effectivePriceMax.toLocaleString()}
           </span>
         </div>
         <Slider
-          value={[effectivePriceMax]}
+          value={[effectivePriceMin, effectivePriceMax]}
           min={0}
           max={priceCeiling}
           step={100}
-          onValueChange={(v) => setPriceMax(v[0])}
+          minStepsBetweenThumbs={1}
+          onValueChange={(v) => {
+            setPriceMin(v[0]);
+            setPriceMax(v[1]);
+          }}
         />
         <div className="mt-1.5 flex justify-between text-[10px] text-muted-foreground">
           <span>PKR 0</span>
           <span>PKR {priceCeiling.toLocaleString()}</span>
         </div>
       </div>
+
 
       {platformOptions.length > 0 && (
         <>
