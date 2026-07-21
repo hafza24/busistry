@@ -603,6 +603,23 @@ const Pricing = () => {
       </div>
 
       <div>
+        <Label className="text-xs uppercase tracking-wider text-muted-foreground">Sort by</Label>
+        <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+          <SelectTrigger className="mt-3 h-10">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="recommended">Recommended</SelectItem>
+            <SelectItem value="price-asc">Price: Low to High</SelectItem>
+            <SelectItem value="price-desc">Price: High to Low</SelectItem>
+            <SelectItem value="name-asc">Name: A–Z</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Separator />
+
+      <div>
         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
         <div className="mt-3 space-y-2">
           {typeOptions.map((t) => (
