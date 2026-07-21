@@ -486,7 +486,9 @@ const Pricing = () => {
     return Math.max(1000, Math.ceil(max / 500) * 500);
   }, [rentPlansAll, buyPlansAll]);
   const [priceMax, setPriceMax] = useState<number | null>(null);
+  const [priceMin, setPriceMin] = useState<number | null>(null);
   const effectivePriceMax = priceMax ?? priceCeiling;
+  const effectivePriceMin = priceMin ?? 0;
 
   const platformOptions = useMemo(() => {
     const set = new Set<string>();
