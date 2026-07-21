@@ -92,6 +92,14 @@ const Footer = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
   const [ratingStats, setRatingStats] = useState<{ avg: number; total: number } | null>(null);
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > window.innerHeight * 0.8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -375,18 +383,20 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "}
             <span className="font-semibold text-foreground">Busistree</span>. All rights reserved.
           </p>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <button
-              type="button"
-              onClick={scrollTop}
-              aria-label="Back to top"
-              className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/60 bg-card/70 text-foreground hover:bg-neutral hover:text-neutral-foreground hover:border-neutral transition-all"
-            >
-              <ArrowUp className="h-3.5 w-3.5" />
-            </button>
-          </div>
         </div>
       </div>
+
+      {/* Floating back-to-top */}
+      <button
+        type="button"
+        onClick={scrollTop}
+        aria-label="Back to top"
+        className={`fixed bottom-6 right-6 z-50 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-elev hover:bg-neutral hover:text-neutral-foreground hover:border-neutral transition-all duration-300 ${
+          showTop ? "opacity-100 translate-y-0 pointer-events-auto animate-fade-in" : "opacity-0 translate-y-3 pointer-events-none"
+        }`}
+      >
+        <ArrowUp className="h-4 w-4" />
+      </button>
     </footer>
   );
 };
