@@ -54,12 +54,15 @@ const trustRow = [
 const platformLinks = [
   { to: "/templates", label: "Templates" },
   { to: "/pricing", label: "Pricing" },
-  { to: "/how-it-works", label: "How It Works" },
   { to: "/marketplace", label: "Addons" },
+  { to: "/how-it-works", label: "How It Works" },
 ];
 
-const supportLinks = [
-  { to: "/contact", label: "Contact Us", external: false },
+const companyLinks = [
+  { to: "/about", label: "About" },
+  { to: "/reviews", label: "Reviews" },
+  { to: "/case-studies", label: "Case Studies" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const legalLinks = [
