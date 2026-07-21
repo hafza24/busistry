@@ -188,8 +188,7 @@ const ReviewsSection = () => {
             <div className="mt-8 md:mt-auto md:pt-8 flex md:justify-end">
               <Button
                 asChild
-                size="lg"
-                className="rounded-full h-12 px-7 bg-gradient-to-r from-primary to-primary-glow shadow-brand group"
+                className="h-12 px-6 text-base rounded-lg shadow-elev group"
               >
                 <Link to="/reviews">
                   See all reviews
@@ -197,6 +196,7 @@ const ReviewsSection = () => {
                 </Link>
               </Button>
             </div>
+
           </div>
         </div>
       </div>
