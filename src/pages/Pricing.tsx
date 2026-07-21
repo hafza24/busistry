@@ -536,11 +536,13 @@ const Pricing = () => {
 
   const activeFilterCount =
     (priceMax !== null && priceMax !== priceCeiling ? 1 : 0) +
+    (priceMin !== null && priceMin !== 0 ? 1 : 0) +
     selectedPlatforms.size +
     selectedDomains.size;
 
   const clearFilters = () => {
     setPriceMax(null);
+    setPriceMin(null);
     setSelectedPlatforms(new Set());
     setSelectedDomains(new Set());
   };
