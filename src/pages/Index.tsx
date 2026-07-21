@@ -678,7 +678,7 @@ const Index = () => {
                   transition={{ delay: i * 0.08 }}
                   className={cn("group", i % 2 === 1 && "mt-4 sm:mt-8 lg:mt-12")}
                 >
-                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[3/4] w-full">
+                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] w-full">
                     <img
                       src={stepImages[i]}
                       alt={s.title}
