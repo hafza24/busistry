@@ -12,8 +12,9 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Pencil, Trash2, Upload, LayoutTemplate, Search, Wand2, ListChecks } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, LayoutTemplate, Search, Wand2, ListChecks, Plug } from "lucide-react";
 import TemplatePlansDialog from "./TemplatePlansDialog";
+import TemplateIntegrationsDialog from "./TemplateIntegrationsDialog";
 import { toast } from "sonner";
 import { TEMPLATE_CATEGORIES, TEMPLATE_CATEGORY_NAMES } from "@/lib/templateCategories";
 import { ALL_CONDITIONAL_FIELDS, FIELD_LABELS, ConditionalField, getPreset } from "@/lib/templatePresets";
@@ -72,6 +73,7 @@ const AdminTemplateManagement = () => {
   const [uploading, setUploading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [plansDialog, setPlansDialog] = useState<{ id: string; name: string } | null>(null);
+  const [integrationsDialog, setIntegrationsDialog] = useState<{ id: string; name: string } | null>(null);
 
   const { data: templates, isLoading } = useQuery({
     queryKey: ["admin_templates"],
@@ -250,6 +252,9 @@ const AdminTemplateManagement = () => {
                     <div className="flex gap-1">
                       <Button size="sm" variant="ghost" title="Compatible plans" onClick={() => setPlansDialog({ id: t.id, name: t.name })}>
                         <ListChecks className="h-4 w-4" />
+                      </Button>
+                      <Button size="sm" variant="ghost" title="Compatible integrations" onClick={() => setIntegrationsDialog({ id: t.id, name: t.name })}>
+                        <Plug className="h-4 w-4" />
                       </Button>
                       <Button size="sm" variant="ghost" onClick={() => openEdit(t)}><Pencil className="h-4 w-4" /></Button>
                       <Button size="sm" variant="ghost" className="text-destructive" onClick={() => deleteMut.mutate(t.id)}>
@@ -631,6 +636,13 @@ const AdminTemplateManagement = () => {
         templateName={plansDialog?.name}
         open={!!plansDialog}
         onOpenChange={(v) => { if (!v) setPlansDialog(null); }}
+      />
+
+      <TemplateIntegrationsDialog
+        templateId={integrationsDialog?.id ?? null}
+        templateName={integrationsDialog?.name}
+        open={!!integrationsDialog}
+        onOpenChange={(v) => { if (!v) setIntegrationsDialog(null); }}
       />
     </div>
   );
