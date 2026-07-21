@@ -212,6 +212,21 @@ const Templates = () => {
                   </button>
                 )}
               </div>
+              <div className="px-2 pb-3">
+                <label htmlFor="tpl-sort" className="block text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1.5">Sort by</label>
+                <select
+                  id="tpl-sort"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="recommended">Recommended</option>
+                  <option value="newest">Newest</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                  <option value="rating">Top rated</option>
+                </select>
+              </div>
               <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Categories</p>
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible scrollbar-none">
                 {categories.map((n) => {
