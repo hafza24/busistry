@@ -153,7 +153,7 @@ const StepPlan = ({ data, update }: Props) => {
               )}
             </div>
             <div className="flex flex-col items-end gap-1">
-              {recommendedIds.has(p.id) && !disabled && <Badge className="bg-primary/15 text-primary hover:bg-primary/20 text-[10px]">Recommended</Badge>}
+              {recommendedIds.has(p.id) && !disabled && <Badge className="bg-primary/10 text-primary hover:bg-primary/15 border-transparent text-[10px] rounded-lg px-2">Recommended</Badge>}
               {isFree && <Badge variant="secondary">Starter</Badge>}
               {disabled && <Badge variant="outline" className="text-[10px]">Not compatible</Badge>}
             </div>
