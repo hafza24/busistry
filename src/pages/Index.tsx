@@ -15,7 +15,7 @@ import SectionHeading from "@/components/SectionHeading";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Linkedin, Twitter, Mail } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
