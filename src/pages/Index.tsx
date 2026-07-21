@@ -870,21 +870,24 @@ const Index = () => {
 
       {/* FAQ */}
       <section className="py-12 md:py-16 border-b border-border/60">
-        <div className="container max-w-3xl">
-          <SectionHeading
-            className="mb-12"
-            align="left"
-            eyebrow="Fine print, plainly"
-            title="The questions everyone asks."
-          />
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((f, i) => (
-              <AccordionItem key={f.q} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left text-base font-semibold">{f.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="container grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeading
+              align="left"
+              eyebrow="Fine print, plainly"
+              title="The questions everyone asks."
+            />
+          </div>
+          <div className="lg:col-span-7">
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((f, i) => (
+                <AccordionItem key={f.q} value={`faq-${i}`}>
+                  <AccordionTrigger className="text-left text-base font-semibold">{f.q}</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
