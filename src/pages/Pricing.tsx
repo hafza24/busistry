@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import pricingHeroBg from "@/assets/pricing-hero-bg.jpg.asset.json";
 
 /* ------------------------------- Pricing card ------------------------------ */
 const PriceCard = ({
@@ -503,22 +504,51 @@ const Pricing = () => {
       />
 
       {/* Hero */}
-      <section className="pt-16 pb-10">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
-            <div className="text-center lg:text-left max-w-2xl">
-              <Badge variant="outline" className="mb-4">7-day money-back guarantee</Badge>
-              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
-                Simple, transparent pricing
+      <section className="relative overflow-hidden pt-20 pb-16">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 -z-10 bg-cover bg-center opacity-70 dark:opacity-25"
+          style={{ backgroundImage: `url(${pricingHeroBg.url})` }}
+          aria-hidden="true"
+        />
+        {/* Soft fade to page background */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/40 via-background/60 to-background" aria-hidden="true" />
+        {/* Ambient blobs */}
+        <div className="pointer-events-none absolute -top-24 -left-24 -z-10 h-[420px] w-[420px] rounded-full bg-primary/20 blur-[120px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -bottom-32 right-0 -z-10 h-[380px] w-[380px] rounded-full bg-accent/20 blur-[120px]" aria-hidden="true" />
+
+        <div className="container relative">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center max-w-6xl mx-auto">
+            <div className="lg:col-span-7 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
+                <span className="h-px w-6 bg-primary" />
+                Pricing
+              </div>
+              <h1 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground">
+                Simple, transparent{" "}
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                  pricing
+                </span>
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl lg:max-w-2xl leading-relaxed mx-auto lg:mx-0">
                 All prices in PKR. No hidden fees. Pay after we verify your details.
               </p>
+              <div className="mt-7 flex flex-wrap items-center gap-3 justify-center lg:justify-start">
+                <Badge variant="outline" className="rounded-full px-3 py-1 border-primary/30 bg-primary/5 text-primary">
+                  <ShieldCheck className="h-3.5 w-3.5 mr-1.5" /> 7-day money-back
+                </Badge>
+                <Badge variant="outline" className="rounded-full px-3 py-1">
+                  <Clock3 className="h-3.5 w-3.5 mr-1.5" /> Delivered in 48 hours
+                </Badge>
+                <Badge variant="outline" className="rounded-full px-3 py-1">
+                  <Wallet className="h-3.5 w-3.5 mr-1.5" /> JazzCash · Easypaisa · Raast
+                </Badge>
+              </div>
             </div>
             {freePlans.length > 0 && (
-              <div className="max-w-sm w-full mx-auto lg:mx-0 lg:ml-auto">
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3 text-center lg:text-left">
-                  Start free
+              <div className="lg:col-span-5 max-w-sm w-full mx-auto lg:mx-0 lg:ml-auto">
+                <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-primary mb-3 text-center lg:text-left flex items-center gap-2 justify-center lg:justify-start">
+                  <span className="h-px w-4 bg-primary" /> Start free
                 </p>
                 {freePlans.map((p) => (
                   <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
