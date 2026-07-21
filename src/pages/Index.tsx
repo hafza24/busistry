@@ -668,14 +668,14 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-6 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-5 auto-rows-[110px] sm:auto-rows-[140px] lg:auto-rows-[170px] w-full">
+            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-6 gap-3 sm:gap-4 lg:gap-5 auto-rows-[130px] sm:auto-rows-[150px] lg:auto-rows-[170px] w-full">
               {steps.map((s, i) => {
-                // Bento layout: card1 tall-left, card2 wide-top-right, card3 wide-bottom-left, card4 tall-right
+                // Explicit bento placement: tall | short-top / short-bottom | wide banner
                 const spans = [
-                  "col-span-3 row-span-2",       // 01 — tall
-                  "col-span-3 row-span-1",       // 02 — wide short
-                  "col-span-3 row-span-1",       // 03 — wide short
-                  "col-span-3 row-span-2 -mt-0 lg:-mt-[calc(170px+1.25rem)]", // 04 — tall aligned with 01
+                  "col-start-1 col-span-3 row-start-1 row-span-2",
+                  "col-start-4 col-span-3 row-start-1 row-span-1",
+                  "col-start-4 col-span-3 row-start-2 row-span-1",
+                  "col-start-1 col-span-6 row-start-3 row-span-1",
                 ];
                 return (
                   <motion.div
