@@ -611,17 +611,17 @@ const Index = () => {
                     </div>
                     <div className="flex gap-1.5 sm:gap-2">
                       {t.demo_url ? (
-                        <Button variant="default" size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3" asChild>
+                        <Button variant="outline" size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
                             Preview <ExternalLink className="h-3 w-3 ml-1 hidden sm:inline" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="default" size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3" asChild>
+                        <Button variant="outline" size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="sm" className="flex-1 rounded-full h-7 sm:h-9 text-[11px] sm:text-sm px-2 sm:px-3 bg-gradient-to-r from-primary to-primary-glow shadow-brand hover:shadow-lg hover:shadow-primary/25 hover:opacity-95 transition-all" asChild>
+                      <Button size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg group shadow-elev" asChild>
                         <Link to="/templates">
                           Select <ArrowRight className="h-3 w-3 ml-1 hidden sm:inline transition-transform group-hover:translate-x-0.5" />
                         </Link>
@@ -904,13 +904,13 @@ const Index = () => {
               subtitle="Send the brief today. Wake up Wednesday to a site that's live, written and ready to sell — nothing owed, nothing hidden."
             />
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button size="lg" variant="default" className="h-12 px-8 text-base group rounded-full" asChild>
+              <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
                 <Link to="/onboarding">
                   Start the 48-hour build
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button size="lg" variant="default" className="h-12 px-8 text-base rounded-full" asChild>
+              <Button variant="outline" size="lg" className="h-12 px-6 text-base rounded-lg" asChild>
                 <Link to="/contact">Speak to the studio</Link>
               </Button>
             </div>
