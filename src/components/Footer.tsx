@@ -301,7 +301,7 @@ const Footer = () => {
             <div className="flex flex-wrap items-center gap-2 mb-5">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
                 <MapPin className="h-3 w-3 text-primary" />
-                Islamabad, Pakistan
+                Lahore, Pakistan
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
                 <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
