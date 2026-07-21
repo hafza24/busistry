@@ -25,6 +25,7 @@ const Templates = () => {
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<"recommended" | "newest" | "price_asc" | "price_desc" | "rating">("recommended");
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
