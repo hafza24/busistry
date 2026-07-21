@@ -427,7 +427,48 @@ const Templates = () => {
                 </>
               )}
 
-              {(priceBand !== "any" || minRating !== 0 || hasDemoOnly || selectedFeatures.length > 0) && (
+              {/* Tags */}
+              {availableTags.length > 0 && (
+                <>
+                  <div className="my-3 h-px bg-border/60" />
+                  <div className="flex items-center justify-between px-2 pb-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tags</p>
+                    {selectedTags.length > 0 && (
+                      <button
+                        onClick={() => setSelectedTags([])}
+                        className="text-xs text-muted-foreground hover:text-foreground"
+                      >
+                        Clear ({selectedTags.length})
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-1 px-1 max-h-48 overflow-y-auto">
+                    {availableTags.map((tag) => {
+                      const active = selectedTags.includes(tag);
+                      return (
+                        <button
+                          key={tag}
+                          onClick={() =>
+                            setSelectedTags((cur) =>
+                              cur.includes(tag) ? cur.filter((x) => x !== tag) : [...cur, tag]
+                            )
+                          }
+                          aria-pressed={active}
+                          className={`text-xs px-2 py-1 rounded-full border transition-all ${
+                            active
+                              ? "bg-primary/10 text-primary border-primary/30 font-semibold"
+                              : "text-foreground/70 border-border/60 hover:bg-primary/5"
+                          }`}
+                        >
+                          #{tag}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {(priceBand !== "any" || minRating !== 0 || hasDemoOnly || selectedFeatures.length > 0 || selectedTags.length > 0) && (
                 <>
                   <div className="my-3 h-px bg-border/60" />
                   <button
@@ -436,6 +477,7 @@ const Templates = () => {
                       setMinRating(0);
                       setHasDemoOnly(false);
                       setSelectedFeatures([]);
+                      setSelectedTags([]);
                     }}
                     className="w-full text-left px-3 py-1.5 text-sm rounded-lg text-muted-foreground hover:bg-muted"
                   >
