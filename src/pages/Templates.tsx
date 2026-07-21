@@ -30,6 +30,7 @@ const Templates = () => {
   const [minRating, setMinRating] = useState<0 | 3 | 4 | 45>(0);
   const [hasDemoOnly, setHasDemoOnly] = useState(false);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
