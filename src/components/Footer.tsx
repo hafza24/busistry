@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ShieldCheck,
   RefreshCw,
@@ -89,6 +89,28 @@ const paymentMethods = [
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
+  const [ratingStats, setRatingStats] = useState<{ avg: number; total: number } | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { count } = await supabase
+        .from("newsletter_subscribers")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "subscribed");
+      if (typeof count === "number") setSubscriberCount(count);
+
+      const { data } = await supabase.rpc("get_feedback_rating_stats");
+      const row = Array.isArray(data) ? data[0] : data;
+      if (row) setRatingStats({ avg: Number(row.avg_rating) || 0, total: Number(row.total_reviews) || 0 });
+    })();
+  }, []);
+
+  const formatCount = (n: number) => {
+    if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k+`;
+    if (n >= 100) return `${Math.floor(n / 10) * 10}+`;
+    return `${n}`;
+  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,15 +194,29 @@ const Footer = () => {
                   </div>
                   <span className="inline-flex items-center gap-1.5 font-medium">
                     <Users className="h-3.5 w-3.5" />
-                    2,500+ founders subscribed
+                    {subscriberCount !== null
+                      ? `${formatCount(subscriberCount)} founders subscribed`
+                      : "Join founders subscribing"}
                   </span>
                 </div>
-                <div className="inline-flex items-center gap-1 font-medium">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
-                  ))}
-                  <span className="ml-1">4.9 / 5 from readers</span>
-                </div>
+                {ratingStats && ratingStats.total > 0 && (
+                  <div className="inline-flex items-center gap-1 font-medium">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <Star
+                        key={i}
+                        className={`h-3.5 w-3.5 ${
+                          i < Math.round(ratingStats.avg)
+                            ? "fill-amber-500 text-amber-500"
+                            : "text-muted-foreground/40"
+                        }`}
+                      />
+                    ))}
+                    <span className="ml-1">
+                      {ratingStats.avg.toFixed(1)} / 5 from {ratingStats.total} review
+                      {ratingStats.total === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
