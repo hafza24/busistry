@@ -26,6 +26,10 @@ const Templates = () => {
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"recommended" | "newest" | "price_asc" | "price_desc" | "rating">("recommended");
+  const [priceBand, setPriceBand] = useState<"any" | "free" | "0_5k" | "5k_15k" | "15k_plus">("any");
+  const [minRating, setMinRating] = useState<0 | 3 | 4 | 45>(0);
+  const [hasDemoOnly, setHasDemoOnly] = useState(false);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
@@ -98,7 +102,36 @@ const Templates = () => {
       )
     : bySub;
 
-  const filtered = [...searched].sort((a, b) => {
+  // Aggregate features across the current category slice for the feature filter chips
+  const availableFeatures = Array.from(
+    new Set(
+      inCategory.flatMap((t) => (Array.isArray(t.features) ? (t.features as string[]) : []))
+    )
+  ).slice(0, 12);
+
+  const advFiltered = searched.filter((t) => {
+    const price = t.price_pkr ?? 0;
+    if (priceBand === "free" && price !== 0) return false;
+    if (priceBand === "0_5k" && !(price > 0 && price <= 5000)) return false;
+    if (priceBand === "5k_15k" && !(price > 5000 && price <= 15000)) return false;
+    if (priceBand === "15k_plus" && !(price > 15000)) return false;
+
+    if (minRating > 0) {
+      const threshold = minRating === 45 ? 4.5 : minRating;
+      const avg = statMap.get(t.id)?.avg_rating ?? 0;
+      if (avg < threshold) return false;
+    }
+
+    if (hasDemoOnly && !t.demo_url) return false;
+
+    if (selectedFeatures.length > 0) {
+      const feats = Array.isArray(t.features) ? (t.features as string[]) : [];
+      if (!selectedFeatures.every((f) => feats.includes(f))) return false;
+    }
+    return true;
+  });
+
+  const filtered = [...advFiltered].sort((a, b) => {
     switch (sortBy) {
       case "newest":
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -282,6 +315,120 @@ const Templates = () => {
                       );
                     })}
                   </div>
+                </>
+              )}
+
+              {/* Price band */}
+              <div className="my-3 h-px bg-border/60" />
+              <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Price</p>
+              <div className="flex lg:flex-col flex-wrap gap-1">
+                {([
+                  ["any", "Any price"],
+                  ["free", "Free"],
+                  ["0_5k", "Up to Rs 5,000"],
+                  ["5k_15k", "Rs 5,000 – 15,000"],
+                  ["15k_plus", "Rs 15,000+"],
+                ] as const).map(([val, label]) => {
+                  const active = priceBand === val;
+                  return (
+                    <button
+                      key={val}
+                      onClick={() => setPriceBand(val)}
+                      aria-pressed={active}
+                      className={`text-left px-3 py-1.5 text-sm rounded-lg transition-all ${
+                        active ? "bg-primary/10 text-primary font-semibold" : "text-foreground/70 hover:bg-primary/5"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Minimum rating */}
+              <div className="my-3 h-px bg-border/60" />
+              <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Rating</p>
+              <div className="flex lg:flex-col flex-wrap gap-1">
+                {([
+                  [0, "Any rating"],
+                  [3, "3★ & up"],
+                  [4, "4★ & up"],
+                  [45, "4.5★ & up"],
+                ] as const).map(([val, label]) => {
+                  const active = minRating === val;
+                  return (
+                    <button
+                      key={val}
+                      onClick={() => setMinRating(val as typeof minRating)}
+                      aria-pressed={active}
+                      className={`text-left px-3 py-1.5 text-sm rounded-lg transition-all ${
+                        active ? "bg-primary/10 text-primary font-semibold" : "text-foreground/70 hover:bg-primary/5"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Availability */}
+              <div className="my-3 h-px bg-border/60" />
+              <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Availability</p>
+              <label className="flex items-center gap-2 px-3 py-1.5 text-sm text-foreground/80 cursor-pointer hover:bg-primary/5 rounded-lg">
+                <input
+                  type="checkbox"
+                  checked={hasDemoOnly}
+                  onChange={(e) => setHasDemoOnly(e.target.checked)}
+                  className="h-4 w-4 rounded border-input accent-primary"
+                />
+                Has live demo
+              </label>
+
+              {/* Features */}
+              {availableFeatures.length > 0 && (
+                <>
+                  <div className="my-3 h-px bg-border/60" />
+                  <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Features</p>
+                  <div className="flex flex-wrap gap-1 px-1">
+                    {availableFeatures.map((f) => {
+                      const active = selectedFeatures.includes(f);
+                      return (
+                        <button
+                          key={f}
+                          onClick={() =>
+                            setSelectedFeatures((cur) =>
+                              cur.includes(f) ? cur.filter((x) => x !== f) : [...cur, f]
+                            )
+                          }
+                          aria-pressed={active}
+                          className={`text-xs px-2 py-1 rounded-full border transition-all ${
+                            active
+                              ? "bg-primary/10 text-primary border-primary/30 font-semibold"
+                              : "text-foreground/70 border-border/60 hover:bg-primary/5"
+                          }`}
+                        >
+                          {f}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {(priceBand !== "any" || minRating !== 0 || hasDemoOnly || selectedFeatures.length > 0) && (
+                <>
+                  <div className="my-3 h-px bg-border/60" />
+                  <button
+                    onClick={() => {
+                      setPriceBand("any");
+                      setMinRating(0);
+                      setHasDemoOnly(false);
+                      setSelectedFeatures([]);
+                    }}
+                    className="w-full text-left px-3 py-1.5 text-sm rounded-lg text-muted-foreground hover:bg-muted"
+                  >
+                    Reset filters
+                  </button>
                 </>
               )}
             </div>
