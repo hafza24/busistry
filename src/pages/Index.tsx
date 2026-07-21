@@ -873,7 +873,7 @@ const Index = () => {
         <div className="container max-w-3xl">
           <SectionHeading
             className="mb-12"
-            align="center"
+            align="left"
             eyebrow="Fine print, plainly"
             title="The questions everyone asks."
           />
