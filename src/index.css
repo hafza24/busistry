@@ -153,6 +153,18 @@
 }
 
 @layer utilities {
+  /* Unify all non-pill radii to the token so the whole site shares one shape.
+     rounded-full is preserved for avatars, dots, and pills. */
+  .rounded-sm,
+  .rounded,
+  .rounded-md,
+  .rounded-lg,
+  .rounded-xl,
+  .rounded-2xl,
+  .rounded-3xl {
+    border-radius: var(--radius) !important;
+  }
+
   .text-gradient-brand {
     background: var(--gradient-brand);
     -webkit-background-clip: text;
