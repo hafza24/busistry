@@ -668,7 +668,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-7 grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-2 gap-3 sm:gap-5 lg:gap-6 items-start max-w-md sm:max-w-none mx-auto w-full">
               {steps.map((s, i) => (
                 <motion.div
                   key={s.num}
@@ -676,7 +676,7 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className={cn("group", i % 2 === 1 && "sm:mt-6 lg:mt-8")}
+                  className={cn("group", i % 2 === 1 && "mt-4 sm:mt-8 lg:mt-12")}
                 >
                   <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[3/4] w-full">
                     <img
