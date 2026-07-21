@@ -658,10 +658,13 @@ const Index = () => {
               What we do, exactly
             </div>
             <h2 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[18ch]">
-              The free website is the beginning — not the offer.
+              Websites that do the heavy lifting for your business.
             </h2>
             <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Four disciplines, one studio. A plan you can defend, a site that ships in two days, a brand people remember, and marketing that keeps working after the launch email.
+              Every free site ships in 48 hours with the essentials built-in — a fast, mobile-first design, a clear homepage, service or product pages, a working contact flow, WhatsApp and payment links, and on-page SEO so Google can actually find you.
+            </p>
+            <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              Need more? Add a full storefront, bookings, a blog, multi-language, custom domain and email, analytics, or a CMS you can edit yourself — all on the same site, without starting over.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
