@@ -89,9 +89,9 @@
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 0 0% 42%;           /* #6a6a6a — neutral gray */
-    --primary-foreground: 0 0% 96%;
-    --primary-glow: 0 0% 55%;      /* #8c8c8c */
+    --primary: 166 55% 52%;        /* brighter emerald for dark bg */
+    --primary-foreground: 0 0% 8%;
+    --primary-glow: 166 60% 62%;
 
     --secondary: 0 0% 15%;         /* #262626 */
     --secondary-foreground: 0 0% 93%;
