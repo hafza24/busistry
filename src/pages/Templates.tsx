@@ -151,186 +151,185 @@ const Templates = () => {
           </div>
         </section>
 
-        {/* Category nav bar — horizontal editorial style */}
-        <nav id="templates-grid" className="mb-4 rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm scroll-mt-24">
-          <div className="flex items-center gap-1 overflow-x-auto px-2 py-2 scrollbar-none">
-            {categories.map((n) => {
-              const active = activeCategory === n;
-              return (
-                <button
-                  key={n}
-                  aria-pressed={active}
-                  onClick={() => updateCategory(n)}
-                  className={`whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    active
-                      ? "bg-primary text-primary-foreground shadow"
-                      : "text-foreground/70 hover:text-primary hover:bg-primary/5"
-                  }`}
-                >
-                  {n}
-                </button>
-              );
-            })}
-          </div>
-        </nav>
-
-        {/* Subcategory filter */}
-        {subcategories.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            <Button
-              variant={activeSub === null ? "secondary" : "ghost"}
-              size="sm"
-              aria-pressed={activeSub === null}
-              onClick={() => updateSub(null)}
-              className={activeSub === null ? "ring-1 ring-primary/40 font-semibold" : ""}
-            >
-              All {activeCategory !== "All" ? activeCategory : ""}
-            </Button>
-            {subcategories.map((s) => {
-              const active = activeSub === s;
-              return (
-                <Button
-                  key={s}
-                  variant={active ? "secondary" : "ghost"}
-                  size="sm"
-                  aria-pressed={active}
-                  onClick={() => updateSub(s)}
-                  className={active ? "ring-1 ring-primary/40 font-semibold" : ""}
-                >
-                  {s}
-                </Button>
-              );
-            })}
-          </div>
-        )}
-
         {/* Category section heading */}
-        <div className="text-center mb-8" id="templates-grid">
+        <div id="templates-grid" className="text-center mb-8 scroll-mt-24">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Category</h2>
           <div className="mx-auto mt-2 h-px w-24 bg-border" />
         </div>
 
-
-        {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-5 xl:gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <Card key={i} className="border-border/50 flex flex-col overflow-hidden">
-                <Skeleton className="h-44 w-full rounded-none" />
-                <CardContent className="p-5 flex-1 space-y-3">
-                  <div className="flex gap-1">
-                    <Skeleton className="h-4 w-14" />
-                    <Skeleton className="h-4 w-16" />
-                  </div>
-                  <Skeleton className="h-5 w-3/4" />
-                  <Skeleton className="h-3 w-full" />
-                  <Skeleton className="h-3 w-5/6" />
-                  <div className="flex gap-1 pt-2">
-                    <Skeleton className="h-4 w-16" />
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-4 w-14" />
-                  </div>
-                </CardContent>
-                <CardFooter className="p-5 pt-0 grid grid-cols-3 gap-2">
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-5 xl:gap-6">
-            {filtered.map((t) => {
-              const features = Array.isArray(t.features) ? (t.features as string[]) : [];
-              const stat = statMap.get(t.id);
-              const detailsPath = t.name?.toLowerCase().includes("booker") ? "/templates/booker" : `/templates/${t.id}`;
-              const stop = (e: React.MouseEvent) => e.stopPropagation();
-              return (
-                <Card
-                  key={t.id}
-                  role="link"
-                  tabIndex={0}
-                  onClick={() => navigate(detailsPath)}
-                  onKeyDown={(e) => { if (e.key === "Enter") navigate(detailsPath); }}
-                  className="group border-border/50 hover:shadow-lg hover:border-primary/30 transition-all flex flex-col overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
-                >
-                  <div className="relative">
-                    {t.preview_image_url ? (
-                      <img src={t.preview_image_url} alt={t.name} className="h-40 md:h-36 lg:h-44 w-full object-cover" loading="lazy" />
-                    ) : (
-                      <div className="h-40 md:h-36 lg:h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
-                        <span className="text-4xl opacity-60">🖼️</span>
-                      </div>
-                    )}
-                    {stat && (
-                      <div className="absolute top-2 left-2">
-                        <ItemBadges stat={stat} />
-                      </div>
-                    )}
-                  </div>
-                  <CardContent className="p-4 md:p-4 lg:p-5 flex-1">
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {t.category && <Badge variant="default" className="text-[10px]">{t.category}</Badge>}
-                      {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
-                    </div>
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-semibold font-display text-base md:text-base lg:text-lg text-foreground line-clamp-1">{t.name}</h3>
-                    </div>
-                    {stat && stat.review_count > 0 && (
-                      <div className="flex items-center gap-2 mt-1">
-                        <RatingStars value={stat.avg_rating} />
-                        <span className="text-xs text-muted-foreground">({stat.review_count})</span>
-                      </div>
-                    )}
-                    {t.description && <p className="text-sm text-muted-foreground mt-2 mb-3 line-clamp-2">{t.description}</p>}
-                    <div className="flex flex-wrap gap-1">
-                      {features.slice(0, 4).map((f) => (
-                        <span key={f} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">{f}</span>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="p-4 md:p-4 lg:p-5 pt-0 flex flex-col gap-2">
-                    <Button
-                      size="lg"
-                      className="w-full bg-primary/90 hover:bg-primary shadow-md"
-                      onClick={(e) => { stop(e); setSelectTarget({ id: t.id, name: t.name }); }}
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6">
+          {/* Sidebar filters */}
+          <aside className="lg:sticky lg:top-24 lg:self-start">
+            <div className="rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm p-3">
+              <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Categories</p>
+              <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible scrollbar-none">
+                {categories.map((n) => {
+                  const active = activeCategory === n;
+                  return (
+                    <button
+                      key={n}
+                      aria-pressed={active}
+                      onClick={() => updateCategory(n)}
+                      className={`whitespace-nowrap lg:whitespace-normal text-left px-3 py-2 text-sm font-medium rounded-lg transition-all ${
+                        active
+                          ? "bg-primary text-primary-foreground shadow"
+                          : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                      }`}
                     >
-                      Select this template
-                    </Button>
-                    <div className="grid grid-cols-2 gap-2">
-                      {t.demo_url ? (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          title="Preview demo in a new tab"
-                          disabled={previewingId === t.id}
-                          onClick={(e) => { stop(e); openPreview(t.id, t.demo_url!); }}
+                      {n}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {subcategories.length > 0 && (
+                <>
+                  <div className="my-3 h-px bg-border/60" />
+                  <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Subcategories</p>
+                  <div className="flex lg:flex-col flex-wrap gap-1">
+                    <button
+                      onClick={() => updateSub(null)}
+                      aria-pressed={activeSub === null}
+                      className={`text-left px-3 py-1.5 text-sm rounded-lg transition-all ${
+                        activeSub === null
+                          ? "bg-primary/10 text-primary font-semibold"
+                          : "text-foreground/70 hover:bg-primary/5"
+                      }`}
+                    >
+                      All {activeCategory !== "All" ? activeCategory : ""}
+                    </button>
+                    {subcategories.map((s) => {
+                      const active = activeSub === s;
+                      return (
+                        <button
+                          key={s}
+                          onClick={() => updateSub(s)}
+                          aria-pressed={active}
+                          className={`text-left px-3 py-1.5 text-sm rounded-lg transition-all ${
+                            active
+                              ? "bg-primary/10 text-primary font-semibold"
+                              : "text-foreground/70 hover:bg-primary/5"
+                          }`}
                         >
-                          {previewingId === t.id ? (
-                            <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Loading</>
+                          {s}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+          </aside>
+
+          {/* Grid */}
+          <div>
+            {isLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Card key={i} className="border-border/50 flex flex-col overflow-hidden">
+                    <Skeleton className="h-44 w-full rounded-none" />
+                    <CardContent className="p-5 flex-1 space-y-3">
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-3 w-full" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : filtered.length === 0 ? (
+              <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6">
+                {filtered.map((t) => {
+                  const features = Array.isArray(t.features) ? (t.features as string[]) : [];
+                  const stat = statMap.get(t.id);
+                  const detailsPath = t.name?.toLowerCase().includes("booker") ? "/templates/booker" : `/templates/${t.id}`;
+                  const stop = (e: React.MouseEvent) => e.stopPropagation();
+                  return (
+                    <Card
+                      key={t.id}
+                      role="link"
+                      tabIndex={0}
+                      onClick={() => navigate(detailsPath)}
+                      onKeyDown={(e) => { if (e.key === "Enter") navigate(detailsPath); }}
+                      className="group border-border/50 hover:shadow-lg hover:border-primary/30 transition-all flex flex-col overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <div className="relative">
+                        {t.preview_image_url ? (
+                          <img src={t.preview_image_url} alt={t.name} className="h-40 md:h-36 lg:h-44 w-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="h-40 md:h-36 lg:h-44 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+                            <span className="text-4xl opacity-60">🖼️</span>
+                          </div>
+                        )}
+                        {stat && (
+                          <div className="absolute top-2 left-2">
+                            <ItemBadges stat={stat} />
+                          </div>
+                        )}
+                      </div>
+                      <CardContent className="p-4 md:p-4 lg:p-5 flex-1">
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          {t.category && <Badge variant="default" className="text-[10px]">{t.category}</Badge>}
+                          {t.subcategory && <Badge variant="secondary" className="text-[10px]">{t.subcategory}</Badge>}
+                        </div>
+                        <div className="flex items-start justify-between gap-2">
+                          <h3 className="font-semibold font-display text-base md:text-base lg:text-lg text-foreground line-clamp-1">{t.name}</h3>
+                        </div>
+                        {stat && stat.review_count > 0 && (
+                          <div className="flex items-center gap-2 mt-1">
+                            <RatingStars value={stat.avg_rating} />
+                            <span className="text-xs text-muted-foreground">({stat.review_count})</span>
+                          </div>
+                        )}
+                        {t.description && <p className="text-sm text-muted-foreground mt-2 mb-3 line-clamp-2">{t.description}</p>}
+                        <div className="flex flex-wrap gap-1">
+                          {features.slice(0, 4).map((f) => (
+                            <span key={f} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">{f}</span>
+                          ))}
+                        </div>
+                      </CardContent>
+                      <CardFooter className="p-4 md:p-4 lg:p-5 pt-0 flex flex-col gap-2">
+                        <Button
+                          size="lg"
+                          className="w-full bg-primary/90 hover:bg-primary shadow-md"
+                          onClick={(e) => { stop(e); setSelectTarget({ id: t.id, name: t.name }); }}
+                        >
+                          Select this template
+                        </Button>
+                        <div className="grid grid-cols-2 gap-2">
+                          {t.demo_url ? (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              title="Preview demo in a new tab"
+                              disabled={previewingId === t.id}
+                              onClick={(e) => { stop(e); openPreview(t.id, t.demo_url!); }}
+                            >
+                              {previewingId === t.id ? (
+                                <><Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" /> Loading</>
+                              ) : (
+                                <><Eye className="h-3.5 w-3.5 mr-1" /> Preview</>
+                              )}
+                            </Button>
                           ) : (
-                            <><Eye className="h-3.5 w-3.5 mr-1" /> Preview</>
+                            <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
+                              <Eye className="h-3.5 w-3.5 mr-1" /> Preview
+                            </Button>
                           )}
-                        </Button>
-                      ) : (
-                        <Button size="sm" variant="outline" disabled title="No demo available" onClick={stop}>
-                          <Eye className="h-3.5 w-3.5 mr-1" /> Preview
-                        </Button>
-                      )}
-                      <Button size="sm" variant="ghost" asChild onClick={stop}>
-                        <Link to={detailsPath}>
-                          <Info className="h-3.5 w-3.5 mr-1" /> Details
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardFooter>
-                </Card>
-              );
-            })}
+                          <Button size="sm" variant="ghost" asChild onClick={stop}>
+                            <Link to={detailsPath}>
+                              <Info className="h-3.5 w-3.5 mr-1" /> Details
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
       <AlertDialog open={!!selectTarget} onOpenChange={(o) => !o && setSelectTarget(null)}>
