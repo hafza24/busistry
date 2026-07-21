@@ -27,7 +27,7 @@ export default function CatalogCard({ item }: { item: CatalogItem }) {
             <Badge variant="outline" className="text-[10px]">{meta.label}</Badge>
             <div className="flex gap-1">
               {item.is_popular && <Badge variant="secondary" className="text-[10px]">Popular</Badge>}
-              {item.is_recommended && <Badge className="text-[10px]">Recommended</Badge>}
+              {item.is_recommended && <Badge className="text-[10px] bg-primary/10 text-primary hover:bg-primary/15 border-transparent rounded-lg px-2">Recommended</Badge>}
             </div>
           </div>
           <p className="font-semibold group-hover:text-neutral transition-colors line-clamp-1">{item.name}</p>

@@ -81,7 +81,7 @@ export default function CatalogItem() {
             <Badge variant="outline">{meta.label}</Badge>
             {item.category && <Badge variant="secondary">{item.category}</Badge>}
             {item.is_popular && <Badge variant="secondary">Popular</Badge>}
-            {item.is_recommended && <Badge>Recommended</Badge>}
+            {item.is_recommended && <Badge className="bg-primary/10 text-primary hover:bg-primary/15 border-transparent rounded-lg px-2">Recommended</Badge>}
           </div>
           <h1 className="font-display text-4xl md:text-5xl font-bold leading-tight">{item.name}</h1>
           {item.short_description && (

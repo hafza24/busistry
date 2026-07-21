@@ -121,8 +121,8 @@ const StepIntegrations = ({ data, update }: Props) => {
         <>
           {data.template_id && (
             <TooltipProvider delayDuration={150}>
-              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mb-3">
-                <span className="uppercase tracking-wide">
+              <div className="flex items-center gap-1.5 text-[11px] mb-3">
+                <span className="uppercase tracking-wide bg-primary/10 text-primary rounded-lg px-2 py-0.5">
                   {matchSource === "admin"
                     ? "Matched by admin mapping"
                     : matchSource === "category"
@@ -185,7 +185,7 @@ const StepIntegrations = ({ data, update }: Props) => {
                           {isFree ? "Free" : `PKR ${i.price_pkr.toLocaleString()}`}
                         </Badge>
                         {isRecommended && (
-                          <Badge className="bg-primary/15 text-primary hover:bg-primary/20 text-[10px]">
+                          <Badge className="bg-primary/10 text-primary hover:bg-primary/15 border-transparent text-[10px] rounded-lg px-2">
                             Recommended
                           </Badge>
                         )}

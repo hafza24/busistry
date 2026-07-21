@@ -200,7 +200,7 @@ const AdminAddonManagement = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {a.is_recommended && <Badge className="text-[10px] bg-primary/15 text-primary hover:bg-primary/15">Recommended</Badge>}
+                      {a.is_recommended && <Badge className="text-[10px] bg-primary/10 text-primary hover:bg-primary/15 border-transparent rounded-lg px-2">Recommended</Badge>}
                       {a.is_popular && <Badge className="text-[10px] bg-accent text-accent-foreground hover:bg-accent">Popular</Badge>}
                     </div>
                   </TableCell>
