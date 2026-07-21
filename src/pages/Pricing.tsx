@@ -493,12 +493,17 @@ const Pricing = () => {
   const platformOptions = useMemo(() => {
     const set = new Set<string>();
     (plans ?? []).forEach((p) => p.platform_type && set.add(p.platform_type));
-    return Array.from(set);
+    return Array.from(set).sort();
   }, [plans]);
   const domainOptions = useMemo(() => {
     const set = new Set<string>();
     (plans ?? []).forEach((p) => p.domain_type && set.add(p.domain_type));
-    return Array.from(set);
+    return Array.from(set).sort();
+  }, [plans]);
+  const typeOptions = useMemo(() => {
+    const set = new Set<string>();
+    (plans ?? []).forEach((p) => p.type && p.type !== "free" && set.add(p.type));
+    return ["all", ...Array.from(set).sort()];
   }, [plans]);
 
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set());
@@ -578,11 +583,11 @@ const Pricing = () => {
       <div>
         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
         <div className="mt-3 space-y-2">
-          {(["all", "rent", "buy"] as const).map((t) => (
+          {typeOptions.map((t) => (
             <button
               key={t}
               type="button"
-              onClick={() => setType(t)}
+              onClick={() => setType(t as "buy" | "rent" | "all")}
               className={`w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors ${
                 activeType === t
                   ? "bg-primary/10 text-primary font-medium"
