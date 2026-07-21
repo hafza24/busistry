@@ -171,6 +171,27 @@ const Templates = () => {
           {/* Sidebar filters */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-xl border border-border/60 bg-card/70 backdrop-blur-sm shadow-sm p-3">
+              <div className="relative mb-3">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search templates…"
+                  aria-label="Search templates"
+                  className="pl-9 pr-9 h-10"
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch("")}
+                    aria-label="Clear search"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
               <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Categories</p>
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible scrollbar-none">
                 {categories.map((n) => {
