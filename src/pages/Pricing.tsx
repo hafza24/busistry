@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Accordion,
   AccordionContent,
@@ -515,6 +516,21 @@ const Pricing = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set());
   const [selectedDomains, setSelectedDomains] = useState<Set<string>>(new Set());
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<"recommended" | "price-asc" | "price-desc" | "name-asc">("recommended");
+
+  const sortPlans = (arr: any[]) => {
+    const copy = [...arr];
+    switch (sortBy) {
+      case "price-asc":
+        return copy.sort((a, b) => (Number(a.price_pkr) || 0) - (Number(b.price_pkr) || 0));
+      case "price-desc":
+        return copy.sort((a, b) => (Number(b.price_pkr) || 0) - (Number(a.price_pkr) || 0));
+      case "name-asc":
+        return copy.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+      default:
+        return copy;
+    }
+  };
 
   const toggleInSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, value: string) =>
     setter((s) => {
@@ -533,8 +549,8 @@ const Pricing = () => {
     return true;
   };
 
-  const rentPlans = rentPlansAll.filter(filterPlan);
-  const buyPlans = buyPlansAll.filter(filterPlan);
+  const rentPlans = sortPlans(rentPlansAll.filter(filterPlan));
+  const buyPlans = sortPlans(buyPlansAll.filter(filterPlan));
 
   const rentWithPopular = rentPlans.map((p, i) => ({
     ...p,
@@ -585,6 +601,23 @@ const Pricing = () => {
           </button>
         )}
       </div>
+
+      <div>
+        <Label className="text-xs uppercase tracking-wider text-muted-foreground">Sort by</Label>
+        <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+          <SelectTrigger className="mt-3 h-10">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="recommended">Recommended</SelectItem>
+            <SelectItem value="price-asc">Price: Low to High</SelectItem>
+            <SelectItem value="price-desc">Price: High to Low</SelectItem>
+            <SelectItem value="name-asc">Name: A–Z</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Separator />
 
       <div>
         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
