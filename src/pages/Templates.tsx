@@ -267,7 +267,26 @@ const Templates = () => {
                 ))}
               </div>
             ) : filtered.length === 0 ? (
-              <p className="text-center text-muted-foreground py-20">No templates available yet.</p>
+              <div className="flex flex-col items-center justify-center text-center py-20 px-6 border border-dashed border-border/60 rounded-lg bg-muted/20">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <SearchIcon className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-display text-2xl mb-2">No templates match your search</h3>
+                <p className="text-muted-foreground max-w-md mb-6">
+                  {search
+                    ? <>We couldn't find anything for <span className="font-medium text-foreground">"{search}"</span>{activeCategory !== "All" || activeSub ? " with your current filters" : ""}. Try a different keyword or clear your filters.</>
+                    : "No templates match the selected filters. Try broadening your selection."}
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => { setSearch(""); setActiveCategory("All"); setActiveSub(null); }}
+                  >
+                    Clear all filters
+                  </Button>
+                  <Button onClick={() => navigate("/contact")}>Request a custom template</Button>
+                </div>
+              </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-6">
                 {filtered.map((t) => {
