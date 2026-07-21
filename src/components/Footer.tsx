@@ -139,37 +139,32 @@ const Footer = () => {
       </div>
 
       <div className="container relative py-16 md:py-20">
-        {/* Newsletter card */}
-        <div className="relative mb-16 overflow-hidden rounded-[2rem] border border-primary-foreground/10 bg-gradient-to-br from-primary via-primary to-primary/85 p-8 md:p-14 shadow-[0_40px_100px_-40px_hsl(var(--primary)/0.6)]">
-          {/* Card decoration */}
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-primary-foreground/10 blur-3xl" />
-            <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-primary-foreground/10 blur-3xl" />
-          </div>
-
-          <div className="relative grid md:grid-cols-5 gap-10 items-center">
-            <div className="md:col-span-3">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/15 backdrop-blur px-3 py-1 text-xs font-semibold text-primary-foreground mb-5 border border-primary-foreground/20">
-                <Sparkles className="h-3.5 w-3.5" />
-                Weekly Insights · Every Friday
+        {/* Newsletter — editorial, hero-style */}
+        <div className="relative mb-16 rounded-[2rem] border border-border/60 bg-card/40 backdrop-blur p-8 md:p-14">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div className="lg:col-span-7 text-left">
+              <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
+                <span className="h-px w-6 bg-primary" />
+                Weekly insights · Every Friday
               </div>
-              <h3 className="font-display text-3xl md:text-[2.5rem] font-bold text-primary-foreground leading-[1.1] mb-4 tracking-tight">
-                Grow every part of your business,
-                <br className="hidden md:block" /> one email at a time.
+
+              <h3 className="mt-6 font-display text-[2rem] md:text-5xl lg:text-[3.5rem] leading-[1.02] tracking-tight text-foreground max-w-[16ch]">
+                Grow your business, one email at a time.
               </h3>
-              <p className="text-primary-foreground/80 text-sm md:text-base max-w-lg leading-relaxed">
-                Playbooks for planning, digital presence, brand & packaging design, and marketing —
-                straight from the Busistree hub. No fluff, unsubscribe anytime.
+
+              <p className="mt-6 md:mt-8 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+                Playbooks for planning, digital presence, brand & packaging design,
+                and marketing — straight from the Busistree hub. No fluff,
+                unsubscribe anytime.
               </p>
 
-              {/* Social proof */}
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-primary-foreground/85 text-xs">
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-muted-foreground text-xs">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {["A", "R", "S", "M"].map((c, i) => (
                       <div
                         key={i}
-                        className="h-7 w-7 rounded-full border-2 border-primary bg-primary-foreground/25 backdrop-blur flex items-center justify-center text-[10px] font-bold text-primary-foreground"
+                        className="h-7 w-7 rounded-full border-2 border-background bg-secondary flex items-center justify-center text-[10px] font-bold text-foreground"
                       >
                         {c}
                       </div>
@@ -182,17 +177,17 @@ const Footer = () => {
                 </div>
                 <div className="inline-flex items-center gap-1 font-medium">
                   {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-amber-300 text-amber-300" />
+                    <Star key={i} className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
                   ))}
                   <span className="ml-1">4.9 / 5 from readers</span>
                 </div>
               </div>
             </div>
 
-            <form onSubmit={handleSubscribe} className="w-full md:col-span-2">
-              <div className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 shadow-inner">
+            <form onSubmit={handleSubscribe} className="w-full lg:col-span-5">
+              <div className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-background border border-border/60 shadow-elev">
                 <div className="relative flex-1">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-primary-foreground/60" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="email"
                     required
@@ -200,12 +195,12 @@ const Footer = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@business.pk"
                     aria-label="Email address"
-                    className="h-12 pl-11 rounded-xl bg-primary-foreground/5 border-0 text-primary-foreground placeholder:text-primary-foreground/50 focus-visible:ring-2 focus-visible:ring-primary-foreground/40"
+                    className="h-12 pl-11 rounded-xl bg-transparent border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/40"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="h-12 px-6 rounded-xl bg-background text-foreground hover:bg-background/90 font-bold gap-2 shadow-lg shadow-black/10"
+                  className="h-12 px-6 rounded-xl font-semibold gap-2"
                 >
                   {subscribed ? (
                     <>
@@ -218,9 +213,9 @@ const Footer = () => {
                   )}
                 </Button>
               </div>
-              <p className="text-[11px] text-primary-foreground/60 mt-3 px-1 leading-relaxed">
+              <p className="text-[11px] text-muted-foreground mt-3 px-1 leading-relaxed">
                 By subscribing you agree to our{" "}
-                <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-neutral-foreground">
+                <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-foreground">
                   Privacy Policy
                 </Link>
                 . We never share your email.
