@@ -514,7 +514,9 @@ const Pricing = () => {
     });
 
   const filterPlan = (p: any) => {
-    if (Number(p.price_pkr) > effectivePriceMax) return false;
+    const price = Number(p.price_pkr) || 0;
+    if (price > effectivePriceMax) return false;
+    if (price < effectivePriceMin) return false;
     if (selectedPlatforms.size > 0 && !selectedPlatforms.has(p.platform_type)) return false;
     if (selectedDomains.size > 0 && !selectedDomains.has(p.domain_type)) return false;
     return true;
