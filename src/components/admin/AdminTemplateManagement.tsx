@@ -73,6 +73,7 @@ const AdminTemplateManagement = () => {
   const [uploading, setUploading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [plansDialog, setPlansDialog] = useState<{ id: string; name: string } | null>(null);
+  const [integrationsDialog, setIntegrationsDialog] = useState<{ id: string; name: string } | null>(null);
 
   const { data: templates, isLoading } = useQuery({
     queryKey: ["admin_templates"],
