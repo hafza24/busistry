@@ -515,6 +515,21 @@ const Pricing = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set());
   const [selectedDomains, setSelectedDomains] = useState<Set<string>>(new Set());
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<"recommended" | "price-asc" | "price-desc" | "name-asc">("recommended");
+
+  const sortPlans = (arr: any[]) => {
+    const copy = [...arr];
+    switch (sortBy) {
+      case "price-asc":
+        return copy.sort((a, b) => (Number(a.price_pkr) || 0) - (Number(b.price_pkr) || 0));
+      case "price-desc":
+        return copy.sort((a, b) => (Number(b.price_pkr) || 0) - (Number(a.price_pkr) || 0));
+      case "name-asc":
+        return copy.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+      default:
+        return copy;
+    }
+  };
 
   const toggleInSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, value: string) =>
     setter((s) => {
