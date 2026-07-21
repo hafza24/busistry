@@ -54,12 +54,15 @@ const trustRow = [
 const platformLinks = [
   { to: "/templates", label: "Templates" },
   { to: "/pricing", label: "Pricing" },
-  { to: "/how-it-works", label: "How It Works" },
   { to: "/marketplace", label: "Addons" },
+  { to: "/how-it-works", label: "How It Works" },
 ];
 
-const supportLinks = [
-  { to: "/contact", label: "Contact Us", external: false },
+const companyLinks = [
+  { to: "/about", label: "About" },
+  { to: "/reviews", label: "Reviews" },
+  { to: "/case-studies", label: "Case Studies" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const legalLinks = [
@@ -344,31 +347,21 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
+          {/* Company */}
           <div className="col-span-1 md:col-span-2 lg:col-span-2">
             <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              Support
+              Company
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {supportLinks.map(({ to, label, external }) => (
+              {companyLinks.map(({ to, label }) => (
                 <li key={to}>
-                  {external ? (
-                    <a
-                      href={to}
-                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
-                    >
-                      <span>{label}</span>
-                      <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                    </a>
-                  ) : (
-                    <Link
-                      to={to}
-                      className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
-                    >
-                      <span>{label}</span>
-                      <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                    </Link>
-                  )}
+                  <Link
+                    to={to}
+                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
+                  >
+                    <span>{label}</span>
+                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </Link>
                 </li>
               ))}
             </ul>
