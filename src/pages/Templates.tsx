@@ -25,6 +25,7 @@ const Templates = () => {
   const [previewingId, setPreviewingId] = useState<string | null>(null);
   const [selectTarget, setSelectTarget] = useState<{ id: string; name: string } | null>(null);
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<"recommended" | "newest" | "price_asc" | "price_desc" | "rating">("recommended");
 
   // Sync URL -> state when the user navigates from the mega menu or browser back/forward
   useEffect(() => {
@@ -89,13 +90,32 @@ const Templates = () => {
   const subcategories = Array.from(new Set(inCategory.map((t) => t.subcategory).filter(Boolean) as string[]));
   const bySub = activeSub ? inCategory.filter((t) => t.subcategory === activeSub) : inCategory;
   const q = search.trim().toLowerCase();
-  const filtered = q
+  const searched = q
     ? bySub.filter((t) =>
         [t.name, t.description, t.category, t.subcategory]
           .filter(Boolean)
           .some((v) => String(v).toLowerCase().includes(q))
       )
     : bySub;
+
+  const filtered = [...searched].sort((a, b) => {
+    switch (sortBy) {
+      case "newest":
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case "price_asc":
+        return (a.price_pkr ?? 0) - (b.price_pkr ?? 0);
+      case "price_desc":
+        return (b.price_pkr ?? 0) - (a.price_pkr ?? 0);
+      case "rating": {
+        const ra = statMap.get(a.id)?.avg_rating ?? 0;
+        const rb = statMap.get(b.id)?.avg_rating ?? 0;
+        return rb - ra;
+      }
+      case "recommended":
+      default:
+        return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+    }
+  });
 
 
 
@@ -191,6 +211,21 @@ const Templates = () => {
                     <X className="h-3.5 w-3.5" />
                   </button>
                 )}
+              </div>
+              <div className="px-2 pb-3">
+                <label htmlFor="tpl-sort" className="block text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1.5">Sort by</label>
+                <select
+                  id="tpl-sort"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                  className="w-full h-9 rounded-md border border-input bg-background px-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="recommended">Recommended</option>
+                  <option value="newest">Newest</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                  <option value="rating">Top rated</option>
+                </select>
               </div>
               <p className="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Categories</p>
               <div className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible scrollbar-none">
