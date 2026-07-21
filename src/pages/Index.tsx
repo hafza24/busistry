@@ -15,7 +15,7 @@ import SectionHeading from "@/components/SectionHeading";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Linkedin, Twitter, Mail } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -166,6 +166,43 @@ const RotatingWords = () => {
   );
 };
 
+const AnimatedStat = ({ value }: { value: string }) => {
+  const match = /^(\d+(?:\.\d+)?)(.*)$/.exec(value);
+  const [display, setDisplay] = useState(match ? "0" : value);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!match) { setDisplay(value); return; }
+    const target = parseFloat(match[1]);
+    const suffix = match[2];
+    const decimals = (match[1].split(".")[1] || "").length;
+    const el = ref.current;
+    if (!el) return;
+    const run = () => {
+      if (started.current) return;
+      started.current = true;
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const current = (target * eased).toFixed(decimals);
+        setDisplay(current + suffix);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) run(); });
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [value]);
+
+  return <span ref={ref}>{display}</span>;
+};
+
 const LiveStats = () => {
   const { data } = useQuery({
     queryKey: ["home-live-stats"],
@@ -211,7 +248,7 @@ const LiveStats = () => {
           <div className="relative h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-5 md:p-6 text-center overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
             <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
             <div className="relative text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-              {s.v}
+              <AnimatedStat value={s.v} />
             </div>
             <div className="relative text-[11px] md:text-xs text-muted-foreground mt-2 font-medium tracking-[0.15em] uppercase">
               {s.l}
