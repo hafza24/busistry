@@ -99,8 +99,8 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
 
-    --accent: 0 0% 42%;
-    --accent-foreground: 0 0% 96%;
+    --accent: 166 55% 52%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 8 65% 55%;
     --destructive-foreground: 0 0% 93%;
