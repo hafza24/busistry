@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import pricingHeroBg from "@/assets/pricing-hero-bg.jpg.asset.json";
 
 /* ------------------------------- Pricing card ------------------------------ */
 const PriceCard = ({
