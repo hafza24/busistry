@@ -583,11 +583,14 @@ const Pricing = () => {
       <div>
         <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
         <div className="mt-3 space-y-2">
-          {(["all", "rent", "buy"] as const).map((t) => (
+      <div>
+        <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
+        <div className="mt-3 space-y-2">
+          {typeOptions.map((t) => (
             <button
               key={t}
               type="button"
-              onClick={() => setType(t)}
+              onClick={() => setType(t as "buy" | "rent" | "all")}
               className={`w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors ${
                 activeType === t
                   ? "bg-primary/10 text-primary font-medium"
