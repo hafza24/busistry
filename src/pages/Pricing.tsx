@@ -845,22 +845,6 @@ const Pricing = () => {
       {/* FAQ */}
       <FaqSection />
 
-      {/* Closing CTA */}
-      <section className="py-16">
-        <div className="container max-w-2xl text-center">
-          <h2 className="text-3xl font-bold font-display text-foreground mb-3">
-            Ready to launch?
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            Tell us about your business — we'll handle the rest. Verification typically takes 5–30 minutes.
-          </p>
-          <Button size="lg" asChild>
-            <Link to="/onboarding">
-              Start your build <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
 
       {comparePlans.length > 0 && (
         <div className="fixed bottom-20 md:bottom-6 right-4 z-40">
