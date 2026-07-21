@@ -269,7 +269,7 @@ const Templates = () => {
             ) : filtered.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-20 px-6 border border-dashed border-border/60 rounded-lg bg-muted/20">
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <SearchIcon className="w-6 h-6 text-primary" />
+                  <Search className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-display text-2xl mb-2">No templates match your search</h3>
                 <p className="text-muted-foreground max-w-md mb-6">
