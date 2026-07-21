@@ -668,7 +668,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+            <div className="lg:col-span-7 grid grid-cols-2 gap-3 sm:gap-4">
               {steps.map((s, i) => (
                 <motion.div
                   key={s.num}
@@ -676,9 +676,9 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className={cn("group", i % 2 === 1 && "sm:mt-10")}
+                  className={cn("group", i % 2 === 1 && "sm:mt-6 lg:mt-8")}
                 >
-                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[3/4] max-w-[240px] mx-auto w-full">
+                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[3/4] w-full">
                     <img
                       src={stepImages[i]}
                       alt={s.title}
@@ -688,13 +688,13 @@ const Index = () => {
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                    <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">
+                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 backdrop-blur px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-mono font-semibold text-primary tracking-[0.18em]">
                       <span className="h-1 w-1 rounded-full bg-primary" />
                       STEP {s.num}
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                      <h3 className="text-lg md:text-xl font-bold font-display mb-1.5 tracking-tight">{s.title}</h3>
-                      <p className="text-xs md:text-sm text-white/85 leading-relaxed">{s.desc}</p>
+                    <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-white">
+                      <h3 className="text-sm sm:text-base md:text-lg font-bold font-display mb-1 tracking-tight leading-tight">{s.title}</h3>
+                      <p className="text-[11px] sm:text-xs md:text-sm text-white/85 leading-snug line-clamp-3">{s.desc}</p>
                     </div>
                   </div>
                 </motion.div>
