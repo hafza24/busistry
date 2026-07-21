@@ -67,11 +67,12 @@ const fallbackTemplates = [
 ];
 
 const steps = [
-  { num: "01", icon: LayoutTemplate, title: "The plan, first.", desc: "Positioning, audience, offer. A written plan you can actually build on — before a single pixel is drawn.", gradient: "from-primary to-primary" },
-  { num: "02", icon: PencilRuler, title: "Your website, in 48 hours.", desc: "A launch-ready site, store or landing page — designed, written and shipped to production, free.", gradient: "from-primary to-primary-glow" },
-  { num: "03", icon: Palette, title: "A brand people remember.", desc: "Identity, packaging and product design that earns a second look — crafted in-house at BizStyle.", gradient: "from-primary to-primary" },
-  { num: "04", icon: Rocket, title: "Marketing that keeps compounding.", desc: "Launch campaigns, always-on promos and content — engineered to turn visits into loyal customers.", gradient: "from-primary to-primary" },
+  { num: "01", icon: LayoutTemplate, title: "Pick a template.", desc: "Browse 100+ launch-ready templates — stores, portfolios, landing pages. Choose the one that fits your business.", gradient: "from-primary to-primary" },
+  { num: "02", icon: PencilRuler, title: "Share your content.", desc: "Send us your logo, copy, images and products — or let us write and source them. A short form is all it takes.", gradient: "from-primary to-primary-glow" },
+  { num: "03", icon: Palette, title: "We build in 48 hours.", desc: "Our team designs, writes and ships your site to production — mobile-ready, SEO-clean and fast, free of cost.", gradient: "from-primary to-primary" },
+  { num: "04", icon: Rocket, title: "Launch & grow.", desc: "Go live on your domain, add a store, connect payments, and scale with add-ons whenever your business is ready.", gradient: "from-primary to-primary" },
 ];
+
 
 const includes = [
   { icon: Globe, title: "Positioning & business plan" },
