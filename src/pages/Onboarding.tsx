@@ -202,7 +202,7 @@ const Onboarding = () => {
           <Progress value={progressValue} className="h-1.5" />
         </div>
 
-        {(data.template_id || data.plan_id) && step === 4 && (
+        {(data.template_id || data.plan_id) && step === 3 && (
           <div className="mb-6 space-y-3">
             <TemplateSummaryCard templateId={data.template_id ?? templateId} />
             <PlanSummaryCard planId={data.plan_id ?? planId} />
