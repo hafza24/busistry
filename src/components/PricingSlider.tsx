@@ -72,7 +72,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
             </span>
           </div>
         )}
-        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted/60 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted/60 dark:bg-muted px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground dark:text-foreground/80 ring-1 ring-border/40 dark:ring-border/60">
           <span className="h-1 w-1 rounded-full bg-primary" aria-hidden="true" />
           Delivered in {tier.delivery}
         </div>
