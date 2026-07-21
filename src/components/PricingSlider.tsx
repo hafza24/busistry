@@ -87,7 +87,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
                   className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                     tier.highlighted
                       ? "bg-primary text-primary-foreground"
-                      : "bg-primary/10 text-primary"
+                      : "bg-primary/10 text-primary dark:bg-primary/20"
                   }`}
                   aria-hidden="true"
                 >
