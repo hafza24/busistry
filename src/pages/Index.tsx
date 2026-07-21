@@ -21,6 +21,7 @@ import { Linkedin, Twitter, Mail } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
@@ -654,53 +655,52 @@ const Index = () => {
           backgroundImage: "radial-gradient(circle at 20% 30%, hsl(var(--primary)/0.15), transparent 40%), radial-gradient(circle at 80% 70%, hsl(var(--accent)/0.15), transparent 40%)",
         }} />
         <div className="container">
-          <div className="max-w-4xl text-left mb-16">
-            <div className="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase text-primary">
-              <span className="h-px w-6 bg-primary" />
-              What we do, exactly
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-28">
+              <SectionHeading
+                align="left"
+                eyebrow="What we do, exactly"
+                title={<>Websites that do the <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent italic">heavy lifting</span>.</>}
+                subtitle="Every free site ships in 48 hours with the essentials built-in — a fast, mobile-first design, a clear homepage, service or product pages, a working contact flow, WhatsApp and payment links, and on-page SEO so Google can actually find you."
+              />
+              <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+                Need more? Add a full storefront, bookings, a blog, multi-language, custom domain and email, analytics, or a CMS you can edit yourself — all on the same site, without starting over.
+              </p>
             </div>
-            <h2 className="mt-6 font-display text-[2.5rem] md:text-6xl lg:text-[4.25rem] leading-[1.02] tracking-tight text-foreground max-w-[18ch]">
-              Websites that do the heavy lifting for your business.
-            </h2>
-            <p className="mt-6 md:mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Every free site ships in 48 hours with the essentials built-in — a fast, mobile-first design, a clear homepage, service or product pages, a working contact flow, WhatsApp and payment links, and on-page SEO so Google can actually find you.
-            </p>
-            <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Need more? Add a full storefront, bookings, a blog, multi-language, custom domain and email, analytics, or a CMS you can edit yourself — all on the same site, without starting over.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
-            {steps.map((s, i) => (
-              <motion.div
-                key={s.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="group"
-              >
-                <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft aspect-[4/5]">
-                  <img
-                    src={stepImages[i]}
-                    alt={s.title}
-                    loading="lazy"
-                    width={1024}
-                    height={1280}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">
-                    STEP {s.num}
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                    <h3 className="text-lg font-bold font-display mb-1.5 tracking-tight">{s.title}</h3>
-                    <p className="text-xs text-white/85 leading-relaxed">{s.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
 
+            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+              {steps.map((s, i) => (
+                <motion.div
+                  key={s.num}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className={cn("group", i % 2 === 1 && "sm:mt-10")}
+                >
+                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[4/5]">
+                    <img
+                      src={stepImages[i]}
+                      alt={s.title}
+                      loading="lazy"
+                      width={1024}
+                      height={1280}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                    <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-[10px] font-mono font-semibold text-primary tracking-[0.2em]">
+                      <span className="h-1 w-1 rounded-full bg-primary" />
+                      STEP {s.num}
+                    </div>
+                    <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                      <h3 className="text-lg md:text-xl font-bold font-display mb-1.5 tracking-tight">{s.title}</h3>
+                      <p className="text-xs md:text-sm text-white/85 leading-relaxed">{s.desc}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
