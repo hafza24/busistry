@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import SEO from "@/components/SEO";
@@ -6,6 +6,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Separator } from "@/components/ui/separator";
 import {
   Accordion,
   AccordionContent,
@@ -23,6 +27,8 @@ import {
   Check,
   Minus,
   ChevronDown,
+  SlidersHorizontal,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -464,8 +470,56 @@ const Pricing = () => {
   const activeType: "buy" | "rent" | "all" = rawType === "buy" ? "buy" : rawType === "all" ? "all" : "rent";
 
   const freePlans = plans?.filter((p) => p.type === "free") ?? [];
-  const rentPlans = plans?.filter((p) => p.type === "rent") ?? [];
-  const buyPlans = plans?.filter((p) => p.type === "buy") ?? [];
+  const rentPlansAll = plans?.filter((p) => p.type === "rent") ?? [];
+  const buyPlansAll = plans?.filter((p) => p.type === "buy") ?? [];
+
+  const setType = (t: "buy" | "rent" | "all") => {
+    const next = new URLSearchParams(searchParams);
+    next.set("type", t);
+    setSearchParams(next, { replace: true });
+  };
+
+  // Sidebar filter state
+  const priceCeiling = useMemo(() => {
+    const all = [...rentPlansAll, ...buyPlansAll];
+    const max = all.reduce((m, p) => Math.max(m, Number(p.price_pkr) || 0), 0);
+    return Math.max(1000, Math.ceil(max / 500) * 500);
+  }, [rentPlansAll, buyPlansAll]);
+  const [priceMax, setPriceMax] = useState<number | null>(null);
+  const effectivePriceMax = priceMax ?? priceCeiling;
+
+  const platformOptions = useMemo(() => {
+    const set = new Set<string>();
+    (plans ?? []).forEach((p) => p.platform_type && set.add(p.platform_type));
+    return Array.from(set);
+  }, [plans]);
+  const domainOptions = useMemo(() => {
+    const set = new Set<string>();
+    (plans ?? []).forEach((p) => p.domain_type && set.add(p.domain_type));
+    return Array.from(set);
+  }, [plans]);
+
+  const [selectedPlatforms, setSelectedPlatforms] = useState<Set<string>>(new Set());
+  const [selectedDomains, setSelectedDomains] = useState<Set<string>>(new Set());
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  const toggleInSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, value: string) =>
+    setter((s) => {
+      const next = new Set(s);
+      if (next.has(value)) next.delete(value);
+      else next.add(value);
+      return next;
+    });
+
+  const filterPlan = (p: any) => {
+    if (Number(p.price_pkr) > effectivePriceMax) return false;
+    if (selectedPlatforms.size > 0 && !selectedPlatforms.has(p.platform_type)) return false;
+    if (selectedDomains.size > 0 && !selectedDomains.has(p.domain_type)) return false;
+    return true;
+  };
+
+  const rentPlans = rentPlansAll.filter(filterPlan);
+  const buyPlans = buyPlansAll.filter(filterPlan);
 
   const rentWithPopular = rentPlans.map((p, i) => ({
     ...p,
@@ -476,10 +530,15 @@ const Pricing = () => {
     popular: buyPlans.length >= 3 ? i === Math.floor(buyPlans.length / 2) : false,
   }));
 
-  const setType = (t: "buy" | "rent" | "all") => {
-    const next = new URLSearchParams(searchParams);
-    next.set("type", t);
-    setSearchParams(next, { replace: true });
+  const activeFilterCount =
+    (priceMax !== null && priceMax !== priceCeiling ? 1 : 0) +
+    selectedPlatforms.size +
+    selectedDomains.size;
+
+  const clearFilters = () => {
+    setPriceMax(null);
+    setSelectedPlatforms(new Set());
+    setSelectedDomains(new Set());
   };
 
   const MAX_COMPARE = 3;
@@ -494,6 +553,106 @@ const Pricing = () => {
   const clearCompare = () => setCompareIds(new Set());
   const comparePlans = (plans ?? []).filter((p) => compareIds.has(p.id));
   const compareDisabled = comparePlans.length >= MAX_COMPARE;
+
+  const FiltersPanel = () => (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-lg text-foreground">Filters</h3>
+        {activeFilterCount > 0 && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+          >
+            Clear all
+          </button>
+        )}
+      </div>
+
+      <div>
+        <Label className="text-xs uppercase tracking-wider text-muted-foreground">Type</Label>
+        <div className="mt-3 space-y-2">
+          {(["all", "rent", "buy"] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setType(t)}
+              className={`w-full text-left px-3 py-2 rounded-md text-sm capitalize transition-colors ${
+                activeType === t
+                  ? "bg-primary/10 text-primary font-medium"
+                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+              }`}
+              aria-pressed={activeType === t}
+            >
+              {t === "all" ? "All plans" : `${t} plans`}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <Label className="text-xs uppercase tracking-wider text-muted-foreground">Max price</Label>
+          <span className="text-xs font-medium text-foreground">
+            PKR {effectivePriceMax.toLocaleString()}
+          </span>
+        </div>
+        <Slider
+          value={[effectivePriceMax]}
+          min={0}
+          max={priceCeiling}
+          step={100}
+          onValueChange={(v) => setPriceMax(v[0])}
+        />
+        <div className="mt-1.5 flex justify-between text-[10px] text-muted-foreground">
+          <span>PKR 0</span>
+          <span>PKR {priceCeiling.toLocaleString()}</span>
+        </div>
+      </div>
+
+      {platformOptions.length > 0 && (
+        <>
+          <Separator />
+          <div>
+            <Label className="text-xs uppercase tracking-wider text-muted-foreground">Platform</Label>
+            <div className="mt-3 space-y-2">
+              {platformOptions.map((v) => (
+                <label key={v} className="flex items-center gap-2 cursor-pointer text-sm">
+                  <Checkbox
+                    checked={selectedPlatforms.has(v)}
+                    onCheckedChange={() => toggleInSet(setSelectedPlatforms, v)}
+                  />
+                  <span className="capitalize text-foreground">{v}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {domainOptions.length > 0 && (
+        <>
+          <Separator />
+          <div>
+            <Label className="text-xs uppercase tracking-wider text-muted-foreground">Domain</Label>
+            <div className="mt-3 space-y-2">
+              {domainOptions.map((v) => (
+                <label key={v} className="flex items-center gap-2 cursor-pointer text-sm">
+                  <Checkbox
+                    checked={selectedDomains.has(v)}
+                    onCheckedChange={() => toggleInSet(setSelectedDomains, v)}
+                  />
+                  <span className="text-foreground">{fmtDomain(v)}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
 
   return (
     <div className="pb-24 md:pb-0">
@@ -567,98 +726,94 @@ const Pricing = () => {
       {/* Plan cards */}
       <section id="plans" className="py-16 scroll-mt-24">
         <div className="container">
-
           {isLoading ? (
             <div className="py-16 flex justify-center">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <>
-
-
-              <div className="flex justify-center mb-10">
-                <div className="inline-flex rounded-full border border-border bg-card p-1">
-                  <button
-                    type="button"
-                    onClick={() => setType("all")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "all"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "all"}
-                  >
-                    All
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setType("rent")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "rent"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "rent"}
-                  >
-                    Rent
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setType("buy")}
-                    className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
-                      activeType === "buy"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                    aria-pressed={activeType === "buy"}
-                  >
-                    Buy
-                  </button>
+            <div className="grid lg:grid-cols-[16rem_1fr] gap-8 lg:gap-10">
+              {/* Desktop sidebar */}
+              <aside className="hidden lg:block">
+                <div className="sticky top-24 rounded-lg border border-border bg-card/50 p-5">
+                  <FiltersPanel />
                 </div>
+              </aside>
+
+              {/* Mobile filter toggle */}
+              <div className="lg:hidden mb-2 flex items-center justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setMobileFiltersOpen((v) => !v)}
+                >
+                  <SlidersHorizontal className="h-4 w-4 mr-2" />
+                  Filters
+                  {activeFilterCount > 0 && (
+                    <Badge className="ml-2" variant="secondary">{activeFilterCount}</Badge>
+                  )}
+                </Button>
+                <span className="text-xs text-muted-foreground capitalize">
+                  {activeType === "all" ? "All plans" : `${activeType} plans`}
+                </span>
               </div>
-
-              {(activeType === "rent" || activeType === "all") && rentWithPopular.length > 0 && (
-                <div className="mb-16">
-                  <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Rent Plans</h2>
-                  <p className="text-center text-muted-foreground mb-8 text-sm">
-                    Pay monthly, cancel anytime
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-                    {rentWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
-                    ))}
-                  </div>
+              {mobileFiltersOpen && (
+                <div className="lg:hidden rounded-lg border border-border bg-card/50 p-5 -mt-2 mb-4">
+                  <FiltersPanel />
                 </div>
               )}
 
-              {(activeType === "buy" || activeType === "all") && buyWithPopular.length > 0 && (
-                <div>
-                  <h2 className="text-2xl font-bold font-display text-center mb-2 text-foreground">Buy Plans</h2>
-                  <p className="text-center text-muted-foreground mb-8 text-sm">
-                    One-time payment, own it forever
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-                    {buyWithPopular.map((p) => (
-                      <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
-                    ))}
+              <div className="min-w-0">
+                {(activeType === "rent" || activeType === "all") && rentWithPopular.length > 0 && (
+                  <div className="mb-14">
+                    <h2 className="text-2xl font-bold font-display mb-1 text-foreground">Rent Plans</h2>
+                    <p className="text-muted-foreground mb-6 text-sm">
+                      Pay monthly, cancel anytime
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                      {rentWithPopular.map((p) => (
+                        <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {activeType === "rent" && rentWithPopular.length === 0 && (
-                <p className="text-center text-muted-foreground py-12">No rent plans available yet.</p>
-              )}
-              {activeType === "buy" && buyWithPopular.length === 0 && (
-                <p className="text-center text-muted-foreground py-12">No buy plans available yet.</p>
-              )}
+                {(activeType === "buy" || activeType === "all") && buyWithPopular.length > 0 && (
+                  <div>
+                    <h2 className="text-2xl font-bold font-display mb-1 text-foreground">Buy Plans</h2>
+                    <p className="text-muted-foreground mb-6 text-sm">
+                      One-time payment, own it forever
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+                      {buyWithPopular.map((p) => (
+                        <PriceCard key={p.id} {...p} onCompare={toggleCompare} isComparing={compareIds.has(p.id)} compareDisabled={compareDisabled} />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {!plans?.length && (
-                <p className="text-center text-muted-foreground py-12">No plans available yet.</p>
-              )}
-            </>
+                {((activeType === "rent" && rentWithPopular.length === 0) ||
+                  (activeType === "buy" && buyWithPopular.length === 0) ||
+                  (activeType === "all" && rentWithPopular.length === 0 && buyWithPopular.length === 0)) && (
+                  <div className="py-16 text-center border border-dashed border-border rounded-lg">
+                    <p className="text-muted-foreground mb-3">No plans match your filters.</p>
+                    {activeFilterCount > 0 && (
+                      <Button variant="outline" size="sm" onClick={clearFilters}>
+                        <X className="h-4 w-4 mr-1.5" /> Clear filters
+                      </Button>
+                    )}
+                  </div>
+                )}
+
+                {!plans?.length && (
+                  <p className="text-center text-muted-foreground py-12">No plans available yet.</p>
+                )}
+              </div>
+            </div>
           )}
         </div>
       </section>
+
 
       {/* Reassurance */}
       <ReassuranceRow />
