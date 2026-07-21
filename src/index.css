@@ -81,61 +81,59 @@
 
 
   .dark {
-    /* Neutral gray dark theme anchored on #6a6a6a */
-    --background: 0 0% 7%;         /* #121212 */
-    --foreground: 0 0% 93%;        /* #ededed */
+    /* Emerald Prestige — dark */
+    --background: 160 40% 6%;
+    --foreground: 46 55% 94%;
 
-    --card: 0 0% 10%;              /* #1a1a1a */
-    --card-foreground: 0 0% 93%;
+    --card: 160 35% 9%;
+    --card-foreground: 46 55% 94%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 93%;
+    --popover: 160 35% 9%;
+    --popover-foreground: 46 55% 94%;
 
-    --primary: 166 55% 52%;        /* brighter emerald for dark bg */
-    --primary-foreground: 0 0% 8%;
-    --primary-glow: 166 60% 62%;
+    --primary: 44 60% 60%;           /* gold as accent action in dark */
+    --primary-foreground: 160 60% 10%;
+    --primary-glow: 44 70% 70%;
 
-    --secondary: 0 0% 15%;         /* #262626 */
-    --secondary-foreground: 0 0% 93%;
+    --secondary: 160 30% 14%;
+    --secondary-foreground: 46 55% 94%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 63%;  /* #a0a0a0 — legible secondary text */
+    --muted: 160 25% 14%;
+    --muted-foreground: 46 20% 70%;
 
-    --accent: 166 55% 52%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 162 70% 42%;
+    --accent-foreground: 160 60% 8%;
 
     --destructive: 8 65% 55%;
-    --destructive-foreground: 0 0% 93%;
+    --destructive-foreground: 46 55% 94%;
 
-    --border: 0 0% 22%;            /* #383838 — subtle divider */
-    --input: 0 0% 22%;
-    --ring: 166 55% 52%;
+    --border: 160 25% 20%;
+    --input: 160 25% 20%;
+    --ring: 44 60% 60%;
 
-    /* Neutral gray anchor — #6a6a6a */
     --neutral: 0 0% 42%;
-    --neutral-foreground: 0 0% 93%;
+    --neutral-foreground: 46 55% 94%;
 
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 166 55% 52%;
-    --sidebar-primary-foreground: 0 0% 8%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 93%;
+    --sidebar-background: 160 35% 9%;
+    --sidebar-foreground: 46 55% 94%;
+    --sidebar-primary: 44 60% 60%;
+    --sidebar-primary-foreground: 160 60% 10%;
+    --sidebar-accent: 160 30% 14%;
+    --sidebar-accent-foreground: 46 55% 94%;
 
-    --sidebar-border: 0 0% 22%;
-    --sidebar-ring: 166 55% 52%;
+    --sidebar-border: 160 25% 20%;
+    --sidebar-ring: 44 60% 60%;
 
-    --success: 166 55% 52%;
-    --success-foreground: 0 0% 8%;
-    --warning: 32 90% 55%;
-    --warning-foreground: 0 0% 10%;
-    --info: 166 55% 52%;
-    --info-foreground: 0 0% 8%;
+    --success: 162 70% 42%;
+    --success-foreground: 160 60% 8%;
+    --warning: 44 70% 55%;
+    --warning-foreground: 160 60% 10%;
+    --info: 162 70% 42%;
+    --info-foreground: 160 60% 8%;
 
-    /* Emerald gradient in dark mode */
-    --gradient-brand: linear-gradient(135deg, hsl(166 25% 38%), hsl(0 0% 18%));
-
+    --gradient-brand: linear-gradient(135deg, hsl(160 60% 22%), hsl(162 70% 32%) 55%, hsl(44 60% 55%));
   }
+
 }
 
 @layer base {
