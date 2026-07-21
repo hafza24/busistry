@@ -131,7 +131,7 @@
     --info-foreground: 0 0% 8%;
 
     /* Emerald gradient in dark mode */
-    --gradient-brand: linear-gradient(135deg, hsl(166 55% 52%), hsl(166 60% 32%));
+    --gradient-brand: linear-gradient(135deg, hsl(166 25% 38%), hsl(0 0% 18%));
 
   }
 }
