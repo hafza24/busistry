@@ -600,23 +600,28 @@ const Pricing = () => {
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <Label className="text-xs uppercase tracking-wider text-muted-foreground">Max price</Label>
+          <Label className="text-xs uppercase tracking-wider text-muted-foreground">Price range</Label>
           <span className="text-xs font-medium text-foreground">
-            PKR {effectivePriceMax.toLocaleString()}
+            PKR {effectivePriceMin.toLocaleString()} – {effectivePriceMax.toLocaleString()}
           </span>
         </div>
         <Slider
-          value={[effectivePriceMax]}
+          value={[effectivePriceMin, effectivePriceMax]}
           min={0}
           max={priceCeiling}
           step={100}
-          onValueChange={(v) => setPriceMax(v[0])}
+          minStepsBetweenThumbs={1}
+          onValueChange={(v) => {
+            setPriceMin(v[0]);
+            setPriceMax(v[1]);
+          }}
         />
         <div className="mt-1.5 flex justify-between text-[10px] text-muted-foreground">
           <span>PKR 0</span>
           <span>PKR {priceCeiling.toLocaleString()}</span>
         </div>
       </div>
+
 
       {platformOptions.length > 0 && (
         <>
