@@ -185,7 +185,7 @@ const StepIntegrations = ({ data, update }: Props) => {
                           {isFree ? "Free" : `PKR ${i.price_pkr.toLocaleString()}`}
                         </Badge>
                         {isRecommended && (
-                          <Badge className="bg-primary/15 text-primary hover:bg-primary/20 text-[10px]">
+                          <Badge className="bg-primary/10 text-primary hover:bg-primary/15 border-transparent text-[10px] rounded-lg px-2">
                             Recommended
                           </Badge>
                         )}
