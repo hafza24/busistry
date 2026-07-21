@@ -211,7 +211,7 @@ const LiveStats = () => {
           <div className="relative h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-5 md:p-6 text-center overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
             <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
             <div className="relative text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-              {s.v}
+              <AnimatedStat value={s.v} />
             </div>
             <div className="relative text-[11px] md:text-xs text-muted-foreground mt-2 font-medium tracking-[0.15em] uppercase">
               {s.l}
