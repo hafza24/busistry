@@ -115,16 +115,16 @@
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 0 0% 42%;
-    --sidebar-primary-foreground: 0 0% 96%;
+    --sidebar-primary: 166 55% 52%;
+    --sidebar-primary-foreground: 0 0% 8%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 93%;
 
     --sidebar-border: 0 0% 22%;
-    --sidebar-ring: 0 0% 55%;
+    --sidebar-ring: 166 55% 52%;
 
-    --success: 0 0% 55%;
-    --success-foreground: 0 0% 10%;
+    --success: 166 55% 52%;
+    --success-foreground: 0 0% 8%;
     --warning: 32 90% 55%;
     --warning-foreground: 0 0% 10%;
     --info: 0 0% 55%;
