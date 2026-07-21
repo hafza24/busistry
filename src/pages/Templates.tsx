@@ -110,6 +110,12 @@ const Templates = () => {
     )
   ).slice(0, 12);
 
+  const availableTags = Array.from(
+    new Set(
+      inCategory.flatMap((t) => (Array.isArray((t as { tags?: unknown }).tags) ? ((t as { tags?: string[] }).tags as string[]) : []))
+    )
+  ).sort();
+
   const advFiltered = searched.filter((t) => {
     const price = t.price_pkr ?? 0;
     if (priceBand === "free" && price !== 0) return false;
@@ -128,6 +134,11 @@ const Templates = () => {
     if (selectedFeatures.length > 0) {
       const feats = Array.isArray(t.features) ? (t.features as string[]) : [];
       if (!selectedFeatures.every((f) => feats.includes(f))) return false;
+    }
+
+    if (selectedTags.length > 0) {
+      const tags = Array.isArray((t as { tags?: unknown }).tags) ? ((t as { tags?: string[] }).tags as string[]) : [];
+      if (!selectedTags.some((tag) => tags.includes(tag))) return false;
     }
     return true;
   });
