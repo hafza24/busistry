@@ -33,13 +33,13 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
       aria-label={`${tier.name}, ${idx + 1} of ${tiersLength}`}
       className={`group relative shrink-0 w-[280px] sm:w-[300px] rounded-lg p-6 border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 flex flex-col ${
         tier.highlighted
-          ? "bg-card border-primary/40 shadow-elev hover:shadow-brand"
-          : "bg-card/70 backdrop-blur-sm border-border/70 shadow-soft hover:border-primary/30 hover:shadow-elev"
+          ? "bg-card border-primary/40 shadow-elev hover:shadow-brand dark:bg-card/95 dark:border-primary/50 dark:shadow-[0_0_0_1px_hsl(var(--primary)/0.25),0_20px_50px_-20px_hsl(var(--primary)/0.35)]"
+          : "bg-card/70 backdrop-blur-sm border-border/70 shadow-soft hover:border-primary/30 hover:shadow-elev dark:bg-card/80 dark:border-border dark:hover:border-primary/40"
       }`}
     >
       {tier.highlighted && (
         <>
-          <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.06]" />
+          <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.06] dark:from-primary/[0.14] dark:to-accent/[0.10]" />
           <div className="absolute -top-2.5 left-6 inline-flex items-center gap-1 rounded-sm bg-primary px-2 py-0.5 text-[9px] font-mono font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-brand">
             <Sparkles className="h-2.5 w-2.5" aria-hidden="true" /> Popular
           </div>
@@ -72,7 +72,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
             </span>
           </div>
         )}
-        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted/60 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted/60 dark:bg-muted px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground dark:text-foreground/80 ring-1 ring-border/40 dark:ring-border/60">
           <span className="h-1 w-1 rounded-full bg-primary" aria-hidden="true" />
           Delivered in {tier.delivery}
         </div>
@@ -87,7 +87,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
                   className={`h-4 w-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
                     tier.highlighted
                       ? "bg-primary text-primary-foreground"
-                      : "bg-primary/10 text-primary"
+                      : "bg-primary/10 text-primary dark:bg-primary/20"
                   }`}
                   aria-hidden="true"
                 >
