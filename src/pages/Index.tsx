@@ -810,21 +810,6 @@ const Index = () => {
       </section>
 
 
-      {/* Team */}
-      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
-        <div className="container">
-          <SectionHeading
-            className="mb-14"
-            align="center"
-            eyebrow="The studio"
-            title={<>The people who <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">build it, on time.</span></>}
-            subtitle="A small, senior team — strategy, design, engineering and marketing — sitting in one room, working on your business together."
-          />
-
-          <TeamDeck />
-
-        </div>
-      </section>
 
       <ReviewsSection />
 
