@@ -77,25 +77,31 @@ const ReviewsSection = () => {
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
       <div className="container max-w-6xl relative">
+        {/* Section heading — left-aligned, full width */}
+        <div className="mb-12 md:mb-16 max-w-3xl">
+          <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-medium tracking-[0.16em] sm:tracking-[0.18em] uppercase text-primary">
+            <span className="h-px w-5 sm:w-6 bg-primary" />
+            Reviews
+          </div>
+          <h2
+            id="reviews-heading"
+            className="mt-4 sm:mt-5 md:mt-6 font-display text-[2rem] sm:text-[2.5rem] md:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.05] md:leading-[1.02] tracking-tight text-foreground max-w-[18ch]"
+          >
+            Loved by{" "}
+            <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent italic">
+              business owners
+            </span>
+          </h2>
+          <p className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            Real feedback from real Busistree customers.
+          </p>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-14 md:gap-10 items-center">
           {/* LEFT — Stats */}
           <div>
-            <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-medium tracking-[0.16em] sm:tracking-[0.18em] uppercase text-primary">
-              <span className="h-px w-5 sm:w-6 bg-primary" />
-              Reviews
-            </div>
-            <h2
-              id="reviews-heading"
-              className="mt-4 sm:mt-5 md:mt-6 font-display text-[2rem] sm:text-[2.5rem] md:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.05] md:leading-[1.02] tracking-tight text-foreground max-w-[18ch]"
-            >
-              Loved by{" "}
-              <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent italic">
-                business owners
-              </span>
-            </h2>
-            <p className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              Real feedback from real Busistree customers.
-            </p>
+
+
 
 
             {/* Big rating block */}
