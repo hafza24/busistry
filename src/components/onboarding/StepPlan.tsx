@@ -199,6 +199,30 @@ const StepPlan = ({ data, update }: Props) => {
             </div>
           )}
 
+          {compatiblePlans.length > 0 && data.template_id && (
+            <TooltipProvider delayDuration={150}>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <span className="uppercase tracking-wide">
+                  {compatibleIds.size > 0 ? "Matched by admin mapping" : "Matched by tech stack"}
+                </span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button type="button" aria-label="How were these plans matched?" className="inline-flex">
+                      <Info className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="max-w-xs text-xs">
+                    {compatibleIds.size > 0
+                      ? "Our team manually approved these plans for this template in the admin dashboard (template_plans mapping)."
+                      : templatePlatform
+                        ? `No admin mapping exists yet, so we inferred compatibility from the template's tech stack (detected: ${templatePlatform}).`
+                        : "No admin mapping and no tech-stack hints found, so all active plans are shown."}
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </TooltipProvider>
+          )}
+
           {compatiblePlans.length > 0 && (
             <div className="grid sm:grid-cols-2 gap-3">
               {compatiblePlans.map((p: any) => renderCard(p, false))}
