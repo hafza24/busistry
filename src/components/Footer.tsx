@@ -261,26 +261,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Trust row */}
-        <ul
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 pb-12 mb-12 border-b border-border/60"
-          aria-label="Trust signals"
-        >
-          {trustRow.map(({ icon: Icon, label, sub, tint }) => (
-            <li
-              key={label}
-              className={`group relative flex items-center gap-3 rounded-2xl border border-border/60 bg-gradient-to-br ${tint} bg-card/60 backdrop-blur p-3.5 md:p-4 hover:border-primary/40 hover:shadow-[0_12px_30px_-15px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5 transition-all duration-300`}
-            >
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-background/80 text-primary ring-1 ring-border/60 group-hover:bg-neutral group-hover:text-neutral-foreground group-hover:ring-neutral transition-colors">
-                <Icon className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-semibold text-sm text-foreground truncate">{label}</p>
-                <p className="text-xs text-muted-foreground truncate">{sub}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
 
         {/* Main grid */}
         <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-12 gap-8 md:gap-10">
