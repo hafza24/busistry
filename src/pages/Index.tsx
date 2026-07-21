@@ -668,37 +668,63 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-2 lg:grid-rows-2 gap-3 sm:gap-4 lg:gap-5 max-w-md sm:max-w-none mx-auto w-full lg:h-full auto-rows-fr">
-              {steps.map((s, i) => (
-                <motion.div
-                  key={s.num}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="group h-full"
-                >
-                  <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft aspect-[4/5] sm:aspect-[5/6] lg:aspect-auto lg:h-full w-full">
-                    <img
-                      src={stepImages[i]}
-                      alt={s.title}
-                      loading="lazy"
-                      width={1024}
-                      height={1280}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 backdrop-blur px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-mono font-semibold text-primary tracking-[0.18em]">
-                      <span className="h-1 w-1 rounded-full bg-primary" />
-                      STEP {s.num}
+            <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-6 gap-3 sm:gap-4 lg:gap-5 auto-rows-[130px] sm:auto-rows-[150px] lg:auto-rows-[170px] w-full">
+              {steps.map((s, i) => {
+                // Explicit bento placement: tall | short-top / short-bottom | wide banner
+                const spans = [
+                  "col-start-1 col-span-3 row-start-1 row-span-2",
+                  "col-start-4 col-span-3 row-start-1 row-span-1",
+                  "col-start-4 col-span-3 row-start-2 row-span-1",
+                  "col-start-1 col-span-6 row-start-3 row-span-1",
+                ];
+                return (
+                  <motion.div
+                    key={s.num}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className={cn("group relative", spans[i])}
+                  >
+                    <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft h-full w-full transition-shadow duration-500 group-hover:shadow-brand">
+                      <img
+                        src={stepImages[i]}
+                        alt={s.title}
+                        loading="lazy"
+                        width={1024}
+                        height={1280}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/0" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-transparent to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      {/* Step number — oversized display numeral */}
+                      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 font-display text-3xl sm:text-4xl lg:text-5xl leading-none text-white/25 group-hover:text-white/60 transition-colors duration-500 tabular-nums">
+                        {s.num}
+                      </div>
+
+                      {/* Eyebrow chip */}
+                      <div className="absolute top-3 left-3 sm:top-4 sm:left-4 inline-flex items-center gap-1.5 text-[9px] sm:text-[10px] font-mono font-semibold text-primary-foreground/95 tracking-[0.2em]">
+                        <span className="h-px w-4 sm:w-5 bg-primary" />
+                        STEP
+                      </div>
+
+                      {/* Content */}
+                      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 lg:p-5 text-white">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-bold font-display mb-1 tracking-tight leading-tight">
+                          {s.title}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs lg:text-sm text-white/80 leading-snug line-clamp-2 lg:line-clamp-3">
+                          {s.desc}
+                        </p>
+                      </div>
+
+                      {/* Corner accent */}
+                      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full" />
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-white">
-                      <h3 className="text-sm sm:text-base md:text-lg font-bold font-display mb-1 tracking-tight leading-tight">{s.title}</h3>
-                      <p className="text-[11px] sm:text-xs md:text-sm text-white/85 leading-snug line-clamp-3">{s.desc}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
