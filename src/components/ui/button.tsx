@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 // - Very subtle shadow
 // - Generous horizontal padding for whitespace
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[12px] text-sm font-semibold border border-border/70 shadow-[0_1px_2px_hsl(160_20%_10%/0.04)] ring-offset-background transition-[transform,background-color,box-shadow,color,border-color] duration-200 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground disabled:border-border disabled:shadow-none disabled:hover:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold border border-border/70 shadow-elev ring-offset-background transition-[transform,background-color,box-shadow,color,border-color] duration-200 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:bg-muted disabled:text-muted-foreground disabled:border-border disabled:shadow-none disabled:hover:translate-y-0 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -43,10 +43,10 @@ const buttonVariants = cva(
       },
 
       size: {
-        default: "h-[52px] px-6 py-2",
-        sm: "h-10 px-4",
-        lg: "h-[52px] px-8",
-        icon: "h-[52px] w-[52px]",
+        default: "h-12 px-6 py-2 [&_svg]:size-4",
+        sm: "h-10 px-4 text-sm [&_svg]:size-4",
+        lg: "h-12 px-6 [&_svg]:size-4",
+        icon: "h-12 w-12 [&_svg]:size-4",
       },
     },
     defaultVariants: {
