@@ -829,7 +829,7 @@ const Index = () => {
       {/* Biztyle — Sister brand highlight */}
       <section className="relative py-12 md:py-16 overflow-hidden bg-[#0b0616] border-y border-primary/20">
         {/* Aurora glows */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.35),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(217,70,239,0.28),transparent_55%)]" />
+        
         {/* Floating orbs */}
         <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
