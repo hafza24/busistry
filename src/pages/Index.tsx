@@ -635,13 +635,14 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button variant="ghost" className="rounded-full group" asChild>
+            <Button className="h-12 px-6 text-base rounded-lg shadow-elev group" asChild>
               <Link to="/templates">
                 View all templates
                 <ArrowUpRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </Button>
           </div>
+
         </div>
       </section>
 
