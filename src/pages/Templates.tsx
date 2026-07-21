@@ -102,7 +102,36 @@ const Templates = () => {
       )
     : bySub;
 
-  const filtered = [...searched].sort((a, b) => {
+  // Aggregate features across the current category slice for the feature filter chips
+  const availableFeatures = Array.from(
+    new Set(
+      inCategory.flatMap((t) => (Array.isArray(t.features) ? (t.features as string[]) : []))
+    )
+  ).slice(0, 12);
+
+  const advFiltered = searched.filter((t) => {
+    const price = t.price_pkr ?? 0;
+    if (priceBand === "free" && price !== 0) return false;
+    if (priceBand === "0_5k" && !(price > 0 && price <= 5000)) return false;
+    if (priceBand === "5k_15k" && !(price > 5000 && price <= 15000)) return false;
+    if (priceBand === "15k_plus" && !(price > 15000)) return false;
+
+    if (minRating > 0) {
+      const threshold = minRating === 45 ? 4.5 : minRating;
+      const avg = statMap.get(t.id)?.avg_rating ?? 0;
+      if (avg < threshold) return false;
+    }
+
+    if (hasDemoOnly && !t.demo_url) return false;
+
+    if (selectedFeatures.length > 0) {
+      const feats = Array.isArray(t.features) ? (t.features as string[]) : [];
+      if (!selectedFeatures.every((f) => feats.includes(f))) return false;
+    }
+    return true;
+  });
+
+  const filtered = [...advFiltered].sort((a, b) => {
     switch (sortBy) {
       case "newest":
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
