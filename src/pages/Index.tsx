@@ -672,12 +672,13 @@ const Index = () => {
         }} />
         <div className="container">
           <SectionHeading
-            className="mb-16"
-            align="center"
+            className="mb-12 md:mb-16"
+            align="left"
             eyebrow="Pricing"
-            title={<>Free to launch. <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">Fair to grow.</span></>}
+            title={<>Free to launch. <span className="italic font-normal text-muted-foreground">Fair to grow.</span></>}
             subtitle="Start with the free 48-hour website. Add branding, packaging or marketing whenever the business is ready — never before."
           />
+
 
           <PricingSlider tiers={displayTiers} />
         </div>
