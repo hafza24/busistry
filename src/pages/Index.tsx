@@ -166,6 +166,43 @@ const RotatingWords = () => {
   );
 };
 
+const AnimatedStat = ({ value }: { value: string }) => {
+  const match = /^(\d+(?:\.\d+)?)(.*)$/.exec(value);
+  const [display, setDisplay] = useState(match ? "0" : value);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!match) { setDisplay(value); return; }
+    const target = parseFloat(match[1]);
+    const suffix = match[2];
+    const decimals = (match[1].split(".")[1] || "").length;
+    const el = ref.current;
+    if (!el) return;
+    const run = () => {
+      if (started.current) return;
+      started.current = true;
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const current = (target * eased).toFixed(decimals);
+        setDisplay(current + suffix);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) run(); });
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [value]);
+
+  return <span ref={ref}>{display}</span>;
+};
+
 const LiveStats = () => {
   const { data } = useQuery({
     queryKey: ["home-live-stats"],
