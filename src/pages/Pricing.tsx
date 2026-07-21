@@ -69,7 +69,11 @@ const PriceCard = ({
         }`}
       >
         <CardHeader className="pb-4">
-          {popular && <Badge className="w-fit mb-2">Most Popular</Badge>}
+          {popular && (
+            <span className="inline-flex w-fit items-center h-9 px-4 mb-2 rounded-md border border-border bg-primary text-primary-foreground text-sm font-medium shadow-elev">
+              Most Popular
+            </span>
+          )}
           <CardTitle className="font-display text-xl">{name}</CardTitle>
           <div className="mt-2">
             <span className="text-3xl font-bold font-display text-foreground">
