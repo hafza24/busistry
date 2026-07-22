@@ -666,6 +666,11 @@ const Index = () => {
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
                 Need more? Add a full storefront, bookings, a blog, multi-language, custom domain and email, analytics, or a CMS you can edit yourself — all on the same site, without starting over.
               </p>
+              <div className="mt-6">
+                <Button asChild variant="outline" className="rounded-md">
+                  <Link to="/how-it-works">See how it works →</Link>
+                </Button>
+              </div>
             </div>
 
             <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-6 gap-3 sm:gap-4 lg:gap-5 auto-rows-[130px] sm:auto-rows-[150px] lg:auto-rows-[170px] w-full">
@@ -686,6 +691,11 @@ const Index = () => {
                     transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className={cn("group relative", spans[i])}
                   >
+                    <Link
+                      to={`/how-it-works#step-${i + 1}`}
+                      aria-label={`${s.title} — see how it works`}
+                      className="block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 rounded-lg"
+                    >
                     <div className="relative overflow-hidden rounded-lg border border-border/70 bg-card shadow-soft h-full w-full transition-shadow duration-500 group-hover:shadow-brand">
                       <img
                         src={stepImages[i]}
@@ -722,6 +732,7 @@ const Index = () => {
                       {/* Corner accent */}
                       <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full" />
                     </div>
+                    </Link>
                   </motion.div>
                 );
               })}
