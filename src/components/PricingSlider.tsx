@@ -40,8 +40,8 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
       {tier.highlighted && (
         <>
           <div className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-gradient-to-br from-primary/[0.06] via-transparent to-accent/[0.06] dark:from-primary/[0.14] dark:to-accent/[0.10]" />
-          <div className="absolute -top-2.5 left-6 inline-flex items-center gap-1 rounded-sm bg-primary px-2 py-0.5 text-[9px] font-mono font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-brand">
-            <Sparkles className="h-2.5 w-2.5" aria-hidden="true" /> Popular
+          <div className="absolute -top-4 left-6 inline-flex items-center gap-1.5 rounded-md border border-border bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground shadow-elev">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" /> Popular
           </div>
         </>
       )}
