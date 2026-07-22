@@ -828,13 +828,7 @@ const Index = () => {
               <div className="relative grid grid-cols-4 bg-gradient-to-b from-secondary/80 to-secondary/40 text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.18em] text-muted-foreground border-b border-border/70">
                 <div className="p-2.5 sm:p-5">Feature</div>
                 <div className="p-2.5 sm:p-5 text-center relative">
-                  <span className="inline-flex items-center gap-1 sm:gap-1.5 text-primary">
-                    <motion.span
-                      animate={{ rotate: [0, 15, -10, 0], scale: [1, 1.15, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <Sparkles className="h-3 w-3" />
-                    </motion.span>
+                  <span className="inline-flex items-center text-primary font-display text-sm sm:text-lg font-bold normal-case tracking-tight">
                     Busistree
                   </span>
                   <span className="absolute -bottom-px left-1/2 -translate-x-1/2 h-[2px] w-10 bg-gradient-to-r from-transparent via-primary to-transparent" />
