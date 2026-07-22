@@ -2,9 +2,27 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { Loader2, Search, X, Sparkles, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useCatalogItems, CATALOG_TYPE_META, type CatalogItem, type CatalogItemType } from "@/hooks/useCatalog";
 import CatalogCard from "./CatalogCard";
 import { Link } from "react-router-dom";
+
+const CatalogCardSkeleton = () => (
+  <Card className="border-border/60 h-full overflow-hidden">
+    <Skeleton className="h-32 w-full rounded-none" />
+    <div className="p-4 space-y-2">
+      <div className="flex items-start justify-between gap-2">
+        <Skeleton className="h-4 w-16 rounded-full" />
+        <Skeleton className="h-4 w-14 rounded-full" />
+      </div>
+      <Skeleton className="h-4 w-3/4" />
+      <Skeleton className="h-3 w-full" />
+      <Skeleton className="h-3 w-5/6" />
+      <Skeleton className="h-4 w-20 mt-1" />
+    </div>
+  </Card>
+);
 
 const FILTERS: { id: "all" | CatalogItemType; label: string }[] = [
   { id: "all", label: "All" },
@@ -143,8 +161,10 @@ export default function CatalogGrid({
       )}
 
       {isLoading ? (
-        <div className="py-12 flex justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: previewLimit ?? 8 }).map((_, i) => (
+            <CatalogCardSkeleton key={i} />
+          ))}
         </div>
       ) : filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground py-12 text-center">
