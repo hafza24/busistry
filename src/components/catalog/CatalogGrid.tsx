@@ -161,8 +161,10 @@ export default function CatalogGrid({
       )}
 
       {isLoading ? (
-        <div className="py-12 flex justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: previewLimit ?? 8 }).map((_, i) => (
+            <CatalogCardSkeleton key={i} />
+          ))}
         </div>
       ) : filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground py-12 text-center">
