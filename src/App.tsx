@@ -23,7 +23,7 @@ const About = lazy(() => import("./pages/About"));
 
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
-const CatalogItem = lazy(() => import("./pages/CatalogItem"));
+
 const TemplatesOnSale = lazy(() => import("./pages/TemplatesOnSale"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -85,7 +85,7 @@ const App = () => (
                     <Route path="/templates/:id" element={<TemplateDetail />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
-                    <Route path="/marketplace/:slug" element={<CatalogItem />} />
+                    
                     <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
