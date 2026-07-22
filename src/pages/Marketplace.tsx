@@ -368,15 +368,16 @@ export default function Marketplace() {
       </section>
 
       {/* Templates — grid + right sidebar filters */}
-      <section id="templates" className="scroll-mt-24">
+      <section id="templates" className="scroll-mt-32">
         <SectionHeader
-          icon={LayoutTemplate}
+          index="02"
           eyebrow="Templates"
           title="Launch-ready website templates"
           description="Beautiful, conversion-focused designs. Free and premium options — installed within 24–48h."
           to="/templates"
           ctaLabel="Browse all templates"
         />
+
 
         {templatesLoading ? (
           <div className="py-12 flex justify-center">
