@@ -316,11 +316,11 @@ const Footer = () => {
             <span className="font-semibold text-foreground">Busistree</span> — Built with care in Pakistan.
           </p>
           <div className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-            <Link to="/legal/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link to="/legal/privacy" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Privacy</Link>
             <span className="opacity-30">/</span>
-            <Link to="/legal/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link to="/legal/terms" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Terms</Link>
             <span className="opacity-30">/</span>
-            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+            <Link to="/contact" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Contact</Link>
           </div>
         </div>
       </div>
