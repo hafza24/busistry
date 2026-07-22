@@ -666,6 +666,11 @@ const Index = () => {
               <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
                 Need more? Add a full storefront, bookings, a blog, multi-language, custom domain and email, analytics, or a CMS you can edit yourself — all on the same site, without starting over.
               </p>
+              <div className="mt-6">
+                <Button asChild variant="outline" className="rounded-md">
+                  <Link to="/how-it-works">See how it works →</Link>
+                </Button>
+              </div>
             </div>
 
             <div className="lg:col-span-7 mt-2 lg:mt-0 grid grid-cols-6 gap-3 sm:gap-4 lg:gap-5 auto-rows-[130px] sm:auto-rows-[150px] lg:auto-rows-[170px] w-full">
