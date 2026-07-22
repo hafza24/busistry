@@ -236,7 +236,7 @@ const Footer = () => {
               <img
                 src={logo}
                 alt="Busistree"
-                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                className="h-20 md:h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
               />
             </Link>
 
