@@ -508,28 +508,108 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             </p>
           </div>
 
-          {/* Trust / verification timeline */}
-          <div className="rounded-lg border border-border bg-card p-4 space-y-3">
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
-              What happens next
-            </div>
-            <ol className="grid gap-2 sm:grid-cols-3 text-xs">
-              {[
-                { icon: Upload, label: "Submit payment", eta: "Now" },
-                { icon: Clock, label: "Manual review", eta: "~5–30 min" },
-                { icon: CheckCircle2, label: "Build starts", eta: "Same day" },
-              ].map((s, i) => (
-                <li key={i} className="flex items-start gap-2 rounded-md bg-muted/40 p-2">
-                  <s.icon className="h-4 w-4 text-primary mt-0.5" aria-hidden="true" />
-                  <div>
-                    <div className="font-medium text-foreground">{s.label}</div>
-                    <div className="text-muted-foreground">{s.eta}</div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+          {/* Verification status timeline */}
+          {(() => {
+            const hasMethod = !!data.payment_method;
+            const hasTx = !!(data.transaction_id && data.transaction_id.trim().length >= 4);
+            const amountMatches = typeof data.amount === "number" && Math.abs(data.amount - grandToday) < 1;
+            const hasProof = !!data.screenshot_url;
+            const submitted = hasMethod && hasTx && amountMatches && hasProof;
+
+            const steps = [
+              {
+                key: "pay",
+                title: "Send PKR payment",
+                desc: "Transfer the exact amount to any account below.",
+                done: hasMethod || hasTx,
+                active: !hasMethod && !hasTx,
+                icon: Smartphone,
+              },
+              {
+                key: "upload",
+                title: "Upload receipt & fill details",
+                desc: "Screenshot must show amount, transaction ID and recipient.",
+                done: submitted,
+                active: (hasMethod || hasTx) && !submitted,
+                icon: Upload,
+              },
+              {
+                key: "review",
+                title: "Manual verification",
+                desc: "Our team matches your payment. Usually 5–30 minutes during business hours.",
+                done: false,
+                active: submitted,
+                icon: Hourglass,
+              },
+              {
+                key: "build",
+                title: "Build starts",
+                desc: "You'll get an email + dashboard notification the moment we begin.",
+                done: false,
+                active: false,
+                icon: Sparkles,
+              },
+            ];
+
+            return (
+              <div className="rounded-lg border border-border bg-card p-4">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-4">
+                  <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
+                  Verification status
+                </div>
+                <ol className="relative space-y-4">
+                  {steps.map((s, i) => {
+                    const Icon = s.done ? CheckCircle2 : s.active ? s.icon : s.icon;
+                    return (
+                      <li key={s.key} className="relative flex gap-3">
+                        {i < steps.length - 1 && (
+                          <span
+                            aria-hidden="true"
+                            className={`absolute left-[15px] top-8 bottom-[-1rem] w-px ${
+                              s.done ? "bg-primary" : "bg-border"
+                            }`}
+                          />
+                        )}
+                        <span
+                          className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border ${
+                            s.done
+                              ? "bg-primary border-primary text-primary-foreground"
+                              : s.active
+                              ? "bg-primary/10 border-primary text-primary animate-pulse"
+                              : "bg-muted border-border text-muted-foreground"
+                          }`}
+                        >
+                          <Icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <div className="flex-1 pt-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span
+                              className={`text-sm font-medium ${
+                                s.done || s.active ? "text-foreground" : "text-muted-foreground"
+                              }`}
+                            >
+                              {s.title}
+                            </span>
+                            {s.done && (
+                              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded px-1.5 py-0.5">
+                                Done
+                              </span>
+                            )}
+                            {s.active && !s.done && (
+                              <span className="text-[10px] font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded px-1.5 py-0.5">
+                                In progress
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            );
+          })()}
 
           {/* Payment account details */}
           <div className="rounded-lg border border-border bg-card p-4 space-y-3">
@@ -546,6 +626,33 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             <p className="text-[11px] text-muted-foreground flex items-center gap-1">
               <Banknote className="h-3 w-3" aria-hidden="true" />
               Tap any value to copy. Your reference helps us match your payment quickly.
+            </p>
+          </div>
+
+          {/* Step-by-step how-to */}
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+              <FileCheck2 className="h-4 w-4 text-primary" aria-hidden="true" />
+              How to submit payment proof
+            </div>
+            <ol className="space-y-2 text-sm text-foreground/90">
+              {[
+                <>Open your wallet or banking app and send <span className="font-semibold text-foreground">PKR {grandToday.toLocaleString()}</span> to any account above.</>,
+                <>Add reference <span className="font-mono font-semibold text-foreground">BST-{(data.id ?? "").slice(0, 8).toUpperCase() || "NEW"}</span> in the note field.</>,
+                <>Take a clear screenshot showing the <span className="font-semibold text-foreground">amount</span>, <span className="font-semibold text-foreground">transaction ID</span>, <span className="font-semibold text-foreground">date</span>, and recipient <span className="font-semibold text-foreground">"Busistree"</span>.</>,
+                <>Enter the transaction ID and amount below, then upload the receipt.</>,
+              ].map((text, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-[11px] font-semibold">
+                    {i + 1}
+                  </span>
+                  <span className="pt-0.5">{text}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="flex items-start gap-1.5 text-[11px] text-muted-foreground border-t border-primary/10 pt-2">
+              <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true" />
+              International wires and non-PKR transfers are not accepted at this step.
             </p>
           </div>
 
@@ -582,6 +689,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
               </SelectContent>
             </Select>
           </div>
+
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
