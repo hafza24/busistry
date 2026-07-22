@@ -18,9 +18,8 @@ import {
 } from "@/components/ui/select";
 import {
   ArrowRight,
-  CreditCard,
-  LayoutTemplate,
   Sparkles,
+
   Check,
   Loader2,
   ExternalLink,
