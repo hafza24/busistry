@@ -270,9 +270,9 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card/40 text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-card transition-all"
+                  className="group/social flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card/40 text-muted-foreground transition-all duration-300 hover:text-primary hover:border-primary/40 hover:bg-primary/5 hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4 transition-transform duration-300 group-hover/social:scale-110" />
                 </a>
               ))}
               <div className="ml-2 pl-2 border-l border-border">
