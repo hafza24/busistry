@@ -443,22 +443,6 @@ export default function Marketplace() {
         </div>
       </section>
 
-
-      {/* CTA */}
-      <section className="rounded-3xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-8 md:p-12 text-center">
-        <h2 className="font-display text-3xl md:text-4xl font-bold mb-3">Ready to launch?</h2>
-        <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-          Pick a plan, choose a template, and add extras — we'll get your store live in 24–48h.
-        </p>
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Button asChild size="lg" className="rounded-full gap-2">
-            <Link to="/onboarding">Get started <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-full">
-            <Link to="/how-it-works">How it works</Link>
-          </Button>
-        </div>
-      </section>
     </div>
   );
 }
