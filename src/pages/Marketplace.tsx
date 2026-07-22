@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   ArrowRight,
   CreditCard,
@@ -15,6 +26,9 @@ import {
   ExternalLink,
   ClipboardList,
   Megaphone,
+  Search,
+  X,
+  SlidersHorizontal,
 } from "lucide-react";
 import CatalogGrid from "@/components/catalog/CatalogGrid";
 import marketplaceHero from "@/assets/marketplace-hero.jpg";
@@ -34,16 +48,15 @@ const useTopPlans = () =>
     },
   });
 
-const useTopTemplates = () =>
+const useAllTemplates = () =>
   useQuery({
-    queryKey: ["marketplace_templates"],
+    queryKey: ["marketplace_templates_all"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("templates")
         .select("*")
         .eq("is_active", true)
-        .order("price_pkr")
-        .limit(4);
+        .order("sort_order", { ascending: true });
       if (error) throw error;
       return data ?? [];
     },
@@ -121,7 +134,86 @@ const JumpStrip = () => {
 
 export default function Marketplace() {
   const { data: plans = [], isLoading: plansLoading } = useTopPlans();
-  const { data: templates = [], isLoading: templatesLoading } = useTopTemplates();
+  const { data: templates = [], isLoading: templatesLoading } = useAllTemplates();
+
+  // Templates filter/sort state
+  const [tplSearch, setTplSearch] = useState("");
+  const [tplCategory, setTplCategory] = useState<string>("all");
+  const [tplPriceBand, setTplPriceBand] = useState<"any" | "free" | "paid">("any");
+  const [tplMaxPrice, setTplMaxPrice] = useState<number>(50000);
+  const [tplSort, setTplSort] = useState<
+    "recommended" | "price_asc" | "price_desc" | "newest" | "name"
+  >("recommended");
+
+  const categories = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          (templates as any[]).map((t) => t.category).filter(Boolean) as string[],
+        ),
+      ),
+    [templates],
+  );
+
+  const maxPriceInData = useMemo(() => {
+    const m = Math.max(
+      0,
+      ...(templates as any[]).map((t) => Number(t.price_pkr) || 0),
+    );
+    return m > 0 ? m : 50000;
+  }, [templates]);
+
+  const filteredTemplates = useMemo(() => {
+    const q = tplSearch.trim().toLowerCase();
+    let list = (templates as any[]).filter((t) => {
+      if (tplCategory !== "all" && t.category !== tplCategory) return false;
+      const price = Number(t.price_pkr) || 0;
+      if (tplPriceBand === "free" && price !== 0) return false;
+      if (tplPriceBand === "paid" && price === 0) return false;
+      if (price > tplMaxPrice) return false;
+      if (q) {
+        const hay = [t.name, t.description, t.category, t.subcategory]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    list = [...list].sort((a, b) => {
+      switch (tplSort) {
+        case "price_asc":
+          return (a.price_pkr ?? 0) - (b.price_pkr ?? 0);
+        case "price_desc":
+          return (b.price_pkr ?? 0) - (a.price_pkr ?? 0);
+        case "newest":
+          return (
+            new Date(b.created_at || 0).getTime() -
+            new Date(a.created_at || 0).getTime()
+          );
+        case "name":
+          return String(a.name).localeCompare(String(b.name));
+        default:
+          return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+      }
+    });
+    return list;
+  }, [templates, tplSearch, tplCategory, tplPriceBand, tplMaxPrice, tplSort]);
+
+  const activeFilterCount =
+    (tplCategory !== "all" ? 1 : 0) +
+    (tplPriceBand !== "any" ? 1 : 0) +
+    (tplMaxPrice < maxPriceInData ? 1 : 0) +
+    (tplSearch.trim() ? 1 : 0);
+
+  const resetTplFilters = () => {
+    setTplSearch("");
+    setTplCategory("all");
+    setTplPriceBand("any");
+    setTplMaxPrice(maxPriceInData);
+    setTplSort("recommended");
+  };
+
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl space-y-12 md:space-y-16">
@@ -268,7 +360,7 @@ export default function Marketplace() {
         )}
       </section>
 
-      {/* Templates — 1 featured + 3 small mosaic */}
+      {/* Templates — grid + right sidebar filters */}
       <section id="templates" className="scroll-mt-24">
         <SectionHeader
           icon={LayoutTemplate}
@@ -276,8 +368,9 @@ export default function Marketplace() {
           title="Launch-ready website templates"
           description="Beautiful, conversion-focused designs. Free and premium options — installed within 24–48h."
           to="/templates"
-          ctaLabel="Browse templates"
+          ctaLabel="Browse all templates"
         />
+
         {templatesLoading ? (
           <div className="py-12 flex justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
@@ -287,73 +380,211 @@ export default function Marketplace() {
             Templates coming soon.
           </p>
         ) : (
-          <div className="grid md:grid-cols-12 gap-4">
-            {templates.slice(0, 1).map((t: any) => {
-              const isFree = !t.price_pkr || t.price_pkr === 0;
-              return (
-                <Link
-                  key={t.id}
-                  to={`/templates/${t.id}`}
-                  className={`${cardShell} md:col-span-6 md:row-span-2`}
-                >
-                  {t.preview_image_url ? (
-                    <img
-                      src={t.preview_image_url}
-                      alt={t.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-64 md:h-full w-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="h-64 md:h-full w-full bg-gradient-to-br from-primary/10 to-accent/10" />
-                  )}
-                  <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                    <div className="flex items-end justify-between gap-3">
-                      <p className="font-semibold text-lg text-white truncate">
-                        {t.name}
-                      </p>
-                      <Badge className="bg-primary shrink-0">
-                        {isFree ? "Free" : `PKR ${t.price_pkr.toLocaleString()}`}
-                      </Badge>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-            <div className="md:col-span-6 grid sm:grid-cols-2 gap-4 md:grid-rows-2">
-              {templates.slice(1, 4).map((t: any) => {
-                const isFree = !t.price_pkr || t.price_pkr === 0;
-                return (
-                  <Link
-                    key={t.id}
-                    to={`/templates/${t.id}`}
-                    className={cardShell}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 lg:gap-8 items-start">
+            {/* Results grid */}
+            <div className="min-w-0 order-2 lg:order-1">
+              {/* Result meta bar */}
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-semibold text-foreground">
+                    {filteredTemplates.length}
+                  </span>{" "}
+                  of {templates.length} templates
+                </p>
+                {activeFilterCount > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={resetTplFilters}
+                    className="h-8 text-xs"
                   >
-                    {t.preview_image_url ? (
-                      <img
-                        src={t.preview_image_url}
-                        alt={t.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-40 w-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="h-40 bg-gradient-to-br from-primary/10 to-accent/10" />
-                    )}
-                    <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
-                      <div className="flex items-end justify-between gap-2">
-                        <p className="font-semibold text-sm text-white truncate">
-                          {t.name}
-                        </p>
-                        <Badge className="bg-primary text-[10px] shrink-0">
-                          {isFree ? "Free" : `PKR ${t.price_pkr.toLocaleString()}`}
-                        </Badge>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+                    <X className="h-3 w-3 mr-1" /> Clear filters
+                  </Button>
+                )}
+              </div>
+
+              {filteredTemplates.length === 0 ? (
+                <div className="rounded-lg border border-dashed border-border/60 py-16 text-center">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    No templates match these filters.
+                  </p>
+                  <Button variant="outline" size="sm" onClick={resetTplFilters}>
+                    Reset filters
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {filteredTemplates.map((t: any) => {
+                    const isFree = !t.price_pkr || t.price_pkr === 0;
+                    return (
+                      <Link
+                        key={t.id}
+                        to={`/templates/${t.id}`}
+                        className={cardShell}
+                      >
+                        {t.preview_image_url ? (
+                          <img
+                            src={t.preview_image_url}
+                            alt={t.name}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-44 w-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="h-44 w-full bg-gradient-to-br from-primary/10 to-accent/10" />
+                        )}
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="font-semibold text-sm truncate">
+                              {t.name}
+                            </p>
+                            <Badge
+                              variant={isFree ? "secondary" : "default"}
+                              className="shrink-0 text-[10px]"
+                            >
+                              {isFree
+                                ? "Free"
+                                : `PKR ${Number(t.price_pkr).toLocaleString()}`}
+                            </Badge>
+                          </div>
+                          {t.category && (
+                            <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                              {t.category}
+                              {t.subcategory ? ` · ${t.subcategory}` : ""}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
+
+            {/* Right sidebar */}
+            <aside className="order-1 lg:order-2 lg:sticky lg:top-24">
+              <div className="rounded-lg border border-border/60 bg-card p-5 space-y-5">
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                    <SlidersHorizontal className="h-4 w-4" /> Filters
+                  </div>
+                  {activeFilterCount > 0 && (
+                    <Badge variant="secondary" className="text-[10px]">
+                      {activeFilterCount} active
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Search */}
+                <div className="space-y-2">
+                  <Label className="text-xs">Search</Label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                    <Input
+                      value={tplSearch}
+                      onChange={(e) => setTplSearch(e.target.value)}
+                      placeholder="Name, tag…"
+                      className="pl-8 h-9 text-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* Category */}
+                {categories.length > 0 && (
+                  <div className="space-y-2">
+                    <Label className="text-xs">Category</Label>
+                    <Select value={tplCategory} onValueChange={setTplCategory}>
+                      <SelectTrigger className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All categories</SelectItem>
+                        {categories.map((c) => (
+                          <SelectItem key={c} value={c}>
+                            {c}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
+                {/* Price band */}
+                <div className="space-y-2">
+                  <Label className="text-xs">Plan</Label>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {(
+                      [
+                        { v: "any", label: "All" },
+                        { v: "free", label: "Free" },
+                        { v: "paid", label: "Paid" },
+                      ] as const
+                    ).map((b) => (
+                      <button
+                        key={b.v}
+                        type="button"
+                        onClick={() => setTplPriceBand(b.v)}
+                        className={`h-8 px-2 rounded-md border text-xs font-medium transition-colors ${
+                          tplPriceBand === b.v
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-background border-border/60 text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {b.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Max price slider */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs">Max price</Label>
+                    <span className="text-xs text-muted-foreground">
+                      PKR {tplMaxPrice.toLocaleString()}
+                    </span>
+                  </div>
+                  <Slider
+                    value={[tplMaxPrice]}
+                    min={0}
+                    max={maxPriceInData}
+                    step={Math.max(500, Math.round(maxPriceInData / 50))}
+                    onValueChange={(v) => setTplMaxPrice(v[0] ?? maxPriceInData)}
+                  />
+                </div>
+
+                {/* Sort */}
+                <div className="space-y-2">
+                  <Label className="text-xs">Sort by</Label>
+                  <Select
+                    value={tplSort}
+                    onValueChange={(v) => setTplSort(v as typeof tplSort)}
+                  >
+                    <SelectTrigger className="h-9 text-sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="recommended">Recommended</SelectItem>
+                      <SelectItem value="newest">Newest</SelectItem>
+                      <SelectItem value="price_asc">Price: low to high</SelectItem>
+                      <SelectItem value="price_desc">Price: high to low</SelectItem>
+                      <SelectItem value="name">Name (A–Z)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {activeFilterCount > 0 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full h-9"
+                    onClick={resetTplFilters}
+                  >
+                    <X className="h-3 w-3 mr-1" /> Clear all
+                  </Button>
+                )}
+              </div>
+            </aside>
           </div>
         )}
       </section>
