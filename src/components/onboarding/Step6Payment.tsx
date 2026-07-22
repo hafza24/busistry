@@ -717,15 +717,29 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
             <Label htmlFor="pay-ss">
               Payment proof <span className="text-destructive">*</span>
             </Label>
-            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-foreground/80 space-y-1">
-              <p className="font-semibold text-foreground">Before uploading — please confirm:</p>
-              <ul className="list-disc pl-4 space-y-0.5 text-muted-foreground">
-                <li>Amount sent equals <span className="font-semibold text-foreground">PKR {grandToday.toLocaleString()}</span> (Pakistani Rupees only).</li>
-                <li>Receipt clearly shows the <span className="font-semibold text-foreground">transaction ID</span>, date, and recipient <span className="font-semibold text-foreground">"Busistree"</span>.</li>
-                <li>Reference note includes <span className="font-mono font-semibold text-foreground">BST-{(data.id ?? "").slice(0, 8).toUpperCase() || "NEW"}</span>.</li>
-                <li>International wire / non-PKR transfers are not accepted at this step.</li>
-              </ul>
-            </div>
+            {(() => {
+              const reqs = [
+                { ok: typeof data.amount === "number" && Math.abs((data.amount ?? 0) - grandToday) < 1, label: `Amount entered equals PKR ${grandToday.toLocaleString()}` },
+                { ok: !!(data.transaction_id && data.transaction_id.trim().length >= 4), label: "Transaction ID filled (4+ chars)" },
+                { ok: !!data.payment_method, label: "Payment method selected" },
+                { ok: !!data.screenshot_url, label: "Receipt uploaded (PNG / JPG / WEBP / PDF, ≤ 5 MB, ≥ 300px)" },
+              ];
+              return (
+                <ul className="rounded-lg border border-border bg-muted/30 p-3 text-xs space-y-1">
+                  {reqs.map((r) => (
+                    <li key={r.label} className="flex items-center gap-2">
+                      {r.ok ? (
+                        <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" aria-hidden="true" />
+                      ) : (
+                        <AlertCircle className="h-3.5 w-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
+                      )}
+                      <span className={r.ok ? "text-foreground" : "text-muted-foreground"}>{r.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              );
+            })()}
+
             <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
               <input
                 type="file"
