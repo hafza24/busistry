@@ -152,6 +152,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   const { data: plan } = useQuery({
     queryKey: ["plan", data.plan_id],
