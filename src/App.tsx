@@ -23,7 +23,7 @@ const About = lazy(() => import("./pages/About"));
 
 const Contact = lazy(() => import("./pages/Contact"));
 const Marketplace = lazy(() => import("./pages/Marketplace"));
-const CatalogItem = lazy(() => import("./pages/CatalogItem"));
+
 const TemplatesOnSale = lazy(() => import("./pages/TemplatesOnSale"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
