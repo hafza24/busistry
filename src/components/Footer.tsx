@@ -240,7 +240,7 @@ const Footer = () => {
         {/* Main grid — Next.js/Vercel style */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-12">
           {/* Brand block */}
-          <div className="col-span-2 md:col-span-4">
+          <div className="col-span-2 md:col-span-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
               <img
                 src={logo}
