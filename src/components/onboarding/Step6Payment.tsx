@@ -833,7 +833,71 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                 )}
               </label>
             </div>
+
+            {(scanning || data.ocr_status) && (
+              <div
+                className={`rounded-lg border p-4 text-sm ${
+                  data.ocr_status === "match"
+                    ? "border-primary/40 bg-primary/5"
+                    : data.ocr_status === "mismatch" || data.ocr_status === "unreadable"
+                    ? "border-destructive/40 bg-destructive/5"
+                    : "border-border bg-muted/30"
+                }`}
+              >
+                <div className="flex items-center gap-2 font-semibold mb-2">
+                  {scanning ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                      Scanning receipt…
+                    </>
+                  ) : data.ocr_status === "match" ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4 text-primary" />
+                      Receipt matches your order
+                    </>
+                  ) : data.ocr_status === "mismatch" ? (
+                    <>
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                      Mismatch detected — please double-check
+                    </>
+                  ) : data.ocr_status === "unreadable" ? (
+                    <>
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                      Couldn't read the receipt clearly
+                    </>
+                  ) : (
+                    <>
+                      <Hourglass className="h-4 w-4 text-muted-foreground" />
+                      Awaiting manual review
+                    </>
+                  )}
+                </div>
+
+                {!scanning && (
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="rounded border border-border/60 bg-background/60 p-2">
+                      <div className="text-muted-foreground">Detected amount</div>
+                      <div className="font-mono">
+                        {data.ocr_amount != null ? `PKR ${Number(data.ocr_amount).toLocaleString()}` : "—"}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground mt-0.5">
+                        Expected PKR {grandToday.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-background/60 p-2">
+                      <div className="text-muted-foreground">Detected TID</div>
+                      <div className="font-mono truncate">{data.ocr_transaction_id || "—"}</div>
+                    </div>
+                  </div>
+                )}
+
+                {!scanning && data.ocr_notes && (
+                  <p className="mt-2 text-xs text-muted-foreground">{data.ocr_notes}</p>
+                )}
+              </div>
+            )}
           </div>
+
         </>
       )}
 
