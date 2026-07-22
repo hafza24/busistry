@@ -305,15 +305,16 @@ export default function Marketplace() {
       <JumpStrip />
 
       {/* Plans */}
-      <section id="plans" className="scroll-mt-24">
+      <section id="plans" className="scroll-mt-32">
         <SectionHeader
-          icon={CreditCard}
+          index="01"
           eyebrow="Plans"
           title="A plan for whichever chapter you're in"
           description="Transparent PKR pricing. Hosting, limits and support included — no surprise line items."
           to="/pricing"
           ctaLabel="View all plans"
         />
+
         {plansLoading ? (
           <div className="py-12 flex justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
