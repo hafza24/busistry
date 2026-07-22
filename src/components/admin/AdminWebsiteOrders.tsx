@@ -44,7 +44,7 @@ const AdminWebsiteOrders = () => {
       const { data, error } = await supabase
         .from("website_orders")
         .select(
-          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, plans(name, type, price_pkr), templates(name, niche)"
+          "id, user_id, template_id, plan_id, store_name, domain_preference, contact_phone, contact_email, address, business_description, logo_url, social_media_links, color_preferences, additional_notes, payment_method, amount, transaction_id, screenshot_url, status, admin_notes, created_at, updated_at, onboarding_submission_id, ocr_status, ocr_amount, ocr_transaction_id, ocr_payment_method, ocr_recipient_name, ocr_sender_name, ocr_date, ocr_confidence, ocr_notes, ocr_raw, ocr_scanned_at, plans(name, type, price_pkr), templates(name, niche), onboarding_submissions:onboarding_submission_id(ocr_status, ocr_amount, ocr_transaction_id, ocr_payment_method, ocr_recipient_name, ocr_sender_name, ocr_date, ocr_confidence, ocr_notes, ocr_raw, ocr_scanned_at)"
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
