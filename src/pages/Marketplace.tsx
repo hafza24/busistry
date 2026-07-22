@@ -134,7 +134,86 @@ const JumpStrip = () => {
 
 export default function Marketplace() {
   const { data: plans = [], isLoading: plansLoading } = useTopPlans();
-  const { data: templates = [], isLoading: templatesLoading } = useTopTemplates();
+  const { data: templates = [], isLoading: templatesLoading } = useAllTemplates();
+
+  // Templates filter/sort state
+  const [tplSearch, setTplSearch] = useState("");
+  const [tplCategory, setTplCategory] = useState<string>("all");
+  const [tplPriceBand, setTplPriceBand] = useState<"any" | "free" | "paid">("any");
+  const [tplMaxPrice, setTplMaxPrice] = useState<number>(50000);
+  const [tplSort, setTplSort] = useState<
+    "recommended" | "price_asc" | "price_desc" | "newest" | "name"
+  >("recommended");
+
+  const categories = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          (templates as any[]).map((t) => t.category).filter(Boolean) as string[],
+        ),
+      ),
+    [templates],
+  );
+
+  const maxPriceInData = useMemo(() => {
+    const m = Math.max(
+      0,
+      ...(templates as any[]).map((t) => Number(t.price_pkr) || 0),
+    );
+    return m > 0 ? m : 50000;
+  }, [templates]);
+
+  const filteredTemplates = useMemo(() => {
+    const q = tplSearch.trim().toLowerCase();
+    let list = (templates as any[]).filter((t) => {
+      if (tplCategory !== "all" && t.category !== tplCategory) return false;
+      const price = Number(t.price_pkr) || 0;
+      if (tplPriceBand === "free" && price !== 0) return false;
+      if (tplPriceBand === "paid" && price === 0) return false;
+      if (price > tplMaxPrice) return false;
+      if (q) {
+        const hay = [t.name, t.description, t.category, t.subcategory]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    list = [...list].sort((a, b) => {
+      switch (tplSort) {
+        case "price_asc":
+          return (a.price_pkr ?? 0) - (b.price_pkr ?? 0);
+        case "price_desc":
+          return (b.price_pkr ?? 0) - (a.price_pkr ?? 0);
+        case "newest":
+          return (
+            new Date(b.created_at || 0).getTime() -
+            new Date(a.created_at || 0).getTime()
+          );
+        case "name":
+          return String(a.name).localeCompare(String(b.name));
+        default:
+          return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+      }
+    });
+    return list;
+  }, [templates, tplSearch, tplCategory, tplPriceBand, tplMaxPrice, tplSort]);
+
+  const activeFilterCount =
+    (tplCategory !== "all" ? 1 : 0) +
+    (tplPriceBand !== "any" ? 1 : 0) +
+    (tplMaxPrice < maxPriceInData ? 1 : 0) +
+    (tplSearch.trim() ? 1 : 0);
+
+  const resetTplFilters = () => {
+    setTplSearch("");
+    setTplCategory("all");
+    setTplPriceBand("any");
+    setTplMaxPrice(maxPriceInData);
+    setTplSort("recommended");
+  };
+
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl space-y-12 md:space-y-16">
