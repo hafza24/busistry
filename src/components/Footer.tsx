@@ -124,18 +124,9 @@ const Footer = () => {
 
       {/* Subtle grid + spotlight (Vercel-style) */}
       <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-            maskImage: "radial-gradient(ellipse at top, black 30%, transparent 75%)",
-            WebkitMaskImage: "radial-gradient(ellipse at top, black 30%, transparent 75%)",
-          }}
-        />
         <div className="absolute -top-40 left-1/2 h-96 w-[52rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
       </div>
+
 
       <div className="container relative py-16 md:py-24">
         {/* Newsletter — Next.js style compact card */}
