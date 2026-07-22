@@ -273,11 +273,68 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
         .upload(path, file, { contentType: file.type, upsert: false });
       if (error) throw error;
       const { data: pub } = supabase.storage.from("payment-screenshots").getPublicUrl(path);
-      update({ screenshot_url: pub.publicUrl });
+      update({
+        screenshot_url: pub.publicUrl,
+        ocr_status: "pending",
+        ocr_amount: null,
+        ocr_transaction_id: null,
+        ocr_notes: null,
+        ocr_raw: null,
+      });
       toast({
         title: "Receipt uploaded",
-        description: "We'll verify your PKR payment and start your build shortly.",
+        description: "Scanning your receipt for amount & transaction ID…",
       });
+
+      // Kick off OCR scan
+      setScanning(true);
+      try {
+        const { data: ocr, error: ocrErr } = await supabase.functions.invoke("parse-receipt", {
+          body: {
+            storage_path: path,
+            expected_amount: grandToday,
+            expected_recipient: "Busistree",
+          },
+        });
+        if (ocrErr) throw ocrErr;
+
+        update({
+          ocr_status: ocr?.status ?? "pending",
+          ocr_amount: ocr?.amount ?? null,
+          ocr_transaction_id: ocr?.transaction_id ?? null,
+          ocr_notes: ocr?.notes ?? null,
+          ocr_raw: ocr?.raw ?? null,
+          // Auto-fill fields if user hasn't set them yet
+          ...(typeof ocr?.amount === "number" && !data.amount ? { amount: ocr.amount } : {}),
+          ...(ocr?.transaction_id && !data.transaction_id ? { transaction_id: ocr.transaction_id } : {}),
+          ...(ocr?.payment_method && !data.payment_method
+            ? { payment_method: String(ocr.payment_method).toLowerCase().includes("jazz") ? "jazzcash"
+                : String(ocr.payment_method).toLowerCase().includes("easy") ? "easypaisa"
+                : String(ocr.payment_method).toLowerCase().includes("bank") ? "bank" : data.payment_method }
+            : {}),
+        });
+
+        if (ocr?.status === "match") {
+          toast({ title: "Receipt verified", description: "Amount and transaction ID match your order." });
+        } else if (ocr?.status === "mismatch") {
+          toast({
+            title: "Mismatch detected",
+            description: ocr?.notes || "Some details on the receipt do not match your order.",
+            variant: "destructive",
+          });
+        } else if (ocr?.status === "unreadable") {
+          toast({
+            title: "Receipt unreadable",
+            description: ocr?.notes || "Please upload a sharper screenshot.",
+            variant: "destructive",
+          });
+        }
+      } catch (ocrErr: any) {
+        console.error("OCR failed", ocrErr);
+        update({ ocr_status: "pending", ocr_notes: "Automatic scan unavailable — admin will verify manually." });
+      } finally {
+        setScanning(false);
+      }
     } catch (err: any) {
       toast({ title: "Upload failed", description: err.message, variant: "destructive" });
     } finally {
