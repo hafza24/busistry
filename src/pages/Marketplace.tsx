@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import SEO from "@/components/SEO";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   ArrowRight,
   CreditCard,
@@ -15,6 +26,9 @@ import {
   ExternalLink,
   ClipboardList,
   Megaphone,
+  Search,
+  X,
+  SlidersHorizontal,
 } from "lucide-react";
 import CatalogGrid from "@/components/catalog/CatalogGrid";
 import marketplaceHero from "@/assets/marketplace-hero.jpg";
@@ -34,16 +48,15 @@ const useTopPlans = () =>
     },
   });
 
-const useTopTemplates = () =>
+const useAllTemplates = () =>
   useQuery({
-    queryKey: ["marketplace_templates"],
+    queryKey: ["marketplace_templates_all"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("templates")
         .select("*")
         .eq("is_active", true)
-        .order("price_pkr")
-        .limit(4);
+        .order("sort_order", { ascending: true });
       if (error) throw error;
       return data ?? [];
     },
