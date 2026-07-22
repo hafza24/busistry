@@ -64,9 +64,10 @@ const SectionHeader = ({
       <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">{title}</h2>
       <p className="text-muted-foreground">{description}</p>
     </div>
-    <Button asChild variant="outline" className="rounded-full gap-2 shrink-0">
+    <Button asChild size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev shrink-0">
       <Link to={to}>
-        {ctaLabel} <ArrowRight className="h-4 w-4" />
+        {ctaLabel}
+        <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
       </Link>
     </Button>
   </div>
