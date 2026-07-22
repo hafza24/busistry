@@ -347,8 +347,10 @@ export default function Marketplace() {
         />
 
         {plansLoading ? (
-          <div className="py-12 flex justify-center">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <PlanCardSkeleton key={i} />
+            ))}
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
