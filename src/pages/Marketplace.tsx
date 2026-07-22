@@ -471,7 +471,7 @@ export default function Marketplace() {
       </section>
 
       {/* Unified catalog */}
-      <section id="catalog" className="scroll-mt-24">
+      <section id="catalog" className="scroll-mt-32">
         <CatalogGrid
           previewLimit={4}
           header={{
