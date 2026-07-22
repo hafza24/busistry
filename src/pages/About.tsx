@@ -232,44 +232,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Story */}
-      <section className="container max-w-6xl py-20 md:py-28">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative order-2 lg:order-1">
-            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
-            <img
-              src={storyIllustration}
-              alt="Founder illustration representing the Busistree story"
-              className="w-full max-w-md mx-auto h-auto object-contain drop-shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
-              loading="lazy"
-            />
-          </div>
-          <div className="order-1 lg:order-2">
-            <div className="text-center lg:text-left mb-6">
-              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The story, briefly</h2>
-              <p className="text-muted-foreground mt-3">Why we made the website free.</p>
-            </div>
-            <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
-              <p>
-                We started as most studios do — quoting, negotiating, chasing.
-                And we kept losing weeks to conversations that should have taken
-                hours. Founders wanted to see the work; we wanted to prove it.
-              </p>
-              <p>
-                So we changed the deal. We build your website — designed,
-                written, deployed — inside forty-eight hours, at no cost.
-                No trial, no watermark, no card on file. You get a real site,
-                yours to keep, whether you ever hire us for anything else.
-              </p>
-              <p>
-                Most of the time, founders continue with us — for the brand,
-                the packaging, the campaigns. Sometimes they don't. Either way,
-                the free work stands on its own. That's the point.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
 
@@ -351,8 +313,48 @@ const About = () => {
 
       </section>
 
+      {/* Story */}
+      <section className="container max-w-6xl py-20 md:py-28">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
+            <img
+              src={storyIllustration}
+              alt="Founder illustration representing the Busistree story"
+              className="w-full max-w-md mx-auto h-auto object-contain drop-shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
+              loading="lazy"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="text-center lg:text-left mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The story, briefly</h2>
+              <p className="text-muted-foreground mt-3">Why we made the website free.</p>
+            </div>
+            <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
+              <p>
+                We started as most studios do — quoting, negotiating, chasing.
+                And we kept losing weeks to conversations that should have taken
+                hours. Founders wanted to see the work; we wanted to prove it.
+              </p>
+              <p>
+                So we changed the deal. We build your website — designed,
+                written, deployed — inside forty-eight hours, at no cost.
+                No trial, no watermark, no card on file. You get a real site,
+                yours to keep, whether you ever hire us for anything else.
+              </p>
+              <p>
+                Most of the time, founders continue with us — for the brand,
+                the packaging, the campaigns. Sometimes they don't. Either way,
+                the free work stands on its own. That's the point.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Timeline */}
       <section className="container max-w-4xl py-20 md:py-28">
+
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our journey</h2>
         </div>
