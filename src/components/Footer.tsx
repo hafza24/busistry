@@ -238,9 +238,9 @@ const Footer = () => {
         </div>
 
         {/* Main grid — Next.js/Vercel style */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-12">
           {/* Brand block */}
-          <div className="col-span-2 md:col-span-6">
+          <div className="md:col-span-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
               <img
                 src={logo}
@@ -290,28 +290,31 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Link columns */}
-          {linkColumns.map(({ title, links }) => (
-            <div key={title} className="col-span-1 md:col-span-2 lg:col-span-2 md:col-start-auto">
-              <h4 className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                {title}
-              </h4>
-              <ul className="space-y-3 text-sm">
-                {links.map(({ to, label }) => (
-                  <li key={to}>
-                    <Link
-                      to={to}
-                      className="group inline-flex items-center gap-1 text-foreground/80 hover:text-foreground transition-colors"
-                    >
-                      <span>{label}</span>
-                      <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-all" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Link columns — 2 cols on mobile, inline on desktop */}
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:contents">
+            {linkColumns.map(({ title, links }) => (
+              <div key={title} className="md:col-span-2">
+                <h4 className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  {title}
+                </h4>
+                <ul className="space-y-3 text-sm">
+                  {links.map(({ to, label }) => (
+                    <li key={to}>
+                      <Link
+                        to={to}
+                        className="group inline-flex items-center gap-1 text-foreground/80 hover:text-foreground transition-colors"
+                      >
+                        <span>{label}</span>
+                        <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-all" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
+
 
         {/* Bottom bar */}
         <div className="mt-16 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
