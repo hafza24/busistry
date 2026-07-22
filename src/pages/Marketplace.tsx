@@ -70,29 +70,32 @@ const cardShell =
   "group relative overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-200 hover:border-primary/40 hover:shadow-elev";
 
 const SectionHeader = ({
-  icon: Icon,
+  index,
   eyebrow,
   title,
   description,
   to,
   ctaLabel,
 }: {
-  icon: any;
+  icon?: any;
+  index?: string;
   eyebrow: string;
   title: string;
   description: string;
   to: string;
   ctaLabel: string;
 }) => (
-  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
     <div className="max-w-2xl">
-      <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary mb-3">
-        <Icon className="h-4 w-4" /> {eyebrow}
+      <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground mb-4">
+        {index ? <span className="text-primary">{index}</span> : null}
+        {index ? <span className="mx-2 text-border">/</span> : null}
+        {eyebrow}
       </div>
-      <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-2">
+      <h2 className="font-display text-3xl md:text-[2.5rem] font-bold tracking-tight leading-[1.05] mb-3">
         {title}
       </h2>
-      <p className="text-muted-foreground">{description}</p>
+      <p className="text-muted-foreground max-w-xl">{description}</p>
     </div>
     <Button
       asChild
@@ -115,22 +118,25 @@ const JumpStrip = () => {
     { label: "Sister services", href: "#sister" },
   ];
   return (
-    <nav
-      aria-label="Marketplace sections"
-      className="flex flex-wrap gap-2 -mt-4"
-    >
-      {items.map((i) => (
-        <a
-          key={i.href}
-          href={i.href}
-          className="inline-flex items-center gap-1.5 h-9 px-4 text-xs font-semibold uppercase tracking-wider rounded-full border border-border/60 bg-card/60 text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
-        >
-          {i.label}
-        </a>
-      ))}
-    </nav>
+    <div className="sticky top-20 z-40 flex justify-center -mt-4 mb-4">
+      <nav
+        aria-label="Marketplace sections"
+        className="inline-flex items-center gap-1 p-1.5 rounded-full border border-border/60 bg-background/80 backdrop-blur-xl shadow-elev"
+      >
+        {items.map((i) => (
+          <a
+            key={i.href}
+            href={i.href}
+            className="px-4 py-2 text-xs font-semibold tracking-wide rounded-full text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
+          >
+            {i.label}
+          </a>
+        ))}
+      </nav>
+    </div>
   );
 };
+
 
 export default function Marketplace() {
   const { data: plans = [], isLoading: plansLoading } = useTopPlans();
