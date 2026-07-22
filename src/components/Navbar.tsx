@@ -255,7 +255,7 @@ const Navbar = () => {
                   aria-expanded={openMenu === "marketplace"}
                   onMouseEnter={() => openWith("marketplace")}
                   onFocus={() => openWith("marketplace")}
-                  onClick={() => setOpenMenu((cur) => (cur === "marketplace" ? null : "marketplace"))}
+                  onClick={() => { setOpenMenu(null); navigate("/marketplace"); }}
                   className={`inline-flex items-center gap-1 h-9 px-4 text-sm font-bold rounded-xl transition-all duration-300 ease-out bg-transparent hover:bg-neutral/10 ${
                     openMenu === "marketplace" ||
                     location.pathname.startsWith("/templates") ||
