@@ -132,10 +132,11 @@ export default function CatalogGrid({
           {showViewAllTop && (
             <Button
               onClick={() => setExpanded(true)}
-              variant="outline"
-              className="rounded-full gap-2 shrink-0"
+              size="lg"
+              className="h-12 px-6 text-base rounded-lg group shadow-elev shrink-0"
             >
-              View all {filtered.length} items <ArrowRight className="h-4 w-4" />
+              View all {filtered.length} items
+              <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Button>
           )}
         </div>
