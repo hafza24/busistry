@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
-import { Upload, Loader2, Pencil, Copy, CheckCircle2, Clock, ShieldCheck, Smartphone, Banknote } from "lucide-react";
+import { Upload, Loader2, Pencil, Copy, CheckCircle2, Clock, ShieldCheck, Smartphone, Banknote, FileCheck2, AlertCircle, Hourglass, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
