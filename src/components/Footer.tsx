@@ -240,7 +240,7 @@ const Footer = () => {
         {/* Main grid — Next.js/Vercel style */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-x-8 gap-y-12">
           {/* Brand block */}
-          <div className="col-span-2 md:col-span-4">
+          <div className="col-span-2 md:col-span-6">
             <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
               <img
                 src={logo}
@@ -292,7 +292,7 @@ const Footer = () => {
 
           {/* Link columns */}
           {linkColumns.map(({ title, links }) => (
-            <div key={title} className="col-span-1 md:col-span-2 md:col-start-auto">
+            <div key={title} className="col-span-1 md:col-span-2 lg:col-span-2 md:col-start-auto">
               <h4 className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                 {title}
               </h4>
@@ -311,31 +311,6 @@ const Footer = () => {
               </ul>
             </div>
           ))}
-
-          {/* Status/Region */}
-          <div className="col-span-2 md:col-span-2">
-            <h4 className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              Region
-            </h4>
-            <div className="rounded-lg border border-border bg-card/40 p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">🇵🇰</span>
-                <span className="text-sm font-medium text-foreground">Pakistan</span>
-              </div>
-              <p className="text-[11px] text-muted-foreground leading-relaxed font-mono">
-                PKR · Karachi (PKT)
-              </p>
-              <div className="mt-3 pt-3 border-t border-border">
-                <a
-                  href="mailto:hello@busistree.com"
-                  className="group inline-flex items-center gap-1 text-xs text-foreground/80 hover:text-foreground"
-                >
-                  hello@busistree.com
-                  <ArrowUpRight className="h-3 w-3 opacity-60 group-hover:opacity-100" />
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Bottom bar */}
