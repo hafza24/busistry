@@ -270,117 +270,89 @@ const Footer = () => {
         </div>
 
 
-        {/* Main grid */}
-        <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-12 gap-8 md:gap-10">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-6 lg:col-span-4">
-            <Link to="/" className="inline-flex items-center gap-2 mb-4 group">
-              <img
-                src={logo}
-                alt="Busistree"
-                className="h-12 md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
-              />
-            </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mb-5">
-              A digital studio building brands, websites, and growth systems for
-              ambitious businesses across Pakistan and beyond.
-            </p>
+        {/* Main grid — editorial split */}
+        <div className="relative rounded-[2rem] border border-border/60 bg-card/30 backdrop-blur overflow-hidden">
+          <div className="grid lg:grid-cols-12">
+            {/* Brand — left rail */}
+            <div className="lg:col-span-5 p-8 md:p-12 lg:border-r border-border/60 bg-gradient-to-br from-primary/[0.04] via-transparent to-transparent">
+              <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
+                <img
+                  src={logo}
+                  alt="Busistree"
+                  className="h-12 md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </Link>
 
-            {/* Meta chips */}
-            <div className="flex flex-wrap items-center gap-2 mb-5">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                <MapPin className="h-3 w-3 text-primary" />
-                Lahore, Pakistan
-              </span>
-              {ratingStats && ratingStats.total > 0 && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                  <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                  {ratingStats.avg.toFixed(1)} · {ratingStats.total}+ review{ratingStats.total === 1 ? "" : "s"}
+              <p className="font-display text-2xl md:text-[1.75rem] leading-[1.15] tracking-tight text-foreground max-w-md mb-6">
+                A digital studio building brands, websites, and growth systems for ambitious businesses across Pakistan and beyond.
+              </p>
+
+              {/* Meta chips */}
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-[11px] font-medium text-muted-foreground">
+                  <MapPin className="h-3 w-3 text-primary" />
+                  Lahore, Pakistan
                 </span>
-              )}
+                {ratingStats && ratingStats.total > 0 && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/60 px-3 py-1.5 text-[11px] font-medium text-muted-foreground">
+                    <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+                    {ratingStats.avg.toFixed(1)} · {ratingStats.total}+ review{ratingStats.total === 1 ? "" : "s"}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                {socialLinks.map(({ href, label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background/60 text-muted-foreground hover:text-neutral-foreground hover:bg-neutral hover:border-neutral hover:-translate-y-0.5 hover:shadow-[0_10px_20px_-10px_hsl(var(--neutral)/0.4)] transition-all"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              {socialLinks.map(({ href, label, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-card/60 text-muted-foreground hover:text-neutral-foreground hover:bg-neutral hover:border-neutral hover:-translate-y-0.5 hover:shadow-[0_10px_20px_-10px_hsl(var(--neutral)/0.4)] transition-all"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
+            {/* Link columns — right rail */}
+            <div className="lg:col-span-7 p-8 md:p-12 grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10">
+              {[
+                { title: "Platform", links: platformLinks },
+                { title: "Company", links: companyLinks },
+                { title: "Legal", links: legalLinks },
+              ].map(({ title, links }) => (
+                <div key={title}>
+                  <h4 className="font-display font-bold mb-5 text-foreground text-xs uppercase tracking-[0.2em] flex items-center gap-2">
+                    <span className="h-px w-4 bg-primary" />
+                    {title}
+                  </h4>
+                  <ul className="space-y-3 text-sm">
+                    {links.map(({ to, label }) => (
+                      <li key={to}>
+                        <Link
+                          to={to}
+                          className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <span className="relative">
+                            {label}
+                            <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+                          </span>
+                          <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>
-
-          {/* Platform */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-2">
-            <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              
-              Platform
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {platformLinks.map(({ to, label }) => (
-                <li key={to}>
-                  <Link
-                    to={to}
-                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
-                  >
-                    <span>{label}</span>
-                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-2">
-            <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              Company
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {companyLinks.map(({ to, label }) => (
-                <li key={to}>
-                  <Link
-                    to={to}
-                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
-                  >
-                    <span>{label}</span>
-                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-2">
-            <h4 className="font-display font-bold mb-4 text-foreground text-xs uppercase tracking-[0.15em] flex items-center gap-2">
-              Legal
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {legalLinks.map(({ to, label }) => (
-                <li key={to}>
-                  <Link
-                    to={to}
-                    className="group inline-flex items-center gap-1.5 text-muted-foreground hover:text-neutral transition-colors"
-                  >
-                    <span>{label}</span>
-                    <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-14 pt-8 border-t border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+        <div className="mt-10 pt-8 border-t border-border/60 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
           <p className="text-muted-foreground text-center md:text-left">
             © {new Date().getFullYear()}{" "}
             <span className="font-semibold text-foreground">Busistree</span>. All rights reserved.
