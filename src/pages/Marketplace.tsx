@@ -30,6 +30,38 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import CatalogGrid from "@/components/catalog/CatalogGrid";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const PlanCardSkeleton = () => (
+  <Card className={cardShell}>
+    <CardContent className="p-6 space-y-4">
+      <div className="flex items-start justify-between gap-2">
+        <Skeleton className="h-5 w-24" />
+        <Skeleton className="h-5 w-14 rounded-full" />
+      </div>
+      <Skeleton className="h-9 w-32" />
+      <Skeleton className="h-3 w-full" />
+      <div className="space-y-2 pt-1">
+        <Skeleton className="h-3 w-5/6" />
+        <Skeleton className="h-3 w-4/6" />
+        <Skeleton className="h-3 w-3/6" />
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const TemplateCardSkeleton = () => (
+  <div className={cardShell}>
+    <Skeleton className="h-44 w-full rounded-none" />
+    <div className="p-4 space-y-2">
+      <div className="flex items-start justify-between gap-2">
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="h-4 w-12 rounded-full" />
+      </div>
+      <Skeleton className="h-3 w-20" />
+    </div>
+  </div>
+);
 import marketplaceHero from "@/assets/marketplace-hero.jpg";
 
 const useTopPlans = () =>
