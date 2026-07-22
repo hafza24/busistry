@@ -292,10 +292,12 @@ const Footer = () => {
                 <MapPin className="h-3 w-3 text-primary" />
                 Lahore, Pakistan
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                4.9 · 320+ reviews
-              </span>
+              {ratingStats && ratingStats.total > 0 && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                  <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+                  {ratingStats.avg.toFixed(1)} · {ratingStats.total}+ review{ratingStats.total === 1 ? "" : "s"}
+                </span>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
