@@ -60,6 +60,12 @@ export type OnboardingData = {
   ocr_status?: "pending" | "match" | "mismatch" | "unreadable" | null;
   ocr_notes?: string | null;
   ocr_raw?: any;
+  ocr_payment_method?: string | null;
+  ocr_recipient_name?: string | null;
+  ocr_sender_name?: string | null;
+  ocr_date?: string | null;
+  ocr_confidence?: number | null;
+  ocr_scanned_at?: string | null;
   terms_accepted?: boolean;
 
   current_step?: number;

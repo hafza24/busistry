@@ -891,6 +891,17 @@ export type Database = {
           integrations_total_pkr: number
           logo_url: string | null
           needs_logo_design: boolean
+          ocr_amount: number | null
+          ocr_confidence: number | null
+          ocr_date: string | null
+          ocr_notes: string | null
+          ocr_payment_method: string | null
+          ocr_raw: Json | null
+          ocr_recipient_name: string | null
+          ocr_scanned_at: string | null
+          ocr_sender_name: string | null
+          ocr_status: string | null
+          ocr_transaction_id: string | null
           payment_gateway: string | null
           payment_method: string | null
           phone: string | null
@@ -935,6 +946,17 @@ export type Database = {
           integrations_total_pkr?: number
           logo_url?: string | null
           needs_logo_design?: boolean
+          ocr_amount?: number | null
+          ocr_confidence?: number | null
+          ocr_date?: string | null
+          ocr_notes?: string | null
+          ocr_payment_method?: string | null
+          ocr_raw?: Json | null
+          ocr_recipient_name?: string | null
+          ocr_scanned_at?: string | null
+          ocr_sender_name?: string | null
+          ocr_status?: string | null
+          ocr_transaction_id?: string | null
           payment_gateway?: string | null
           payment_method?: string | null
           phone?: string | null
@@ -979,6 +1001,17 @@ export type Database = {
           integrations_total_pkr?: number
           logo_url?: string | null
           needs_logo_design?: boolean
+          ocr_amount?: number | null
+          ocr_confidence?: number | null
+          ocr_date?: string | null
+          ocr_notes?: string | null
+          ocr_payment_method?: string | null
+          ocr_raw?: Json | null
+          ocr_recipient_name?: string | null
+          ocr_scanned_at?: string | null
+          ocr_sender_name?: string | null
+          ocr_status?: string | null
+          ocr_transaction_id?: string | null
           payment_gateway?: string | null
           payment_method?: string | null
           phone?: string | null
@@ -2119,6 +2152,17 @@ export type Database = {
           domain_preference: string | null
           id: string
           logo_url: string | null
+          ocr_amount: number | null
+          ocr_confidence: number | null
+          ocr_date: string | null
+          ocr_notes: string | null
+          ocr_payment_method: string | null
+          ocr_raw: Json | null
+          ocr_recipient_name: string | null
+          ocr_scanned_at: string | null
+          ocr_sender_name: string | null
+          ocr_status: string | null
+          ocr_transaction_id: string | null
           onboarding_submission_id: string | null
           payment_method: string | null
           plan_id: string
@@ -2147,6 +2191,17 @@ export type Database = {
           domain_preference?: string | null
           id?: string
           logo_url?: string | null
+          ocr_amount?: number | null
+          ocr_confidence?: number | null
+          ocr_date?: string | null
+          ocr_notes?: string | null
+          ocr_payment_method?: string | null
+          ocr_raw?: Json | null
+          ocr_recipient_name?: string | null
+          ocr_scanned_at?: string | null
+          ocr_sender_name?: string | null
+          ocr_status?: string | null
+          ocr_transaction_id?: string | null
           onboarding_submission_id?: string | null
           payment_method?: string | null
           plan_id: string
@@ -2175,6 +2230,17 @@ export type Database = {
           domain_preference?: string | null
           id?: string
           logo_url?: string | null
+          ocr_amount?: number | null
+          ocr_confidence?: number | null
+          ocr_date?: string | null
+          ocr_notes?: string | null
+          ocr_payment_method?: string | null
+          ocr_raw?: Json | null
+          ocr_recipient_name?: string | null
+          ocr_scanned_at?: string | null
+          ocr_sender_name?: string | null
+          ocr_status?: string | null
+          ocr_transaction_id?: string | null
           onboarding_submission_id?: string | null
           payment_method?: string | null
           plan_id?: string
