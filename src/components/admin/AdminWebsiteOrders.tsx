@@ -216,18 +216,135 @@ const AdminWebsiteOrders = () => {
                   </div>
                 )}
                 {selected.additional_notes && <p className="md:col-span-2"><strong>Notes:</strong> {selected.additional_notes}</p>}
-                {selected.payment_method && (
-                  <>
-                    <p><strong>Payment:</strong> {selected.payment_method}</p>
-                    <p><strong>TxID:</strong> {selected.transaction_id || "—"}</p>
-                    <p><strong>Amount:</strong> PKR {selected.amount?.toLocaleString()}</p>
-                    {selected.screenshot_url && (
-                      <p><strong>Screenshot:</strong>{" "}
-                        <a href={selected.screenshot_url} target="_blank" rel="noopener noreferrer" className="text-primary underline">View</a>
-                      </p>
-                    )}
-                  </>
-                )}
+                {selected.payment_method && (() => {
+                  const sub = selected.onboarding_submissions ?? {};
+                  const ocr = {
+                    status: selected.ocr_status ?? sub.ocr_status ?? null,
+                    amount: selected.ocr_amount ?? sub.ocr_amount ?? null,
+                    transaction_id: selected.ocr_transaction_id ?? sub.ocr_transaction_id ?? null,
+                    payment_method: selected.ocr_payment_method ?? sub.ocr_payment_method ?? null,
+                    recipient_name: selected.ocr_recipient_name ?? sub.ocr_recipient_name ?? null,
+                    sender_name: selected.ocr_sender_name ?? sub.ocr_sender_name ?? null,
+                    date: selected.ocr_date ?? sub.ocr_date ?? null,
+                    confidence: selected.ocr_confidence ?? sub.ocr_confidence ?? null,
+                    notes: selected.ocr_notes ?? sub.ocr_notes ?? null,
+                    raw: selected.ocr_raw ?? sub.ocr_raw ?? null,
+                    scanned_at: selected.ocr_scanned_at ?? sub.ocr_scanned_at ?? null,
+                  };
+                  const amountDelta =
+                    typeof ocr.amount === "number" && typeof selected.amount === "number"
+                      ? ocr.amount - selected.amount
+                      : null;
+                  const tidMatch =
+                    ocr.transaction_id && selected.transaction_id
+                      ? ocr.transaction_id.trim().toLowerCase() === selected.transaction_id.trim().toLowerCase()
+                      : null;
+                  const verdictBadge =
+                    ocr.status === "match"
+                      ? { icon: CheckCircle2, cls: "bg-primary/10 text-primary border-primary/30", label: "OCR: Match" }
+                      : ocr.status === "mismatch"
+                      ? { icon: AlertTriangle, cls: "bg-destructive/10 text-destructive border-destructive/30", label: "OCR: Mismatch" }
+                      : ocr.status === "unreadable"
+                      ? { icon: AlertTriangle, cls: "bg-destructive/10 text-destructive border-destructive/30", label: "OCR: Unreadable" }
+                      : { icon: Hourglass, cls: "bg-muted text-muted-foreground border-border", label: "OCR: Pending" };
+                  const V = verdictBadge.icon;
+
+                  return (
+                    <div className="md:col-span-2 space-y-3 rounded-lg border border-border/60 bg-muted/20 p-4">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2 font-semibold text-sm">
+                          <ScanLine className="h-4 w-4 text-muted-foreground" />
+                          Payment verification
+                        </div>
+                        <Badge variant="outline" className={`gap-1 ${verdictBadge.cls}`}>
+                          <V className="h-3.5 w-3.5" />
+                          {verdictBadge.label}
+                        </Badge>
+                      </div>
+
+                      <div className="grid gap-3 md:grid-cols-3 text-xs">
+                        <div className="rounded border border-border/60 bg-background/70 p-3">
+                          <div className="text-[10px] uppercase tracking-wide text-muted-foreground">User-entered</div>
+                          <dl className="mt-1 space-y-1">
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Method</dt><dd className="font-medium">{selected.payment_method || "—"}</dd></div>
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Amount</dt><dd className="font-mono">PKR {selected.amount?.toLocaleString() ?? "—"}</dd></div>
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">TxID</dt><dd className="font-mono truncate max-w-[120px]" title={selected.transaction_id || ""}>{selected.transaction_id || "—"}</dd></div>
+                          </dl>
+                        </div>
+
+                        <div className="rounded border border-border/60 bg-background/70 p-3">
+                          <div className="text-[10px] uppercase tracking-wide text-muted-foreground">OCR-detected</div>
+                          <dl className="mt-1 space-y-1">
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Method</dt><dd className="font-medium">{ocr.payment_method || "—"}</dd></div>
+                            <div className="flex justify-between gap-2">
+                              <dt className="text-muted-foreground">Amount</dt>
+                              <dd className="font-mono">
+                                {ocr.amount != null ? `PKR ${Number(ocr.amount).toLocaleString()}` : "—"}
+                                {amountDelta != null && amountDelta !== 0 && (
+                                  <span className="ml-1 text-destructive">({amountDelta > 0 ? "+" : ""}{amountDelta.toLocaleString()})</span>
+                                )}
+                              </dd>
+                            </div>
+                            <div className="flex justify-between gap-2">
+                              <dt className="text-muted-foreground">TxID</dt>
+                              <dd className={`font-mono truncate max-w-[120px] ${tidMatch === false ? "text-destructive" : ""}`} title={ocr.transaction_id || ""}>
+                                {ocr.transaction_id || "—"}
+                              </dd>
+                            </div>
+                          </dl>
+                        </div>
+
+                        <div className="rounded border border-border/60 bg-background/70 p-3">
+                          <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Receipt context</div>
+                          <dl className="mt-1 space-y-1">
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Recipient</dt><dd className="font-medium truncate max-w-[140px]" title={ocr.recipient_name || ""}>{ocr.recipient_name || "—"}</dd></div>
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Sender</dt><dd className="font-medium truncate max-w-[140px]" title={ocr.sender_name || ""}>{ocr.sender_name || "—"}</dd></div>
+                            <div className="flex justify-between gap-2"><dt className="text-muted-foreground">Date</dt><dd className="font-mono">{ocr.date || "—"}</dd></div>
+                            <div className="flex justify-between gap-2">
+                              <dt className="text-muted-foreground">Confidence</dt>
+                              <dd className="font-mono">{ocr.confidence != null ? `${Math.round(Number(ocr.confidence) * 100)}%` : "—"}</dd>
+                            </div>
+                          </dl>
+                        </div>
+                      </div>
+
+                      {ocr.notes && (
+                        <div className="rounded border border-amber-500/30 bg-amber-500/5 p-2 text-xs text-foreground">
+                          <span className="font-semibold">Notes: </span>{ocr.notes}
+                        </div>
+                      )}
+
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        {selected.screenshot_url ? (
+                          <a
+                            href={selected.screenshot_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5" /> Open uploaded receipt
+                          </a>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">No receipt uploaded</span>
+                        )}
+                        <span className="text-[10px] text-muted-foreground">
+                          {ocr.scanned_at ? `Scanned ${format(new Date(ocr.scanned_at), "PP p")}` : "Not scanned yet"}
+                        </span>
+                      </div>
+
+                      {ocr.raw && (
+                        <details className="rounded border border-border/60 bg-background/60 p-2 text-xs">
+                          <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
+                            Raw extracted data
+                          </summary>
+                          <pre className="mt-2 overflow-auto text-[11px] leading-relaxed">
+{JSON.stringify(ocr.raw, null, 2)}
+                          </pre>
+                        </details>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
 
               <hr className="border-border" />
