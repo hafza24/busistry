@@ -485,14 +485,15 @@ export default function Marketplace() {
       </section>
 
       {/* Sister Business Services — 3-up strip, shared shell */}
-      <section id="sister" className="scroll-mt-24">
+      <section id="sister" className="scroll-mt-32">
         <SectionHeader
-          icon={ExternalLink}
+          index="03"
           eyebrow="Sister services"
           title="More from the Busistree family"
           description="Specialized platforms that complement your store — hosted separately, built to work together."
           to="/contact"
           ctaLabel="Talk to us"
+
         />
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
