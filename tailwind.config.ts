@@ -92,12 +92,17 @@ export default {
           "0%": { transform: "scale(1)", opacity: "0.6" },
           "80%, 100%": { transform: "scale(1.8)", opacity: "0" },
         },
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "float-slow": "float-slow 4s ease-in-out infinite",
         "ping-slow": "ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",
+        shimmer: "shimmer 1.8s infinite",
+
       },
     },
   },
