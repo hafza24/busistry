@@ -312,7 +312,6 @@ const Footer = () => {
             </div>
           ))}
         </div>
-        </div>
 
         {/* Bottom bar */}
         <div className="mt-16 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
