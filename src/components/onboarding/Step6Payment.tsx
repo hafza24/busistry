@@ -152,6 +152,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   const { data: plan } = useQuery({
     queryKey: ["plan", data.plan_id],
@@ -272,11 +273,68 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
         .upload(path, file, { contentType: file.type, upsert: false });
       if (error) throw error;
       const { data: pub } = supabase.storage.from("payment-screenshots").getPublicUrl(path);
-      update({ screenshot_url: pub.publicUrl });
+      update({
+        screenshot_url: pub.publicUrl,
+        ocr_status: "pending",
+        ocr_amount: null,
+        ocr_transaction_id: null,
+        ocr_notes: null,
+        ocr_raw: null,
+      });
       toast({
         title: "Receipt uploaded",
-        description: "We'll verify your PKR payment and start your build shortly.",
+        description: "Scanning your receipt for amount & transaction ID…",
       });
+
+      // Kick off OCR scan
+      setScanning(true);
+      try {
+        const { data: ocr, error: ocrErr } = await supabase.functions.invoke("parse-receipt", {
+          body: {
+            storage_path: path,
+            expected_amount: grandToday,
+            expected_recipient: "Busistree",
+          },
+        });
+        if (ocrErr) throw ocrErr;
+
+        update({
+          ocr_status: ocr?.status ?? "pending",
+          ocr_amount: ocr?.amount ?? null,
+          ocr_transaction_id: ocr?.transaction_id ?? null,
+          ocr_notes: ocr?.notes ?? null,
+          ocr_raw: ocr?.raw ?? null,
+          // Auto-fill fields if user hasn't set them yet
+          ...(typeof ocr?.amount === "number" && !data.amount ? { amount: ocr.amount } : {}),
+          ...(ocr?.transaction_id && !data.transaction_id ? { transaction_id: ocr.transaction_id } : {}),
+          ...(ocr?.payment_method && !data.payment_method
+            ? { payment_method: String(ocr.payment_method).toLowerCase().includes("jazz") ? "jazzcash"
+                : String(ocr.payment_method).toLowerCase().includes("easy") ? "easypaisa"
+                : String(ocr.payment_method).toLowerCase().includes("bank") ? "bank" : data.payment_method }
+            : {}),
+        });
+
+        if (ocr?.status === "match") {
+          toast({ title: "Receipt verified", description: "Amount and transaction ID match your order." });
+        } else if (ocr?.status === "mismatch") {
+          toast({
+            title: "Mismatch detected",
+            description: ocr?.notes || "Some details on the receipt do not match your order.",
+            variant: "destructive",
+          });
+        } else if (ocr?.status === "unreadable") {
+          toast({
+            title: "Receipt unreadable",
+            description: ocr?.notes || "Please upload a sharper screenshot.",
+            variant: "destructive",
+          });
+        }
+      } catch (ocrErr: any) {
+        console.error("OCR failed", ocrErr);
+        update({ ocr_status: "pending", ocr_notes: "Automatic scan unavailable — admin will verify manually." });
+      } finally {
+        setScanning(false);
+      }
     } catch (err: any) {
       toast({ title: "Upload failed", description: err.message, variant: "destructive" });
     } finally {
@@ -775,7 +833,71 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
                 )}
               </label>
             </div>
+
+            {(scanning || data.ocr_status) && (
+              <div
+                className={`rounded-lg border p-4 text-sm ${
+                  data.ocr_status === "match"
+                    ? "border-primary/40 bg-primary/5"
+                    : data.ocr_status === "mismatch" || data.ocr_status === "unreadable"
+                    ? "border-destructive/40 bg-destructive/5"
+                    : "border-border bg-muted/30"
+                }`}
+              >
+                <div className="flex items-center gap-2 font-semibold mb-2">
+                  {scanning ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                      Scanning receipt…
+                    </>
+                  ) : data.ocr_status === "match" ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4 text-primary" />
+                      Receipt matches your order
+                    </>
+                  ) : data.ocr_status === "mismatch" ? (
+                    <>
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                      Mismatch detected — please double-check
+                    </>
+                  ) : data.ocr_status === "unreadable" ? (
+                    <>
+                      <AlertCircle className="h-4 w-4 text-destructive" />
+                      Couldn't read the receipt clearly
+                    </>
+                  ) : (
+                    <>
+                      <Hourglass className="h-4 w-4 text-muted-foreground" />
+                      Awaiting manual review
+                    </>
+                  )}
+                </div>
+
+                {!scanning && (
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="rounded border border-border/60 bg-background/60 p-2">
+                      <div className="text-muted-foreground">Detected amount</div>
+                      <div className="font-mono">
+                        {data.ocr_amount != null ? `PKR ${Number(data.ocr_amount).toLocaleString()}` : "—"}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground mt-0.5">
+                        Expected PKR {grandToday.toLocaleString()}
+                      </div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-background/60 p-2">
+                      <div className="text-muted-foreground">Detected TID</div>
+                      <div className="font-mono truncate">{data.ocr_transaction_id || "—"}</div>
+                    </div>
+                  </div>
+                )}
+
+                {!scanning && data.ocr_notes && (
+                  <p className="mt-2 text-xs text-muted-foreground">{data.ocr_notes}</p>
+                )}
+              </div>
+            )}
           </div>
+
         </>
       )}
 

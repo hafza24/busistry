@@ -55,6 +55,11 @@ export type OnboardingData = {
   transaction_id?: string;
   amount?: number;
   screenshot_url?: string;
+  ocr_amount?: number | null;
+  ocr_transaction_id?: string | null;
+  ocr_status?: "pending" | "match" | "mismatch" | "unreadable" | null;
+  ocr_notes?: string | null;
+  ocr_raw?: any;
   terms_accepted?: boolean;
 
   current_step?: number;
