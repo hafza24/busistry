@@ -172,11 +172,12 @@ const About = () => {
               {/* Portrait */}
               <div className="absolute inset-y-4 left-1/2 -translate-x-1/2 w-[78%] sm:w-[70%] lg:w-[72%] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.35)] z-10">
                 <img
-                  src={heroFounder}
-                  alt="Pakistani business owner smiling with a laptop showing their new website"
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1024&q=80"
+                  alt="Business owner smiling with a laptop showing their new website"
                   className="w-full h-full object-cover"
                   width={1024}
                   height={1280}
+                  loading="lazy"
                 />
               </div>
 
