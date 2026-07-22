@@ -732,6 +732,7 @@ const Index = () => {
                       {/* Corner accent */}
                       <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full" />
                     </div>
+                    </Link>
                   </motion.div>
                 );
               })}
