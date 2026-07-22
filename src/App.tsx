@@ -85,7 +85,7 @@ const App = () => (
                     <Route path="/templates/:id" element={<TemplateDetail />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/marketplace" element={<Marketplace />} />
-                    <Route path="/marketplace/:slug" element={<CatalogItem />} />
+                    
                     <Route path="/addons" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/addons/:kind/:slug" element={<Navigate to="/marketplace" replace />} />
                     <Route path="/templates-on-sale" element={<TemplatesOnSale />} />
