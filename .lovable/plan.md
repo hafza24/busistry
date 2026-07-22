@@ -1,119 +1,69 @@
+# Marketplace Page — Design Audit & Change Plan
 
-# Marketplace Restructure Plan
+## Audit findings
 
-Goal: eliminate the four parallel systems (`addons`, `integrations`, `website_products`, `upgrade_orders` catalog) and replace them with **one unified catalog + one order table**, backed by a shared card, detail page, admin editor, and user history.
+**1. Competing visual languages**
+The page runs four distinct art directions in one scroll:
+- Hero banner: emerald + wave SVG + glow (on-brand)
+- Templates tile: full-black photo card
+- Catalog tile: solid primary with radial glow
+- Biztyle card in sister-services: dark violet/fuchsia neo-brutalist grid
+Each is fine in isolation; stacked, they read like four different sites.
 
----
+**2. Hero right column duplicates the page**
+The 3 tiles (Plans / Templates / Catalog) jump to the exact three sections that follow immediately below. Redundant scroll + wasted above-the-fold real estate.
 
-## 1. New database model
+**3. Section rhythm is monotone**
+Every section uses the same `SectionHeader` (eyebrow + h2 + description + outline CTA) followed by a flat card grid. No hierarchy, no editorial break, no scannable difference between Plans, Templates, Catalog, Sister services.
 
-Two new tables replace the catalog side of all four systems.
+**4. Card treatments are inconsistent**
+- Plan cards: plain bordered `Card`, tiny features list
+- Template cards: image + badge, minimal metadata
+- Catalog cards: separate component styling
+- Sister-service cards: heavy gradient panels with icons
+No shared card grammar.
 
-### `catalog_items` — single source of truth for anything a user can buy/request
+**5. Spacing is heavy**
+`space-y-20` between every section on a page with 5 sections = lots of empty scroll, especially between Plans → Templates → Catalog which are conceptually related.
 
-Fields:
-- `id`, `slug` (unique), `name`, `short_description`, `long_description`
-- `type` enum: `addon`, `integration`, `page`, `section`, `popup`, `plan_upgrade`, `product_limit`, `category_limit`, `extend_duration`, `content_tweak`
-- `category` (freeform tag, e.g. "Marketing", "SEO", "Design")
-- `price_pkr`, `pricing_type` (`one_time` | `monthly` | `per_unit`), `per_unit_label`
-- `icon`, `cover_image`, `gallery` (jsonb array of urls)
-- `features` (jsonb array of strings), `faq` (jsonb array of `{q, a}`)
-- `applicable_plans` (text[]), `applicable_types` (text[] — which store types it fits)
-- `meta_title`, `meta_description`, `og_image`
-- `is_enabled`, `is_recommended`, `is_popular`, `sort_order`
-- `related_item_ids` (uuid[])
-- Standard timestamps
+**6. CTA styling was just unified** (hero-style buttons) — good baseline to build on.
 
-Access: public `SELECT` where `is_enabled = true`; full CRUD for admins.
-
-### `catalog_orders` — single order log
-
-Replaces `store_addons` and `upgrade_orders` at the app layer.
-
-Fields:
-- `id`, `user_id`, `store_id` (nullable — required only for store-scoped types)
-- `item_id` → `catalog_items.id`, `item_type_snapshot`, `name_snapshot`
-- `price_snapshot_pkr`, `pricing_type_snapshot`, `quantity`
-- `config` (jsonb — free-form: notes, target plan id, days, etc.)
-- `status`: `pending` | `approved` | `in_progress` | `active` | `completed` | `rejected`
-- `transaction_id`, `payment_screenshot_url`, `admin_notes`
-- Standard timestamps
-
-Access: users see/insert their own; admins see all; edge functions via service role.
-
-### Migration of existing data
-
-- Copy `addons`, `integrations`, `website_products` rows into `catalog_items` with appropriate `type`.
-- Copy `store_addons` and `upgrade_orders` rows into `catalog_orders`.
-- Keep legacy tables in place (read-only) for one release so nothing breaks; new code writes only to the new tables.
-- Rewrite `get_pending_review_prompts` and `can_review` to read `catalog_orders`.
-- Rewrite `apply_upgrade_order` as `apply_catalog_order` operating on the new table.
+**7. Biztyle violet card breaks the design system**
+Hardcoded hex (`#0b0616`), `rgba(139,92,246,...)`, `text-primary/70/70` (typo), `text-white` — violates the semantic token rule and the emerald palette.
 
 ---
 
-## 2. Frontend consolidation
+## Change plan (phased, low-risk first)
 
-### Routes (before → after)
+### Phase 1 — System hygiene (no layout change)
+1. Fix the Biztyle card: replace hardcoded violet/hex + `text-white` + `text-primary/70/70` typo with semantic tokens. Keep it visually distinct via a `sister-biztyle` token variant defined in `index.css`, not inline hex.
+2. Normalize section spacing: `space-y-20` → `space-y-16` (desktop) / `space-y-12` (mobile).
+3. Unify eyebrow + heading typography across `SectionHeader` and the hero's inline headings.
 
-```text
-/addons                 →  removed (redirect to /marketplace)
-/marketplace            →  unified catalog grid, filter chips by type
-/addons/:slug           →  removed
-/marketplace/:slug      →  single detail page for every item type
-```
+### Phase 2 — Kill the redundancy
+4. Remove the 3-tile right column from the hero (Plans/Templates/Catalog shortcuts). Reshape hero into a single wide editorial banner with the emerald art + headline + two CTAs.
+5. Add a compact "jump-to" strip under the hero (small pill chips: Plans · Templates · Catalog · Sister services) — same navigation intent, one row instead of a duplicate column.
 
-### Components (before → after)
+### Phase 3 — Card grammar
+6. Define one shared card shell (radius, border, hover, shadow) and apply it to Plan, Template, Catalog, and Sister-service cards. Only the *content* differs; the frame is identical.
+7. Plan cards: promote price, add a single-line "best for" tagline, drop the 4-cell limits grid into a compact inline row.
+8. Template cards: keep image, drop the redundant category text under the name, move the price badge to a bottom-left chip so the title has room.
 
-| Before | After |
-| --- | --- |
-| `MarketplaceGrid`, addons grid on `/marketplace`, `/addons` | `<CatalogGrid />` with type/category filter |
-| `AddonDetail.tsx`, product detail bits | `<CatalogItemDetail />` (rich content + SEO + related) |
-| `CheckoutDialog`, `WebsiteSelectionModal`, store `UpgradePlan` upgrade flow | `<CatalogCheckoutDialog />` — one flow: pick website (if store-scoped) → quantity/config → payment |
-| `MyAddons`, `MyStoreAddons`, `MyWebsiteUpdates`, `MyOrders` (partial) | `<MyRequests />` — unified history, filterable by type & status |
-| `AdminAddonManagement`, `AdminIntegrations`, `AdminWebsiteProducts`, `AdminAddonsHub` | `<AdminCatalog />` — one table + editor with all fields (rich content, SEO, gallery, related) |
-| `AdminStoreAddons`, `AdminUpgradeOrders` | `<AdminCatalogOrders />` — one queue with type filter, approve/reject/complete |
+### Phase 4 — Editorial rhythm
+9. Break the "grid-after-header" monotony with one asymmetric moment — Templates as a 1-featured + 3-small mosaic instead of a flat 4-col grid.
+10. Sister-services: shrink to a 3-up strip with a shared card shell (see step 6), so it reads as "also from us" not "third product tier".
 
-### Unified card
-
-`<CatalogCard item={...} />` — used on marketplace grid, related-items row, and store dashboard "recommended for you". Shows icon, name, short description, price badge, popular/recommended pills.
-
-### Unified detail page
-
-Sections in order:
-1. Hero: cover, name, short description, price + CTA ("Add to my site" / "Request update")
-2. Long description (markdown)
-3. Features list
-4. Gallery
-5. FAQ (accordion)
-6. Related items row
-7. SEO tags rendered via `<SEO />`
-
----
-
-## 3. Sidebars & entry points
-
-- Dashboard sidebar: remove "My Add-ons" + "Website Updates", add single "My Requests".
-- Store dashboard sidebar: keep "Addons" tab but point it at `<CatalogGrid storeId={...} />` filtered to store-scoped types.
-- Admin sidebar: replace three catalog entries with "Catalog" and "Catalog Orders".
-
----
-
-## 4. Rollout order
-
-1. Migration: create `catalog_items` + `catalog_orders` + RLS + grants + backfill from legacy tables.
-2. Build shared components: `CatalogCard`, `CatalogItemDetail`, `CatalogCheckoutDialog`, hooks (`useCatalog`, `useMyCatalogOrders`, `useAdminCatalog`).
-3. Rewrite pages: `/marketplace`, `/marketplace/:slug`, `MyRequests`, `AdminCatalog`, `AdminCatalogOrders`.
-4. Swap sidebar entries and route registrations; add `/addons` → `/marketplace` redirect.
-5. Delete old components once nothing imports them; keep legacy DB tables read-only for one release, then drop in a follow-up.
+### Phase 5 — Motion & polish
+11. Consistent hover: 200ms border + shadow lift on every card. No card should hover differently from its neighbor.
+12. Lazy-load section imagery below the fold (Templates hero image is already `fetchPriority=high`; the rest should be `loading=lazy`).
 
 ---
 
 ## Technical notes
+- Files touched: `src/pages/Marketplace.tsx`, `src/index.css` (biztyle token), possibly a new `src/components/marketplace/JumpStrip.tsx`.
+- No DB, no route, no data-fetching changes.
+- Each phase is independently shippable and reviewable.
 
-- `catalog_items.type` drives which fields the checkout dialog collects (e.g. `plan_upgrade` needs `target_plan_id` in `config`; `extend_duration` needs `days`; `product_limit`/`category_limit` need `quantity`; others just need optional notes).
-- Store-scoped types (`plan_upgrade`, `product_limit`, `category_limit`, `extend_duration`, `content_tweak`, `page`, `section`, `popup`, `addon` when it modifies a site) require `store_id`; `integration`-only items that aren't tied to a store don't.
-- `apply_catalog_order` security-definer RPC handles the same automations `apply_upgrade_order` did (bump limits, extend expiry, change plan) plus marking add-on installs `active`.
-- Realtime: enable `catalog_orders` on `supabase_realtime` publication so admin queue and user history update live.
-- No frontend hardcoded colors — all styling via existing tokens.
+---
 
-This is a large change. I'll ship it in the rollout order above so the app stays functional between steps.
+Reply with which phases to execute (e.g. "do 1 and 2" or "all of it") and I'll implement.
