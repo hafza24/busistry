@@ -320,9 +320,9 @@ const About = () => {
           <div className="relative order-2 lg:order-1">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
             <img
-              src={storyIllustration}
-              alt="Founder illustration representing the Busistree story"
-              className="w-full max-w-md mx-auto h-auto object-contain drop-shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
+              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+              alt="Founders collaborating around a laptop, building a business together"
+              className="w-full max-w-md mx-auto h-auto rounded-2xl object-cover shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
               loading="lazy"
             />
           </div>
