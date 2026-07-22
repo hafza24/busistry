@@ -185,13 +185,42 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
 
 
   const MAX_MB = 5;
+  const MIN_KB = 3;
+  const MIN_IMG_PX = 300; // reject tiny/blurry crops
   const ALLOWED = ["image/png", "image/jpeg", "image/jpg", "image/webp", "application/pdf"];
+
+  const validateImageDimensions = (file: File): Promise<{ ok: boolean; w?: number; h?: number }> =>
+    new Promise((resolve) => {
+      if (file.type === "application/pdf") return resolve({ ok: true });
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        resolve({ ok: img.width >= MIN_IMG_PX && img.height >= MIN_IMG_PX, w: img.width, h: img.height });
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve({ ok: false });
+      };
+      img.src = url;
+    });
 
   const handleScreenshot = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
 
-    // Validation
+    // Filename sanity
+    if (!file.name || file.name.length > 200 || /[<>:"/\\|?*\x00-\x1F]/.test(file.name)) {
+      toast({
+        title: "Invalid file name",
+        description: "Please rename the file to remove special characters and try again.",
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+
+    // MIME type
     if (!ALLOWED.includes(file.type)) {
       toast({
         title: "Unsupported file type",
@@ -201,6 +230,8 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       e.target.value = "";
       return;
     }
+
+    // Size bounds
     if (file.size > MAX_MB * 1024 * 1024) {
       toast({
         title: "File too large",
@@ -210,10 +241,22 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       e.target.value = "";
       return;
     }
-    if (file.size < 3 * 1024) {
+    if (file.size < MIN_KB * 1024) {
       toast({
         title: "File looks empty",
-        description: "That file seems too small to be a valid receipt. Please re-upload.",
+        description: `That file is under ${MIN_KB} KB — too small to be a valid receipt. Please re-upload.`,
+        variant: "destructive",
+      });
+      e.target.value = "";
+      return;
+    }
+
+    // Image dimensions
+    const dim = await validateImageDimensions(file);
+    if (!dim.ok) {
+      toast({
+        title: "Image too small or unreadable",
+        description: `Receipt must be at least ${MIN_IMG_PX}×${MIN_IMG_PX}px so we can read the transaction details.`,
         variant: "destructive",
       });
       e.target.value = "";
@@ -240,6 +283,7 @@ const Step6Payment = ({ data, update, onEdit }: Props) => {
       setUploading(false);
     }
   };
+
 
   return (
     <StepShell title="Confirm & pay" subtitle="Review every detail below. You can jump back to any step to make changes before submitting.">
