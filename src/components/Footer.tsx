@@ -270,9 +270,9 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card/40 text-muted-foreground hover:text-foreground hover:border-foreground/40 hover:bg-card transition-all"
+                  className="group/social flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card/40 text-muted-foreground transition-all duration-300 hover:text-primary hover:border-primary/40 hover:bg-primary/5 hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4 transition-transform duration-300 group-hover/social:scale-110" />
                 </a>
               ))}
               <div className="ml-2 pl-2 border-l border-border">
@@ -293,10 +293,12 @@ const Footer = () => {
                     <li key={to}>
                       <Link
                         to={to}
-                        className="group inline-flex items-center gap-1 text-foreground/80 hover:text-foreground transition-colors"
+                        className="group inline-flex items-center gap-1 text-foreground/70 transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:text-primary rounded-sm focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       >
-                        <span>{label}</span>
-                        <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-all" />
+                        <span className="relative after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 group-hover:after:scale-x-100">
+                          {label}
+                        </span>
+                        <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-80 group-hover:translate-x-0 group-hover:text-primary" />
                       </Link>
                     </li>
                   ))}
@@ -314,11 +316,11 @@ const Footer = () => {
             <span className="font-semibold text-foreground">Busistree</span> — Built with care in Pakistan.
           </p>
           <div className="flex items-center gap-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-            <Link to="/legal/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link to="/legal/privacy" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Privacy</Link>
             <span className="opacity-30">/</span>
-            <Link to="/legal/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link to="/legal/terms" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Terms</Link>
             <span className="opacity-30">/</span>
-            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+            <Link to="/contact" className="relative transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 hover:after:scale-x-100">Contact</Link>
           </div>
         </div>
       </div>
