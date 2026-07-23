@@ -432,56 +432,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* 5 — WHY CHOOSE */}
-      <section className="border-t border-border/60 bg-secondary/40">
-        <div className="container max-w-6xl py-20 md:py-28">
-          <Reveal>
-            <div className="max-w-2xl mb-14">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Why choose Busistree</p>
-              <h2
-                className="font-display font-semibold text-foreground tracking-tight"
-                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
-              >
-                A small studio, built like an enterprise partner.
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="space-y-16 md:space-y-24">
-            {whyChoose.map((row, i) => {
-              const reversed = i % 2 === 1;
-              return (
-                <Reveal key={row.title}>
-                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-                    <div className={cn("order-2", reversed ? "lg:order-2" : "lg:order-1")}>
-                      <div className="relative overflow-hidden rounded-2xl border border-border/60 shadow-soft group">
-                        <img
-                          src={row.image}
-                          alt={row.alt}
-                          loading="lazy"
-                          className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                    </div>
-                    <div className={cn("order-1", reversed ? "lg:order-1" : "lg:order-2")}>
-                      <div className="text-primary font-mono text-xs tracking-widest mb-3">
-                        0{i + 1}
-                      </div>
-                      <h3
-                        className="font-display font-semibold text-foreground tracking-tight"
-                        style={{ fontSize: "clamp(1.35rem, 2.4vw, 1.9rem)" }}
-                      >
-                        {row.title}
-                      </h3>
-                      <p className="mt-4 text-muted-foreground leading-relaxed max-w-lg">{row.body}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* 6 — STATS */}
       <section className="border-t border-border/60">
