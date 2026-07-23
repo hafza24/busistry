@@ -496,18 +496,28 @@ const About = () => {
               </h2>
             </div>
           </Reveal>
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-12 flex flex-wrap items-stretch gap-3">
             {values.map((v, i) => (
-              <Reveal key={v.title} delay={(i % 3) * 80}>
-                <Card className="group h-full border-border/60 hover:-translate-y-1 hover:border-primary/40 hover:shadow-brand transition-all duration-300 rounded-2xl">
-                  <CardContent className="p-7">
-                    <div className="h-11 w-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5 transition-transform group-hover:scale-110">
-                      <v.icon className="h-5 w-5" strokeWidth={1.6} />
+              <Reveal key={v.title} delay={(i % 6) * 60}>
+                <div className="group relative">
+                  <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card px-5 h-11 cursor-default transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-brand group-hover:-translate-y-0.5">
+                    <v.icon className="h-4 w-4 text-primary" strokeWidth={1.8} />
+                    <h3 className="font-display text-sm font-semibold text-foreground whitespace-nowrap">
+                      {v.title}
+                    </h3>
+                  </div>
+                  <div
+                    role="tooltip"
+                    className="pointer-events-none absolute left-1/2 top-[calc(100%+10px)] z-20 w-72 -translate-x-1/2 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100"
+                  >
+                    <div className="rounded-xl border border-border/60 bg-popover text-popover-foreground shadow-brand p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-1">
+                        {v.title}
+                      </p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{v.body}</p>
                     </div>
-                    <h3 className="font-display text-lg font-semibold text-foreground">{v.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{v.body}</p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>
