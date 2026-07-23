@@ -496,7 +496,9 @@ const About = () => {
               </h2>
             </div>
           </Reveal>
-          <div className="mt-12 flex flex-wrap items-stretch gap-3">
+          {/* Mobile: horizontal scroll rail. sm+: wrapping row. */}
+          <div className="mt-12 -mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex sm:flex-wrap items-stretch gap-3 px-4 sm:px-0 w-max sm:w-auto snap-x snap-mandatory sm:snap-none">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 6) * 60}>
                 <div className="group relative">
