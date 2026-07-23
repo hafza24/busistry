@@ -418,7 +418,7 @@ const Index = () => {
         path="/"
       />
       {/* Hero — left-aligned copy + product mock */}
-      <section className="relative border-b border-border/60">
+      <section id="top" className="relative border-b border-border/60 scroll-mt-24">
         <div className="container pt-6 md:pt-10 lg:pt-12 pb-16 md:pb-24">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Left: copy (left-aligned, no centering) */}
