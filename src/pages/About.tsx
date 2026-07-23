@@ -34,16 +34,22 @@ import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
 import teamRohaAsset from "@/assets/team-roha.png.asset.json";
+import valueInnovation from "@/assets/values/innovation.png";
+import valueTrust from "@/assets/values/trust.png";
+import valueSimplicity from "@/assets/values/simplicity.png";
+import valueQuality from "@/assets/values/quality.png";
+import valueGrowth from "@/assets/values/growth.png";
+import valueSuccess from "@/assets/values/success.png";
 
 /* ---------------- data ---------------- */
 
 const values = [
-  { icon: Lightbulb, title: "Innovation", body: "New ideas, tested weekly. We adopt the tools and patterns that make founders' lives shorter and their brands stronger." },
-  { icon: ShieldCheck, title: "Trust", body: "Transparent pricing, honest timelines, and work you own outright. No lock-in, no fine print, no surprise invoices." },
-  { icon: Sparkles, title: "Simplicity", body: "One studio, one contact, one clear plan. We remove decisions so founders can focus on running the business." },
-  { icon: Award, title: "Quality", body: "Editorial-grade design and engineering — the same standard whether the project is free or a long retainer." },
-  { icon: TrendingUp, title: "Growth", body: "Every site ships with the analytics, SEO and content foundations to compound results over the first year." },
-  { icon: HeartHandshake, title: "Customer Success", body: "Your launch is the beginning. We stay close — updates, coaching and campaigns — for as long as you're growing." },
+  { image: valueInnovation, title: "Innovation", body: "New ideas, tested weekly. We adopt the tools and patterns that make founders' lives shorter and their brands stronger." },
+  { image: valueTrust, title: "Trust", body: "Transparent pricing, honest timelines, and work you own outright. No lock-in, no fine print, no surprise invoices." },
+  { image: valueSimplicity, title: "Simplicity", body: "One studio, one contact, one clear plan. We remove decisions so founders can focus on running the business." },
+  { image: valueQuality, title: "Quality", body: "Editorial-grade design and engineering — the same standard whether the project is free or a long retainer." },
+  { image: valueGrowth, title: "Growth", body: "Every site ships with the analytics, SEO and content foundations to compound results over the first year." },
+  { image: valueSuccess, title: "Customer Success", body: "Your launch is the beginning. We stay close — updates, coaching and campaigns — for as long as you're growing." },
 ];
 
 const whyChoose = [
