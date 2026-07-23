@@ -11,6 +11,7 @@ interface ScrollProgressRailProps {
 const ScrollProgressRail = ({ milestones, className }: ScrollProgressRailProps) => {
   const [progress, setProgress] = useState(0);
   const [activeId, setActiveId] = useState<string | null>(milestones[0]?.id ?? null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -18,8 +19,8 @@ const ScrollProgressRail = ({ milestones, className }: ScrollProgressRailProps) 
       const scrollTop = window.scrollY;
       const max = doc.scrollHeight - window.innerHeight;
       setProgress(max > 0 ? Math.min(1, Math.max(0, scrollTop / max)) : 0);
+      setVisible(scrollTop > window.innerHeight * 0.4);
 
-      // Determine active milestone
       const viewportMid = scrollTop + window.innerHeight * 0.35;
       let current = milestones[0]?.id ?? null;
       for (const m of milestones) {
@@ -41,52 +42,84 @@ const ScrollProgressRail = ({ milestones, className }: ScrollProgressRailProps) 
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const activeIndex = Math.max(0, milestones.findIndex((m) => m.id === activeId));
+
   return (
-    <div
+    <nav
+      aria-label="Page sections"
       className={cn(
-        "fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-3",
+        "fixed right-5 xl:right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block transition-all duration-500",
+        visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none",
         className
       )}
-      aria-label="Page progress"
     >
-      {/* Track with fill */}
-      <div className="relative h-72 w-[3px] rounded-full bg-border/70 overflow-hidden">
-        <div
-          className="absolute inset-x-0 top-0 bg-primary rounded-full transition-[height] duration-150"
-          style={{ height: `${progress * 100}%` }}
-        />
+      {/* Progress readout */}
+      <div className="mb-4 flex flex-col items-end gap-1 pr-1">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70">
+          {String(activeIndex + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")}
+        </span>
+        <span className="font-mono text-[10px] tabular-nums text-muted-foreground/60">
+          {Math.round(progress * 100)}%
+        </span>
       </div>
 
-      {/* Milestones */}
-      <ul className="absolute inset-y-0 flex flex-col justify-between py-1">
-        {milestones.map((m) => {
+      <ul className="relative flex flex-col gap-4 pr-1">
+        {/* Track */}
+        <span
+          aria-hidden
+          className="absolute right-[5px] top-1 bottom-1 w-px bg-border/60 rounded-full"
+        />
+        {/* Fill */}
+        <span
+          aria-hidden
+          className="absolute right-[5px] top-1 w-px rounded-full bg-gradient-to-b from-primary to-primary/40 transition-[height] duration-200 ease-out"
+          style={{ height: `calc((100% - 0.5rem) * ${progress})` }}
+        />
+
+        {milestones.map((m, i) => {
           const active = m.id === activeId;
+          const passed = i < activeIndex;
           return (
-            <li key={m.id} className="group relative flex items-center">
+            <li key={m.id} className="group relative flex items-center justify-end">
+              {/* Label */}
+              <span
+                className={cn(
+                  "pointer-events-none absolute right-6 whitespace-nowrap font-mono text-[11px] tracking-wide transition-all duration-300",
+                  active
+                    ? "opacity-100 translate-x-0 text-foreground"
+                    : "opacity-0 -translate-x-2 text-muted-foreground group-hover:opacity-100 group-hover:translate-x-0"
+                )}
+              >
+                <span className="text-muted-foreground/60 mr-2">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {m.label}
+              </span>
+
+              {/* Dot */}
               <button
                 type="button"
                 onClick={() => jumpTo(m.id)}
                 aria-label={`Jump to ${m.label}`}
-                className={cn(
-                  "h-3 w-3 rounded-full border transition-all duration-200",
-                  active
-                    ? "bg-primary border-primary scale-125 shadow-[0_0_0_4px_hsl(var(--primary)/0.15)]"
-                    : "bg-background border-border hover:border-primary hover:scale-110"
-                )}
-              />
-              <span
-                className={cn(
-                  "pointer-events-none absolute right-6 whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium text-foreground shadow-elev opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0",
-                  active && "opacity-100 translate-x-0"
-                )}
+                aria-current={active ? "true" : undefined}
+                className="relative flex h-4 w-4 items-center justify-center"
               >
-                {m.label}
-              </span>
+                <span
+                  className={cn(
+                    "block rounded-full transition-all duration-300",
+                    active
+                      ? "h-2.5 w-2.5 bg-primary shadow-[0_0_0_4px_hsl(var(--primary)/0.15)]"
+                      : passed
+                      ? "h-1.5 w-1.5 bg-primary/60"
+                      : "h-1.5 w-1.5 bg-border group-hover:bg-primary/70 group-hover:scale-125"
+                  )}
+                />
+              </button>
             </li>
           );
         })}
       </ul>
-    </div>
+    </nav>
   );
 };
 
