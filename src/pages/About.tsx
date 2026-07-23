@@ -356,49 +356,7 @@ const About = () => {
       </section>
 
       {/* 3 — MISSION & VISION */}
-      <section className="border-t border-border/60 bg-secondary/40">
-        <div className="container max-w-6xl py-20 md:py-28">
-          <Reveal>
-            <div className="max-w-2xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Mission & vision</p>
-              <h2
-                className="font-display font-semibold text-foreground tracking-tight"
-                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
-              >
-                Why Busistree exists, and where it's going.
-              </h2>
-            </div>
-          </Reveal>
-          <div className="mt-12 grid md:grid-cols-2 gap-6">
-            {[
-              {
-                icon: Target,
-                title: "Our mission",
-                body: "Give every entrepreneur the same launch quality, speed and confidence that only funded teams have historically enjoyed — with none of the friction.",
-              },
-              {
-                icon: Eye,
-                title: "Our vision",
-                body: "A world where starting a business online takes days, not months — and where small teams look, feel and perform like established brands from day one.",
-              },
-            ].map((c, i) => (
-              <Reveal key={c.title} delay={i * 120}>
-                <Card className="h-full border-border/60 bg-card hover:-translate-y-1 hover:shadow-brand transition-all duration-300 rounded-2xl">
-                  <CardContent className="p-8 md:p-10 h-full flex flex-col">
-                    <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
-                      <c.icon className="h-6 w-6" strokeWidth={1.6} />
-                    </div>
-                    <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground">
-                      {c.title}
-                    </h3>
-                    <p className="mt-3 text-muted-foreground leading-relaxed">{c.body}</p>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <MissionVisionToggle />
 
       {/* 4 — CORE VALUES */}
       <section className="border-t border-border/60">
