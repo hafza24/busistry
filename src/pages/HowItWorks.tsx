@@ -44,8 +44,91 @@ const steps = [
 ];
 
 
-const HowItWorks = () => (
+const StepRow = ({ s, i }: { s: typeof steps[number]; i: number }) => {
+  const reverse = i % 2 === 1;
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const numY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0.4]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.92, 1, 0.98]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ opacity }}
+      className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}
+    >
+      <div className="relative">
+        <motion.span
+          aria-hidden="true"
+          style={{ y: numY }}
+          className={`absolute -top-6 md:-top-10 ${reverse ? "right-2 md:right-6" : "left-2 md:left-6"} text-[8rem] md:text-[11rem] leading-none font-display font-bold text-primary/10 select-none`}
+        >
+          {String(i + 1).padStart(2, "0")}
+        </motion.span>
+        <motion.div
+          style={{ y: imgY, scale }}
+          className="relative z-10 rounded-3xl bg-primary/5 border border-primary/10 p-6 md:p-10 shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4)]"
+        >
+          <img
+            src={s.image}
+            alt={s.title}
+            loading="lazy"
+            width={1024}
+            height={1024}
+            className="w-full h-auto rounded-2xl"
+          />
+        </motion.div>
+      </div>
+
+      <motion.div style={{ y }}>
+        <motion.span
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-3 block font-display"
+        >
+          Step {String(i + 1).padStart(2, "0")}
+        </motion.span>
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4 tracking-tight"
+        >
+          {s.title}
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-muted-foreground leading-relaxed text-lg"
+        >
+          {s.desc}
+        </motion.p>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const HowItWorks = () => {
+  const { scrollYProgress } = useScroll();
+  const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
   <div className="py-16">
+    <motion.div
+      style={{ scaleX: progressScaleX, transformOrigin: "0% 50%" }}
+      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-primary/70 to-primary z-50"
+    />
     <SEO
       title="How It Works — Order your free website in 48 hours | Busistree"
       description="Four simple steps: share your brief, pick a template, we build in 48 hours, then launch and grow. This is how Busistree ships a business."
