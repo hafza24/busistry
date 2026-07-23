@@ -34,16 +34,22 @@ import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
 import teamRohaAsset from "@/assets/team-roha.png.asset.json";
+import valueInnovation from "@/assets/values/innovation.png";
+import valueTrust from "@/assets/values/trust.png";
+import valueSimplicity from "@/assets/values/simplicity.png";
+import valueQuality from "@/assets/values/quality.png";
+import valueGrowth from "@/assets/values/growth.png";
+import valueSuccess from "@/assets/values/success.png";
 
 /* ---------------- data ---------------- */
 
 const values = [
-  { icon: Lightbulb, title: "Innovation", body: "New ideas, tested weekly. We adopt the tools and patterns that make founders' lives shorter and their brands stronger." },
-  { icon: ShieldCheck, title: "Trust", body: "Transparent pricing, honest timelines, and work you own outright. No lock-in, no fine print, no surprise invoices." },
-  { icon: Sparkles, title: "Simplicity", body: "One studio, one contact, one clear plan. We remove decisions so founders can focus on running the business." },
-  { icon: Award, title: "Quality", body: "Editorial-grade design and engineering — the same standard whether the project is free or a long retainer." },
-  { icon: TrendingUp, title: "Growth", body: "Every site ships with the analytics, SEO and content foundations to compound results over the first year." },
-  { icon: HeartHandshake, title: "Customer Success", body: "Your launch is the beginning. We stay close — updates, coaching and campaigns — for as long as you're growing." },
+  { image: valueInnovation, title: "Innovation", body: "New ideas, tested weekly. We adopt the tools and patterns that make founders' lives shorter and their brands stronger." },
+  { image: valueTrust, title: "Trust", body: "Transparent pricing, honest timelines, and work you own outright. No lock-in, no fine print, no surprise invoices." },
+  { image: valueSimplicity, title: "Simplicity", body: "One studio, one contact, one clear plan. We remove decisions so founders can focus on running the business." },
+  { image: valueQuality, title: "Quality", body: "Editorial-grade design and engineering — the same standard whether the project is free or a long retainer." },
+  { image: valueGrowth, title: "Growth", body: "Every site ships with the analytics, SEO and content foundations to compound results over the first year." },
+  { image: valueSuccess, title: "Customer Success", body: "Your launch is the beginning. We stay close — updates, coaching and campaigns — for as long as you're growing." },
 ];
 
 const whyChoose = [
@@ -516,33 +522,36 @@ const About = () => {
               </h2>
             </div>
           </Reveal>
-          {/* Mobile: horizontal scroll rail. sm+: wrapping row. */}
-          <div className="mt-12 -mx-4 sm:mx-0 overflow-x-auto sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex sm:flex-wrap items-stretch gap-3 px-4 sm:px-0 w-max sm:w-auto snap-x snap-mandatory sm:snap-none">
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 6) * 60}>
-                <div className="group relative snap-start">
-                  <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card px-5 h-12 sm:h-11 cursor-default transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-brand group-hover:-translate-y-0.5">
-                    <v.icon className="h-4 w-4 text-primary shrink-0" strokeWidth={1.8} />
-                    <h3 className="font-display text-sm font-semibold text-foreground whitespace-nowrap">
+                <div className="group relative aspect-square rounded-2xl border border-border/60 bg-card p-5 md:p-6 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-brand hover:-translate-y-1">
+                  <div className="flex items-start justify-between">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-primary/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3">
+                      <img
+                        src={v.image}
+                        alt={v.title}
+                        width={512}
+                        height={512}
+                        loading="lazy"
+                        className="w-full h-full object-contain p-2"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-muted-foreground/60 tracking-widest">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg md:text-xl font-semibold text-foreground">
                       {v.title}
                     </h3>
-                  </div>
-                  <div
-                    role="tooltip"
-                    className="pointer-events-none absolute left-1/2 top-[calc(100%+10px)] z-20 w-72 max-w-[80vw] -translate-x-1/2 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100"
-                  >
-                    <div className="rounded-xl border border-border/60 bg-popover text-popover-foreground shadow-brand p-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-1">
-                        {v.title}
-                      </p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{v.body}</p>
-                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {v.body}
+                    </p>
                   </div>
                 </div>
               </Reveal>
             ))}
-            </div>
           </div>
         </div>
       </section>
