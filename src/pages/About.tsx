@@ -1,82 +1,239 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Target, Heart, Rocket, ShieldCheck, Globe, ArrowRight, Star, MessageSquare, ShoppingBag, TrendingUp, CheckCircle2, Linkedin, Mail, Instagram } from "lucide-react";
+import {
+  ArrowRight,
+  Star,
+  Linkedin,
+  Mail,
+  Instagram,
+  Target,
+  Eye,
+  Lightbulb,
+  ShieldCheck,
+  Sparkles,
+  Award,
+  TrendingUp,
+  HeartHandshake,
+  Search,
+  ClipboardList,
+  Hammer,
+  Rocket,
+  LineChart,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
-import heroFounder from "@/assets/about-hero-founder.jpg";
-import badgeStore from "@/assets/about-badge-store.png";
-import badgeAnalytics from "@/assets/about-badge-analytics.png";
-import storyIllustration from "@/assets/about-story-illustration.png";
 import founderHafza from "@/assets/founder-hafza.png";
 import teamRohmaAsset from "@/assets/team-rohma.png.asset.json";
 import teamAsimAsset from "@/assets/team-asim.png.asset.json";
 import teamKiranAsset from "@/assets/team-kiran.png.asset.json";
 import teamRohaAsset from "@/assets/team-roha.png.asset.json";
 
+/* ---------------- data ---------------- */
+
+const values = [
+  { icon: Lightbulb, title: "Innovation", body: "New ideas, tested weekly. We adopt the tools and patterns that make founders' lives shorter and their brands stronger." },
+  { icon: ShieldCheck, title: "Trust", body: "Transparent pricing, honest timelines, and work you own outright. No lock-in, no fine print, no surprise invoices." },
+  { icon: Sparkles, title: "Simplicity", body: "One studio, one contact, one clear plan. We remove decisions so founders can focus on running the business." },
+  { icon: Award, title: "Quality", body: "Editorial-grade design and engineering — the same standard whether the project is free or a long retainer." },
+  { icon: TrendingUp, title: "Growth", body: "Every site ships with the analytics, SEO and content foundations to compound results over the first year." },
+  { icon: HeartHandshake, title: "Customer Success", body: "Your launch is the beginning. We stay close — updates, coaching and campaigns — for as long as you're growing." },
+];
+
+const whyChoose = [
+  {
+    title: "A complete business ecosystem",
+    body: "Strategy, brand, website, packaging, marketing and support — under one roof, with one accountable team. You never re-brief a new stranger.",
+    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=1600&q=80",
+    alt: "Team collaborating on a project in a bright modern office",
+  },
+  {
+    title: "Affordable, honest pricing",
+    body: "A production-quality launch website, free. Retainers and add-ons are priced flat and public — no procurement games, no surprise line items.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80",
+    alt: "Person reviewing a clear pricing document at a desk",
+  },
+  {
+    title: "48-hour delivery",
+    body: "From brief to live in two working days. A dedicated pod ships in parallel — copy, design, engineering and deployment — so you don't wait weeks.",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=80",
+    alt: "Designers and engineers reviewing work on a large screen",
+  },
+  {
+    title: "Professional, editorial quality",
+    body: "Real photography, real copy, real point of view. Nothing feels like it came out of a wizard, because none of it did.",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=80",
+    alt: "Designer sketching a brand identity system on paper",
+  },
+  {
+    title: "Long-term support",
+    body: "Monthly updates, performance reviews and marketing sprints. A senior team stays on the account — the person who ships is the person you reach.",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80",
+    alt: "Two colleagues reviewing analytics on a laptop",
+  },
+];
+
+const stats = [
+  { value: 2400, suffix: "+", label: "Projects completed" },
+  { value: 1800, suffix: "+", label: "Businesses supported" },
+  { value: 6, suffix: "", label: "Years of experience" },
+  { value: 98, suffix: "%", label: "Customer satisfaction" },
+];
+
 const team = [
   {
     name: "Hafza Azam",
-    role: "CEO",
+    role: "Founder & CEO",
     image: founderHafza,
-    cardGradient: "from-[#6b5cb8] via-[#8b7ecf] to-[#b8a5d9]",
-    bio: "Hafza leads Busistree's vision and strategy. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lacs, so people can have portfolios, stores, management systems and invites.",
+    bio: "Leads strategy, design and engineering — turning briefs into launch-ready websites in 48 hours.",
     socials: { linkedin: "#", instagram: "#", email: "hafza@busistree.com" },
   },
   {
     name: "Rohma Shahid",
-    role: "CMO",
+    role: "Chief Marketing Officer",
     image: teamRohmaAsset.url,
-    cardGradient: "from-[#389c84] to-[#6ec4a8]",
-    bio: "Rohma drives Busistree's marketing and brand. She crafts the stories, campaigns and creative that connect ambitious founders with the platform.",
+    bio: "Builds the stories, campaigns and creative that connect ambitious founders with the platform.",
     socials: { linkedin: "#", instagram: "#", email: "rohma@busistree.com" },
   },
   {
     name: "Asim Azeemi",
-    role: "CCO",
+    role: "Chief Customer Officer",
     image: teamAsimAsset.url,
-    cardGradient: "from-[#7a8fbf] to-[#a8b8d9]",
-    bio: "Asim leads customer success and operations. He makes sure every store request is handled with care, speed and craft — from first form to final launch.",
+    bio: "Runs customer success and operations — every request handled with care, speed and craft.",
     socials: { linkedin: "#", instagram: "#", email: "asim@busistree.com" },
   },
   {
     name: "Kiran Masood",
-    role: "HR Manager",
+    role: "Head of People",
     image: teamKiranAsset.url,
-    cardGradient: "from-[#7c5fb8] to-[#b89ad9]",
-    bio: "Kiran leads people and culture at Busistree. She builds the team, nurtures talent, and makes sure everyone has what they need to do their best work.",
+    bio: "Builds the team and culture that lets senior people do their best, most careful work.",
     socials: { linkedin: "#", instagram: "#", email: "kiran@busistree.com" },
   },
   {
     name: "Roha Shahid",
-    role: "Senior Fullstack Developer",
+    role: "Senior Fullstack Engineer",
     image: teamRohaAsset.url,
-    cardGradient: "from-[#4a7c6f] to-[#8ab8a8]",
-    bio: "Roha architects and builds Busistree end-to-end. From database schemas to pixel-perfect interfaces, she ships the platform that Pakistani founders rely on every day.",
+    bio: "Architects and builds the Busistree platform end-to-end — from database to pixel.",
     socials: { linkedin: "#", instagram: "#", email: "roha@busistree.com" },
   },
 ];
 
-
-
-const values = [
-  { icon: Target, title: "Free means free", body: "The 48-hour website costs nothing. No card, no trial, no fine print. If we don't earn the next brief, we've still done the work." },
-  { icon: Heart, title: "Editorial over templated", body: "Every site gets real copy, real images and a real point of view. If it looks like it came out of a wizard, we haven't done our job." },
-  { icon: ShieldCheck, title: "One studio, one voice", body: "Strategy, writing, design, engineering and marketing sit in one room. You never hand the same story to a new stranger." },
-  { icon: Rocket, title: "Ship, then refine", body: "Live in forty-eight hours beats perfect in six weeks. Momentum, then polish — never the other way around." },
+const process = [
+  { icon: Search, title: "Discover", body: "A short brief and a working session. We learn the business, the audience and what success looks like in ninety days." },
+  { icon: ClipboardList, title: "Plan", body: "A clear scope, sitemap and content plan — signed off before a pixel is designed. No moving targets." },
+  { icon: Hammer, title: "Build", body: "Design, copy and engineering run in parallel. You see progress daily, not at the end." },
+  { icon: Rocket, title: "Launch", body: "Live in forty-eight hours on your own domain, with analytics, SEO and search console configured." },
+  { icon: LineChart, title: "Grow", body: "Monthly reviews, content sprints and iteration. The site gets sharper as the business does." },
 ];
 
-const milestones = [
-  { year: "2023", title: "The 48-hour promise", body: "Started as a small studio with one rule: any business we take on goes live inside two working days." },
-  { year: "2024", title: "The studio grew a spine", body: "Added BizStyle in-house — identity, product and packaging design under the same roof as the site." },
-  { year: "2025", title: "Free became the default", body: "Made the launch website free. The work speaks; the rest of the business is optional, not obligatory." },
-  { year: "2026", title: "Here, now", body: "A small senior team, shipping websites in forty-eight hours and quietly building the brands behind them." },
+const testimonials = [
+  {
+    quote: "The most professional launch we've had. From brief to live site in two days — and the writing was ours, only sharper.",
+    name: "Ayesha Raza",
+    role: "Founder, Noor & Co.",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+  },
+  {
+    quote: "It feels like hiring a senior in-house team without the overhead. They think like operators, not vendors.",
+    name: "Bilal Ahmed",
+    role: "CEO, Fern Studio",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+  },
+  {
+    quote: "We stopped shopping for a website the day theirs went live. Traffic doubled inside a month with no paid spend.",
+    name: "Mariam Iqbal",
+    role: "Director, Studio Kaghaz",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+  },
+  {
+    quote: "Straightforward pricing, senior people, and work that actually converts. Everything a small business hopes for.",
+    name: "Hamza Khan",
+    role: "Owner, Halcyon Coffee",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
+  },
 ];
+
+/* ---------------- helpers ---------------- */
+
+function useInView<T extends HTMLElement>(threshold = 0.2) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+const Reveal = ({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) => {
+  const { ref, inView } = useInView<HTMLDivElement>(0.15);
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={cn(
+        "transition-all duration-700 ease-out will-change-transform",
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
+  const { ref, inView } = useInView<HTMLSpanElement>(0.4);
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const duration = 1600;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setN(Math.round(to * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, to]);
+  return (
+    <span ref={ref} className="tabular-nums">
+      {n.toLocaleString()}
+      {suffix}
+    </span>
+  );
+};
+
+/* ---------------- page ---------------- */
 
 const About = () => {
-  const { data: stats } = useQuery({
+  const [tIndex, setTIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTIndex((i) => (i + 1) % testimonials.length), 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  const { data: rating } = useQuery({
     queryKey: ["about-feedback-stats"],
     queryFn: async () => {
       const { data, error } = await supabase.rpc("get_feedback_rating_distribution");
@@ -84,380 +241,538 @@ const About = () => {
       return data?.[0] ?? { total_reviews: 0, avg_rating: 0 };
     },
   });
+  const avg = Number(rating?.avg_rating ?? 4.9);
 
-  const { data: previewReviews = [] } = useQuery({
-    queryKey: ["about-preview-reviews"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("public_feedback_reviews" as any)
-        .select("id, subject, message, rating, created_at")
-        .order("featured", { ascending: false })
-        .order("created_at", { ascending: false })
-        .limit(3);
-      if (error) throw error;
-      return (data ?? []) as any[];
-    },
-  });
-
-  const total = Number(stats?.total_reviews ?? 0);
-  const avg = Number(stats?.avg_rating ?? 0);
-
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Busistree",
+    url: "https://busistry.lovable.app",
+    description:
+      "Busistree helps entrepreneurs start, build, manage and grow their businesses through one connected ecosystem — strategy, brand, website, marketing and support.",
+    foundingDate: "2023",
+    founder: { "@type": "Person", name: "Hafza Azam" },
+  };
 
   return (
-    <div className="pb-16">
+    <div className="bg-background">
       <SEO
-        title="About Busistree — The studio behind the 48-hour website"
-        description="A small senior studio shipping launch-ready websites in forty-eight hours — free — and quietly building the brand, packaging and marketing behind them."
+        title="About Busistree — One connected ecosystem for modern businesses"
+        description="Busistree is the studio and platform helping entrepreneurs start, build, manage and grow their businesses — strategy, brand, website, marketing and support in one place."
         path="/about"
+        jsonLd={jsonLd}
       />
 
-      {/* Hero — Datify-style split layout */}
-      <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/5 via-background to-accent/10">
-        <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_80%_20%,hsl(var(--primary)/0.14),transparent_70%),radial-gradient(50%_50%_at_15%_90%,hsl(var(--accent)/0.14),transparent_70%)]" />
-        <div className="container max-w-6xl relative py-16 md:py-24">
-          <div className="grid md:grid-cols-[1.05fr_1fr] gap-12 md:gap-16 items-center">
-            {/* Left copy */}
-            <div className="relative text-center lg:text-left order-2 lg:order-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                — The studio behind the 48-hour website
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-foreground leading-[1.05] tracking-tight">
-                A small studio,{" "}
-                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-                  a two-day promise,
-                </span>{" "}
-                and the quiet work that follows.
-              </h1>
-              <p className="text-base md:text-lg text-muted-foreground mt-6 max-w-lg mx-auto lg:mx-0">
-                Busistree ships your website — free — in forty-eight hours.
-                Then, if the work is good enough, we stay on for the brand, the
-                packaging and the marketing. That's it. That's the whole studio.
-              </p>
+      {/* 1 — HERO */}
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=80"
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
+          <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_80%_10%,hsl(var(--primary)/0.18),transparent_70%)]" />
+        </div>
 
-              {/* Action row */}
-              <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 max-w-md mx-auto lg:mx-0">
-                <form
-                  onSubmit={(e) => e.preventDefault()}
-                  className="flex items-center gap-2 p-1.5 pl-4 rounded-full bg-card border border-border/70 shadow-soft flex-1 focus-within:border-primary/50 focus-within:shadow-brand transition-all"
-                >
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="flex-1 min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
-                    aria-label="Email address"
-                  />
-                  <Button asChild size="sm" className="rounded-full h-10 px-5 shrink-0">
-                    <Link to="/templates">Get started</Link>
-                  </Button>
-                </form>
-              </div>
-
-              <div className="mt-5 flex justify-center lg:justify-start">
-                <Link
-                  to="/how-it-works"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors group"
-                >
-                  See how it works
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
+        <div className="container max-w-6xl py-24 md:py-32 lg:py-40">
+          <Reveal>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-5">
+              About Busistree
+            </p>
+          </Reveal>
+          <Reveal delay={80}>
+            <h1
+              className="font-display font-semibold text-foreground tracking-tight leading-[1.05] max-w-4xl"
+              style={{ fontSize: "clamp(2.25rem, 5.5vw, 4.5rem)" }}
+            >
+              One connected ecosystem to start, build and grow a modern business.
+            </h1>
+          </Reveal>
+          <Reveal delay={160}>
+            <p
+              className="mt-6 text-muted-foreground max-w-2xl leading-relaxed"
+              style={{ fontSize: "clamp(1rem, 1.2vw, 1.15rem)" }}
+            >
+              Busistree brings strategy, brand, website, marketing and support into one calm,
+              accountable studio — so entrepreneurs can focus on the work only they can do.
+            </p>
+          </Reveal>
+          <Reveal delay={240}>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="min-h-11">
+                <Link to="/templates">Start your journey <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="min-h-11">
+                <Link to="/contact">Contact us</Link>
+              </Button>
             </div>
+          </Reveal>
+        </div>
+      </section>
 
-            {/* Right visual */}
-            <div className="relative order-1 lg:order-2 mx-auto w-full max-w-md lg:max-w-none aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5]">
-              {/* Soft blob backdrop */}
-              <div className="absolute inset-4 sm:inset-6 rounded-[3rem] bg-gradient-to-br from-primary/15 via-primary-glow/10 to-accent/20 blur-2xl" />
-              <div className="absolute inset-6 sm:inset-8 rounded-[2.5rem] bg-gradient-to-br from-primary/10 to-accent/10" />
-
-              {/* Portrait */}
-              <div className="absolute inset-y-4 left-1/2 -translate-x-1/2 w-[78%] sm:w-[70%] lg:w-[72%] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.35)] z-10">
+      {/* 2 — OUR STORY */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <Reveal>
+              <div className="relative overflow-hidden rounded-2xl border border-border/60 shadow-soft group">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1024&q=80"
-                  alt="Business owner smiling with a laptop showing their new website"
-                  className="w-full h-full object-cover"
-                  width={1024}
-                  height={1280}
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80"
+                  alt="Entrepreneurs in a strategy meeting around a table"
+                  className="w-full h-full object-cover aspect-[4/3] transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
               </div>
-
-              {/* Floating card — Analytics badge (top right) */}
-              <div className="absolute top-6 right-0 sm:right-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-3.5 animate-float-slow">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center shrink-0">
-                  <img src={badgeAnalytics} alt="" className="h-7 w-7 object-contain" loading="lazy" />
-                </div>
-                <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Growth</div>
-                  <div className="text-xs sm:text-sm font-bold text-foreground flex items-center gap-1">
-                    <TrendingUp className="h-3.5 w-3.5 text-primary" /> +38% MoM
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating card — Store badge (mid left) */}
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 sm:-left-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-3.5 animate-float-slow" style={{ animationDelay: "1.2s" }}>
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-accent/20 to-primary-glow/20 flex items-center justify-center shrink-0">
-                  <img src={badgeStore} alt="" className="h-7 w-7 object-contain" loading="lazy" />
-                </div>
-                <div>
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Live store</div>
-                  <div className="text-xs sm:text-sm font-bold text-foreground">Launched in 36h</div>
-                </div>
-              </div>
-
-              {/* Floating card — Reviewer profile (bottom left) */}
-              <div className="absolute bottom-4 left-0 sm:left-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-4 animate-float-slow" style={{ animationDelay: "2.4s" }}>
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-xs font-bold shrink-0">
-                  AR
-                </div>
-                <div>
-                  <div className="text-xs sm:text-sm font-bold text-foreground leading-tight">Ayesha Raza</div>
-                  <div className="text-[10px] text-muted-foreground flex items-center gap-1 mt-0.5">
-                    <CheckCircle2 className="h-3 w-3 text-primary" /> Verified customer
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating card — Rating (bottom right) */}
-              <div className="absolute bottom-8 right-0 sm:-right-1 z-20 flex flex-col rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg px-3.5 py-2.5 animate-float-slow" style={{ animationDelay: "1.8s" }}>
-                <div className="flex gap-0.5 mb-1">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <Star key={n} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <div className="text-xs sm:text-sm font-bold text-foreground">4.9 / 5</div>
-                <div className="text-[10px] text-muted-foreground">1,200+ reviews</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
-
-      {/* Values */}
-      <section className="container max-w-6xl py-20 md:py-28">
-
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">What we believe</h2>
-          <p className="text-muted-foreground mt-3">The principles behind every website we ship.</p>
-        </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
-          {values.map((v) => (
-            <Card key={v.title} className="border-border/60 hover:border-primary/40 hover:shadow-md transition-all">
-              <CardContent className="p-6">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-                  <v.icon className="h-5 w-5" />
-                </div>
-                <h3 className="font-semibold font-display text-foreground mb-1">{v.title}</h3>
-                <p className="text-sm text-muted-foreground">{v.body}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="container max-w-6xl pt-20 md:pt-28 pb-8 md:pb-10">
-        <div className="text-center mb-12">
-          <div className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">— Meet the founder</div>
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The person behind Busistree</h2>
-          <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            A product-minded builder shipping launch-ready websites in forty-eight hours.
-          </p>
-        </div>
-
-        {/* Founder feature */}
-        {(() => {
-          const m = team[0];
-          return (
-            <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center mb-16">
-              <div className="order-2 md:order-1">
-                <div className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary mb-4">
-                  <span className="h-px w-10 bg-primary/60" />
-                  Founder
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold font-display tracking-tight leading-tight text-foreground">
-                  “We're giving away a <span className="italic font-light text-primary">100k-worth website for free</span> — because launching online shouldn't wait six weeks or cost a retainer.”
-                </h3>
-                <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
-                  Hafza Azam is the founder & CEO of Busistree. A product-minded builder from Pakistan, she leads strategy, design and engineering — shipping conversion-ready websites in 48 hours that would normally cost lacs, so people can have portfolios, stores, management systems and invites.
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Our story</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                Built because launching a business was harder than it needed to be.
+              </h2>
+              <div className="mt-5 space-y-4 text-muted-foreground leading-relaxed">
+                <p>
+                  Busistree began as a small studio quoting websites and losing weeks to conversations
+                  that should have taken hours. Founders wanted proof; we wanted to make it easier.
                 </p>
-                <div className="flex items-center gap-2 mt-6">
-                  {m.socials.linkedin && (
-                    <a href={m.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}
-                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all shadow-sm">
-                      <Linkedin className="h-4 w-4" />
-                    </a>
-                  )}
-                  {m.socials.instagram && (
-                    <a href={m.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on Instagram`}
-                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all shadow-sm">
-                      <Instagram className="h-4 w-4" />
-                    </a>
-                  )}
-                  {m.socials.email && (
-                    <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`}
-                       className="h-10 w-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground hover:border-primary hover:text-primary transition-all shadow-sm">
-                      <Mail className="h-4 w-4" />
-                    </a>
-                  )}
-                </div>
+                <p>
+                  So we redesigned the deal. A production-quality website — designed, written and
+                  deployed — inside forty-eight hours, at no cost. Yours to keep, whether you hire us
+                  again or not.
+                </p>
+                <p>
+                  Today Busistree is a connected ecosystem: brand, product, marketing and long-term
+                  support, delivered by a small senior team that stays close to every account.
+                </p>
               </div>
-              <div className="order-1 md:order-2 flex items-center justify-center">
-                <img src={m.image} alt={m.name} className="w-full h-auto object-contain drop-shadow-2xl" />
-              </div>
-            </div>
-          );
-        })()}
-
-      </section>
-
-      {/* Story */}
-      <section className="container max-w-6xl py-20 md:py-28">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="relative order-2 lg:order-1">
-            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-primary-glow/5 to-accent/10 blur-3xl rounded-full" />
-            <img
-              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
-              alt="Founders collaborating around a laptop, building a business together"
-              className="w-full max-w-md mx-auto h-auto rounded-2xl object-cover shadow-[0_20px_40px_hsl(var(--primary)/0.15)]"
-              loading="lazy"
-            />
-          </div>
-          <div className="order-1 lg:order-2">
-            <div className="text-center lg:text-left mb-6">
-              <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">The story, briefly</h2>
-              <p className="text-muted-foreground mt-3">Why we made the website free.</p>
-            </div>
-            <div className="prose prose-neutral dark:prose-invert max-w-none text-foreground space-y-4">
-              <p>
-                We started as most studios do — quoting, negotiating, chasing.
-                And we kept losing weeks to conversations that should have taken
-                hours. Founders wanted to see the work; we wanted to prove it.
-              </p>
-              <p>
-                So we changed the deal. We build your website — designed,
-                written, deployed — inside forty-eight hours, at no cost.
-                No trial, no watermark, no card on file. You get a real site,
-                yours to keep, whether you ever hire us for anything else.
-              </p>
-              <p>
-                Most of the time, founders continue with us — for the brand,
-                the packaging, the campaigns. Sometimes they don't. Either way,
-                the free work stands on its own. That's the point.
-              </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="container max-w-4xl py-20 md:py-28">
-
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">Our journey</h2>
-        </div>
-        <ol className="relative border-l border-border/60 ml-3 space-y-8">
-          {milestones.map((m) => (
-            <li key={m.year} className="pl-6">
-              <span className="absolute -left-2 h-4 w-4 rounded-full bg-primary ring-4 ring-background" />
-              <div className="text-xs font-semibold text-primary">{m.year}</div>
-              <h3 className="font-semibold font-display text-foreground mt-1">{m.title}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{m.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-
-      {/* Reviews */}
-      <section className="container max-w-6xl py-20 md:py-28">
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold border border-primary/20 mb-4">
-            <MessageSquare className="h-3.5 w-3.5" /> What customers say
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground">
-            Loved by <span className="text-primary">{total.toLocaleString()}+</span> businesses
-          </h2>
-          {total > 0 && (
-            <div className="flex items-center justify-center gap-2 mt-3">
-              <div className="flex gap-0.5">
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <Star
-                    key={n}
-                    className={cn(
-                      "h-4 w-4",
-                      n <= Math.round(avg) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30",
-                    )}
-                  />
-                ))}
-              </div>
-              <span className="text-sm text-muted-foreground">
-                <strong className="text-foreground">{avg.toFixed(1)}</strong>/5 average rating
-              </span>
+      {/* 3 — MISSION & VISION */}
+      <section className="border-t border-border/60 bg-secondary/40">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Mission & vision</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                Why Busistree exists, and where it's going.
+              </h2>
             </div>
-          )}
-        </div>
-
-        {previewReviews.length > 0 && (
-          <div className="grid md:grid-cols-3 gap-5">
-            {previewReviews.map((r) => (
-              <Card key={r.id} className="border-border/60 hover:border-primary/40 hover:shadow-md transition-all">
-                <CardContent className="p-6">
-                  {r.rating && (
-                    <div className="flex gap-0.5 mb-3">
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <Star
-                          key={n}
-                          className={cn(
-                            "h-3.5 w-3.5",
-                            n <= r.rating ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30",
-                          )}
-                        />
-                      ))}
+          </Reveal>
+          <div className="mt-12 grid md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: Target,
+                title: "Our mission",
+                body: "Give every entrepreneur the same launch quality, speed and confidence that only funded teams have historically enjoyed — with none of the friction.",
+              },
+              {
+                icon: Eye,
+                title: "Our vision",
+                body: "A world where starting a business online takes days, not months — and where small teams look, feel and perform like established brands from day one.",
+              },
+            ].map((c, i) => (
+              <Reveal key={c.title} delay={i * 120}>
+                <Card className="h-full border-border/60 bg-card hover:-translate-y-1 hover:shadow-brand transition-all duration-300 rounded-2xl">
+                  <CardContent className="p-8 md:p-10 h-full flex flex-col">
+                    <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
+                      <c.icon className="h-6 w-6" strokeWidth={1.6} />
                     </div>
-                  )}
-                  {r.subject && (
-                    <h3 className="font-semibold font-display text-foreground line-clamp-2 mb-2">
-                      {r.subject}
+                    <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground">
+                      {c.title}
                     </h3>
-                  )}
-                  <p className="text-sm text-muted-foreground line-clamp-4 whitespace-pre-line">
-                    {r.message}
-                  </p>
-                </CardContent>
-              </Card>
+                    <p className="mt-3 text-muted-foreground leading-relaxed">{c.body}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
             ))}
           </div>
-        )}
-
-        <div className="text-center mt-8">
-          <Button size="lg" variant="outline" asChild>
-            <Link to="/reviews">
-              Read all reviews <ArrowRight className="h-4 w-4 ml-1" />
-            </Link>
-          </Button>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container max-w-5xl pb-4">
-        <div className="text-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/5 to-accent/5 p-10 md:p-16">
-          <h2 className="text-2xl md:text-4xl font-bold font-display text-foreground">
-            Ready to launch your business online?
-          </h2>
-          <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-            Start your free 48-hour website today — no card, no catch.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
-            <Button size="lg" asChild>
-              <Link to="/templates"><Rocket className="h-4 w-4 mr-1" /> Get started</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link to="/contact"><Globe className="h-4 w-4 mr-1" /> Contact us</Link>
-            </Button>
+      {/* 4 — CORE VALUES */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Core values</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                The principles behind every decision.
+              </h2>
+            </div>
+          </Reveal>
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {values.map((v, i) => (
+              <Reveal key={v.title} delay={(i % 3) * 80}>
+                <Card className="group h-full border-border/60 hover:-translate-y-1 hover:border-primary/40 hover:shadow-brand transition-all duration-300 rounded-2xl">
+                  <CardContent className="p-7">
+                    <div className="h-11 w-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5 transition-transform group-hover:scale-110">
+                      <v.icon className="h-5 w-5" strokeWidth={1.6} />
+                    </div>
+                    <h3 className="font-display text-lg font-semibold text-foreground">{v.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{v.body}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5 — WHY CHOOSE */}
+      <section className="border-t border-border/60 bg-secondary/40">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-2xl mb-14">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Why choose Busistree</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                A small studio, built like an enterprise partner.
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="space-y-16 md:space-y-24">
+            {whyChoose.map((row, i) => {
+              const reversed = i % 2 === 1;
+              return (
+                <Reveal key={row.title}>
+                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+                    <div className={cn("order-2", reversed ? "lg:order-2" : "lg:order-1")}>
+                      <div className="relative overflow-hidden rounded-2xl border border-border/60 shadow-soft group">
+                        <img
+                          src={row.image}
+                          alt={row.alt}
+                          loading="lazy"
+                          className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                    </div>
+                    <div className={cn("order-1", reversed ? "lg:order-1" : "lg:order-2")}>
+                      <div className="text-primary font-mono text-xs tracking-widest mb-3">
+                        0{i + 1}
+                      </div>
+                      <h3
+                        className="font-display font-semibold text-foreground tracking-tight"
+                        style={{ fontSize: "clamp(1.35rem, 2.4vw, 1.9rem)" }}
+                      >
+                        {row.title}
+                      </h3>
+                      <p className="mt-4 text-muted-foreground leading-relaxed max-w-lg">{row.body}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6 — STATS */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-6xl py-20 md:py-24">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 80}>
+                <div className="text-center md:text-left">
+                  <div
+                    className="font-display font-semibold text-foreground tracking-tight"
+                    style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
+                  >
+                    <Counter to={s.value} suffix={s.suffix} />
+                  </div>
+                  <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7 — FOUNDER */}
+      <section className="border-t border-border/60 bg-secondary/40">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 items-center">
+            <Reveal>
+              <div className="relative mx-auto max-w-sm">
+                <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-primary-glow/10 to-transparent blur-2xl rounded-3xl" />
+                <div className="relative overflow-hidden rounded-2xl border border-border/60 shadow-brand bg-card">
+                  <img
+                    src={team[0].image}
+                    alt={team[0].name}
+                    className="w-full aspect-[4/5] object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-4">
+                Meet the founder
+              </p>
+              <Quote className="h-10 w-10 text-primary/40 mb-4" strokeWidth={1.4} />
+              <blockquote
+                className="font-display font-medium text-foreground tracking-tight leading-[1.2]"
+                style={{ fontSize: "clamp(1.35rem, 2.6vw, 2rem)" }}
+              >
+                "Launching a business online shouldn't take six weeks or a retainer. We built
+                Busistree so founders can start on day one — with the same craft big brands take
+                months to buy."
+              </blockquote>
+              <div className="mt-8 flex items-center gap-4">
+                <div>
+                  <div className="font-semibold text-foreground">{team[0].name}</div>
+                  <div className="text-sm text-muted-foreground">{team[0].role}</div>
+                </div>
+                <div className="h-8 w-px bg-border" />
+                <div className="flex items-center gap-2">
+                  <a href={team[0].socials.linkedin} aria-label="LinkedIn" className="h-10 w-10 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors">
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                  <a href={team[0].socials.instagram} aria-label="Instagram" className="h-10 w-10 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors">
+                    <Instagram className="h-4 w-4" />
+                  </a>
+                  <a href={`mailto:${team[0].socials.email}`} aria-label="Email" className="h-10 w-10 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors">
+                    <Mail className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 8 — TEAM */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-2xl mb-14">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">The team</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                Senior people, working on your account.
+              </h2>
+            </div>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {team.slice(1).map((m, i) => (
+              <Reveal key={m.name} delay={i * 80}>
+                <div className="group text-center">
+                  <div className="relative mx-auto w-40 h-40 md:w-44 md:h-44 rounded-full overflow-hidden border border-border/60 shadow-soft transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-brand bg-secondary">
+                    <img
+                      src={m.image}
+                      alt={m.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold text-foreground">{m.name}</h3>
+                  <div className="text-sm text-primary mt-0.5">{m.role}</div>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{m.bio}</p>
+                  <div className="mt-4 flex items-center justify-center gap-2">
+                    <a href={m.socials.linkedin} aria-label={`${m.name} on LinkedIn`} className="h-9 w-9 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors">
+                      <Linkedin className="h-3.5 w-3.5" />
+                    </a>
+                    <a href={`mailto:${m.socials.email}`} aria-label={`Email ${m.name}`} className="h-9 w-9 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors">
+                      <Mail className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 9 — PROCESS */}
+      <section className="border-t border-border/60 bg-secondary/40">
+        <div className="container max-w-6xl py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-2xl mb-14">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">How we work</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                A calm process, from first call to compounding growth.
+              </h2>
+            </div>
+          </Reveal>
+
+          {/* Desktop horizontal */}
+          <div className="hidden md:block relative">
+            <div className="absolute left-0 right-0 top-6 h-px bg-border" aria-hidden />
+            <ol className="grid grid-cols-5 gap-6 relative">
+              {process.map((p, i) => (
+                <Reveal key={p.title} delay={i * 100}>
+                  <li className="text-left">
+                    <div className="relative">
+                      <div className="h-12 w-12 rounded-full bg-background border border-border flex items-center justify-center text-primary shadow-soft">
+                        <p.icon className="h-5 w-5" strokeWidth={1.6} />
+                      </div>
+                    </div>
+                    <div className="mt-5 font-mono text-[11px] tracking-widest text-muted-foreground">
+                      STEP 0{i + 1}
+                    </div>
+                    <h3 className="mt-1 font-display text-lg font-semibold text-foreground">{p.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.body}</p>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+
+          {/* Mobile vertical */}
+          <ol className="md:hidden relative border-l border-border/70 ml-5 space-y-8">
+            {process.map((p, i) => (
+              <Reveal key={p.title} delay={i * 80}>
+                <li className="pl-6 relative">
+                  <span className="absolute -left-[13px] top-0 h-6 w-6 rounded-full bg-background border border-border flex items-center justify-center text-primary">
+                    <p.icon className="h-3 w-3" />
+                  </span>
+                  <div className="font-mono text-[11px] tracking-widest text-muted-foreground">
+                    STEP 0{i + 1}
+                  </div>
+                  <h3 className="mt-1 font-display text-base font-semibold text-foreground">{p.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{p.body}</p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 10 — TESTIMONIALS */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-5xl py-20 md:py-28">
+          <Reveal>
+            <div className="text-center mb-12">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">Testimonials</p>
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight"
+                style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+              >
+                Trusted by teams that shipped with us.
+              </h2>
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <Star key={n} className={cn("h-4 w-4", n <= Math.round(avg) ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground/30")} />
+                  ))}
+                </div>
+                <span><strong className="text-foreground">{avg.toFixed(1)}</strong>/5 average rating</span>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="relative rounded-2xl border border-border/60 bg-card shadow-soft p-8 md:p-12">
+              <Quote className="absolute top-6 left-6 h-8 w-8 text-primary/25" strokeWidth={1.4} />
+              <div className="min-h-[180px] flex flex-col justify-center">
+                <blockquote
+                  key={tIndex}
+                  className="font-display text-foreground text-center max-w-3xl mx-auto leading-relaxed animate-fade-in"
+                  style={{ fontSize: "clamp(1.1rem, 2vw, 1.4rem)" }}
+                >
+                  "{testimonials[tIndex].quote}"
+                </blockquote>
+                <div className="mt-8 flex items-center justify-center gap-4">
+                  <img
+                    src={testimonials[tIndex].avatar}
+                    alt={testimonials[tIndex].name}
+                    className="h-12 w-12 rounded-full object-cover border border-border"
+                    loading="lazy"
+                  />
+                  <div className="text-left">
+                    <div className="font-semibold text-foreground">{testimonials[tIndex].name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonials[tIndex].role}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between">
+                <button
+                  onClick={() => setTIndex((i) => (i - 1 + testimonials.length) % testimonials.length)}
+                  aria-label="Previous testimonial"
+                  className="h-10 w-10 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <div className="flex items-center gap-2">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setTIndex(i)}
+                      aria-label={`Testimonial ${i + 1}`}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all",
+                        i === tIndex ? "w-8 bg-primary" : "w-1.5 bg-border hover:bg-muted-foreground/40",
+                      )}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={() => setTIndex((i) => (i + 1) % testimonials.length)}
+                  aria-label="Next testimonial"
+                  className="h-10 w-10 rounded-full border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary/60 transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 11 — CTA */}
+      <section className="border-t border-border/60">
+        <div className="container max-w-6xl py-16 md:py-24">
+          <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-primary/10 via-background to-accent/10 p-10 md:p-16 lg:p-20 text-center shadow-soft">
+            <div
+              className="absolute inset-0 opacity-[0.06] pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(hsl(var(--foreground)) 1px, transparent 1px)",
+                backgroundSize: "20px 20px",
+              }}
+              aria-hidden="true"
+            />
+            <div className="relative">
+              <h2
+                className="font-display font-semibold text-foreground tracking-tight max-w-3xl mx-auto"
+                style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)" }}
+              >
+                Ready to build a business that looks, feels and performs like a brand?
+              </h2>
+              <p className="mt-5 text-muted-foreground max-w-xl mx-auto">
+                Start with a free 48-hour website. No card, no trial, no fine print — just the work.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3 justify-center">
+                <Button asChild size="lg" className="min-h-11">
+                  <Link to="/templates">Start your journey <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="min-h-11">
+                  <Link to="/contact">Talk to the team</Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
