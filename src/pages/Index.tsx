@@ -907,7 +907,7 @@ const Index = () => {
 
 
       {/* FAQ */}
-      <section className="py-12 md:py-16 border-b border-border/60">
+      <section id="faq" className="py-12 md:py-16 border-b border-border/60 scroll-mt-24">
         <div className="container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeading
