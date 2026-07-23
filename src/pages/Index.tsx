@@ -12,6 +12,7 @@ import step04Asset from "@/assets/step-04.jpg.asset.json";
 const stepImages = [step01Asset.url, step02Asset.url, step03Asset.url, step04Asset.url];
 import TrustBadges from "@/components/TrustBadges";
 import SectionHeading from "@/components/SectionHeading";
+import ScrollProgressRail from "@/components/ScrollProgressRail";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
@@ -412,13 +413,25 @@ const Index = () => {
 
   return (
     <div>
+      <ScrollProgressRail
+        milestones={[
+          { id: "top", label: "Intro" },
+          { id: "templates", label: "Templates" },
+          { id: "included-services", label: "What's included" },
+          { id: "pricing", label: "Pricing" },
+          { id: "stats", label: "Proof" },
+          { id: "compare", label: "Compare" },
+          { id: "reviews", label: "Reviews" },
+          { id: "faq", label: "FAQ" },
+        ]}
+      />
       <SEO
         title="Busistree — A website, free. In 48 hours."
         description="A launch-ready website designed, written and shipped in 48 hours — at no cost. Plus branding, packaging and marketing when you're ready to grow."
         path="/"
       />
       {/* Hero — left-aligned copy + product mock */}
-      <section className="relative border-b border-border/60">
+      <section id="top" className="relative border-b border-border/60 scroll-mt-24">
         <div className="container pt-6 md:pt-10 lg:pt-12 pb-16 md:pb-24">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Left: copy (left-aligned, no centering) */}
@@ -548,7 +561,7 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section id="templates" className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30 scroll-mt-24">
         <div className="container">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <SectionHeading
@@ -745,7 +758,7 @@ const Index = () => {
 
 
       {/* Pricing */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden">
+      <section id="pricing" className="py-12 md:py-16 bg-gradient-to-b from-secondary/40 to-background border-b border-border/60 relative overflow-hidden scroll-mt-24">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 70% 20%, hsl(var(--primary)/0.2), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -765,7 +778,7 @@ const Index = () => {
 
 
       {/* Social Proof */}
-      <section className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden">
+      <section id="stats" className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden scroll-mt-24">
         {/* Ambient background */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
@@ -794,7 +807,7 @@ const Index = () => {
 
 
       {/* Comparison */}
-      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section id="compare" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
@@ -897,7 +910,9 @@ const Index = () => {
 
 
 
-      <ReviewsSection />
+      <div id="reviews" className="scroll-mt-24">
+        <ReviewsSection />
+      </div>
 
 
 
@@ -905,7 +920,7 @@ const Index = () => {
 
 
       {/* FAQ */}
-      <section className="py-12 md:py-16 border-b border-border/60">
+      <section id="faq" className="py-12 md:py-16 border-b border-border/60 scroll-mt-24">
         <div className="container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeading
