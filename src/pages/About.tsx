@@ -111,111 +111,122 @@ const About = () => {
         path="/about"
       />
 
-      {/* Hero — Trekcave-inspired split with organic image + floating pills */}
-      <section className="relative overflow-hidden">
-        <div className="container max-w-6xl relative pt-10 md:pt-16 pb-16 md:pb-24">
-          <div className="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-center">
+      {/* Hero — Datify-style split layout */}
+      <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-br from-primary/5 via-background to-accent/10">
+        <div className="absolute inset-0 pointer-events-none opacity-60 [background:radial-gradient(60%_50%_at_80%_20%,hsl(var(--primary)/0.14),transparent_70%),radial-gradient(50%_50%_at_15%_90%,hsl(var(--accent)/0.14),transparent_70%)]" />
+        <div className="container max-w-6xl relative py-16 md:py-24">
+          <div className="grid md:grid-cols-[1.05fr_1fr] gap-12 md:gap-16 items-center">
             {/* Left copy */}
-            <div className="relative order-2 lg:order-1">
-              <h1 className="font-display font-black tracking-[-0.04em] leading-[0.92] text-foreground text-[3.25rem] sm:text-[4.5rem] lg:text-[6rem]">
-                Websites &amp;
-                <br />
-                <span className="text-primary">Brands</span>
+            <div className="relative text-center lg:text-left order-2 lg:order-1">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                — The studio behind the 48-hour website
+              </p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-foreground leading-[1.05] tracking-tight">
+                A small studio,{" "}
+                <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
+                  a two-day promise,
+                </span>{" "}
+                and the quiet work that follows.
               </h1>
-              <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-md">
-                A perfect launchpad for your next business — shipped free in forty-eight hours.
+              <p className="text-base md:text-lg text-muted-foreground mt-6 max-w-lg mx-auto lg:mx-0">
+                Busistree ships your website — free — in forty-eight hours.
+                Then, if the work is good enough, we stay on for the brand, the
+                packaging and the marketing. That's it. That's the whole studio.
               </p>
 
-              <div className="mt-8 flex items-center gap-4">
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full h-14 pl-7 pr-2 text-sm font-semibold uppercase tracking-[0.14em] shadow-brand"
+              {/* Action row */}
+              <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 max-w-md mx-auto lg:mx-0">
+                <form
+                  onSubmit={(e) => e.preventDefault()}
+                  className="flex items-center gap-2 p-1.5 pl-4 rounded-full bg-card border border-border/70 shadow-soft flex-1 focus-within:border-primary/50 focus-within:shadow-brand transition-all"
                 >
-                  <Link to="/templates" className="inline-flex items-center gap-3">
-                    Start Free
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/15">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </Link>
-                </Button>
-                <div className="hidden sm:block h-10 w-px bg-border" />
-                <Link
-                  to="/how-it-works"
-                  className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors"
-                >
-                  How it works
-                </Link>
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
+                    aria-label="Email address"
+                  />
+                  <Button asChild size="sm" className="rounded-full h-10 px-5 shrink-0">
+                    <Link to="/templates">Get started</Link>
+                  </Button>
+                </form>
               </div>
 
-              <Sparkles className="hidden lg:block absolute -bottom-6 left-[42%] h-6 w-6 text-primary/60" />
+              <div className="mt-5 flex justify-center lg:justify-start">
+                <Link
+                  to="/how-it-works"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:text-primary transition-colors group"
+                >
+                  See how it works
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </div>
             </div>
 
-            {/* Right visual — organic rounded image with floating pills */}
-            <div className="relative order-1 lg:order-2">
-              <div className="relative aspect-[5/6] sm:aspect-[6/5] lg:aspect-[5/6] w-full">
-                <div
-                  className="absolute inset-0 overflow-hidden shadow-[0_40px_100px_-30px_hsl(var(--primary)/0.4)]"
-                  style={{ borderRadius: "58% 42% 55% 45% / 45% 55% 45% 55%" }}
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1522252234503-e356532cafd5?auto=format&fit=crop&w=1400&q=80"
-                    alt="Founder working on a laptop launching a new website"
-                    className="w-full h-full object-cover"
-                    width={1400}
-                    height={1600}
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/25 via-transparent to-transparent mix-blend-multiply" />
+            {/* Right visual */}
+            <div className="relative order-1 lg:order-2 mx-auto w-full max-w-md lg:max-w-none aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5]">
+              {/* Soft blob backdrop */}
+              <div className="absolute inset-4 sm:inset-6 rounded-[3rem] bg-gradient-to-br from-primary/15 via-primary-glow/10 to-accent/20 blur-2xl" />
+              <div className="absolute inset-6 sm:inset-8 rounded-[2.5rem] bg-gradient-to-br from-primary/10 to-accent/10" />
+
+              {/* Portrait */}
+              <div className="absolute inset-y-4 left-1/2 -translate-x-1/2 w-[78%] sm:w-[70%] lg:w-[72%] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden ring-1 ring-border/60 shadow-[0_30px_80px_-20px_hsl(var(--primary)/0.35)] z-10">
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1024&q=80"
+                  alt="Business owner smiling with a laptop showing their new website"
+                  className="w-full h-full object-cover"
+                  width={1024}
+                  height={1280}
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Floating card — Analytics badge (top right) */}
+              <div className="absolute top-6 right-0 sm:right-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-3.5 animate-float-slow">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center shrink-0">
+                  <img src={badgeAnalytics} alt="" className="h-7 w-7 object-contain" loading="lazy" />
                 </div>
-
-                <Sparkles className="absolute -top-2 right-16 h-5 w-5 text-primary" />
-                <Sparkles className="absolute top-1/3 -right-3 h-4 w-4 text-accent" />
-
-                {/* Floating pill — Studio (top right) */}
-                <div className="absolute top-8 right-2 sm:right-6 z-20 flex items-center gap-2.5 rounded-full bg-card/95 backdrop-blur border border-border/70 shadow-lg pl-2 pr-4 py-1.5 animate-float-slow">
-                  <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-[11px] font-bold shrink-0">
-                    HA
-                  </div>
-                  <div className="leading-tight">
-                    <div className="text-xs font-bold text-foreground">Busistree Studio</div>
-                    <div className="text-[10px] text-muted-foreground">48h delivery</div>
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Growth</div>
+                  <div className="text-xs sm:text-sm font-bold text-foreground flex items-center gap-1">
+                    <TrendingUp className="h-3.5 w-3.5 text-primary" /> +38% MoM
                   </div>
                 </div>
+              </div>
 
-                {/* Floating card — Stats (bottom right) */}
-                <div
-                  className="absolute -bottom-4 right-0 sm:-right-2 z-20 flex items-center gap-3 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-xl px-4 py-3 animate-float-slow"
-                  style={{ animationDelay: "1.4s" }}
-                >
-                  <div className="flex -space-x-2">
-                    <div className="h-8 w-8 rounded-full ring-2 ring-card bg-gradient-to-br from-primary to-primary-glow" />
-                    <div className="h-8 w-8 rounded-full ring-2 ring-card bg-gradient-to-br from-accent to-primary" />
-                    <div className="h-8 w-8 rounded-full ring-2 ring-card bg-gradient-to-br from-primary-glow to-accent" />
-                  </div>
-                  <div className="leading-tight">
-                    <div className="text-sm font-bold text-foreground">
-                      {total > 0 ? `${total.toLocaleString()}+` : "1,200+"}
-                    </div>
-                    <div className="text-[10px] text-muted-foreground">founders launched</div>
+              {/* Floating card — Store badge (mid left) */}
+              <div className="absolute top-1/2 -translate-y-1/2 left-0 sm:-left-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-3.5 animate-float-slow" style={{ animationDelay: "1.2s" }}>
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-accent/20 to-primary-glow/20 flex items-center justify-center shrink-0">
+                  <img src={badgeStore} alt="" className="h-7 w-7 object-contain" loading="lazy" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Live store</div>
+                  <div className="text-xs sm:text-sm font-bold text-foreground">Launched in 36h</div>
+                </div>
+              </div>
+
+              {/* Floating card — Reviewer profile (bottom left) */}
+              <div className="absolute bottom-4 left-0 sm:left-2 z-20 flex items-center gap-2.5 rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg p-2.5 pr-4 animate-float-slow" style={{ animationDelay: "2.4s" }}>
+                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-xs font-bold shrink-0">
+                  AR
+                </div>
+                <div>
+                  <div className="text-xs sm:text-sm font-bold text-foreground leading-tight">Ayesha Raza</div>
+                  <div className="text-[10px] text-muted-foreground flex items-center gap-1 mt-0.5">
+                    <CheckCircle2 className="h-3 w-3 text-primary" /> Verified customer
                   </div>
                 </div>
+              </div>
 
-                {/* Floating card — Rating (bottom left) */}
-                <div
-                  className="absolute bottom-16 left-0 sm:-left-3 z-20 flex flex-col rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg px-3.5 py-2.5 animate-float-slow"
-                  style={{ animationDelay: "2.2s" }}
-                >
-                  <div className="flex gap-0.5 mb-1">
-                    {[1, 2, 3, 4, 5].map((n) => (
-                      <Star key={n} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <div className="text-xs font-bold text-foreground">
-                    {avg > 0 ? avg.toFixed(1) : "4.9"} / 5
-                  </div>
-                  <div className="text-[10px] text-muted-foreground">Verified reviews</div>
+              {/* Floating card — Rating (bottom right) */}
+              <div className="absolute bottom-8 right-0 sm:-right-1 z-20 flex flex-col rounded-2xl bg-card/95 backdrop-blur border border-border/70 shadow-lg px-3.5 py-2.5 animate-float-slow" style={{ animationDelay: "1.8s" }}>
+                <div className="flex gap-0.5 mb-1">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <Star key={n} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                  ))}
                 </div>
+                <div className="text-xs sm:text-sm font-bold text-foreground">4.9 / 5</div>
+                <div className="text-[10px] text-muted-foreground">1,200+ reviews</div>
               </div>
             </div>
           </div>
