@@ -413,6 +413,18 @@ const Index = () => {
 
   return (
     <div>
+      <ScrollProgressRail
+        milestones={[
+          { id: "top", label: "Intro" },
+          { id: "templates", label: "Templates" },
+          { id: "included-services", label: "What's included" },
+          { id: "pricing", label: "Pricing" },
+          { id: "stats", label: "Proof" },
+          { id: "compare", label: "Compare" },
+          { id: "reviews", label: "Reviews" },
+          { id: "faq", label: "FAQ" },
+        ]}
+      />
       <SEO
         title="Busistree — A website, free. In 48 hours."
         description="A launch-ready website designed, written and shipped in 48 hours — at no cost. Plus branding, packaging and marketing when you're ready to grow."
