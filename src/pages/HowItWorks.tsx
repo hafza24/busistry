@@ -121,28 +121,75 @@ const StepRow = ({ s, i }: { s: typeof steps[number]; i: number }) => {
 
 const StepsWithConnector = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const [size, setSize] = useState({ w: 100, h: 1000 });
+  const [anchors, setAnchors] = useState<{ x: number; y: number }[]>([]);
+
+  // Sync connector progress with the same window a StepRow uses to reveal itself.
+  // StepRow reaches full opacity around scrollYProgress 0.25 of ["start end","end start"],
+  // which corresponds to the row's center hitting viewport center. So we drive the
+  // connector by container center-crossing — identical timing to the reveals.
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 70%", "end 60%"],
+    offset: ["start center", "end center"],
   });
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  // Zig-zag path across a 100 x 1000 viewBox (preserveAspectRatio=none stretches to container)
-  // Each step alternates image side; connector snakes between them.
-  const pathD = `
-    M 50 0
-    C 50 80, 15 120, 15 200
-    C 15 280, 85 320, 85 400
-    C 85 480, 15 520, 15 600
-    C 15 680, 85 720, 85 800
-    C 85 880, 50 920, 50 1000
-  `;
+  useLayoutEffect(() => {
+    const measure = () => {
+      const container = containerRef.current;
+      if (!container) return;
+      const cRect = container.getBoundingClientRect();
+      const h = container.offsetHeight;
+      const w = container.offsetWidth || 100;
+      const points = stepRefs.current
+        .filter((el): el is HTMLDivElement => !!el)
+        .map((el, i) => {
+          const r = el.getBoundingClientRect();
+          const yCenter = r.top - cRect.top + r.height / 2;
+          // Alternate sides so the connector meets each step where its image sits.
+          const x = i % 2 === 0 ? w * 0.18 : w * 0.82;
+          return { x, y: yCenter };
+        });
+      setSize({ w, h });
+      setAnchors(points);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (containerRef.current) ro.observe(containerRef.current);
+    stepRefs.current.forEach((el) => el && ro.observe(el));
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  // Build a smooth cubic path through anchors, entering/leaving from top/bottom center.
+  const pathD = (() => {
+    if (anchors.length === 0) return "";
+    const midX = size.w / 2;
+    const first = anchors[0];
+    const last = anchors[anchors.length - 1];
+    let d = `M ${midX} 0 C ${midX} ${first.y * 0.35}, ${first.x} ${first.y * 0.55}, ${first.x} ${first.y}`;
+    for (let i = 1; i < anchors.length; i++) {
+      const a = anchors[i - 1];
+      const b = anchors[i];
+      const midY = (a.y + b.y) / 2;
+      d += ` C ${a.x} ${midY}, ${b.x} ${midY}, ${b.x} ${b.y}`;
+    }
+    d += ` C ${last.x} ${last.y + (size.h - last.y) * 0.45}, ${midX} ${last.y + (size.h - last.y) * 0.65}, ${midX} ${size.h}`;
+    return d;
+  })();
 
   return (
     <div ref={containerRef} className="relative">
       <svg
         aria-hidden="true"
-        viewBox="0 0 100 1000"
+        width={size.w}
+        height={size.h}
+        viewBox={`0 0 ${size.w} ${size.h}`}
         preserveAspectRatio="none"
         className="pointer-events-none absolute inset-0 hidden md:block w-full h-full z-0"
       >
@@ -150,32 +197,65 @@ const StepsWithConnector = () => {
         <path
           d={pathD}
           fill="none"
-          stroke="hsl(var(--primary) / 0.08)"
-          strokeWidth="0.6"
+          stroke="hsl(var(--primary) / 0.10)"
+          strokeWidth="1.25"
           strokeLinecap="round"
-          strokeDasharray="1.5 2"
-          vectorEffect="non-scaling-stroke"
+          strokeDasharray="4 6"
         />
-        {/* animated drawn line */}
+        {/* animated drawn line, synced to step reveal timing */}
         <motion.path
           d={pathD}
           fill="none"
           stroke="hsl(var(--primary))"
-          strokeWidth="1.2"
+          strokeWidth="1.75"
           strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
           style={{ pathLength, opacity: pathLength }}
         />
+        {/* anchor dots — each lights up when the connector reaches it */}
+        {anchors.map((a, i) => {
+          const t = anchors.length > 1 ? (i + 0.5) / anchors.length : 0.5;
+          return (
+            <AnchorDot key={i} cx={a.x} cy={a.y} progress={scrollYProgress} threshold={t} />
+          );
+        })}
       </svg>
 
       <div className="relative z-10 space-y-24 md:space-y-32">
         {steps.map((s, i) => (
-          <StepRow key={s.title} s={s} i={i} />
+          <div
+            key={s.title}
+            ref={(el) => (stepRefs.current[i] = el)}
+          >
+            <StepRow s={s} i={i} />
+          </div>
         ))}
       </div>
     </div>
   );
 };
+
+const AnchorDot = ({
+  cx,
+  cy,
+  progress,
+  threshold,
+}: {
+  cx: number;
+  cy: number;
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  threshold: number;
+}) => {
+  const scale = useTransform(progress, [threshold - 0.05, threshold], [0.6, 1]);
+  const opacity = useTransform(progress, [threshold - 0.05, threshold], [0.25, 1]);
+  return (
+    <>
+      <circle cx={cx} cy={cy} r={6} fill="hsl(var(--background))" stroke="hsl(var(--primary) / 0.2)" strokeWidth={1} />
+      <motion.circle cx={cx} cy={cy} r={4} fill="hsl(var(--primary))" style={{ scale, opacity, transformOrigin: `${cx}px ${cy}px` }} />
+    </>
+  );
+};
+
+
 
 
 const HowItWorks = () => {
