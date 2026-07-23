@@ -552,19 +552,30 @@ const About = () => {
       <section className="border-t border-border/60">
         <div className="container max-w-6xl py-20 md:py-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div className="text-center md:text-left">
-                  <div
-                    className="font-display font-semibold text-foreground tracking-tight"
-                    style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
-                  >
-                    <Counter to={s.value} suffix={s.suffix} />
+            {(() => {
+              const yearsExp = Math.max(1, new Date().getFullYear() - FOUNDING_YEAR);
+              const avgRating = Number(rating?.avg_rating ?? 0);
+              const satisfaction = avgRating > 0 ? Math.round((avgRating / 5) * 100) : 98;
+              const dynamicStats = [
+                { value: liveStats?.projects ?? 0, suffix: "+", label: "Projects delivered" },
+                { value: liveStats?.businesses ?? 0, suffix: "+", label: "Businesses supported" },
+                { value: yearsExp, suffix: "", label: "Years of experience" },
+                { value: satisfaction, suffix: "%", label: "Customer satisfaction" },
+              ];
+              return dynamicStats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 80}>
+                  <div className="text-center md:text-left">
+                    <div
+                      className="font-display font-semibold text-foreground tracking-tight"
+                      style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
+                    >
+                      <Counter to={s.value} suffix={s.suffix} />
+                    </div>
+                    <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
                   </div>
-                  <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ));
+            })()}
           </div>
         </div>
       </section>
