@@ -79,12 +79,7 @@ const whyChoose = [
   },
 ];
 
-const stats = [
-  { value: 2400, suffix: "+", label: "Projects completed" },
-  { value: 1800, suffix: "+", label: "Businesses supported" },
-  { value: 6, suffix: "", label: "Years of experience" },
-  { value: 98, suffix: "%", label: "Customer satisfaction" },
-];
+const FOUNDING_YEAR = 2023;
 
 const team = [
   {
