@@ -501,16 +501,16 @@ const About = () => {
             <div className="flex sm:flex-wrap items-stretch gap-3 px-4 sm:px-0 w-max sm:w-auto snap-x snap-mandatory sm:snap-none">
             {values.map((v, i) => (
               <Reveal key={v.title} delay={(i % 6) * 60}>
-                <div className="group relative">
-                  <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card px-5 h-11 cursor-default transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-brand group-hover:-translate-y-0.5">
-                    <v.icon className="h-4 w-4 text-primary" strokeWidth={1.8} />
+                <div className="group relative snap-start">
+                  <div className="flex items-center gap-2 rounded-full border border-border/60 bg-card px-5 h-12 sm:h-11 cursor-default transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-brand group-hover:-translate-y-0.5">
+                    <v.icon className="h-4 w-4 text-primary shrink-0" strokeWidth={1.8} />
                     <h3 className="font-display text-sm font-semibold text-foreground whitespace-nowrap">
                       {v.title}
                     </h3>
                   </div>
                   <div
                     role="tooltip"
-                    className="pointer-events-none absolute left-1/2 top-[calc(100%+10px)] z-20 w-72 -translate-x-1/2 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100"
+                    className="pointer-events-none absolute left-1/2 top-[calc(100%+10px)] z-20 w-72 max-w-[80vw] -translate-x-1/2 opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100"
                   >
                     <div className="rounded-xl border border-border/60 bg-popover text-popover-foreground shadow-brand p-4">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary mb-1">
@@ -522,6 +522,7 @@ const About = () => {
                 </div>
               </Reveal>
             ))}
+            </div>
           </div>
         </div>
       </section>
