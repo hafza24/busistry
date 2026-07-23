@@ -548,7 +548,7 @@ const Index = () => {
       <TrustBadges />
 
       {/* Template Showcase */}
-      <section className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30">
+      <section id="templates" className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30 scroll-mt-24">
         <div className="container">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <SectionHeading
