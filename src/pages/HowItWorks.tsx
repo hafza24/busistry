@@ -158,11 +158,8 @@ const HowItWorks = () => {
       </div>
 
 
-      <div className="space-y-24 md:space-y-32">
-        {steps.map((s, i) => (
-          <StepRow key={s.title} s={s} i={i} />
-        ))}
-      </div>
+      <StepsWithConnector />
+
 
 
       {/* How to place your order — detailed */}
