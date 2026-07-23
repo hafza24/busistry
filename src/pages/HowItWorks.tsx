@@ -1,6 +1,6 @@
 import SEO from "@/components/SEO";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import step1 from "@/assets/how-step-1.jpg";
