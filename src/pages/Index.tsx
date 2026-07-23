@@ -794,7 +794,7 @@ const Index = () => {
 
 
       {/* Comparison */}
-      <section className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden">
+      <section id="compare" className="py-12 md:py-16 bg-secondary/40 border-b border-border/60 relative overflow-hidden scroll-mt-24">
         <div className="absolute inset-0 -z-10 opacity-[0.2]" style={{
           backgroundImage: "radial-gradient(circle at 80% 20%, hsl(var(--primary)/0.18), transparent 45%), radial-gradient(circle at 20% 80%, hsl(var(--accent)/0.15), transparent 45%)",
         }} />
