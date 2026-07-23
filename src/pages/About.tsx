@@ -79,12 +79,7 @@ const whyChoose = [
   },
 ];
 
-const stats = [
-  { value: 2400, suffix: "+", label: "Projects completed" },
-  { value: 1800, suffix: "+", label: "Businesses supported" },
-  { value: 6, suffix: "", label: "Years of experience" },
-  { value: 98, suffix: "%", label: "Customer satisfaction" },
-];
+const FOUNDING_YEAR = 2023;
 
 const team = [
   {
@@ -365,6 +360,31 @@ const About = () => {
       return data?.[0] ?? { total_reviews: 0, avg_rating: 0 };
     },
   });
+
+  const { data: liveStats } = useQuery({
+    queryKey: ["about-live-stats"],
+    queryFn: async () => {
+      const [ordersRes, usersRes, storesRes] = await Promise.all([
+        supabase
+          .from("website_orders")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["delivered", "completed", "paid"]),
+        supabase
+          .from("website_orders")
+          .select("user_id", { count: "exact", head: false })
+          .not("user_id", "is", null),
+        supabase.from("stores").select("id", { count: "exact", head: true }),
+      ]);
+      const uniqueUsers = new Set(
+        (usersRes.data ?? []).map((r: { user_id: string | null }) => r.user_id),
+      ).size;
+      return {
+        projects: ordersRes.count ?? 0,
+        businesses: uniqueUsers,
+        stores: storesRes.count ?? 0,
+      };
+    },
+  });
   const avg = Number(rating?.avg_rating ?? 4.9);
 
   const jsonLd = {
@@ -532,19 +552,30 @@ const About = () => {
       <section className="border-t border-border/60">
         <div className="container max-w-6xl py-20 md:py-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <div className="text-center md:text-left">
-                  <div
-                    className="font-display font-semibold text-foreground tracking-tight"
-                    style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
-                  >
-                    <Counter to={s.value} suffix={s.suffix} />
+            {(() => {
+              const yearsExp = Math.max(1, new Date().getFullYear() - FOUNDING_YEAR);
+              const avgRating = Number(rating?.avg_rating ?? 0);
+              const satisfaction = avgRating > 0 ? Math.round((avgRating / 5) * 100) : 98;
+              const dynamicStats = [
+                { value: liveStats?.projects ?? 0, suffix: "+", label: "Projects delivered" },
+                { value: liveStats?.businesses ?? 0, suffix: "+", label: "Businesses supported" },
+                { value: yearsExp, suffix: "", label: "Years of experience" },
+                { value: satisfaction, suffix: "%", label: "Customer satisfaction" },
+              ];
+              return dynamicStats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 80}>
+                  <div className="text-center md:text-left">
+                    <div
+                      className="font-display font-semibold text-foreground tracking-tight"
+                      style={{ fontSize: "clamp(2rem, 4.5vw, 3.25rem)" }}
+                    >
+                      <Counter to={s.value} suffix={s.suffix} />
+                    </div>
+                    <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
                   </div>
-                  <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ));
+            })()}
           </div>
         </div>
       </section>
