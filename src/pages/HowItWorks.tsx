@@ -159,51 +159,11 @@ const HowItWorks = () => {
 
 
       <div className="space-y-24 md:space-y-32">
-        {steps.map((s, i) => {
-          const reverse = i % 2 === 1;
-          return (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6 }}
-              className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}
-            >
-              {/* Image side with big numeral */}
-              <div className="relative">
-                <span
-                  aria-hidden="true"
-                  className={`absolute -top-6 md:-top-10 ${reverse ? "right-2 md:right-6" : "left-2 md:left-6"} text-[8rem] md:text-[11rem] leading-none font-display font-bold text-primary/10 select-none`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="relative z-10 rounded-3xl bg-primary/5 border border-primary/10 p-6 md:p-10 shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4)]">
-                  <img
-                    src={s.image}
-                    alt={s.title}
-                    loading="lazy"
-                    width={1024}
-                    height={1024}
-                    className="w-full h-auto rounded-2xl"
-                  />
-                </div>
-              </div>
-
-              {/* Text side */}
-              <div>
-                <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-3 block font-display">
-                  Step {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4 tracking-tight">
-                  {s.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed text-lg">{s.desc}</p>
-              </div>
-            </motion.div>
-          );
-        })}
+        {steps.map((s, i) => (
+          <StepRow key={s.title} s={s} i={i} />
+        ))}
       </div>
+
 
       {/* How to place your order — detailed */}
       <section className="mt-24 md:mt-32">
