@@ -897,7 +897,9 @@ const Index = () => {
 
 
 
-      <ReviewsSection />
+      <div id="reviews" className="scroll-mt-24">
+        <ReviewsSection />
+      </div>
 
 
 
