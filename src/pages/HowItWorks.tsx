@@ -119,6 +119,65 @@ const StepRow = ({ s, i }: { s: typeof steps[number]; i: number }) => {
   );
 };
 
+const StepsWithConnector = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 70%", "end 60%"],
+  });
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Zig-zag path across a 100 x 1000 viewBox (preserveAspectRatio=none stretches to container)
+  // Each step alternates image side; connector snakes between them.
+  const pathD = `
+    M 50 0
+    C 50 80, 15 120, 15 200
+    C 15 280, 85 320, 85 400
+    C 85 480, 15 520, 15 600
+    C 15 680, 85 720, 85 800
+    C 85 880, 50 920, 50 1000
+  `;
+
+  return (
+    <div ref={containerRef} className="relative">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 100 1000"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-0 hidden md:block w-full h-full z-0"
+      >
+        {/* faint guide track */}
+        <path
+          d={pathD}
+          fill="none"
+          stroke="hsl(var(--primary) / 0.08)"
+          strokeWidth="0.6"
+          strokeLinecap="round"
+          strokeDasharray="1.5 2"
+          vectorEffect="non-scaling-stroke"
+        />
+        {/* animated drawn line */}
+        <motion.path
+          d={pathD}
+          fill="none"
+          stroke="hsl(var(--primary))"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          style={{ pathLength, opacity: pathLength }}
+        />
+      </svg>
+
+      <div className="relative z-10 space-y-24 md:space-y-32">
+        {steps.map((s, i) => (
+          <StepRow key={s.title} s={s} i={i} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
 const HowItWorks = () => {
   const { scrollYProgress } = useScroll();
   const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
