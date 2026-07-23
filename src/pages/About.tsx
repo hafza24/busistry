@@ -224,7 +224,131 @@ const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   );
 };
 
+/* ---------------- mission & vision toggle ---------------- */
+
+const missionVisionSlides = [
+  {
+    key: "mission",
+    eyebrow: "Our mission",
+    title: "Launch quality, without the launch tax.",
+    body: "Give every entrepreneur the same launch quality, speed and confidence that only funded teams have historically enjoyed — with none of the friction.",
+    image:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
+    icon: Target,
+  },
+  {
+    key: "vision",
+    eyebrow: "Our vision",
+    title: "Days to live. Years to grow.",
+    body: "A world where starting a business online takes days, not months — and where small teams look, feel and perform like established brands from day one.",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
+    icon: Eye,
+  },
+];
+
+const MissionVisionToggle = () => {
+  const [active, setActive] = useState(0);
+  const slide = missionVisionSlides[active];
+  const other = missionVisionSlides[1 - active];
+  const OtherIcon = other.icon;
+  return (
+    <section className="border-t border-border/60 bg-secondary/40">
+      <div className="container max-w-6xl py-20 md:py-28">
+        <Reveal>
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-3">
+              Mission & vision
+            </p>
+            <h2
+              className="font-display font-semibold text-foreground tracking-tight"
+              style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)" }}
+            >
+              Why Busistree exists, and where it's going.
+            </h2>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid md:grid-cols-2 gap-8 items-stretch">
+          {/* Image side — slides based on active */}
+          <div
+            className={cn(
+              "relative order-1 transition-transform duration-700 ease-out",
+              active === 1 && "md:translate-x-[calc(100%+2rem)]",
+            )}
+          >
+            <div className="relative overflow-hidden rounded-2xl border border-border/60 shadow-brand aspect-[4/5] md:aspect-auto md:h-full min-h-[380px]">
+              {missionVisionSlides.map((s, i) => (
+                <img
+                  key={s.key}
+                  src={s.image}
+                  alt={s.eyebrow}
+                  loading="lazy"
+                  className={cn(
+                    "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+                    active === i ? "opacity-100" : "opacity-0",
+                  )}
+                />
+              ))}
+              <div className="absolute inset-0 bg-gradient-to-tr from-foreground/40 via-transparent to-transparent" />
+              <button
+                type="button"
+                onClick={() => setActive((a) => 1 - a)}
+                className="absolute bottom-5 left-5 inline-flex items-center gap-2 rounded-md border border-white/30 bg-background/90 backdrop-blur px-4 h-11 text-sm font-medium text-foreground shadow-brand hover:bg-background transition-colors"
+              >
+                <OtherIcon className="h-4 w-4 text-primary" strokeWidth={1.8} />
+                {other.eyebrow}
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Text side */}
+          <div
+            className={cn(
+              "order-2 transition-transform duration-700 ease-out flex",
+              active === 1 && "md:-translate-x-[calc(100%+2rem)]",
+            )}
+          >
+            <Card className="h-full w-full border-border/60 bg-card rounded-2xl">
+              <CardContent className="p-8 md:p-10 h-full flex flex-col justify-center">
+                <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6">
+                  <slide.icon className="h-6 w-6" strokeWidth={1.6} />
+                </div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary mb-2">
+                  {slide.eyebrow}
+                </p>
+                <h3 className="font-display text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+                  {slide.title}
+                </h3>
+                <p className="mt-4 text-muted-foreground leading-relaxed text-lg">
+                  {slide.body}
+                </p>
+                <div className="mt-8 flex items-center gap-2">
+                  {missionVisionSlides.map((s, i) => (
+                    <button
+                      key={s.key}
+                      type="button"
+                      onClick={() => setActive(i)}
+                      aria-label={`Show ${s.eyebrow}`}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all",
+                        active === i ? "w-8 bg-primary" : "w-4 bg-border hover:bg-muted-foreground/40",
+                      )}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 /* ---------------- page ---------------- */
+
 
 const About = () => {
   const [tIndex, setTIndex] = useState(0);
