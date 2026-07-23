@@ -10,7 +10,7 @@ import step02Asset from "@/assets/step-02.jpg.asset.json";
 import step03Asset from "@/assets/step-03.jpg.asset.json";
 import step04Asset from "@/assets/step-04.jpg.asset.json";
 const stepImages = [step01Asset.url, step02Asset.url, step03Asset.url, step04Asset.url];
-import TrustBadges from "@/components/TrustBadges";
+
 import SectionHeading from "@/components/SectionHeading";
 import ScrollProgressRail from "@/components/ScrollProgressRail";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
@@ -558,7 +558,7 @@ const Index = () => {
 
 
 
-      <TrustBadges />
+      
 
       {/* Template Showcase */}
       <section id="templates" className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30 scroll-mt-24">
