@@ -13,6 +13,7 @@ const stepImages = [step01Asset.url, step02Asset.url, step03Asset.url, step04Ass
 
 import SectionHeading from "@/components/SectionHeading";
 import ScrollProgressRail from "@/components/ScrollProgressRail";
+import FloatingIcons from "@/components/FloatingIcons";
 import ReviewsSection from "@/components/feedback/ReviewsSection";
 import PricingSlider from "@/components/PricingSlider";
 import { Link } from "react-router-dom";
