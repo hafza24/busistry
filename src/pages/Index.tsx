@@ -765,7 +765,7 @@ const Index = () => {
 
 
       {/* Social Proof */}
-      <section className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden">
+      <section id="stats" className="relative py-12 md:py-16 border-b border-border/60 overflow-hidden scroll-mt-24">
         {/* Ambient background */}
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
