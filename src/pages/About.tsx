@@ -360,6 +360,31 @@ const About = () => {
       return data?.[0] ?? { total_reviews: 0, avg_rating: 0 };
     },
   });
+
+  const { data: liveStats } = useQuery({
+    queryKey: ["about-live-stats"],
+    queryFn: async () => {
+      const [ordersRes, usersRes, storesRes] = await Promise.all([
+        supabase
+          .from("website_orders")
+          .select("id", { count: "exact", head: true })
+          .in("status", ["delivered", "completed", "paid"]),
+        supabase
+          .from("website_orders")
+          .select("user_id", { count: "exact", head: false })
+          .not("user_id", "is", null),
+        supabase.from("stores").select("id", { count: "exact", head: true }),
+      ]);
+      const uniqueUsers = new Set(
+        (usersRes.data ?? []).map((r: { user_id: string | null }) => r.user_id),
+      ).size;
+      return {
+        projects: ordersRes.count ?? 0,
+        businesses: uniqueUsers,
+        stores: storesRes.count ?? 0,
+      };
+    },
+  });
   const avg = Number(rating?.avg_rating ?? 4.9);
 
   const jsonLd = {
