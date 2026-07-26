@@ -430,7 +430,7 @@ const Index = () => {
                 A website, free. In 48 hours.
               </div>
 
-              <h1 className="mt-6 font-display text-[2rem] xs:text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] tracking-tight text-foreground max-w-[16ch]">
+              <h1 className="mt-6 font-display text-[2rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] tracking-tight text-foreground max-w-[16ch]">
                 Your business, live by the weekend.
               </h1>
 
@@ -562,7 +562,7 @@ const Index = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {showcase.slice(0, 4).map((t: any, i: number) => {
               const Icon = (t.icon as any) ?? ShoppingBag;
               return (
