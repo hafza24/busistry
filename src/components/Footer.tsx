@@ -21,6 +21,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const platformLinks = [
   { to: "/templates", label: "Templates" },
@@ -53,8 +54,6 @@ const socialLinks = [
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
-  const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
-  const [ratingStats, setRatingStats] = useState<{ avg: number; total: number } | null>(null);
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -64,19 +63,28 @@ const Footer = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    (async () => {
+  const { data: subscriberCount = null } = useQuery({
+    queryKey: ["footer_subscriber_count"],
+    queryFn: async () => {
       const { count } = await supabase
         .from("newsletter_subscribers")
         .select("id", { count: "exact", head: true })
         .eq("status", "subscribed");
-      if (typeof count === "number") setSubscriberCount(count);
+      return typeof count === "number" ? count : null;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
+  const { data: ratingStats = null } = useQuery({
+    queryKey: ["feedback_rating_stats"],
+    queryFn: async () => {
       const { data } = await supabase.rpc("get_feedback_rating_stats");
       const row = Array.isArray(data) ? data[0] : data;
-      if (row) setRatingStats({ avg: Number(row.avg_rating) || 0, total: Number(row.total_reviews) || 0 });
-    })();
-  }, []);
+      return row ? { avg: Number(row.avg_rating) || 0, total: Number(row.total_reviews) || 0 } : null;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
 
   const formatCount = (n: number) => {
     if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k+`;

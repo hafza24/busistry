@@ -81,12 +81,14 @@ const Navbar = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from("templates")
-        .select("id,name,price_pkr,sale_price_pkr,preview_image_url,category")
+        .select("id,name,price_pkr,original_price_pkr,preview_image_url,category")
         .eq("is_active", true)
-        .not("sale_price_pkr", "is", null)
-        .order("sale_price_pkr")
+        .not("original_price_pkr", "is", null)
+        .order("price_pkr")
         .limit(6);
-      return data ?? [];
+      return (data ?? []).filter(
+        (t: any) => t.original_price_pkr && Number(t.original_price_pkr) > Number(t.price_pkr)
+      );
     },
     staleTime: 5 * 60 * 1000,
   });
@@ -440,9 +442,9 @@ const Navbar = () => {
                                       <div className="p-2.5">
                                         <div className="text-xs font-semibold text-foreground truncate">{t.name}</div>
                                         <div className="flex items-baseline gap-1.5 mt-0.5">
-                                          <span className="text-xs font-bold text-primary">PKR {(t.sale_price_pkr ?? t.price_pkr).toLocaleString()}</span>
-                                          {t.sale_price_pkr && t.price_pkr > t.sale_price_pkr && (
-                                            <span className="text-[10px] text-muted-foreground line-through">PKR {t.price_pkr.toLocaleString()}</span>
+                                          <span className="text-xs font-bold text-primary">PKR {Number(t.price_pkr).toLocaleString()}</span>
+                                          {t.original_price_pkr && Number(t.original_price_pkr) > Number(t.price_pkr) && (
+                                            <span className="text-[10px] text-muted-foreground line-through">PKR {Number(t.original_price_pkr).toLocaleString()}</span>
                                           )}
                                         </div>
                                       </div>
