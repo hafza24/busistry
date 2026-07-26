@@ -21,6 +21,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const platformLinks = [
   { to: "/templates", label: "Templates" },
