@@ -336,7 +336,7 @@ const Index = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from("plans")
-        .select("id, name, type, price_pkr, duration_days, features, max_products, max_categories, max_pages")
+        .select("id, name, type, price_pkr, duration_days, features, max_products, max_categories, max_pages, team_users, email_accounts, domain_type, platform_type")
         .eq("is_active", true)
         .order("price_pkr");
       return data ?? [];
