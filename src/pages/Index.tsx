@@ -207,28 +207,7 @@ const AnimatedStat = ({ value }: { value: string }) => {
 };
 
 const LiveStats = () => {
-  const { data } = useQuery({
-    queryKey: ["home-live-stats"],
-    queryFn: async () => {
-      const [delivered, ratingRes, ordersRes, reviewsRes] = await Promise.all([
-        supabase
-          .from("website_orders")
-          .select("id", { count: "exact", head: true })
-          .in("status", ["completed", "delivered"]),
-        supabase.rpc("get_feedback_rating_stats"),
-        supabase.from("website_orders").select("id", { count: "exact", head: true }),
-        supabase.from("reviews").select("id", { count: "exact", head: true }),
-      ]);
-      const rating = (ratingRes.data as any)?.[0] ?? { avg_rating: 0, total_reviews: 0 };
-      return {
-        delivered: delivered.count ?? 0,
-        totalOrders: ordersRes.count ?? 0,
-        avgRating: Number(rating.avg_rating ?? 0),
-        totalReviews: (Number(rating.total_reviews ?? 0) || 0) + (reviewsRes.count ?? 0),
-      };
-    },
-    staleTime: 60_000,
-  });
+  const { data } = useHeroStats();
 
   const stats = [
     { v: data ? `${data.delivered}${data.delivered >= 10 ? "+" : ""}` : "—", l: "Sites delivered" },
