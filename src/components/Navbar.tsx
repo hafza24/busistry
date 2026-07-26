@@ -81,12 +81,14 @@ const Navbar = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from("templates")
-        .select("id,name,price_pkr,sale_price_pkr,preview_image_url,category")
+        .select("id,name,price_pkr,original_price_pkr,preview_image_url,category")
         .eq("is_active", true)
-        .not("sale_price_pkr", "is", null)
-        .order("sale_price_pkr")
+        .not("original_price_pkr", "is", null)
+        .order("price_pkr")
         .limit(6);
-      return data ?? [];
+      return (data ?? []).filter(
+        (t: any) => t.original_price_pkr && Number(t.original_price_pkr) > Number(t.price_pkr)
+      );
     },
     staleTime: 5 * 60 * 1000,
   });
