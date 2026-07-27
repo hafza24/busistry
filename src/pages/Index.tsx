@@ -562,7 +562,7 @@ const Index = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
             {showcase.slice(0, 4).map((t: any, i: number) => {
               const Icon = (t.icon as any) ?? ShoppingBag;
               return (
@@ -572,9 +572,8 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.06 }}
-                  className="group relative bg-card/70 backdrop-blur-sm border border-border/70 rounded-lg overflow-hidden hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1.5 hover:border-primary/50 transition-all duration-500"
+                  className="group relative flex flex-col bg-card/70 backdrop-blur-sm border border-border/70 rounded-lg overflow-hidden hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1.5 hover:border-primary/50 transition-all duration-500"
                 >
-                  {/* Gradient sheen border on hover */}
                   <div className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
 
                   <div className="aspect-[4/3] bg-gradient-to-br from-secondary via-background to-secondary/60 relative overflow-hidden">
@@ -594,47 +593,45 @@ const Index = () => {
                       </div>
                     )}
 
-                    {/* Image overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <Badge
                       variant="secondary"
-                      className="absolute top-2 left-2 sm:top-4 sm:left-4 backdrop-blur-md bg-background/85 border border-border/60 shadow-sm text-[9px] sm:text-[11px] font-semibold tracking-wide px-1.5 sm:px-2.5 py-0.5 sm:py-1"
+                      className="absolute top-3 left-3 backdrop-blur-md bg-background/85 border border-border/60 shadow-sm text-[10px] sm:text-[11px] font-semibold tracking-wide px-2 py-0.5"
                     >
                       {t.niche}
                     </Badge>
                   </div>
 
-                  <div className="p-3 sm:p-5 relative">
-                    <div className="flex items-center justify-between mb-2 sm:mb-4">
-                      <h3 className="text-sm sm:text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors truncate">
+                  <div className="p-4 sm:p-5 relative flex flex-col flex-1">
+                    <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
+                      <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight group-hover:text-primary transition-colors truncate">
                         {t.name}
                       </h3>
-                      <div className="hidden sm:flex h-6 w-6 rounded-full bg-primary/10 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
+                      <div className="hidden sm:flex h-6 w-6 shrink-0 rounded-full bg-primary/10 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-2">
                         <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
                       </div>
                     </div>
-                    <div className="flex gap-1.5 sm:gap-2">
+                    <div className="mt-auto flex flex-col sm:flex-row gap-2">
                       {t.demo_url ? (
-                        <Button variant="outline" size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg" asChild>
+                        <Button variant="outline" size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                            Preview <ExternalLink className="h-3 w-3 ml-1 hidden sm:inline" />
+                            Preview <ExternalLink className="h-3.5 w-3.5 ml-1" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg" asChild>
+                        <Button variant="outline" size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="lg" className="flex-1 h-10 sm:h-12 px-3 sm:px-6 text-[11px] sm:text-base rounded-lg group shadow-elev" asChild>
+                      <Button size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg group shadow-elev" asChild>
                         <Link to="/templates">
-                          Select <ArrowRight className="h-3 w-3 ml-1 hidden sm:inline transition-transform group-hover:translate-x-0.5" />
+                          Select <ArrowRight className="h-3.5 w-3.5 ml-1 transition-transform group-hover:translate-x-0.5" />
                         </Link>
                       </Button>
                     </div>
                   </div>
                 </motion.div>
-
               );
             })}
           </div>
