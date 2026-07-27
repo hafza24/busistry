@@ -492,6 +492,507 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_automation_logs: {
+        Row: {
+          automation_id: string
+          contact_id: string | null
+          details: Json
+          executed_at: string
+          id: string
+          message_id: string | null
+          result: string
+        }
+        Insert: {
+          automation_id: string
+          contact_id?: string | null
+          details?: Json
+          executed_at?: string
+          id?: string
+          message_id?: string | null
+          result?: string
+        }
+        Update: {
+          automation_id?: string
+          contact_id?: string | null
+          details?: Json
+          executed_at?: string
+          id?: string
+          message_id?: string | null
+          result?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_automation_logs_automation_id_fkey"
+            columns: ["automation_id"]
+            isOneToOne: false
+            referencedRelation: "crm_automations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_automation_logs_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_automation_logs_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "crm_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_automations: {
+        Row: {
+          actions: Json
+          conditions: Json
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          priority: number
+          trigger: Database["public"]["Enums"]["crm_automation_trigger"]
+          updated_at: string
+        }
+        Insert: {
+          actions?: Json
+          conditions?: Json
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          priority?: number
+          trigger: Database["public"]["Enums"]["crm_automation_trigger"]
+          updated_at?: string
+        }
+        Update: {
+          actions?: Json
+          conditions?: Json
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          priority?: number
+          trigger?: Database["public"]["Enums"]["crm_automation_trigger"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      crm_broadcast_recipients: {
+        Row: {
+          broadcast_id: string
+          contact_id: string
+          delivered_at: string | null
+          error: string | null
+          id: string
+          read_at: string | null
+          sent_at: string | null
+          status: Database["public"]["Enums"]["crm_message_status"]
+          wa_message_id: string | null
+        }
+        Insert: {
+          broadcast_id: string
+          contact_id: string
+          delivered_at?: string | null
+          error?: string | null
+          id?: string
+          read_at?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["crm_message_status"]
+          wa_message_id?: string | null
+        }
+        Update: {
+          broadcast_id?: string
+          contact_id?: string
+          delivered_at?: string | null
+          error?: string | null
+          id?: string
+          read_at?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["crm_message_status"]
+          wa_message_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_broadcast_recipients_broadcast_id_fkey"
+            columns: ["broadcast_id"]
+            isOneToOne: false
+            referencedRelation: "crm_broadcasts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_broadcast_recipients_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_broadcasts: {
+        Row: {
+          audience_filter: Json
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          delivered_count: number
+          failed_count: number
+          id: string
+          name: string
+          read_count: number
+          scheduled_at: string | null
+          sent_count: number
+          started_at: string | null
+          status: Database["public"]["Enums"]["crm_broadcast_status"]
+          template_id: string | null
+          template_variables: Json
+          total_count: number
+          updated_at: string
+        }
+        Insert: {
+          audience_filter?: Json
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_count?: number
+          failed_count?: number
+          id?: string
+          name: string
+          read_count?: number
+          scheduled_at?: string | null
+          sent_count?: number
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["crm_broadcast_status"]
+          template_id?: string | null
+          template_variables?: Json
+          total_count?: number
+          updated_at?: string
+        }
+        Update: {
+          audience_filter?: Json
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          delivered_count?: number
+          failed_count?: number
+          id?: string
+          name?: string
+          read_count?: number
+          scheduled_at?: string | null
+          sent_count?: number
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["crm_broadcast_status"]
+          template_id?: string | null
+          template_variables?: Json
+          total_count?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_broadcasts_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "crm_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_contacts: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          is_blocked: boolean
+          last_inbound_at: string | null
+          last_message_at: string | null
+          metadata: Json
+          name: string | null
+          owner_id: string | null
+          profile_name: string | null
+          stage_id: string | null
+          tags: string[]
+          unread_count: number
+          updated_at: string
+          wa_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_blocked?: boolean
+          last_inbound_at?: string | null
+          last_message_at?: string | null
+          metadata?: Json
+          name?: string | null
+          owner_id?: string | null
+          profile_name?: string | null
+          stage_id?: string | null
+          tags?: string[]
+          unread_count?: number
+          updated_at?: string
+          wa_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_blocked?: boolean
+          last_inbound_at?: string | null
+          last_message_at?: string | null
+          metadata?: Json
+          name?: string | null
+          owner_id?: string | null
+          profile_name?: string | null
+          stage_id?: string | null
+          tags?: string[]
+          unread_count?: number
+          updated_at?: string
+          wa_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_contacts_stage_id_fkey"
+            columns: ["stage_id"]
+            isOneToOne: false
+            referencedRelation: "crm_pipeline_stages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_conversations: {
+        Row: {
+          assigned_to: string | null
+          contact_id: string
+          created_at: string
+          id: string
+          last_message_at: string | null
+          status: Database["public"]["Enums"]["crm_conversation_status"]
+          updated_at: string
+          window_expires_at: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          contact_id: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          status?: Database["public"]["Enums"]["crm_conversation_status"]
+          updated_at?: string
+          window_expires_at?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          contact_id?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          status?: Database["public"]["Enums"]["crm_conversation_status"]
+          updated_at?: string
+          window_expires_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_conversations_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_messages: {
+        Row: {
+          contact_id: string
+          content: Json
+          conversation_id: string
+          created_at: string
+          direction: Database["public"]["Enums"]["crm_message_direction"]
+          error: string | null
+          id: string
+          sent_by: string | null
+          status: Database["public"]["Enums"]["crm_message_status"]
+          template_name: string | null
+          type: string
+          wa_message_id: string | null
+        }
+        Insert: {
+          contact_id: string
+          content?: Json
+          conversation_id: string
+          created_at?: string
+          direction: Database["public"]["Enums"]["crm_message_direction"]
+          error?: string | null
+          id?: string
+          sent_by?: string | null
+          status?: Database["public"]["Enums"]["crm_message_status"]
+          template_name?: string | null
+          type?: string
+          wa_message_id?: string | null
+        }
+        Update: {
+          contact_id?: string
+          content?: Json
+          conversation_id?: string
+          created_at?: string
+          direction?: Database["public"]["Enums"]["crm_message_direction"]
+          error?: string | null
+          id?: string
+          sent_by?: string | null
+          status?: Database["public"]["Enums"]["crm_message_status"]
+          template_name?: string | null
+          type?: string
+          wa_message_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_messages_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "crm_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          contact_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          contact_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          contact_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_notes_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_pipeline_stages: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          is_default: boolean
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      crm_tags: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      crm_templates: {
+        Row: {
+          body: string | null
+          category: string | null
+          components: Json
+          created_at: string
+          id: string
+          language: string
+          name: string
+          status: string
+          synced_at: string | null
+          updated_at: string
+          variables: string[]
+          wa_template_id: string | null
+        }
+        Insert: {
+          body?: string | null
+          category?: string | null
+          components?: Json
+          created_at?: string
+          id?: string
+          language?: string
+          name: string
+          status?: string
+          synced_at?: string | null
+          updated_at?: string
+          variables?: string[]
+          wa_template_id?: string | null
+        }
+        Update: {
+          body?: string | null
+          category?: string | null
+          components?: Json
+          created_at?: string
+          id?: string
+          language?: string
+          name?: string
+          status?: string
+          synced_at?: string | null
+          updated_at?: string
+          variables?: string[]
+          wa_template_id?: string | null
+        }
+        Relationships: []
+      }
       feedback_submissions: {
         Row: {
           admin_notes: string | null
@@ -2635,6 +3136,22 @@ export type Database = {
         | "completed"
         | "rejected"
       catalog_pricing_type: "one_time" | "monthly" | "per_unit"
+      crm_automation_trigger:
+        | "keyword"
+        | "first_message"
+        | "inactivity"
+        | "tag_added"
+        | "stage_changed"
+      crm_broadcast_status:
+        | "draft"
+        | "scheduled"
+        | "sending"
+        | "completed"
+        | "failed"
+        | "cancelled"
+      crm_conversation_status: "open" | "pending" | "closed"
+      crm_message_direction: "in" | "out"
+      crm_message_status: "queued" | "sent" | "delivered" | "read" | "failed"
       newsletter_status: "subscribed" | "unsubscribed"
       payment_method:
         | "easypaisa"
@@ -2827,6 +3344,24 @@ export const Constants = {
         "rejected",
       ],
       catalog_pricing_type: ["one_time", "monthly", "per_unit"],
+      crm_automation_trigger: [
+        "keyword",
+        "first_message",
+        "inactivity",
+        "tag_added",
+        "stage_changed",
+      ],
+      crm_broadcast_status: [
+        "draft",
+        "scheduled",
+        "sending",
+        "completed",
+        "failed",
+        "cancelled",
+      ],
+      crm_conversation_status: ["open", "pending", "closed"],
+      crm_message_direction: ["in", "out"],
+      crm_message_status: ["queued", "sent", "delivered", "read", "failed"],
       newsletter_status: ["subscribed", "unsubscribed"],
       payment_method: [
         "easypaisa",
