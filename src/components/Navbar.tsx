@@ -568,7 +568,7 @@ const Navbar = () => {
       {mobileRender && (
         <div
           id="mobile-menu"
-          className={`lg:hidden mt-3 w-full grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`lg:hidden mt-3 ml-auto w-64 sm:w-72 grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
             mobileOpen
               ? "grid-rows-[1fr] opacity-100 translate-y-0"
               : "grid-rows-[0fr] opacity-0 -translate-y-2"
