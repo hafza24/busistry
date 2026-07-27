@@ -27,6 +27,7 @@ const menuItems = [
   { id: "reviews", label: "Reviews", icon: Star },
   { id: "case_studies", label: "Case Studies", icon: BookOpen },
   { id: "newsletter", label: "Newsletter", icon: Mail },
+  { id: "crm", label: "WhatsApp CRM", icon: MessagesSquare },
   { id: "support", label: "Support", icon: LifeBuoy },
   { id: "audit", label: "Audit Logs", icon: ScrollText },
 ];
