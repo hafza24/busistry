@@ -440,8 +440,8 @@ const Index = () => {
                 brand, the packaging, the campaigns that keep customers arriving.
               </p>
 
-              <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
+              <div className="mt-10 flex flex-col sm:flex-row gap-3 w-full">
+                <Button size="lg" className="w-full sm:w-auto h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
                   <Link to="/onboarding">
                     Claim my free website
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -450,7 +450,7 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 px-6 text-base rounded-lg"
+                  className="w-full sm:w-auto h-12 px-6 text-base rounded-lg"
                   onClick={() => {
                     document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
