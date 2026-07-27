@@ -20,7 +20,6 @@ import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminSupportHub from "@/components/admin/AdminSupportHub";
 import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
-import AdminCRMInbox from "@/components/admin/AdminCRMInbox";
 import NotificationBell from "@/components/notifications/NotificationBell";
 
 const viewTitles: Record<string, string> = {
@@ -40,7 +39,6 @@ const viewTitles: Record<string, string> = {
   audit: "Audit Logs",
   newsletter: "Newsletter Subscribers",
   case_studies: "Case Studies",
-  crm: "WhatsApp CRM",
 
 };
 
@@ -81,8 +79,6 @@ const AdminDashboard = () => {
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
       case "case_studies": return <AdminCaseStudies />;
-      case "crm": return <AdminCRMInbox />;
-      
       
       default: return <AdminWebsiteOrders />;
     }
