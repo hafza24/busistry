@@ -440,8 +440,8 @@ const Index = () => {
                 brand, the packaging, the campaigns that keep customers arriving.
               </p>
 
-              <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                <Button size="lg" className="h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
+              <div className="mt-10 flex flex-col sm:flex-row gap-3 w-full">
+                <Button size="lg" className="w-full sm:w-auto h-12 px-6 text-base rounded-lg group shadow-elev" asChild>
                   <Link to="/onboarding">
                     Claim my free website
                     <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -450,7 +450,7 @@ const Index = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="h-12 px-6 text-base rounded-lg"
+                  className="w-full sm:w-auto h-12 px-6 text-base rounded-lg"
                   onClick={() => {
                     document.getElementById("included-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
@@ -547,14 +547,14 @@ const Index = () => {
       {/* Template Showcase */}
       <section id="templates" className="py-12 md:py-16 border-b border-border/60 bg-gradient-to-b from-background to-secondary/30 scroll-mt-24">
         <div className="container">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="mb-10 md:mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <SectionHeading
               align="left"
               eyebrow="The free website"
               title={<>A site worth <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">paying for</span> — on the house.</>}
               subtitle="Editorial layouts, considered typography, real copy. Choose a starting point; we finish it in forty-eight hours."
             />
-            <Button className="h-12 px-6 text-base rounded-lg shadow-elev group shrink-0" asChild>
+            <Button className="w-full md:w-auto h-12 px-6 text-base rounded-lg shadow-elev group shrink-0" asChild>
               <Link to="/templates">
                 View all templates
                 <ArrowUpRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
