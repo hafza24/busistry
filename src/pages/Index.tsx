@@ -612,21 +612,21 @@ const Index = () => {
                         <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
                       </div>
                     </div>
-                    <div className="mt-auto flex flex-col sm:flex-row gap-2">
+                    <div className="mt-auto flex flex-row gap-2">
                       {t.demo_url ? (
-                        <Button variant="outline" size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg" asChild>
+                        <Button variant="outline" size="sm" className="flex-1 min-w-0 h-9 px-2 text-xs sm:text-sm rounded-lg" asChild>
                           <a href={t.demo_url} target="_blank" rel="noopener noreferrer">
-                            Preview <ExternalLink className="h-3.5 w-3.5 ml-1" />
+                            Preview <ExternalLink className="h-3 w-3 ml-1 shrink-0" />
                           </a>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg" asChild>
+                        <Button variant="outline" size="sm" className="flex-1 min-w-0 h-9 px-2 text-xs sm:text-sm rounded-lg" asChild>
                           <Link to="/templates">Preview</Link>
                         </Button>
                       )}
-                      <Button size="lg" className="flex-1 h-11 sm:h-12 px-3 text-sm sm:text-base rounded-lg group shadow-elev" asChild>
+                      <Button size="sm" className="flex-1 min-w-0 h-9 px-2 text-xs sm:text-sm rounded-lg group shadow-elev" asChild>
                         <Link to="/templates">
-                          Select <ArrowRight className="h-3.5 w-3.5 ml-1 transition-transform group-hover:translate-x-0.5" />
+                          Select <ArrowRight className="h-3 w-3 ml-1 shrink-0 transition-transform group-hover:translate-x-0.5" />
                         </Link>
                       </Button>
                     </div>
