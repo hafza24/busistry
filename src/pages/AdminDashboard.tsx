@@ -40,6 +40,7 @@ const viewTitles: Record<string, string> = {
   audit: "Audit Logs",
   newsletter: "Newsletter Subscribers",
   case_studies: "Case Studies",
+  crm: "WhatsApp CRM",
 
 };
 
@@ -80,6 +81,8 @@ const AdminDashboard = () => {
       case "audit": return <AdminAuditLogs />;
       case "newsletter": return <AdminNewsletterSubscribers />;
       case "case_studies": return <AdminCaseStudies />;
+      case "crm": return <AdminCRMInbox />;
+      
       
       default: return <AdminWebsiteOrders />;
     }
