@@ -62,12 +62,12 @@ export async function setOrderStatus(input: AdminOrderTrackingInput) {
 
   return callApi("admin.orders.set_status", data, {
     fallback: async () => {
-      const patch: Record<string, unknown> = { status: data.status };
+      const patch: Record<string, string | null> = { status: data.status };
       if (data.tracking_number !== undefined) patch.tracking_number = data.tracking_number || null;
       if (data.tracking_carrier !== undefined) patch.tracking_carrier = data.tracking_carrier || null;
       if (data.tracking_url !== undefined) patch.tracking_url = data.tracking_url || null;
       if (data.status === "shipped") patch.shipped_at = new Date().toISOString();
-      const res = await supabase.from("orders").update(patch).eq("id", data.id).select("id").single();
+      const res = await supabase.from("orders").update(patch as never).eq("id", data.id).select("id").single();
       unwrap(res);
       return { id: data.id, status: data.status };
     },
