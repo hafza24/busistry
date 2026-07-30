@@ -14,6 +14,7 @@ import { ArrowLeft, Loader2, CheckCircle2, ShoppingBag } from "lucide-react";
 import SEO from "@/components/SEO";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useStoreCart } from "@/hooks/useStoreCart";
+import { createStoreOrder } from "@/services/orders";
 
 const shippingSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
