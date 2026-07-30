@@ -97,34 +97,28 @@ const Checkout = () => {
 
     setSubmitting(true);
     try {
-      const orderNumber = `ORD-${Date.now().toString(36).toUpperCase()}`;
       const fullAddress = `${parsed.data.address}, ${parsed.data.city}${
         parsed.data.notes ? ` — Notes: ${parsed.data.notes}` : ""
       }`;
-      const items = cart.map((i) => ({
-        product_id: i.product.id,
-        product_name: i.product.name,
-        quantity: i.quantity,
-        price: Number(i.product.price),
-        total: Number(i.product.price) * i.quantity,
-      }));
 
-      const { error: rpcError } = await supabase.rpc("create_order_with_items", {
-        p_store_id: store.id,
-        p_order_number: orderNumber,
-        p_customer_name: parsed.data.name,
-        p_customer_email: parsed.data.email || "",
-        p_customer_phone: parsed.data.phone,
-        p_customer_address: fullAddress,
-        p_subtotal: cartTotal,
-        p_total: cartTotal,
-        p_items: items as any,
+      const result = await createStoreOrder({
+        store_id: store.id,
+        customer_name: parsed.data.name,
+        customer_phone: parsed.data.phone,
+        customer_email: parsed.data.email || "",
+        customer_address: fullAddress,
+        notes: parsed.data.notes || "",
+        items: cart.map((i) => ({
+          product_id: i.product.id,
+          product_name: i.product.name,
+          quantity: i.quantity,
+          price: Number(i.product.price),
+        })),
       });
-      if (rpcError) throw rpcError;
 
       clearCart();
-      setPlacedOrder(orderNumber);
-      toast.success(`Order ${orderNumber} placed`);
+      setPlacedOrder(result.order_number);
+      toast.success(`Order ${result.order_number} placed`);
     } catch (err: any) {
       toast.error(err.message || "Could not place order");
     } finally {
