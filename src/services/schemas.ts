@@ -36,7 +36,7 @@ export const CreateCatalogOrderSchema = z.object({
   item_id: uuid,
   store_id: uuid.nullable().optional(),
   quantity: z.number().int().min(1).max(999).default(1),
-  config: z.record(z.unknown()).default({}),
+  config: z.record(z.string(), z.unknown()).default({}),
   payment_method: z
     .enum(["easypaisa", "jazzcash", "nayapay", "raast", "bank_transfer"])
     .optional(),
@@ -54,7 +54,7 @@ export const CreateUpgradeOrderSchema = z.object({
     "plan_change",
     "content_tweak",
   ]),
-  details: z.record(z.unknown()).default({}),
+  details: z.record(z.string(), z.unknown()).default({}),
   amount: z.number().int().min(0),
   payment_method: z.string().trim().max(50).optional(),
   transaction_id: z.string().trim().max(120).optional().or(z.literal("")),
