@@ -382,7 +382,7 @@ const Auth = () => {
             <div className="absolute -bottom-24 -right-10 w-72 h-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
 
             <div className="relative h-full flex flex-col items-center justify-center text-center p-6 sm:p-10 gap-5">
-              <img src={logo} alt="Busistree" className="w-20 h-20 object-contain" />
+              <img src={logo} alt="Busistree" className="w-20 h-20 object-contain [filter:brightness(0)]" />
 
               {isLogin ? (
                 <>
