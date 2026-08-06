@@ -290,7 +290,7 @@ const Reviews = () => {
                             <img
                               src={it.cover_image_url}
                               alt={it.title}
-                              className="w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
+                              className="w-full h-full object-cover transition-transform duration-900 ease-smooth group-hover:scale-110"
                               loading="lazy"
                             />
                           )}

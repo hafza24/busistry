@@ -697,7 +697,7 @@ const Index = () => {
                         loading="lazy"
                         width={1024}
                         height={1280}
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-900 ease-smooth group-hover:scale-[1.08]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/0" />
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-transparent to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -1054,7 +1054,7 @@ const TeamDeck = () => {
         {TEAM.map((m, i) => (
           <div
             key={m.name}
-            className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${WRAPPERS[i]}`}
+            className={`absolute w-[260px] sm:w-[280px] transition-all duration-700 ease-smooth ${WRAPPERS[i]}`}
             style={{ transitionDelay: `${i * 80}ms` }}
           >
             {renderCard(m, { hoverHint: true })}

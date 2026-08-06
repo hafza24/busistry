@@ -568,7 +568,7 @@ const Navbar = () => {
       {mobileRender && (
         <div
           id="mobile-menu"
-          className={`lg:hidden mt-3 ml-auto w-64 sm:w-72 grid transition-[grid-template-rows,opacity,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`lg:hidden mt-3 ml-auto w-64 sm:w-72 grid transition-[grid-template-rows,opacity,transform] duration-400 ease-smooth ${
             mobileOpen
               ? "grid-rows-[1fr] opacity-100 translate-y-0"
               : "grid-rows-[0fr] opacity-0 -translate-y-2"
@@ -638,12 +638,12 @@ const Navbar = () => {
                           className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 inline-flex items-center justify-center rounded-xl text-muted-foreground hover:text-neutral hover:bg-neutral/10 transition-colors"
                         >
                           <ChevronDown
-                            className={`h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isOpen ? "rotate-180 scale-110 text-primary" : "rotate-0 scale-100"}`}
+                            className={`h-4 w-4 transition-transform duration-500 ease-smooth ${isOpen ? "rotate-180 scale-110 text-primary" : "rotate-0 scale-100"}`}
                           />
                         </button>
                       </div>
                       <div
-                        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-smooth ${
                           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
@@ -655,7 +655,7 @@ const Navbar = () => {
                                 style={{
                                   transitionDelay: isOpen ? `${80 + subIdx * 50}ms` : "0ms",
                                 }}
-                                className={`transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                className={`transition-all duration-400 ease-smooth ${
                                   isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
                                 }`}
                               >
