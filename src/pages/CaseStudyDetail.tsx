@@ -126,7 +126,7 @@ const CaseStudyDetail = () => {
               <img
                 src={data.cover_image_url}
                 alt={data.title}
-                className="w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                className="w-full h-full object-cover transition-transform duration-900 ease-smooth group-hover:scale-[1.03]"
               />
               {/* Shimmer sweep on load */}
               <motion.div

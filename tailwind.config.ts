@@ -13,6 +13,13 @@ export default {
       },
     },
     extend: {
+      transitionDuration: {
+        "400": "400ms",
+        "900": "900ms",
+      },
+      transitionTimingFunction: {
+        smooth: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Fraunces', 'Georgia', 'serif'],

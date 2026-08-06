@@ -31,7 +31,7 @@ const Card = ({ tier, tiersLength, idx }: { tier: PricingTier; tiersLength: numb
       role="group"
       aria-roledescription="slide"
       aria-label={`${tier.name}, ${idx + 1} of ${tiersLength}`}
-      className={`group relative shrink-0 w-[280px] sm:w-[300px] rounded-lg p-6 border transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 flex flex-col ${
+      className={`group relative shrink-0 w-[280px] sm:w-[300px] rounded-lg p-6 border transition-all duration-500 ease-smooth hover:-translate-y-1.5 flex flex-col ${
         tier.highlighted
           ? "bg-card border-primary/40 shadow-elev hover:shadow-brand dark:bg-card/95 dark:border-primary/50 dark:shadow-[0_0_0_1px_hsl(var(--primary)/0.25),0_20px_50px_-20px_hsl(var(--primary)/0.35)]"
           : "bg-card/70 backdrop-blur-sm border-border/70 shadow-soft hover:border-primary/30 hover:shadow-elev dark:bg-card/80 dark:border-border dark:hover:border-primary/40"
