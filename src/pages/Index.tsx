@@ -368,6 +368,13 @@ const Index = () => {
 
   const liveSites = [
     {
+      id: "live-hafza",
+      name: "Hafza Portfolio",
+      niche: "Portfolio",
+      demo_url: "https://hafza.busistree.com",
+      preview_image_url: "https://image.thum.io/get/width/1200/crop/900/https://hafza.busistree.com",
+    },
+    {
       id: "live-tutor",
       name: "Tutor Busistree",
       niche: "Online Learning",
