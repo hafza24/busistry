@@ -29,6 +29,7 @@ const AdminWebsiteOrders = () => {
   const qc = useQueryClient();
   const [selected, setSelected] = useState<any>(null);
   const [filterStatus, setFilterStatus] = useState("all");
+  const [invoiceOrder, setInvoiceOrder] = useState<any>(null);
   const [editFields, setEditFields] = useState({
     status: "",
     wordpress_url: "",
