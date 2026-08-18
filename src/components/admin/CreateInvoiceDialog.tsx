@@ -85,9 +85,9 @@ export default function CreateInvoiceDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
-                control: form.control,
-                name: "customer_name",
-                render: ({ field }) => (
+                control={form.control}
+                name="customer_name"
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Customer Name</FormLabel>
                     <FormControl>
@@ -95,12 +95,12 @@ export default function CreateInvoiceDialog({
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                ),
+                )}
               />
               <FormField
-                control: form.control,
-                name: "customer_email",
-                render: ({ field }) => (
+                control={form.control}
+                name="customer_email"
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Customer Email</FormLabel>
                     <FormControl>
@@ -108,12 +108,12 @@ export default function CreateInvoiceDialog({
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                ),
+                )}
               />
               <FormField
-                control: form.control,
-                name: "customer_phone",
-                render: ({ field }) => (
+                control={form.control}
+                name="customer_phone"
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Customer Phone</FormLabel>
                     <FormControl>
@@ -121,12 +121,12 @@ export default function CreateInvoiceDialog({
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                ),
+                )}
               />
               <FormField
-                control: form.control,
-                name: "issue_date",
-                render: ({ field }) => (
+                control={form.control}
+                name="issue_date"
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Issue Date</FormLabel>
                     <FormControl>
@@ -134,14 +134,14 @@ export default function CreateInvoiceDialog({
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-                ),
+                )}
               />
             </div>
 
             <FormField
-              control: form.control,
-              name: "customer_address",
-              render: ({ field }) => (
+              control={form.control}
+              name="customer_address"
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Customer Address</FormLabel>
                   <FormControl>
@@ -149,7 +149,7 @@ export default function CreateInvoiceDialog({
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              ),
+              )}
             />
 
             <div className="space-y-4">
@@ -169,9 +169,9 @@ export default function CreateInvoiceDialog({
                 <div key={field.id} className="flex gap-4 items-end border p-4 rounded-md relative">
                   <div className="flex-1 space-y-4">
                     <FormField
-                      control: form.control,
+                      control={form.control}
                       name={`items.${index}.description`}
-                      render: ({ field }) => (
+                      render={({ field }) => (
                         <FormItem>
                           <FormLabel>Description</FormLabel>
                           <FormControl>
@@ -179,13 +179,13 @@ export default function CreateInvoiceDialog({
                           </FormControl>
                           <FormMessage />
                         </FormItem>
-                      ),
+                      )}
                     />
                     <div className="grid grid-cols-2 gap-4">
                       <FormField
-                        control: form.control,
+                        control={form.control}
                         name={`items.${index}.quantity`}
-                        render: ({ field }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <FormLabel>Quantity</FormLabel>
                             <FormControl>
@@ -198,12 +198,12 @@ export default function CreateInvoiceDialog({
                             </FormControl>
                             <FormMessage />
                           </FormItem>
-                        ),
+                        )}
                       />
                       <FormField
-                        control: form.control,
+                        control={form.control}
                         name={`items.${index}.unit_price`}
-                        render: ({ field }) => (
+                        render={({ field }) => (
                           <FormItem>
                             <FormLabel>Unit Price</FormLabel>
                             <FormControl>
@@ -216,7 +216,7 @@ export default function CreateInvoiceDialog({
                             </FormControl>
                             <FormMessage />
                           </FormItem>
-                        ),
+                        )}
                       />
                     </div>
                   </div>
@@ -236,9 +236,9 @@ export default function CreateInvoiceDialog({
             </div>
 
             <FormField
-              control: form.control,
-              name: "notes",
-              render: ({ field }) => (
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Notes (Optional)</FormLabel>
                   <FormControl>
@@ -246,7 +246,7 @@ export default function CreateInvoiceDialog({
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              ),
+              )}
             />
 
             <DialogFooter>
