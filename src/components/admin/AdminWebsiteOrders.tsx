@@ -178,9 +178,12 @@ const AdminWebsiteOrders = () => {
                 <TableCell>{order.contact_phone}</TableCell>
                 <TableCell><Badge className={statusColors[order.status] || ""}>{order.status.replace("_", " ")}</Badge></TableCell>
                 <TableCell>{format(new Date(order.created_at), "dd MMM yyyy")}</TableCell>
-                <TableCell>
-                  <Button variant="ghost" size="icon" onClick={() => openDetail(order)} aria-label="View order details">
-                    <Eye className="h-4 w-4" aria-hidden="true" />
+                <TableCell className="flex gap-1">
+                  <Button variant="ghost" size="icon" onClick={() => openDetail(order)} title="View order details">
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => setInvoiceOrder(order)} title="Generate Invoice">
+                    <FileText className="h-4 w-4 text-emerald-600" />
                   </Button>
                 </TableCell>
               </TableRow>
