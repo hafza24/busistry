@@ -81,9 +81,17 @@ const AdminOverview = () => {
     const websiteOrders = stats?.websiteOrders ?? [];
     const activeSubs = subs.filter((s: any) => s.status === "active").length;
     const pending = requests.filter((r: any) => r.status === "pending").length;
-    const revenue =
+    
+    // Revenue from invoices (paid part) + legacy order logic
+    const invoiceRevenue = stats?.invoices?.reduce((sum: number, inv: any) => sum + (Number(inv.amount_paid) || 0), 0) || 0;
+    
+    // If no invoices yet, fallback to order-based calculation to show historical data
+    const legacyRevenue = 
       stores.reduce((sum: number, s: any) => sum + (s.plans?.price_pkr ?? 0), 0) +
       websiteOrders.reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
+    
+    const revenue = Math.max(invoiceRevenue, legacyRevenue);
+
     return {
       orders: stores.length + websiteOrders.length,
       users: users.length,
