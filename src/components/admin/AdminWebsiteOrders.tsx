@@ -154,12 +154,7 @@ const AdminWebsiteOrders = () => {
             {statuses.map((s) => (<SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>))}
           </SelectContent>
         </Select>
-      <InvoiceFormDialog
-        open={isInvoiceDialogOpen}
-        onOpenChange={setIsInvoiceDialogOpen}
-        order={selectedOrder}
-      />
-    </div>
+      </div>
 
       <div className="rounded-md border">
         <Table>
