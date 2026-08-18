@@ -20,7 +20,9 @@ import AdminSubscriptions from "@/components/admin/AdminSubscriptions";
 import AdminSupportHub from "@/components/admin/AdminSupportHub";
 import AdminNewsletterSubscribers from "@/components/admin/AdminNewsletterSubscribers";
 import AdminCaseStudies from "@/components/admin/AdminCaseStudies";
+import AdminInvoices from "@/components/admin/AdminInvoices";
 import NotificationBell from "@/components/notifications/NotificationBell";
+
 
 const viewTitles: Record<string, string> = {
   overview: "Overview",
@@ -37,6 +39,8 @@ const viewTitles: Record<string, string> = {
   reviews: "Reviews Moderation",
   support: "Support",
   audit: "Audit Logs",
+  invoices: "Invoice Management",
+
   newsletter: "Newsletter Subscribers",
   case_studies: "Case Studies",
 
@@ -77,6 +81,8 @@ const AdminDashboard = () => {
       case "reviews": return <AdminReviewsModeration />;
       case "support": return <AdminSupportHub />;
       case "audit": return <AdminAuditLogs />;
+      case "invoices": return <AdminInvoices />;
+
       case "newsletter": return <AdminNewsletterSubscribers />;
       case "case_studies": return <AdminCaseStudies />;
       

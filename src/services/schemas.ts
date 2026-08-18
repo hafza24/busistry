@@ -108,3 +108,25 @@ export const AdminOrderTrackingSchema = z.object({
   tracking_url: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 export type AdminOrderTrackingInput = z.infer<typeof AdminOrderTrackingSchema>;
+
+export const CreateInvoiceItemSchema = z.object({
+  description: z.string().trim().min(1, "Description is required"),
+  quantity: z.number().int().min(1, "Quantity must be at least 1"),
+  unit_price: z.number().finite().min(0, "Unit price must be at least 0"),
+});
+
+export const CreateInvoiceSchema = z.object({
+  customer_id: uuid.nullable().optional(),
+  customer_name: z.string().trim().min(2, "Name is required"),
+  customer_email: z.string().trim().email("Invalid email").optional().or(z.literal("")),
+  customer_phone: z.string().trim().optional().or(z.literal("")),
+  customer_address: z.string().trim().optional().or(z.literal("")),
+  status: z.enum(["pending", "paid", "cancelled"]).default("pending"),
+  issue_date: z.string(), // ISO date string
+  due_date: z.string().optional().or(z.literal("")),
+  currency: z.string().default("PKR"),
+  notes: z.string().optional().or(z.literal("")),
+  items: z.array(CreateInvoiceItemSchema).min(1, "At least one item is required"),
+});
+
+export type CreateInvoiceInput = z.infer<typeof CreateInvoiceSchema>;
