@@ -1,17 +1,23 @@
-# Plan: Normalize hidden characters
+# Plan: Admin Dashboard Fix
 
-The user request specifies a visual edit from a zero-width space (`\u2063`) to itself. In the context of the Lovable visual editor, this often indicates a desire to normalize or remove a hidden character that was accidentally inserted during a text edit, which can sometimes interfere with layout or copying.
-
-## Proposed Changes
-
-### Content Cleaning
-- Search the entire `src` directory for the Unicode character `\u2063` (Invisible Separator) using byte-level matching.
-- Replace any instances of this character with an empty string if they appear within text content.
+The Admin Dashboard is currently experiencing a runtime error because the `AdminOverview` component attempts to query the `updated_at` column on the `stores` table, which does not exist in the database.
 
 ## Technical Details
-- Use a Python script to reliably find and remove the specific UTF-8 byte sequence (`\xe2\x81\xa3`) from source files.
-- This ensures that hidden characters don't persist in the codebase even if they aren't visible in standard editors.
+
+- **Root Cause**: `AdminOverview.tsx` uses `.select("..., updated_at, ...").order("updated_at")` on the `stores` table.
+- **Database State**: `information_schema` confirms `updated_at` is missing from `public.stores`.
+- **Symptoms**: `AdminOverview` fails to load "Recent Orders", likely showing a blank or error state.
+
+## Implementation Steps
+
+### 1. Database Migration
+- Add `updated_at` column to `public.stores`.
+- Attach the standard `handle_updated_at()` trigger to maintain it.
+
+### 2. Code Verification
+- Once the migration is applied, the existing code in `AdminOverview.tsx` and `AdminDashboard.tsx` will function correctly as it already expects this column to exist.
 
 ## Verification Plan
-- Run the search script again after the change to confirm zero matches.
-- Perform a visual inspection of the site to ensure no text strings have collapsed unexpectedly.
+
+- Check `supabase--analytics_query` to ensure no new "column does not exist" errors appear.
+- Verify the Admin Dashboard "Overview" tab loads correctly.
