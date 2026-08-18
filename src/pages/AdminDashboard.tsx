@@ -86,7 +86,7 @@ const AdminDashboard = () => {
       case "newsletter": return <AdminNewsletterSubscribers />;
       case "case_studies": return <AdminCaseStudies />;
       
-      default: return <AdminWebsiteOrders />;
+      default: return <AdminOverview />;
     }
   };
 
