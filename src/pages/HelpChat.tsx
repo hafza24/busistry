@@ -52,19 +52,27 @@ const HelpChat = () => {
 
     const channel = supabase
       .channel(`chat-${activeId}`)
-      .on("postgres_changes", {
-        event: "INSERT", schema: "public", table: "chat_messages",
-        filter: `thread_id=eq.${activeId}`,
-      }, (payload) => {
-        setMessages((prev) => {
-          const m = payload.new as Message;
-          if (prev.some((x) => x.id === m.id)) return prev;
-          return [...prev, m];
-        });
-      })
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
+          filter: `thread_id=eq.${activeId}`,
+        },
+        (payload) => {
+          setMessages((prev) => {
+            const m = payload.new as Message;
+            if (prev.some((x) => x.id === m.id)) return prev;
+            return [...prev, m];
+          });
+        }
+      )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [activeId]);
 
   useEffect(() => {
