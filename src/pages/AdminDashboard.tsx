@@ -9,7 +9,7 @@ import AdminRequestManagement from "@/components/admin/AdminRequestManagement";
 import AdminUserManagement from "@/components/admin/AdminUserManagement";
 import AdminTemplateManagement from "@/components/admin/AdminTemplateManagement";
 import AdminOverview from "@/components/admin/AdminOverview";
-
+import AdminInvoices from "@/components/admin/AdminInvoices";
 import AdminPlanManagement from "@/components/admin/AdminPlanManagement";
 import AdminCatalog from "@/components/admin/AdminCatalog";
 import AdminCatalogOrders from "@/components/admin/AdminCatalogOrders";
