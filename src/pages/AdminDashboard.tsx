@@ -26,6 +26,7 @@ const viewTitles: Record<string, string> = {
   overview: "Overview",
   orders: "Website Orders",
   subscriptions: "Recurring Subscriptions",
+  invoices: "Invoice Management",
   requests: "Store Requests (Legacy)",
   users: "User Management",
   templates: "Template Management",
