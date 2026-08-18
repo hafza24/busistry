@@ -50,9 +50,10 @@ const AdminContactMessages = () => {
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "contact_messages" },
-        () => load(),
+        () => load()
       )
       .subscribe();
+
     return () => {
       supabase.removeChannel(channel);
     };
