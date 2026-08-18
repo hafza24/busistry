@@ -171,15 +171,23 @@ export function useMyCatalogOrders(userId?: string) {
   const qc = useQueryClient();
   useEffect(() => {
     if (!userId) return;
+    let isSubscribed = true;
     const channel = supabase
       .channel(`catalog_orders_user_${userId}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "catalog_orders", filter: `user_id=eq.${userId}` },
-        () => qc.invalidateQueries({ queryKey: ["my_catalog_orders", userId] }),
-      )
-      .subscribe();
+        () => {
+          if (isSubscribed) {
+            qc.invalidateQueries({ queryKey: ["my_catalog_orders", userId] });
+          }
+        }
+      );
+      
+    channel.subscribe();
+    
     return () => {
+      isSubscribed = false;
       supabase.removeChannel(channel);
     };
   }, [userId, qc]);
@@ -202,15 +210,23 @@ export function useMyCatalogOrders(userId?: string) {
 export function useAllCatalogOrders() {
   const qc = useQueryClient();
   useEffect(() => {
+    let isSubscribed = true;
     const channel = supabase
       .channel("catalog_orders_admin")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "catalog_orders" },
-        () => qc.invalidateQueries({ queryKey: ["catalog_orders_admin"] }),
-      )
-      .subscribe();
+        () => {
+          if (isSubscribed) {
+            qc.invalidateQueries({ queryKey: ["catalog_orders_admin"] });
+          }
+        }
+      );
+      
+    channel.subscribe();
+    
     return () => {
+      isSubscribed = false;
       supabase.removeChannel(channel);
     };
   }, [qc]);

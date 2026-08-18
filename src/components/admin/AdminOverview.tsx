@@ -36,7 +36,7 @@ const AdminOverview = () => {
   const { data: stats } = useQuery({
     queryKey: ["admin_overview_stats"],
     queryFn: async () => {
-      const [orders, users, subs, requests, tickets, feedback, templates, websiteOrders] = await Promise.all([
+      const [orders, users, subs, requests, tickets, feedback, templates, websiteOrders, invoices] = await Promise.all([
         supabase.from("stores").select("id, created_at, status, plans(price_pkr)"),
         supabase.from("profiles").select("id, created_at"),
         supabase.from("subscriptions").select("id, status"),
@@ -45,6 +45,7 @@ const AdminOverview = () => {
         supabase.from("feedback_submissions").select("id, rating, approved"),
         supabase.from("templates").select("id, is_active"),
         supabase.from("website_orders").select("id, created_at, amount, status"),
+        supabase.from("invoices").select("id, grand_total, amount_paid, status, invoice_type"),
       ]);
       return {
         stores: orders.data ?? [],
@@ -55,6 +56,7 @@ const AdminOverview = () => {
         feedback: feedback.data ?? [],
         templates: templates.data ?? [],
         websiteOrders: websiteOrders.data ?? [],
+        invoices: invoices.data ?? [],
       };
     },
   });
@@ -79,9 +81,17 @@ const AdminOverview = () => {
     const websiteOrders = stats?.websiteOrders ?? [];
     const activeSubs = subs.filter((s: any) => s.status === "active").length;
     const pending = requests.filter((r: any) => r.status === "pending").length;
-    const revenue =
+    
+    // Revenue from invoices (paid part) + legacy order logic
+    const invoiceRevenue = stats?.invoices?.reduce((sum: number, inv: any) => sum + (Number(inv.amount_paid) || 0), 0) || 0;
+    
+    // If no invoices yet, fallback to order-based calculation to show historical data
+    const legacyRevenue = 
       stores.reduce((sum: number, s: any) => sum + (s.plans?.price_pkr ?? 0), 0) +
       websiteOrders.reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
+    
+    const revenue = Math.max(invoiceRevenue, legacyRevenue);
+
     return {
       orders: stores.length + websiteOrders.length,
       users: users.length,

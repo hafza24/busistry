@@ -50,21 +50,27 @@ const HelpChat = () => {
     if (!activeId) { setMessages([]); return; }
     loadMessages(activeId);
 
+    let isSubscribed = true;
     const channel = supabase
       .channel(`chat-${activeId}`)
       .on("postgres_changes", {
         event: "INSERT", schema: "public", table: "chat_messages",
         filter: `thread_id=eq.${activeId}`,
       }, (payload) => {
+        if (!isSubscribed) return;
         setMessages((prev) => {
           const m = payload.new as Message;
           if (prev.some((x) => x.id === m.id)) return prev;
           return [...prev, m];
         });
-      })
-      .subscribe();
+      });
+      
+    channel.subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    return () => { 
+      isSubscribed = false;
+      supabase.removeChannel(channel); 
+    };
   }, [activeId]);
 
   useEffect(() => {

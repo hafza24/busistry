@@ -39,13 +39,21 @@ export function useNotifications(audience: "user" | "admin" = "user") {
 
   useEffect(() => {
     if (!user) return;
+    let isSubscribed = true;
     const channel = supabase
       .channel(`notifications-${audience}-${user.id}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "notifications" }, () => {
-        qc.invalidateQueries({ queryKey: ["notifications", audience, user.id] });
-      })
-      .subscribe();
-    return () => { supabase.removeChannel(channel); };
+        if (isSubscribed) {
+          qc.invalidateQueries({ queryKey: ["notifications", audience, user.id] });
+        }
+      });
+      
+    channel.subscribe();
+    
+    return () => { 
+      isSubscribed = false;
+      supabase.removeChannel(channel); 
+    };
   }, [user, audience, qc]);
 
   return query;

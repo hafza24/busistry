@@ -23,17 +23,27 @@ export const useComingSoon = () => {
   });
 
   useEffect(() => {
+    let isSubscribed = true;
     const channel = supabase
       .channel("site_settings_changes")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "site_settings" },
         () => {
-          qc.invalidateQueries({ queryKey: COMING_SOON_KEY });
+          if (isSubscribed) {
+            qc.invalidateQueries({ queryKey: COMING_SOON_KEY });
+          }
         }
-      )
-      .subscribe();
+      );
+
+    channel.subscribe((status) => {
+      if (status !== "SUBSCRIBED") {
+        console.warn("Realtime subscription status for site_settings:", status);
+      }
+    });
+
     return () => {
+      isSubscribed = false;
       supabase.removeChannel(channel);
     };
   }, [qc]);

@@ -16,6 +16,7 @@ const menuItems = [
   { id: "overview", label: "Overview", icon: Home },
   { id: "orders", label: "Website Orders", icon: Globe },
   { id: "subscriptions", label: "Subscriptions", icon: Repeat },
+  { id: "invoices", label: "Invoices", icon: FileText },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
 
   { id: "plans", label: "Plans", icon: CreditCard },
