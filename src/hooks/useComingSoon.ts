@@ -31,8 +31,14 @@ export const useComingSoon = () => {
         () => {
           qc.invalidateQueries({ queryKey: COMING_SOON_KEY });
         }
-      )
-      .subscribe();
+      );
+
+    channel.subscribe((status) => {
+      if (status === 'SUBSCRIBED') {
+        console.log('Subscribed to site_settings_changes');
+      }
+    });
+
     return () => {
       supabase.removeChannel(channel);
     };
