@@ -36,16 +36,23 @@ const AdminSupportChat = () => {
   useEffect(() => {
     if (!activeId) return;
     loadMessages(activeId);
+    let isSubscribed = true;
     const channel = supabase.channel(`admin-chat-${activeId}`)
       .on("postgres_changes", {
         event: "INSERT", schema: "public", table: "chat_messages",
         filter: `thread_id=eq.${activeId}`,
       }, (payload) => {
+        if (!isSubscribed) return;
         const m = payload.new as Message;
         setMessages((p) => p.some((x) => x.id === m.id) ? p : [...p, m]);
-      })
-      .subscribe();
-    return () => { supabase.removeChannel(channel); };
+      });
+      
+    channel.subscribe();
+    
+    return () => { 
+      isSubscribed = false;
+      supabase.removeChannel(channel); 
+    };
   }, [activeId]);
 
   useEffect(() => {
@@ -54,10 +61,18 @@ const AdminSupportChat = () => {
 
   // Realtime: refresh thread list on new messages
   useEffect(() => {
+    let isSubscribed = true;
     const channel = supabase.channel("admin-threads-list")
-      .on("postgres_changes", { event: "*", schema: "public", table: "chat_threads" }, () => loadThreads())
-      .subscribe();
-    return () => { supabase.removeChannel(channel); };
+      .on("postgres_changes", { event: "*", schema: "public", table: "chat_threads" }, () => {
+        if (isSubscribed) loadThreads();
+      });
+      
+    channel.subscribe();
+    
+    return () => { 
+      isSubscribed = false;
+      supabase.removeChannel(channel); 
+    };
   }, [filter]);
 
   const loadThreads = async () => {

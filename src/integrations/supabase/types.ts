@@ -1206,7 +1206,12 @@ export type Database = {
           description: string
           id: string
           invoice_id: string
+          item_name: string | null
+          line_total: number | null
+          product_id: string | null
           quantity: number
+          tax_amount: number | null
+          tax_rate: number | null
           unit_price: number
         }
         Insert: {
@@ -1215,7 +1220,12 @@ export type Database = {
           description: string
           id?: string
           invoice_id: string
+          item_name?: string | null
+          line_total?: number | null
+          product_id?: string | null
           quantity?: number
+          tax_amount?: number | null
+          tax_rate?: number | null
           unit_price?: number
         }
         Update: {
@@ -1224,7 +1234,12 @@ export type Database = {
           description?: string
           id?: string
           invoice_id?: string
+          item_name?: string | null
+          line_total?: number | null
+          product_id?: string | null
           quantity?: number
+          tax_amount?: number | null
+          tax_rate?: number | null
           unit_price?: number
         }
         Relationships: [
@@ -1239,57 +1254,98 @@ export type Database = {
       }
       invoices: {
         Row: {
+          amount_due: number | null
+          amount_paid: number | null
+          company_name: string | null
           created_at: string | null
+          created_by: string | null
           currency: string
           customer_address: string | null
           customer_email: string | null
           customer_id: string | null
           customer_name: string
           customer_phone: string | null
+          discount_total: number | null
           due_date: string | null
+          grand_total: number | null
           id: string
           invoice_number: string
+          invoice_type: Database["public"]["Enums"]["invoice_type"] | null
           issue_date: string
           notes: string | null
+          order_id: string | null
+          shipping_total: number | null
           status: Database["public"]["Enums"]["invoice_status"] | null
+          tax_number: string | null
+          tax_total: number | null
           total_amount: number
           updated_at: string | null
         }
         Insert: {
+          amount_due?: number | null
+          amount_paid?: number | null
+          company_name?: string | null
           created_at?: string | null
+          created_by?: string | null
           currency?: string
           customer_address?: string | null
           customer_email?: string | null
           customer_id?: string | null
           customer_name: string
           customer_phone?: string | null
+          discount_total?: number | null
           due_date?: string | null
+          grand_total?: number | null
           id?: string
           invoice_number: string
+          invoice_type?: Database["public"]["Enums"]["invoice_type"] | null
           issue_date?: string
           notes?: string | null
+          order_id?: string | null
+          shipping_total?: number | null
           status?: Database["public"]["Enums"]["invoice_status"] | null
+          tax_number?: string | null
+          tax_total?: number | null
           total_amount?: number
           updated_at?: string | null
         }
         Update: {
+          amount_due?: number | null
+          amount_paid?: number | null
+          company_name?: string | null
           created_at?: string | null
+          created_by?: string | null
           currency?: string
           customer_address?: string | null
           customer_email?: string | null
           customer_id?: string | null
           customer_name?: string
           customer_phone?: string | null
+          discount_total?: number | null
           due_date?: string | null
+          grand_total?: number | null
           id?: string
           invoice_number?: string
+          invoice_type?: Database["public"]["Enums"]["invoice_type"] | null
           issue_date?: string
           notes?: string | null
+          order_id?: string | null
+          shipping_total?: number | null
           status?: Database["public"]["Enums"]["invoice_status"] | null
+          tax_number?: string | null
+          tax_total?: number | null
           total_amount?: number
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "invoices_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "website_orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       moderation_notification_logs: {
         Row: {
@@ -3247,7 +3303,14 @@ export type Database = {
       crm_conversation_status: "open" | "pending" | "closed"
       crm_message_direction: "in" | "out"
       crm_message_status: "queued" | "sent" | "delivered" | "read" | "failed"
-      invoice_status: "pending" | "paid" | "cancelled"
+      invoice_status:
+        | "draft"
+        | "sent"
+        | "paid"
+        | "partially_paid"
+        | "overdue"
+        | "cancelled"
+      invoice_type: "manual" | "order"
       newsletter_status: "subscribed" | "unsubscribed"
       payment_method:
         | "easypaisa"
@@ -3458,7 +3521,15 @@ export const Constants = {
       crm_conversation_status: ["open", "pending", "closed"],
       crm_message_direction: ["in", "out"],
       crm_message_status: ["queued", "sent", "delivered", "read", "failed"],
-      invoice_status: ["pending", "paid", "cancelled"],
+      invoice_status: [
+        "draft",
+        "sent",
+        "paid",
+        "partially_paid",
+        "overdue",
+        "cancelled",
+      ],
+      invoice_type: ["manual", "order"],
       newsletter_status: ["subscribed", "unsubscribed"],
       payment_method: [
         "easypaisa",

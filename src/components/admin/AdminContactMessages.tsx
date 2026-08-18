@@ -45,15 +45,21 @@ const AdminContactMessages = () => {
 
   useEffect(() => {
     load();
+    let isSubscribed = true;
     const channel = supabase
       .channel("admin-contact-messages")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "contact_messages" },
-        () => load(),
-      )
-      .subscribe();
+        () => {
+          if (isSubscribed) load();
+        },
+      );
+      
+    channel.subscribe();
+    
     return () => {
+      isSubscribed = false;
       supabase.removeChannel(channel);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
