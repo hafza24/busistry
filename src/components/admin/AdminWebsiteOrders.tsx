@@ -11,7 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Eye, Globe, Package, ScanLine, CheckCircle2, AlertTriangle, Hourglass, ExternalLink } from "lucide-react";
+import { Eye, Globe, Package, ScanLine, CheckCircle2, AlertTriangle, Hourglass, ExternalLink, FileText } from "lucide-react";
+import { InvoiceFormDialog } from "./InvoiceFormDialog";
 import { format } from "date-fns";
 import { toast } from "sonner";
 
