@@ -43,7 +43,6 @@ const viewTitles: Record<string, string> = {
 
   newsletter: "Newsletter Subscribers",
   case_studies: "Case Studies",
-
 };
 
 const AdminDashboard = () => {
