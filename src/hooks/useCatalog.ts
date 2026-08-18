@@ -182,9 +182,8 @@ export function useMyCatalogOrders(userId?: string) {
             qc.invalidateQueries({ queryKey: ["my_catalog_orders", userId] });
           }
         }
-      );
-      
-    channel.subscribe();
+      )
+      .subscribe();
     
     return () => {
       isSubscribed = false;
@@ -221,9 +220,8 @@ export function useAllCatalogOrders() {
             qc.invalidateQueries({ queryKey: ["catalog_orders_admin"] });
           }
         }
-      );
-      
-    channel.subscribe();
+      )
+      .subscribe();
     
     return () => {
       isSubscribed = false;

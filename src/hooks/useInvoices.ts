@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'partially_paid' | 'overdue' | 'cancelled';
@@ -48,6 +49,29 @@ export interface Invoice {
 }
 
 export function useAdminInvoices() {
+  const qc = useQueryClient();
+  
+  useEffect(() => {
+    let isSubscribed = true;
+    const channel = supabase
+      .channel("admin_invoices_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "invoices" },
+        () => {
+          if (isSubscribed) {
+            qc.invalidateQueries({ queryKey: ["admin_invoices"] });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      isSubscribed = false;
+      supabase.removeChannel(channel);
+    };
+  }, [qc]);
+
   return useQuery({
     queryKey: ["admin_invoices"],
     queryFn: async () => {

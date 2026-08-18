@@ -34,13 +34,12 @@ export const useComingSoon = () => {
             qc.invalidateQueries({ queryKey: COMING_SOON_KEY });
           }
         }
-      );
-
-    channel.subscribe((status) => {
-      if (status !== "SUBSCRIBED") {
-        console.warn("Realtime subscription status for site_settings:", status);
-      }
-    });
+      )
+      .subscribe((status) => {
+        if (status !== "SUBSCRIBED") {
+          console.warn("Realtime subscription status for site_settings:", status);
+        }
+      });
 
     return () => {
       isSubscribed = false;
