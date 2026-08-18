@@ -395,6 +395,12 @@ const AdminWebsiteOrders = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      <InvoiceFormDialog 
+        open={!!invoiceOrder} 
+        onOpenChange={(o) => !o && setInvoiceOrder(null)} 
+        order={invoiceOrder} 
+      />
     </div>
   );
 };
