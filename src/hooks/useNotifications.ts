@@ -46,10 +46,9 @@ export function useNotifications(audience: "user" | "admin" = "user") {
         if (isSubscribed) {
           qc.invalidateQueries({ queryKey: ["notifications", audience, user.id] });
         }
-      });
+      })
+      .subscribe();
       
-    channel.subscribe();
-    
     return () => { 
       isSubscribed = false;
       supabase.removeChannel(channel); 

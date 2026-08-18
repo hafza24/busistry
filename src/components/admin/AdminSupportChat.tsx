@@ -45,10 +45,9 @@ const AdminSupportChat = () => {
         if (!isSubscribed) return;
         const m = payload.new as Message;
         setMessages((p) => p.some((x) => x.id === m.id) ? p : [...p, m]);
-      });
+      })
+      .subscribe();
       
-    channel.subscribe();
-    
     return () => { 
       isSubscribed = false;
       supabase.removeChannel(channel); 
@@ -65,10 +64,9 @@ const AdminSupportChat = () => {
     const channel = supabase.channel("admin-threads-list")
       .on("postgres_changes", { event: "*", schema: "public", table: "chat_threads" }, () => {
         if (isSubscribed) loadThreads();
-      });
+      })
+      .subscribe();
       
-    channel.subscribe();
-    
     return () => { 
       isSubscribed = false;
       supabase.removeChannel(channel); 

@@ -54,10 +54,9 @@ const AdminContactMessages = () => {
         () => {
           if (isSubscribed) load();
         },
-      );
+      )
+      .subscribe();
       
-    channel.subscribe();
-    
     return () => {
       isSubscribed = false;
       supabase.removeChannel(channel);

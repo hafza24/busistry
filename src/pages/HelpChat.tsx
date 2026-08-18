@@ -63,9 +63,8 @@ const HelpChat = () => {
           if (prev.some((x) => x.id === m.id)) return prev;
           return [...prev, m];
         });
-      });
-      
-    channel.subscribe();
+      })
+      .subscribe();
 
     return () => { 
       isSubscribed = false;
