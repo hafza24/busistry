@@ -2281,6 +2281,7 @@ export type Database = {
           status: Database["public"]["Enums"]["store_status"]
           subdomain_slug: string
           template_id: string
+          updated_at: string | null
           user_id: string
         }
         Insert: {
@@ -2297,6 +2298,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["store_status"]
           subdomain_slug: string
           template_id: string
+          updated_at?: string | null
           user_id: string
         }
         Update: {
@@ -2313,6 +2315,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["store_status"]
           subdomain_slug?: string
           template_id?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: [
