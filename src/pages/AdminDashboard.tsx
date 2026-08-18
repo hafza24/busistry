@@ -67,6 +67,7 @@ const AdminDashboard = () => {
       case "overview": return <AdminOverview />;
       case "orders": return <AdminWebsiteOrders />;
       case "subscriptions": return <AdminSubscriptions />;
+      case "invoices": return <AdminInvoices />;
       case "requests": return <AdminRequestManagement />;
       case "users": return <AdminUserManagement />;
       case "templates": return <AdminTemplateManagement />;
