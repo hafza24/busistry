@@ -36,7 +36,7 @@ const AdminOverview = () => {
   const { data: stats } = useQuery({
     queryKey: ["admin_overview_stats"],
     queryFn: async () => {
-      const [orders, users, subs, requests, tickets, feedback, templates, websiteOrders, invoices] = await Promise.all([
+      const [orders, users, subs, requests, tickets, feedback, templates, websiteOrders] = await Promise.all([
         supabase.from("stores").select("id, created_at, status, plans(price_pkr)"),
         supabase.from("profiles").select("id, created_at"),
         supabase.from("subscriptions").select("id, status"),
@@ -45,7 +45,6 @@ const AdminOverview = () => {
         supabase.from("feedback_submissions").select("id, rating, approved"),
         supabase.from("templates").select("id, is_active"),
         supabase.from("website_orders").select("id, created_at, amount, status"),
-        supabase.from("invoices").select("id, total_amount, status"),
       ]);
       return {
         stores: orders.data ?? [],
@@ -56,7 +55,6 @@ const AdminOverview = () => {
         feedback: feedback.data ?? [],
         templates: templates.data ?? [],
         websiteOrders: websiteOrders.data ?? [],
-        invoices: invoices.data ?? [],
       };
     },
   });
@@ -83,7 +81,6 @@ const AdminOverview = () => {
     const pending = requests.filter((r: any) => r.status === "pending").length;
     const revenue =
       stores.reduce((sum: number, s: any) => sum + (s.plans?.price_pkr ?? 0), 0) +
-      (stats?.invoices ?? []).filter((i: any) => i.status === "paid").reduce((sum: number, i: any) => sum + (Number(i.total_amount) || 0), 0) +
       websiteOrders.reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
     return {
       orders: stores.length + websiteOrders.length,

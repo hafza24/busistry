@@ -29,7 +29,6 @@ const menuItems = [
   { id: "newsletter", label: "Newsletter", icon: Mail },
   { id: "support", label: "Support", icon: LifeBuoy },
   { id: "audit", label: "Audit Logs", icon: ScrollText },
-  { id: "invoices", label: "Invoices", icon: ClipboardList },
 ];
 
 const AdminSidebar = ({ activeView, onViewChange }: AdminSidebarProps) => {

@@ -1199,98 +1199,6 @@ export type Database = {
         }
         Relationships: []
       }
-      invoice_items: {
-        Row: {
-          amount: number
-          created_at: string | null
-          description: string
-          id: string
-          invoice_id: string
-          quantity: number
-          unit_price: number
-        }
-        Insert: {
-          amount?: number
-          created_at?: string | null
-          description: string
-          id?: string
-          invoice_id: string
-          quantity?: number
-          unit_price?: number
-        }
-        Update: {
-          amount?: number
-          created_at?: string | null
-          description?: string
-          id?: string
-          invoice_id?: string
-          quantity?: number
-          unit_price?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "invoice_items_invoice_id_fkey"
-            columns: ["invoice_id"]
-            isOneToOne: false
-            referencedRelation: "invoices"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      invoices: {
-        Row: {
-          created_at: string | null
-          currency: string
-          customer_address: string | null
-          customer_email: string | null
-          customer_id: string | null
-          customer_name: string
-          customer_phone: string | null
-          due_date: string | null
-          id: string
-          invoice_number: string
-          issue_date: string
-          notes: string | null
-          status: Database["public"]["Enums"]["invoice_status"] | null
-          total_amount: number
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          currency?: string
-          customer_address?: string | null
-          customer_email?: string | null
-          customer_id?: string | null
-          customer_name: string
-          customer_phone?: string | null
-          due_date?: string | null
-          id?: string
-          invoice_number: string
-          issue_date?: string
-          notes?: string | null
-          status?: Database["public"]["Enums"]["invoice_status"] | null
-          total_amount?: number
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          currency?: string
-          customer_address?: string | null
-          customer_email?: string | null
-          customer_id?: string | null
-          customer_name?: string
-          customer_phone?: string | null
-          due_date?: string | null
-          id?: string
-          invoice_number?: string
-          issue_date?: string
-          notes?: string | null
-          status?: Database["public"]["Enums"]["invoice_status"] | null
-          total_amount?: number
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
       moderation_notification_logs: {
         Row: {
           created_at: string
@@ -3244,7 +3152,6 @@ export type Database = {
       crm_conversation_status: "open" | "pending" | "closed"
       crm_message_direction: "in" | "out"
       crm_message_status: "queued" | "sent" | "delivered" | "read" | "failed"
-      invoice_status: "pending" | "paid" | "cancelled"
       newsletter_status: "subscribed" | "unsubscribed"
       payment_method:
         | "easypaisa"
@@ -3455,7 +3362,6 @@ export const Constants = {
       crm_conversation_status: ["open", "pending", "closed"],
       crm_message_direction: ["in", "out"],
       crm_message_status: ["queued", "sent", "delivered", "read", "failed"],
-      invoice_status: ["pending", "paid", "cancelled"],
       newsletter_status: ["subscribed", "unsubscribed"],
       payment_method: [
         "easypaisa",
